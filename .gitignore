@@ -1,6 +1,5 @@
 .DS_Store
 .tempmediaStorage/
-*.png
-*.webp
-*.jpg
+screenshot_*.png
+screenshot_*.webp
 *.log
