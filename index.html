@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Semana Gain 10K — De Espectador a Trader Lucrativo</title>
+  <meta name="description" content="La semana que te transformará de espectador del mercado a un Trader Lucrativo. Del 10 al 19 de agosto del 2026, en vivo por Zoom." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css" />
+  <link rel="stylesheet" href="styles.css?v=20" />
+</head>
+<body>
+
+  <!-- ==================== TOP BAR ==================== -->
+  <header class="top-bar" id="top-bar">
+    <div class="top-bar__inner">
+      <div class="top-bar__badges">
+        <span class="top-bar__badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Del 10 al 19 de agosto del 2026
+        </span>
+        <span class="top-bar__badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          En vivo por Zoom
+        </span>
+      </div>
+      <div class="countdown" id="countdown">
+        <div class="countdown__block">
+          <span class="countdown__number" id="cd-days">05</span>
+          <span class="countdown__label">DIAS</span>
+        </div>
+        <div class="countdown__block">
+          <span class="countdown__number" id="cd-hours">14</span>
+          <span class="countdown__label">HORAS</span>
+        </div>
+        <div class="countdown__block">
+          <span class="countdown__number" id="cd-minutes">32</span>
+          <span class="countdown__label">MINUTOS</span>
+        </div>
+        <div class="countdown__block">
+          <span class="countdown__number" id="cd-seconds">41</span>
+          <span class="countdown__label">SEGUNDOS</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" id="hero">
+    <div class="hero__bg">
+      <video class="hero__video hero__video--desktop" autoplay muted loop playsinline>
+        <source src="referencias/videoback.mp4" type="video/mp4" />
+      </video>
+      <video class="hero__video hero__video--mobile" autoplay muted loop playsinline>
+        <source src="referencias/backmobile.mp4" type="video/mp4" />
+      </video>
+      <div class="hero__video-overlay"></div>
+    </div>
+    <div class="hero__content">
+      <div class="hero__text">
+        <img src="referencias/logo.webp" alt="Semana Gain 10K" class="hero__logo" />
+        <p class="hero__eyebrow" style="display:none;">S E M A N A</p>
+        <h1 class="hero__title" style="display:none;">GAIN <span class="hero__title-accent">10K</span></h1>
+        <h2 class="hero__subtitle">LA INFLACIÓN AVANZA <span class="text-green-glow">MÁS RÁPIDO QUE TU SUELDO.</span></h2>
+        <p class="hero__headline">
+          APRENDE A <span class="text-green-glow">DIVERSIFICAR TU ECONOMÍA</span> ANALIZANDO EL MERCADO SOLO 2 HORAS AL DÍA.
+        </p>
+        <p class="hero__description">
+          Únete al Taller "Aprende a Invertir desde Cero". Un reto gratuito de 10 días donde Juan Fernando Villegas operará una cuenta real en vivo en tu pantalla para que domines el juego mental del dinero.
+        </p>
+        <form class="hero__form" id="hero-form">
+          <input type="text" name="name" id="hero-name" class="form__input" placeholder="👤  Tu nombre completo" required />
+          <input type="email" name="email" id="hero-email" class="form__input" placeholder="✉️  Tu mejor correo electrónico" required />
+          <input type="tel" name="phone" id="hero-phone" class="form__input phone-input" placeholder="Tu número de WhatsApp" required />
+          <label class="form__checkbox" for="hero-terms">
+            <input type="checkbox" name="terms" id="hero-terms" required />
+            <span>Acepto la <a href="#" class="form__link">política de privacidad</a> y el tratamiento de mis datos.</span>
+          </label>
+          <button type="submit" class="btn btn--primary" id="hero-cta">
+            QUIERO RESERVAR MI LUGAR
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </button>
+        </form>
+        <p class="hero__bonus">
+          🎁 Material complementario y bonos exclusivos para inscritos
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MARQUEE TICKER ==================== -->
+  <div class="marquee" id="marquee">
+    <div class="marquee__track">
+      <span class="marquee__item">EN VIVO POR ZOOM</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">10 A 19 DE AGOSTO</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">EN VIVO POR ZOOM</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">10 A 19 DE AGOSTO</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">EN VIVO POR ZOOM</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">10 A 19 DE AGOSTO</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">EN VIVO POR ZOOM</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">10 A 19 DE AGOSTO</span>
+      <span class="marquee__diamond">◇</span>
+      <!-- Duplicated for seamless loop -->
+      <span class="marquee__item">EN VIVO POR ZOOM</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">10 A 19 DE AGOSTO</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">EN VIVO POR ZOOM</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">10 A 19 DE AGOSTO</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">EN VIVO POR ZOOM</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">10 A 19 DE AGOSTO</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">EN VIVO POR ZOOM</span>
+      <span class="marquee__diamond">◇</span>
+      <span class="marquee__item">10 A 19 DE AGOSTO</span>
+      <span class="marquee__diamond">◇</span>
+    </div>
+  </div>
+
+  <!-- ==================== WHAT YOU WILL MASTER ==================== -->
+  <section class="what-you-learn" id="what-you-learn">
+    <div class="what-you-learn__container">
+      <div class="what-you-learn__header">
+        <p class="what-you-learn__subtitle">CONTENIDO DEL PROGRAMA</p>
+        <h2 class="what-you-learn__title">
+          LO QUE VAS A DOMINAR EN ESTOS <span class="text-green-glow">10 DÍAS</span>
+        </h2>
+      </div>
+
+      <div class="what-you-learn__split">
+        <!-- Left Side: Interactive PEDEM Radar Engine -->
+        <div class="what-you-learn__visual-col">
+          <div class="engine-wrapper">
+            <div class="engine-container">
+              <!-- Central Core -->
+              <div class="engine-core">
+                <span class="core-icon">🛡️</span>
+                <span class="core-label">MÉTODO</span>
+                <span class="core-label">PEDEM</span>
+              </div>
+              
+              <!-- Radar Scanner Beam -->
+              <div class="engine-scanner"></div>
+              
+              <!-- Orbit 1 (Inner) -->
+              <div class="engine-orbit orbit--inner"></div>
+              
+              <!-- Orbit 2 (Outer) -->
+              <div class="engine-orbit orbit--outer"></div>
+              
+              <!-- Node 1: IA Copilot -->
+              <div class="engine-node node--ia">
+                <div class="node-dot"></div>
+                <div class="node-card">
+                  <span class="node-title">🤖 Copiloto IA</span>
+                  <span class="node-desc">Trabajo pesado delegado</span>
+                </div>
+              </div>
+              
+              <!-- Node 2: PEDEM Rules -->
+              <div class="engine-node node--rules">
+                <div class="node-dot"></div>
+                <div class="node-card">
+                  <span class="node-title">📋 Reglas PEDEM</span>
+                  <span class="node-desc">Cero decisiones emocionales</span>
+                </div>
+              </div>
+              
+              <!-- Node 3: Anti-Sabotage Shield -->
+              <div class="engine-node node--shield">
+                <div class="node-dot"></div>
+                <div class="node-card">
+                  <span class="node-title">🛡️ Anti-Sabotaje</span>
+                  <span class="node-desc">Gestión de riesgo automática</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="engine-glow-bg"></div>
+        </div>
+
+        <!-- Right Side: Steps -->
+        <div class="what-you-learn__steps-col">
+          <!-- Step 1 -->
+          <div class="step-item" id="wy-step-1">
+            <div class="step-number-wrapper">
+              <span class="step-number">01</span>
+              <div class="step-connector"></div>
+            </div>
+            <div class="step-content">
+              <h3 class="step-title">Delega el trabajo pesado</h3>
+              <p class="step-desc">Descubre cómo usar la Inteligencia Artificial como tu copiloto financiero para reducir el análisis complejo y operar en minutos, no en horas.</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-item" id="wy-step-2">
+            <div class="step-number-wrapper">
+              <span class="step-number">02</span>
+              <div class="step-connector"></div>
+            </div>
+            <div class="step-content">
+              <h3 class="step-title">Sistemas basados en reglas</h3>
+              <p class="step-desc">Implementa el Método PEDEM para "quitarle el teclado" a tus emociones y tomar decisiones 100% estratégicas.</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-item" id="wy-step-3">
+            <div class="step-number-wrapper">
+              <span class="step-number">03</span>
+            </div>
+            <div class="step-content">
+              <h3 class="step-title">Vence al "Saboteador"</h3>
+              <p class="step-desc">Identifica el patrón psicológico oculto que afecta tu economía y neutralízalo para gestionar tu riesgo sin estar pegado a una pantalla todo el día.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOR WHO SECTION ==================== -->
+  <section class="for-who" id="for-who">
+    <div class="for-who__container">
+      <div class="for-who__card-wrapper">
+        <p class="for-who__subtitle" style="text-align: center; color: var(--green-primary); font-family: var(--font-heading); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.25em; margin-bottom: 8px; text-transform: uppercase;">¿ES ESTE TALLER PARA TI?</p>
+        <h2 class="for-who__title">
+          ESTO ES PARA <span class="text-green-glow">LOS QUE...</span>
+        </h2>
+        <div class="for-who__grid">
+          <!-- Card 1 -->
+          <div class="for-who__card" id="card-1">
+            <div class="for-who__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            </div>
+            <p class="for-who__text">
+              <strong>Están cansados de decir todos los años “este es mi año”,</strong> siguen sin cumplir sus metas financieras y les gustaría cerrar el 2025 con una inversión sólida.
+            </p>
+          </div>
+          <!-- Card 2 -->
+          <div class="for-who__card" id="card-2">
+            <div class="for-who__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+            </div>
+            <p class="for-who__text">
+              <strong>Quieren dejar de depender de una sola fuente de ingresos</strong> y aprender cómo generar un ingreso extra en dólares.
+            </p>
+          </div>
+          <!-- Card 3 -->
+          <div class="for-who__card" id="card-3">
+            <div class="for-who__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v17M12 20H8m8 0h-4M3 7h18M6 7l-2 9h4l-2-9zm12 0l-2 9h4l-2-9z"/></svg>
+            </div>
+            <p class="for-who__text">
+              <strong>Sueñan con poder equilibrar más su vida</strong> para poder hacer ese viaje, disfrutar de su futura jubilación, comprar esa propiedad o darle ese regalo a sus hijos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROFESSOR SECTION ==================== -->
+  <section class="professor" id="professor">
+    <div class="professor__container">
+      <div class="professor__image-col">
+        <!-- Photo of the professor -->
+        <div class="professor__image-wrapper">
+          <img src="referencias/juanvillegas.png" alt="Juan Fernando Villegas" class="professor__img" />
+        </div>
+        <div class="professor__badge">
+          <span class="professor__badge-icon">📍</span>
+          MÁS DE 12 MIL ALUMNOS GRADUADOS
+        </div>
+      </div>
+      <div class="professor__info">
+        <p class="professor__eyebrow">
+          <span class="professor__eyebrow-line"></span>
+          El mentor detrás del Taller
+        </p>
+        <h2 class="professor__name">Juan Villegas</h2>
+        
+        <!-- Quote card -->
+        <div class="professor__quote-card">
+          <p class="professor__quote-text">"No operamos por suerte; operamos con un sistema, tecnología y, sobre todo, criterio profesional."</p>
+          <span class="professor__quote-author">— Juan Villegas</span>
+        </div>
+
+        <p class="professor__bio">
+          <strong>Juan Fernando Villegas</strong> es la mente detrás del Método Ingresarios y uno de los referentes más respetados en la profesionalización del trading en Latinoamérica. Con más de 20 años de experiencia enfrentando la volatilidad de los mercados globales, ha consolidado una carrera basada en la transparencia y la disciplina técnica.
+        </p>
+        <p class="professor__bio">
+          Su mayor legado no es solo su operativa personal, sino el impacto en la comunidad: ha formado y acompañado a miles de traders en su camino desde la confusión inicial hasta la maestría y el éxito financiero. Juan Fernando es conocido por ser un <strong>"anti-gurú"</strong>; su enfoque no está en las ganancias mágicas, sino en desarrollar el <strong>Flow de Inversionista</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER CTA ==================== -->
+  <section class="footer-cta" id="footer-cta">
+    <div class="footer-cta__container">
+      <div class="footer-cta__left">
+        <p class="footer-cta__eyebrow" style="display: none;">S E M A N A</p>
+        <h2 class="footer-cta__title">
+          TU TIEMPO ES <span class="text-green-glow">LIMITADO,</span><br />TU EDUCACIÓN FINANCIERA NO DEBERÍA SERLO.
+        </h2>
+        <p class="footer-cta__desc">
+          100% Educación financiera y análisis de datos. Sin falsas promesas ni simuladores.
+        </p>
+      </div>
+      <div class="footer-cta__right">
+        <form class="footer-cta__form" id="footer-form">
+          <input type="text" name="name" id="footer-name" class="form__input" placeholder="👤  Tu nombre completo" required />
+          <input type="email" name="email" id="footer-email" class="form__input" placeholder="✉️  Tu mejor correo electrónico" required />
+          <input type="tel" name="phone" id="footer-phone" class="form__input phone-input" placeholder="Tu número de WhatsApp" required />
+          <label class="form__checkbox" for="footer-terms">
+            <input type="checkbox" name="terms" id="footer-terms" required />
+            <span>Acepto la <a href="#" class="form__link">política de privacidad</a> y el tratamiento de mis datos.</span>
+          </label>
+          <button type="submit" class="btn btn--primary" id="footer-cta-btn">
+            QUIERO RESERVAR MI LUGAR
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer" id="footer">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <p>Semana Trader Lucrativo – Todos os direitos reservados.</p>
+        <p>Evento 100% online e gratuito. Você poderá cancelar sua inscrição a qualquer momento.</p>
+      </div>
+      <div class="footer__disclaimer">
+        <p>Este conteúdo não garante rentabilidade futura. Operações no mercado financeiro envolvem riscos.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
+  <script src="script.js?v=5"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+.DS_Store
+.tempmediaStorage/
+*.png
+*.webp
+*.jpg
+*.log
