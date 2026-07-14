@@ -89,6 +89,26 @@ document.querySelectorAll('.btn--primary').forEach(function (btn) {
 });
 
 // ========================================
+// UTM PARAMETERS CAPTURE AND FIELD POPULATION
+// ========================================
+
+function populateUTMs() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  utms.forEach(function (utm) {
+    const value = urlParams.get(utm) || '';
+    document.querySelectorAll(`input[name="${utm}"]`).forEach(function (input) {
+      input.value = value;
+    });
+  });
+}
+
+// Populate initially on load
+document.addEventListener('DOMContentLoaded', populateUTMs);
+// Fallback run immediately in case DOMContentLoaded has already fired
+populateUTMs();
+
+// ========================================
 // FORM SUBMISSION HANDLER
 // ========================================
 
@@ -107,11 +127,17 @@ function handleFormSubmit(e) {
   btn.style.pointerEvents = 'none';
   btn.style.opacity = '0.8';
 
+  // Extract all form values (including hidden UTM fields)
+  const formData = new FormData(form);
+  const formValues = Object.fromEntries(formData.entries());
+  console.log('Form submitted with values:', formValues);
+
   setTimeout(function () {
     btn.innerHTML = originalText;
     btn.style.pointerEvents = '';
     btn.style.opacity = '';
     form.reset();
+    populateUTMs(); // Repopulate UTMs after form reset
   }, 3000);
 }
 
