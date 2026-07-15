@@ -407,6 +407,11 @@ a {
   margin-bottom: 24px;
 }
 
+/* Mobile-only video below the form — hidden on desktop */
+.hero__video--below-form {
+  display: none;
+}
+
 .hero__eyebrow {
   font-family: var(--font-heading);
   font-size: 0.85rem;
@@ -1299,7 +1304,13 @@ a {
   .hero {
     padding-top: 95px;
     min-height: auto;
-    padding-bottom: 50px;
+    padding-bottom: 0;
+    background-color: var(--bg-dark);
+  }
+
+  /* Hide the absolute bg layer since video is below */
+  .hero__bg {
+    display: none;
   }
 
   .hero__content {
@@ -1307,12 +1318,24 @@ a {
     padding-bottom: 60px;
   }
 
-  .hero__video--desktop {
+  /* Hide both background videos on mobile — video appears below form instead */
+  .hero__video--desktop,
+  .hero__video--mobile {
     display: none;
   }
 
-  .hero__video--mobile {
+  /* Show video below the form on mobile */
+  .hero__video--below-form {
     display: block;
+    width: calc(100% + 48px);
+    margin-left: -24px;
+    margin-right: -24px;
+    margin-top: 24px;
+    height: 220px;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 0;
+    opacity: 0.85;
   }
 
   .hero__logo {
