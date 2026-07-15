@@ -1,5 +1,10 @@
 {
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/test", "destination": "/test.html" },
+    { "source": "/resultado", "destination": "/test.html" },
+    { "source": "/app", "destination": "/test.html" }
+  ],
   "headers": [
     {
       "source": "/referencias/:path*",

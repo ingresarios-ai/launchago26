@@ -403,7 +403,7 @@ function showAnalyzing() {
 // SHOW RESULT — brief, then redirect to thank you
 // ========================================
 
-function showResult() {
+function showResult(skipPushState) {
   var maxScore = 0;
   var dominant = 'vengador';
   Object.keys(scores).forEach(function (key) {
@@ -422,6 +422,9 @@ function showResult() {
   document.getElementById('result-desc').textContent = sab.desc;
   document.getElementById('result-insight').innerHTML = '<strong>💡 Insight:</strong> ' + sab.insight;
 
+  // Persist for SPA reloads
+  localStorage.setItem('saboteur_scores', JSON.stringify(scores));
+  localStorage.setItem('saboteur_result', dominant);
   // Populate mission saboteur name
   var missionEl = document.getElementById('mission-saboteur-name');
   if (missionEl) missionEl.textContent = sab.name;
@@ -445,7 +448,11 @@ function showResult() {
   });
   document.getElementById('result-scores').innerHTML = scoresHtml;
 
-  showScreen('screen-result');
+  if (!skipPushState) {
+    navigateTo('/resultado', 'screen-result');
+  } else {
+    showScreen('screen-result');
+  }
 
   // Animate score bars
   setTimeout(function () {
@@ -719,3 +726,75 @@ function updateTestCountdown() {
 
 updateTestCountdown();
 setInterval(updateTestCountdown, 1000);
+
+// ========================================
+// SPA ROUTER
+// ========================================
+
+function navigateTo(path, screenId) {
+  if (window.location.pathname !== path) {
+    history.pushState({ screen: screenId }, '', path);
+  }
+  showScreen(screenId);
+  window.scrollTo(0,0);
+  
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'virtual_pageview',
+    page_path: path
+  });
+}
+
+window.addEventListener('popstate', function (event) {
+  if (event.state && event.state.screen) {
+    showScreen(event.state.screen);
+  } else {
+    initRouter();
+  }
+});
+
+function initRouter() {
+  var path = window.location.pathname;
+  var hasResult = localStorage.getItem('saboteur_result') !== null;
+  
+  if (path === '/resultado') {
+    if (hasResult) {
+      var storedScores = localStorage.getItem('saboteur_scores');
+      if (storedScores) {
+         scores = JSON.parse(storedScores);
+         showResult(true); // render without pushing state again
+      } else {
+         navigateTo('/test', 'screen-intro');
+      }
+    } else {
+      navigateTo('/test', 'screen-intro');
+    }
+  } else if (path === '/app') {
+    if (hasResult) {
+       var storedScores = localStorage.getItem('saboteur_scores');
+       if (storedScores) {
+          scores = JSON.parse(storedScores);
+          // Briefly render result to populate DOM, then switch to app
+          showResult(true); 
+          navigateTo('/app', 'screen-next-steps');
+       } else {
+          navigateTo('/test', 'screen-intro');
+       }
+    } else {
+       navigateTo('/test', 'screen-intro');
+    }
+  } else {
+    // Default to /test
+    if (path !== '/test') {
+      history.replaceState({ screen: 'screen-intro' }, '', '/test');
+    }
+    showScreen('screen-intro');
+  }
+}
+
+// Initialize router on load
+initRouter();
+
+function goToApp() {
+  navigateTo('/app', 'screen-next-steps');
+}
