@@ -1,0 +1,446 @@
+/* ========================================
+   GRACIAS / THANK YOU — Styles
+   ======================================== */
+
+:root {
+  --bg-main: #0a0e13;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --bg-card-hover: rgba(255, 255, 255, 0.07);
+  --green: #22c55e;
+  --green-dim: rgba(34, 197, 94, 0.08);
+  --green-glow: rgba(34, 197, 94, 0.3);
+  --text-white: #f1f5f9;
+  --text-gray: #94a3b8;
+  --text-muted: #64748b;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Outfit', 'Inter', system-ui, sans-serif;
+  --vengador: #ef4444;
+  --euforico: #f59e0b;
+  --impaciente: #8b5cf6;
+  --paralizado: #3b82f6;
+  --whatsapp: #25D366;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-main);
+  color: var(--text-gray);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.text-green { color: var(--green); }
+
+/* ========================================
+   LAYOUT
+   ======================================== */
+
+.ty {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+}
+
+/* ========================================
+   HERO
+   ======================================== */
+
+.ty-hero {
+  text-align: center;
+  padding: 40px 0 32px;
+}
+
+.ty-hero__badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: var(--green-dim);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+  animation: fadeInDown 0.6s ease;
+}
+
+.ty-hero__title {
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--text-white);
+  line-height: 1.15;
+  margin-bottom: 24px;
+  animation: fadeInDown 0.6s ease 0.1s both;
+}
+
+/* Saboteur Mini Card */
+.ty-saboteur-mini {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 20px 24px;
+  text-align: left;
+  animation: fadeInDown 0.6s ease 0.2s both;
+}
+
+.ty-saboteur-mini__emoji {
+  font-size: 2.8rem;
+  flex-shrink: 0;
+}
+
+.ty-saboteur-mini__name {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-white);
+  margin-bottom: 4px;
+}
+
+.ty-saboteur-mini__desc {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* ========================================
+   STEPS
+   ======================================== */
+
+.ty-step {
+  display: flex;
+  gap: 16px;
+  padding: 32px 0;
+  border-top: 1px solid var(--border-subtle);
+  animation: fadeInUp 0.5s ease both;
+}
+
+.ty-step:nth-child(3) { animation-delay: 0.1s; }
+.ty-step:nth-child(4) { animation-delay: 0.2s; }
+.ty-step:nth-child(5) { animation-delay: 0.3s; }
+
+.ty-step__number {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--green);
+  color: #0a0e13;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1rem;
+  border-radius: 50%;
+}
+
+.ty-step__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.ty-step__title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-white);
+  margin-bottom: 8px;
+}
+
+.ty-step__desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* ========================================
+   WhatsApp BUTTON
+   ======================================== */
+
+.ty-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 28px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  width: 100%;
+}
+
+.ty-btn--whatsapp {
+  background: var(--whatsapp);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+}
+
+.ty-btn--whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+}
+
+.ty-btn--whatsapp:active {
+  transform: translateY(0);
+}
+
+/* ========================================
+   VIDEO
+   ======================================== */
+
+.ty-video {
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+}
+
+.ty-video__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 220px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.ty-video iframe,
+.ty-video video {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+}
+
+/* ========================================
+   MISSION
+   ======================================== */
+
+.ty-mission {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.ty-mission__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ty-mission__tag {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--green);
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  background: var(--green-dim);
+  border-radius: 6px;
+}
+
+.ty-mission__points {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.ty-mission__title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-white);
+  margin-bottom: 12px;
+}
+
+.ty-mission__instruction {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.ty-mission__instruction strong {
+  color: var(--text-white);
+}
+
+.ty-mission__example {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid var(--green);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.ty-mission__example p + p {
+  margin-top: 6px;
+}
+
+.ty-mission__example strong {
+  color: var(--text-white);
+}
+
+.ty-mission__note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ========================================
+   COUNTDOWN
+   ======================================== */
+
+.ty-countdown {
+  text-align: center;
+  padding: 40px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.ty-countdown__label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.ty-countdown__timer {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ty-countdown__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 12px 16px;
+  min-width: 60px;
+}
+
+.ty-countdown__unit span {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--green);
+}
+
+.ty-countdown__unit small {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.ty-countdown__separator {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+}
+
+.ty-countdown__date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.ty-footer {
+  text-align: center;
+  padding: 24px 0;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.ty-footer__small {
+  margin-top: 6px;
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+/* ========================================
+   SABOTEUR TYPE COLORS
+   ======================================== */
+
+.ty-saboteur-mini[data-type="vengador"] .ty-saboteur-mini__name { color: var(--vengador); }
+.ty-saboteur-mini[data-type="euforico"] .ty-saboteur-mini__name { color: var(--euforico); }
+.ty-saboteur-mini[data-type="impaciente"] .ty-saboteur-mini__name { color: var(--impaciente); }
+.ty-saboteur-mini[data-type="paralizado"] .ty-saboteur-mini__name { color: var(--paralizado); }
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 480px) {
+  .ty-hero__title {
+    font-size: 1.9rem;
+  }
+
+  .ty-saboteur-mini {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .ty-step {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ty-countdown__unit {
+    padding: 10px 12px;
+    min-width: 52px;
+  }
+
+  .ty-countdown__unit span {
+    font-size: 1.4rem;
+  }
+}

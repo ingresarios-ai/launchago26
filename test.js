@@ -1,16 +1,29 @@
 // ========================================
 // TEST DEL SABOTEADOR — LOGIC
+// Bifurcación: traders vs no-traders
 // ========================================
 
-const SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
+var SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
 
 // ========================================
-// QUESTIONS — 8 situaciones reales
-// Cada opción puntúa: [vengador, euforico, impaciente, paralizado]
+// PREGUNTA FILTRO
 // ========================================
 
-var questions = [
+var filterQuestion = {
+  text: '¿Ya operas en mercados financieros (Forex, cripto, acciones, futuros)?',
+  options: [
+    { text: 'Sí, ya opero o he operado activamente.', branch: 'trader' },
+    { text: 'Aún no, pero quiero empezar o estoy aprendiendo.', branch: 'no-trader' }
+  ]
+};
+
+// ========================================
+// PREGUNTAS PARA TRADERS (7 preguntas)
+// Cada opción: [vengador, euforico, impaciente, paralizado]
+// ========================================
+
+var traderQuestions = [
   {
     text: 'Acabas de cerrar una operación con pérdida. ¿Cuál es tu primer impulso?',
     options: [
@@ -30,7 +43,7 @@ var questions = [
     ]
   },
   {
-    text: 'Ves una oportunidad en el mercado pero no cumple al 100% con tu plan de trading. ¿Qué haces?',
+    text: 'Ves una oportunidad pero no cumple al 100% con tu plan de trading. ¿Qué haces?',
     options: [
       { text: 'Entro igual — si espero la señal perfecta, pierdo la oportunidad.', scores: [0, 0, 3, 0] },
       { text: 'No entro, pero me quedo mirando la pantalla esperando que se confirme.', scores: [0, 0, 1, 2] },
@@ -39,7 +52,7 @@ var questions = [
     ]
   },
   {
-    text: 'Tu stop loss se activa y el precio se da la vuelta exactamente después. ¿Qué sientes?',
+    text: 'Tu stop loss se activa y el precio se da la vuelta justo después. ¿Qué sientes?',
     options: [
       { text: 'Rabia — voy a entrar de nuevo con más volumen para compensar.', scores: [3, 0, 1, 0] },
       { text: 'Frustración, pero entiendo que forma parte del proceso.', scores: [0, 0, 0, 0] },
@@ -48,7 +61,7 @@ var questions = [
     ]
   },
   {
-    text: 'Es viernes por la noche y piensas en tu semana de trading. ¿Cuál es tu reflexión más frecuente?',
+    text: 'Es viernes y piensas en tu semana de trading. ¿Cuál es tu reflexión más frecuente?',
     options: [
       { text: '"Si no hubiera perdido ese trade del martes, estaría en positivo."', scores: [3, 0, 0, 0] },
       { text: '"Fue una gran semana, el lunes voy con todo."', scores: [0, 3, 0, 0] },
@@ -57,16 +70,7 @@ var questions = [
     ]
   },
   {
-    text: 'Alguien de tu entorno te cuenta que ganó mucho dinero con una operación. ¿Cómo reaccionas?',
-    options: [
-      { text: 'Siento urgencia por buscar mi propia operación grande ahora mismo.', scores: [1, 0, 3, 0] },
-      { text: 'Pienso: "yo soy mejor, necesito demostrar que también puedo."', scores: [2, 2, 0, 0] },
-      { text: 'Me alegro por él y sigo con mi plan como si nada.', scores: [0, 0, 0, 0] },
-      { text: 'Me desanimo. Quizás no soy bueno para esto.', scores: [0, 0, 0, 3] }
-    ]
-  },
-  {
-    text: 'Llevas una operación abierta con buena ganancia y el precio empieza a retroceder. ¿Qué haces?',
+    text: 'Llevas una operación con buena ganancia y el precio empieza a retroceder. ¿Qué haces?',
     options: [
       { text: 'Muevo mi take profit más lejos — puedo sacar más.', scores: [0, 3, 0, 0] },
       { text: 'Cierro inmediatamente antes de que se borre toda la ganancia.', scores: [0, 0, 2, 2] },
@@ -86,36 +90,107 @@ var questions = [
 ];
 
 // ========================================
-// SABOTEUR PROFILES
+// PREGUNTAS PARA NO-TRADERS (7 preguntas)
+// Mismos arquetipos, contexto de dinero cotidiano
+// ========================================
+
+var noTraderQuestions = [
+  {
+    text: 'Haces una inversión o compra importante y pierdes dinero. ¿Cuál es tu reacción?',
+    options: [
+      { text: 'Busco recuperar ese dinero lo más rápido posible, aunque sea arriesgando más.', scores: [3, 0, 1, 0] },
+      { text: 'Necesito actuar ya — no puedo quedarme de brazos cruzados.', scores: [0, 0, 3, 0] },
+      { text: 'Me bloqueo. No quiero pensar más en dinero por un tiempo.', scores: [0, 0, 0, 3] },
+      { text: 'Analizo qué pasó y tomo nota para la próxima vez.', scores: [0, 1, 0, 0] }
+    ]
+  },
+  {
+    text: 'Recibes un ingreso extra que no esperabas. ¿Qué haces?',
+    options: [
+      { text: 'Lo invierto todo de una — hay que aprovechar mientras tengo capital.', scores: [0, 3, 1, 0] },
+      { text: 'Busco la mejor oportunidad rápido antes de que se me vaya la plata.', scores: [0, 1, 3, 0] },
+      { text: 'Lo guardo y espero. Necesito investigar más antes de moverlo.', scores: [0, 0, 0, 3] },
+      { text: 'Divido: una parte la invierto y otra la reservo.', scores: [0, 0, 0, 0] }
+    ]
+  },
+  {
+    text: 'Alguien te habla de una oportunidad de negocio o inversión. ¿Cómo reaccionas?',
+    options: [
+      { text: 'Si suena bien, entro de una. Las oportunidades no esperan.', scores: [0, 0, 3, 0] },
+      { text: 'Investigo, pero al final nunca me decido. Siempre falta algo.', scores: [0, 0, 0, 3] },
+      { text: 'Me emociono y quiero entrar con todo lo que tengo.', scores: [0, 3, 0, 0] },
+      { text: 'Evalúo con calma si encaja con mi situación actual.', scores: [0, 0, 0, 0] }
+    ]
+  },
+  {
+    text: 'Un amigo te cuenta que ganó mucho dinero con algo. ¿Qué sientes?',
+    options: [
+      { text: '"¿Por qué no fui yo? Necesito encontrar MI oportunidad ahora."', scores: [2, 0, 2, 0] },
+      { text: '"Yo también puedo. Voy a meterle con todo."', scores: [1, 3, 0, 0] },
+      { text: 'Me alegro por él, pero sigo con mi camino.', scores: [0, 0, 0, 0] },
+      { text: 'Me desanimo. Siento que siempre llego tarde a todo.', scores: [0, 0, 0, 3] }
+    ]
+  },
+  {
+    text: 'Piensas en tu situación financiera actual. ¿Cuál frase te identifica más?',
+    options: [
+      { text: '"Si no hubiera cometido ese error, estaría mucho mejor."', scores: [3, 0, 0, 0] },
+      { text: '"Siento que estoy a punto de dar un gran salto."', scores: [0, 3, 0, 0] },
+      { text: '"Necesito generar más ingresos ya, no puedo esperar."', scores: [0, 0, 3, 0] },
+      { text: '"Quiero empezar algo, pero no sé por dónde ni cuándo."', scores: [0, 0, 0, 3] }
+    ]
+  },
+  {
+    text: 'Tienes que tomar una decisión financiera importante. ¿Cómo la enfrentas?',
+    options: [
+      { text: 'Decido rápido. Si sale mal, ajusto sobre la marcha.', scores: [0, 1, 3, 0] },
+      { text: 'Siento que si no actúo ahora, la oportunidad desaparece.', scores: [1, 2, 1, 0] },
+      { text: 'Analizo tanto que a veces se me pasa el momento.', scores: [0, 0, 0, 3] },
+      { text: 'Busco información, pido opiniones y luego decido.', scores: [0, 0, 0, 0] }
+    ]
+  },
+  {
+    text: 'Si pudieras cambiar UNA cosa de tu relación con el dinero, ¿cuál sería?',
+    options: [
+      { text: 'Dejar de intentar recuperar lo que ya perdí.', scores: [3, 0, 0, 0] },
+      { text: 'No dejarme llevar por la emoción cuando las cosas van bien.', scores: [0, 3, 0, 0] },
+      { text: 'Tener más paciencia y no actuar por impulso.', scores: [0, 0, 3, 0] },
+      { text: 'Dejar de pensar tanto y empezar a actuar de una vez.', scores: [0, 0, 0, 3] }
+    ]
+  }
+];
+
+// ========================================
+// SABOTEUR PROFILES (universales)
 // ========================================
 
 var saboteurs = {
   vengador: {
     emoji: '🔥',
     name: 'EL VENGADOR',
-    desc: 'Operas desde la revancha. Cada pérdida se convierte en una batalla personal que necesitas ganar, así que aumentas el riesgo para "recuperar". El problema: el mercado no te debe nada.',
-    insight: 'Tu Saboteador se activa después de cada pérdida. Te susurra: "duplica la posición y sales en cero". Pero las estadísticas muestran que el 78% de las veces eso amplifica la pérdida.',
+    desc: 'Actúas desde la revancha. Cada pérdida se convierte en una batalla personal que necesitas ganar, así que aumentas el riesgo para "recuperar". El problema: ni el mercado ni el dinero te deben nada.',
+    insight: 'Tu Saboteador se activa después de cada pérdida. Te susurra: "recupéralo ya". Pero las decisiones tomadas desde la rabia amplían la pérdida el 78% de las veces.',
     color: '#ef4444'
   },
   euforico: {
     emoji: '🎰',
     name: 'EL EUFÓRICO',
-    desc: 'Después de ganar, te sientes invencible. Aumentas el tamaño, sobreoperas y dejas de seguir las reglas que te dieron la ganancia. Tu peor enemigo no es la pérdida — es la racha ganadora.',
-    insight: 'Tu Saboteador se activa cuando las cosas van bien. Te convence de que "estás en racha" y que las reglas ya no aplican. Los traders más peligrosos no son los que pierden — son los que no saben ganar.',
+    desc: 'Cuando las cosas van bien, te sientes invencible. Arriesgas más, dejas de seguir las reglas y sobreactúas. Tu peor enemigo no es el fracaso — es el éxito mal gestionado.',
+    insight: 'Tu Saboteador se activa cuando las cosas van bien. Te convence de que "estás en racha" y que las reglas ya no aplican. Las personas más peligrosas con el dinero no son las que pierden — son las que no saben ganar.',
     color: '#f59e0b'
   },
   impaciente: {
     emoji: '⚡',
     name: 'EL IMPACIENTE',
-    desc: 'Necesitas acción constante. Entras antes de tiempo, operas sin confirmación y confundes movimiento con progreso. Tu cuenta paga el costo de tu ansiedad.',
-    insight: 'Tu Saboteador te hace creer que si no estás operando, estás perdiendo. Pero en trading, las mejores decisiones suelen ser las que NO tomas. La paciencia no es pasividad — es precisión.',
+    desc: 'Necesitas acción constante. Actúas antes de tiempo, decides sin confirmación y confundes movimiento con progreso. Tu bolsillo paga el costo de tu ansiedad.',
+    insight: 'Tu Saboteador te hace creer que si no estás actuando, estás perdiendo. Pero las mejores decisiones financieras suelen ser las que NO tomas impulsivamente. La paciencia no es pasividad — es precisión.',
     color: '#8b5cf6'
   },
   paralizado: {
     emoji: '🧊',
     name: 'EL PARALIZADO',
-    desc: 'Analizas todo pero no ejecutas nada. El miedo a equivocarte te congela y la oportunidad pasa frente a tus ojos mientras buscas "una señal más". Tu parálisis también cuesta dinero.',
-    insight: 'Tu Saboteador usa la perfección como excusa para la inacción. Te convence de que necesitas más datos, más análisis, más confirmación. Pero el costo de NO actuar es invisible — y acumulativo.',
+    desc: 'Analizas todo pero no decides nada. El miedo a equivocarte te congela y las oportunidades pasan frente a ti mientras buscas "más información". Tu inacción también cuesta dinero.',
+    insight: 'Tu Saboteador usa la perfección como excusa para la inacción. Te convence de que necesitas más datos, más seguridad. Pero el costo de NO actuar es invisible — y acumulativo.',
     color: '#3b82f6'
   }
 };
@@ -128,6 +203,9 @@ var currentQuestion = 0;
 var answers = [];
 var scores = { vengador: 0, euforico: 0, impaciente: 0, paralizado: 0 };
 var token = new URLSearchParams(window.location.search).get('token') || '';
+var userBranch = ''; // 'trader' or 'no-trader'
+var activeQuestions = []; // set after filter question
+var totalQuestions = 8; // filter + 7 branch questions
 
 // ========================================
 // SCREEN MANAGEMENT
@@ -150,24 +228,72 @@ function updateProgress(percent) {
 
 document.getElementById('btn-start').addEventListener('click', function () {
   showScreen('screen-questions');
-  renderQuestion();
+  renderFilterQuestion();
   updateProgress(0);
 });
 
 // ========================================
-// RENDER QUESTION
+// RENDER FILTER QUESTION (Pregunta 1)
 // ========================================
 
-function renderQuestion() {
-  var q = questions[currentQuestion];
+function renderFilterQuestion() {
   var container = document.getElementById('question-container');
-
-  // Fade out
   container.style.opacity = '0';
   container.style.transform = 'translateY(20px)';
 
   setTimeout(function () {
-    document.getElementById('question-counter').textContent = 'Pregunta ' + (currentQuestion + 1) + ' de ' + questions.length;
+    document.getElementById('question-counter').textContent = 'Pregunta 1 de ' + totalQuestions;
+    document.getElementById('question-text').textContent = filterQuestion.text;
+
+    var optionsHtml = '';
+    var letters = ['A', 'B'];
+    filterQuestion.options.forEach(function (opt, i) {
+      optionsHtml += '<button class="test-option" data-branch="' + opt.branch + '">' +
+        '<span class="test-option__letter">' + letters[i] + '</span>' +
+        '<span>' + opt.text + '</span>' +
+        '</button>';
+    });
+    document.getElementById('question-options').innerHTML = optionsHtml;
+
+    document.querySelectorAll('.test-option').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        // Visual feedback
+        document.querySelectorAll('.test-option').forEach(function (b) { b.style.pointerEvents = 'none'; });
+        this.classList.add('test-option--selected');
+
+        // Set branch
+        userBranch = this.getAttribute('data-branch');
+        activeQuestions = userBranch === 'trader' ? traderQuestions : noTraderQuestions;
+        answers.push(userBranch);
+
+        // Move to first real question
+        setTimeout(function () {
+          currentQuestion = 0;
+          renderQuestion();
+        }, 600);
+      });
+    });
+
+    container.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    container.style.opacity = '1';
+    container.style.transform = 'translateY(0)';
+  }, 200);
+}
+
+// ========================================
+// RENDER QUESTION (preguntas 2-8)
+// ========================================
+
+function renderQuestion() {
+  var q = activeQuestions[currentQuestion];
+  var container = document.getElementById('question-container');
+
+  container.style.opacity = '0';
+  container.style.transform = 'translateY(20px)';
+
+  setTimeout(function () {
+    // +2 because filter is question 1, and currentQuestion is 0-indexed
+    document.getElementById('question-counter').textContent = 'Pregunta ' + (currentQuestion + 2) + ' de ' + totalQuestions;
     document.getElementById('question-text').textContent = q.text;
 
     var optionsHtml = '';
@@ -180,20 +306,18 @@ function renderQuestion() {
     });
     document.getElementById('question-options').innerHTML = optionsHtml;
 
-    // Add click handlers
     document.querySelectorAll('.test-option').forEach(function (btn) {
       btn.addEventListener('click', function () {
         selectOption(parseInt(this.getAttribute('data-index')));
       });
     });
 
-    // Fade in
     container.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
     container.style.opacity = '1';
     container.style.transform = 'translateY(0)';
   }, 200);
 
-  updateProgress(((currentQuestion) / questions.length) * 100);
+  updateProgress(((currentQuestion + 1) / totalQuestions) * 100);
 }
 
 // ========================================
@@ -201,25 +325,22 @@ function renderQuestion() {
 // ========================================
 
 function selectOption(index) {
-  var q = questions[currentQuestion];
+  var q = activeQuestions[currentQuestion];
   var opt = q.options[index];
 
-  // Visual feedback
   var allOptions = document.querySelectorAll('.test-option');
   allOptions.forEach(function (btn) { btn.style.pointerEvents = 'none'; });
   allOptions[index].classList.add('test-option--selected');
 
-  // Record answer and accumulate scores
   answers.push(index);
   scores.vengador += opt.scores[0];
   scores.euforico += opt.scores[1];
   scores.impaciente += opt.scores[2];
   scores.paralizado += opt.scores[3];
 
-  // Next question or results
   setTimeout(function () {
     currentQuestion++;
-    if (currentQuestion < questions.length) {
+    if (currentQuestion < activeQuestions.length) {
       renderQuestion();
     } else {
       updateProgress(100);
@@ -259,11 +380,10 @@ function showAnalyzing() {
 }
 
 // ========================================
-// SHOW RESULT
+// SHOW RESULT — brief, then redirect to thank you
 // ========================================
 
 function showResult() {
-  // Determine dominant saboteur
   var maxScore = 0;
   var dominant = 'vengador';
   Object.keys(scores).forEach(function (key) {
@@ -303,19 +423,20 @@ function showResult() {
 
   showScreen('screen-result');
 
-  // Animate score bars after screen transition
+  // Animate score bars
   setTimeout(function () {
     document.querySelectorAll('.score-bar__fill').forEach(function (bar) {
       bar.style.width = bar.getAttribute('data-width');
     });
   }, 300);
 
-  // Push test completion event to GTM dataLayer
+  // GTM event
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
     event: 'test_saboteador_completado',
     saboteur_type: dominant,
     saboteur_name: sab.name,
+    user_branch: userBranch,
     scores: scores
   });
 
@@ -330,21 +451,17 @@ function showResult() {
 function saveResult(dominant) {
   if (!token) return;
 
-  // First, get the lead_id by token
   fetch(SUPABASE_URL + '/rest/v1/leads?auth_token=eq.' + token + '&select=id', {
     headers: {
       'apikey': SUPABASE_ANON_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-      'x-auth-token': token
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
     }
   })
   .then(function (res) { return res.json(); })
   .then(function (leads) {
     if (!leads || !leads.length) return;
-
     var leadId = leads[0].id;
 
-    // Save test result
     return fetch(SUPABASE_URL + '/rest/v1/saboteur_test', {
       method: 'POST',
       headers: {
@@ -354,18 +471,24 @@ function saveResult(dominant) {
       },
       body: JSON.stringify({
         lead_id: leadId,
-        answers: { responses: answers },
+        answers: { branch: userBranch, responses: answers },
         saboteur_type: dominant,
         scores: scores
       })
     });
   })
-  .then(function () {
-    console.log('Test result saved to Supabase');
-  })
-  .catch(function (err) {
-    console.error('Error saving test result:', err);
-  });
+  .then(function () { console.log('Test result saved'); })
+  .catch(function (err) { console.error('Error saving:', err); });
+}
+
+// ========================================
+// CONTINUE TO THANK YOU PAGE
+// ========================================
+
+function goToThankYou() {
+  var dominant = document.getElementById('result-card').getAttribute('data-type');
+  var params = 'token=' + token + '&saboteur=' + dominant + '&branch=' + userBranch;
+  window.location.href = 'gracias.html?' + params;
 }
 
 // ========================================
@@ -375,24 +498,17 @@ function saveResult(dominant) {
 function shareResult() {
   var dominant = document.getElementById('result-card').getAttribute('data-type');
   var sab = saboteurs[dominant];
-  var shareText = 'Mi Saboteador es ' + sab.name + ' ' + sab.emoji + ' — ¿Cuál opera TU cuenta? Descúbrelo en 2 minutos:';
-  var shareUrl = 'https://taller.ingresarios.net/test.html';
+  var shareText = 'Mi Saboteador es ' + sab.name + ' ' + sab.emoji + ' — ¿Cuál es el tuyo? Descúbrelo en 2 minutos:';
+  var shareUrl = 'https://taller.ingresarios.net/test';
 
   if (navigator.share) {
-    navigator.share({
-      title: 'Test del Saboteador',
-      text: shareText,
-      url: shareUrl
-    }).catch(function () {});
+    navigator.share({ title: 'Test del Saboteador', text: shareText, url: shareUrl }).catch(function () {});
   } else {
-    // Fallback: copy to clipboard
-    var fullText = shareText + ' ' + shareUrl;
-    navigator.clipboard.writeText(fullText).then(function () {
+    navigator.clipboard.writeText(shareText + ' ' + shareUrl).then(function () {
       var btn = document.getElementById('btn-share');
-      btn.innerHTML = '✓ ¡COPIADO AL PORTAPAPELES!';
-      setTimeout(function () {
-        btn.innerHTML = 'COMPARTIR MI RESULTADO <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
-      }, 2000);
+      var orig = btn.innerHTML;
+      btn.innerHTML = '✓ ¡COPIADO!';
+      setTimeout(function () { btn.innerHTML = orig; }, 2000);
     });
   }
 }

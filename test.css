@@ -167,6 +167,22 @@ body {
   transform: translateY(0);
 }
 
+.test-btn--secondary {
+  background: transparent;
+  color: var(--text-gray);
+  border: 1px solid var(--border-subtle);
+  box-shadow: none;
+  margin-top: 12px;
+  font-size: 0.85rem;
+}
+
+.test-btn--secondary:hover {
+  background: var(--bg-card);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--text-white);
+  box-shadow: none;
+}
+
 /* ========================================
    QUESTION SCREEN
    ======================================== */
