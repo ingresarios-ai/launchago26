@@ -31,8 +31,8 @@
 // ========================================
 
 (function () {
-  // Set event date: August 10, 2026
-  const eventDate = new Date('2026-08-10T00:00:00-06:00').getTime();
+  // Set event date: August 3, 2026
+  const eventDate = new Date('2026-08-03T00:00:00-06:00').getTime();
 
   const daysEl = document.getElementById('cd-days');
   const hoursEl = document.getElementById('cd-hours');

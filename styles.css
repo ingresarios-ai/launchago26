@@ -658,6 +658,204 @@ a {
   font-weight: 700;
 }
 
+.text-red-glow {
+  color: #ef4444;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.4), 0 0 20px rgba(239, 68, 68, 0.2);
+}
+
+.for-who__title--negative {
+  margin-top: 56px;
+}
+
+.for-who__card--negative:hover {
+  background-color: rgba(239, 68, 68, 0.03);
+  border-color: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.12);
+}
+
+.for-who__icon--negative {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.for-who__card--negative:hover .for-who__icon--negative {
+  background-color: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.35);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
+}
+
+/* ========================================
+   TESTIMONIALS SECTION
+   ======================================== */
+.testimonials {
+  padding: var(--section-padding);
+  background-color: var(--bg-dark);
+  position: relative;
+}
+
+.testimonials__container {
+  max-width: var(--container-width-lg);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.testimonials__subtitle {
+  text-align: center;
+  color: var(--green-primary);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.testimonials__title {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1.25;
+  color: var(--text-white);
+  max-width: 800px;
+  margin: 0 auto 48px auto;
+  text-transform: uppercase;
+}
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.testimonials__card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  transition: transform var(--transition-medium), border-color var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.testimonials__card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(34, 197, 94, 0.2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.testimonials__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green-primary), #15803d);
+  color: var(--bg-dark);
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.testimonials__name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-white);
+  margin-bottom: 4px;
+}
+
+.testimonials__location {
+  font-size: 0.82rem;
+  color: var(--text-gray);
+  margin-bottom: 16px;
+}
+
+.testimonials__divider {
+  height: 1px;
+  background-color: var(--border-subtle);
+  margin-bottom: 16px;
+}
+
+.testimonials__quote {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-gray-light);
+}
+
+.testimonials__quote strong {
+  color: var(--green-primary);
+}
+
+/* ========================================
+   FAQ SECTION
+   ======================================== */
+.faq {
+  padding: var(--section-padding);
+  background-color: var(--bg-dark);
+}
+
+.faq__container {
+  max-width: var(--container-width-md);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.faq__subtitle {
+  text-align: center;
+  color: var(--green-primary);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.faq__title {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1.25;
+  color: var(--text-white);
+  margin-bottom: 48px;
+  text-transform: uppercase;
+}
+
+.faq__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq__item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  transition: border-color var(--transition-fast);
+}
+
+.faq__item:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.faq__question {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: 10px;
+}
+
+.faq__answer {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-gray-light);
+}
+
 /* ========================================
    WHAT YOU WILL MASTER SECTION (SPLIT & TERMINAL)
    ======================================== */
@@ -1468,6 +1666,23 @@ a {
     align-items: center;
     text-align: center;
     gap: 12px;
+  }
+
+  /* Testimonials & FAQ Mobile */
+  .testimonials__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .testimonials__title,
+  .faq__title {
+    font-size: 1.6rem;
+    margin-bottom: 32px;
+  }
+
+  .testimonials__card,
+  .faq__item {
+    padding: 20px;
   }
 }
 

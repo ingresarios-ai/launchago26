@@ -29,10 +29,10 @@
   document.getElementById('mission-saboteur-name').style.color = sab.color;
 
   // ========================================
-  // COUNTDOWN — 10 de agosto 2026, 8 PM CST
+  // COUNTDOWN — 3 de agosto 2026
   // ========================================
 
-  var eventDate = new Date('2026-08-11T02:00:00Z'); // Aug 10, 8PM CDT = Aug 11 02:00 UTC
+  var eventDate = new Date('2026-08-04T02:00:00Z'); // Aug 3, 8PM CDT = Aug 4 02:00 UTC
 
   function updateCountdown() {
     var now = new Date();
