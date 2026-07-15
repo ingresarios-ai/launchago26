@@ -1297,9 +1297,14 @@ a {
 
   /* Hero — fix logo overlap */
   .hero {
-    padding-top: 120px;
+    padding-top: 95px;
     min-height: auto;
     padding-bottom: 50px;
+  }
+
+  .hero__content {
+    padding-top: 10px;
+    padding-bottom: 60px;
   }
 
   .hero__video--desktop {
