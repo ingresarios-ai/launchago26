@@ -109,36 +109,165 @@ document.addEventListener('DOMContentLoaded', populateUTMs);
 populateUTMs();
 
 // ========================================
+// SUPABASE CONFIG
+// ========================================
+
+const SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
+const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/jTugwykceKyJlATOSvkb/webhook-trigger/deaadf50-9f15-4372-a5b4-5ec030b01fea';
+
+// ========================================
 // FORM SUBMISSION HANDLER
 // ========================================
 
 function handleFormSubmit(e) {
   e.preventDefault();
   const form = e.target;
-  const name = form.querySelector('input[type="text"]').value.trim();
-  const email = form.querySelector('input[type="email"]').value.trim();
-
-  if (!name || !email) return;
-
   const btn = form.querySelector('.btn');
   const originalText = btn.innerHTML;
 
-  btn.innerHTML = '✓ ¡INSCRIPCIÓN REALIZADA!';
+  // Get form values
+  const name = form.querySelector('input[name="name"]').value.trim();
+  const email = form.querySelector('input[name="email"]').value.trim();
+  const phoneInput = form.querySelector('.phone-input');
+
+  if (!name || !email) return;
+
+  // Get full international phone number from intl-tel-input
+  let phone = '';
+  if (window.__itiInstances) {
+    const itiIndex = Array.from(document.querySelectorAll('.phone-input')).indexOf(phoneInput);
+    if (itiIndex >= 0 && window.__itiInstances[itiIndex]) {
+      phone = window.__itiInstances[itiIndex].getNumber();
+    }
+  }
+  if (!phone) phone = phoneInput.value.trim();
+
+  // Get hidden fields
+  const landing = form.querySelector('input[name="landing"]').value;
+  const utm_source = form.querySelector('input[name="utm_source"]').value;
+  const utm_medium = form.querySelector('input[name="utm_medium"]').value;
+  const utm_campaign = form.querySelector('input[name="utm_campaign"]').value;
+  const utm_content = form.querySelector('input[name="utm_content"]').value;
+  const utm_term = form.querySelector('input[name="utm_term"]').value;
+
+  // Disable button
+  btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><svg width="16" height="16" viewBox="0 0 24 24" style="animation:spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="30 70"/></svg> REGISTRANDO...</span>';
   btn.style.pointerEvents = 'none';
   btn.style.opacity = '0.8';
 
-  // Extract all form values (including hidden UTM fields)
-  const formData = new FormData(form);
-  const formValues = Object.fromEntries(formData.entries());
-  console.log('Form submitted with values:', formValues);
+  // Add spinner keyframes if not already present
+  if (!document.getElementById('spinner-style')) {
+    const spinStyle = document.createElement('style');
+    spinStyle.id = 'spinner-style';
+    spinStyle.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+    document.head.appendChild(spinStyle);
+  }
 
-  setTimeout(function () {
-    btn.innerHTML = originalText;
-    btn.style.pointerEvents = '';
-    btn.style.opacity = '';
-    form.reset();
-    populateUTMs(); // Repopulate UTMs after form reset
-  }, 3000);
+  const leadData = {
+    name, email, phone, landing,
+    utm_source: utm_source || null,
+    utm_medium: utm_medium || null,
+    utm_campaign: utm_campaign || null,
+    utm_content: utm_content || null,
+    utm_term: utm_term || null
+  };
+
+  // 1. POST to Supabase — create lead and get auth_token
+  fetch(SUPABASE_URL + '/rest/v1/leads', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'Prefer': 'return=representation'
+    },
+    body: JSON.stringify(leadData)
+  })
+  .then(function (res) {
+    if (!res.ok) {
+      return res.json().then(function (err) {
+        // If duplicate email, fetch the existing token
+        if (err.code === '23505') {
+          return fetch(SUPABASE_URL + '/rest/v1/rpc/get_token_by_email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+            },
+            body: JSON.stringify({ p_email: email })
+          }).then(function (r) { return r.json(); });
+        }
+        throw new Error(err.message || 'Error al registrar');
+      });
+    }
+    return res.json();
+  })
+  .then(function (data) {
+    var token = '';
+    if (Array.isArray(data) && data.length > 0) {
+      token = data[0].auth_token;
+    } else if (data && data.auth_token) {
+      token = data.auth_token;
+    } else if (typeof data === 'string') {
+      token = data;
+    }
+
+    // Generate magic link
+    var magicLink = 'https://taller.ingresarios.net/app?token=' + token;
+
+    // Update the lead with the magic link
+    if (token) {
+      fetch(SUPABASE_URL + '/rest/v1/leads?auth_token=eq.' + token, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+        },
+        body: JSON.stringify({ magic_link: magicLink })
+      }).catch(function () {}); // fire and forget
+    }
+
+    // 2. POST to GHL webhook (in parallel, fire and forget)
+    var ghlData = Object.assign({}, leadData, {
+      magic_link: magicLink,
+      auth_token: token,
+      source: 'landing_ingresarios'
+    });
+
+    fetch(GHL_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(ghlData)
+    }).catch(function () {}); // fire and forget
+
+    // 3. Show success and redirect to test
+    btn.innerHTML = '✓ ¡INSCRIPCIÓN REALIZADA!';
+
+    setTimeout(function () {
+      if (token) {
+        window.location.href = 'test.html?token=' + token;
+      } else {
+        // Fallback: show success without redirect
+        btn.innerHTML = originalText;
+        btn.style.pointerEvents = '';
+        btn.style.opacity = '';
+        form.reset();
+        populateUTMs();
+      }
+    }, 1200);
+  })
+  .catch(function (err) {
+    console.error('Registration error:', err);
+    btn.innerHTML = '⚠️ Error — Intenta de nuevo';
+    setTimeout(function () {
+      btn.innerHTML = originalText;
+      btn.style.pointerEvents = '';
+      btn.style.opacity = '';
+    }, 3000);
+  });
 }
 
 document.getElementById('hero-form').addEventListener('submit', handleFormSubmit);
