@@ -208,6 +208,7 @@ var currentQuestion = 0;
 var answers = [];
 var scores = { vengador: 0, euforico: 0, impaciente: 0, paralizado: 0 };
 var token = new URLSearchParams(window.location.search).get('token') || localStorage.getItem('auth_token') || '';
+var userEmail = localStorage.getItem('user_email') || '';
 var userBranch = ''; // 'trader' or 'no-trader'
 var activeQuestions = []; // set after filter question
 var totalQuestions = 8; // filter + 7 branch questions
@@ -560,6 +561,7 @@ function whatsappClicked() {
       body: JSON.stringify({
         event: 'whatsapp_clicked',
         auth_token: token,
+        email: userEmail,
         saboteur: dominant,
         saboteur_name: sab.name,
         branch: userBranch,
@@ -656,6 +658,7 @@ function submitMission() {
         body: JSON.stringify({
           event: 'mission_completed',
           auth_token: token,
+          email: userEmail,
           mission_id: 'mission_01',
           response: response,
           timestamp: new Date().toISOString()

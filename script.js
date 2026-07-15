@@ -259,6 +259,7 @@ function handleFormSubmit(e) {
     btn.innerHTML = '✓ ¡INSCRIPCIÓN REALIZADA!';
     if (token) {
       localStorage.setItem('auth_token', token);
+      localStorage.setItem('user_email', email);
       // Remove pixel fired session flag so it triggers fresh on test load
       sessionStorage.removeItem('lead_pixel_fired');
       window.location.href = 'test.html';
