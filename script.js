@@ -260,7 +260,7 @@ function handleFormSubmit(e) {
     if (token) {
       setTimeout(function () {
         window.location.href = 'test.html?token=' + token;
-      }, 400);
+      }, 800);
     } else {
       btn.innerHTML = originalText;
       btn.style.pointerEvents = '';

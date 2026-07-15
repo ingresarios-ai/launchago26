@@ -212,6 +212,17 @@ var userBranch = ''; // 'trader' or 'no-trader'
 var activeQuestions = []; // set after filter question
 var totalQuestions = 8; // filter + 7 branch questions
 
+// GTM Conversion Tracking on Load
+window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({
+  event: 'lead_registration_success',
+  token: token
+});
+window.dataLayer.push({
+  event: 'Lead',
+  token: token
+});
+
 // ========================================
 // SCREEN MANAGEMENT
 // ========================================
