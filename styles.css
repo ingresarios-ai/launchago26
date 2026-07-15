@@ -1236,6 +1236,8 @@ a {
 }
 
 .footer__logo-img {
+  display: block;
+  margin: 0 auto;
   height: 28px;
   width: auto;
   opacity: 0.7;
