@@ -6,6 +6,11 @@
 var SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
 var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
 
+// GHL Webhooks
+var GHL_WEBHOOK_WHATSAPP = 'https://services.leadconnectorhq.com/hooks/jTugwykceKyJlATOSvkb/webhook-trigger/c17e220a-db9c-42ba-8665-421ed7c223a4';
+var GHL_WEBHOOK_VIDEO = '';    // TODO: add when ready
+var GHL_WEBHOOK_MISSION = '';  // TODO: add when ready
+
 // ========================================
 // PREGUNTA FILTRO
 // ========================================
@@ -515,4 +520,65 @@ function shareResult() {
       setTimeout(function () { btn.innerHTML = orig; }, 2000);
     });
   }
+}
+
+// ========================================
+// WHATSAPP CLICK TRACKING
+// ========================================
+
+function whatsappClicked() {
+  var dominant = document.getElementById('result-card').getAttribute('data-type');
+  var sab = saboteurs[dominant];
+
+  // 1. Fire GHL webhook (fire and forget)
+  if (GHL_WEBHOOK_WHATSAPP) {
+    fetch(GHL_WEBHOOK_WHATSAPP, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event: 'whatsapp_clicked',
+        auth_token: token,
+        saboteur: dominant,
+        saboteur_name: sab.name,
+        branch: userBranch,
+        timestamp: new Date().toISOString()
+      })
+    }).catch(function () {});
+  }
+
+  // 2. Save progress to Supabase
+  trackProgress('whatsapp_clicked');
+
+  // 3. GTM event
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'whatsapp_clicked',
+    saboteur: dominant,
+    branch: userBranch
+  });
+}
+
+// ========================================
+// PROGRESS TRACKING (Supabase)
+// ========================================
+
+function trackProgress(milestone) {
+  if (!token) return;
+
+  fetch(SUPABASE_URL + '/rest/v1/user_progress', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({
+      auth_token: token,
+      milestone: milestone,
+      completed_at: new Date().toISOString()
+    })
+  }).catch(function (err) {
+    console.error('Progress tracking error:', err);
+  });
 }
