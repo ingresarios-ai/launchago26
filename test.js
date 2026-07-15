@@ -402,6 +402,10 @@ function showResult() {
   document.getElementById('result-desc').textContent = sab.desc;
   document.getElementById('result-insight').innerHTML = '<strong>💡 Insight:</strong> ' + sab.insight;
 
+  // Populate mission saboteur name
+  var missionEl = document.getElementById('mission-saboteur-name');
+  if (missionEl) missionEl.textContent = sab.name;
+
   // Score bars
   var totalMax = Math.max(scores.vengador, scores.euforico, scores.impaciente, scores.paralizado, 1);
   var scoresHtml = '';
