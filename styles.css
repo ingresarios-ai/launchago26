@@ -302,6 +302,26 @@ a {
   flex-shrink: 0;
 }
 
+.top-bar__badge:nth-child(2) {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
+  border-color: rgba(34, 197, 94, 0.4);
+  color: var(--green-primary);
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+.top-bar__badge:nth-child(2) svg {
+  stroke: var(--green-primary);
+}
+
+@keyframes livePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 12px 2px rgba(34, 197, 94, 0.15);
+  }
+}
+
 /* Countdown */
 .countdown {
   display: flex;
@@ -1212,6 +1232,7 @@ a {
 
 .footer__logo {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .footer__logo-img {
@@ -1295,32 +1316,13 @@ a {
     animation: badgePulse 2.5s ease-in-out infinite;
   }
 
-  .top-bar__badge:nth-child(2) {
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
-    border-color: rgba(34, 197, 94, 0.4);
-    color: var(--green-primary);
-    animation: livePulse 2s ease-in-out infinite;
-  }
 
-  .top-bar__badge:nth-child(2) svg {
-    stroke: var(--green-primary);
-  }
 
   @keyframes badgePulse {
     0%, 100% { opacity: 0.85; }
     50% { opacity: 1; }
   }
 
-  @keyframes livePulse {
-    0%, 100% {
-      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
-      border-color: rgba(34, 197, 94, 0.4);
-    }
-    50% {
-      box-shadow: 0 0 12px 2px rgba(34, 197, 94, 0.25);
-      border-color: rgba(34, 197, 94, 0.7);
-    }
-  }
 
   .countdown {
     gap: 2px;
