@@ -258,9 +258,10 @@ function handleFormSubmit(e) {
     // Show success and redirect FAST
     btn.innerHTML = '✓ ¡INSCRIPCIÓN REALIZADA!';
     if (token) {
-      setTimeout(function () {
-        window.location.href = 'test.html?token=' + token;
-      }, 800);
+      localStorage.setItem('auth_token', token);
+      // Remove pixel fired session flag so it triggers fresh on test load
+      sessionStorage.removeItem('lead_pixel_fired');
+      window.location.href = 'test.html';
     } else {
       btn.innerHTML = originalText;
       btn.style.pointerEvents = '';

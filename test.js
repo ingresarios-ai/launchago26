@@ -207,21 +207,25 @@ var saboteurs = {
 var currentQuestion = 0;
 var answers = [];
 var scores = { vengador: 0, euforico: 0, impaciente: 0, paralizado: 0 };
-var token = new URLSearchParams(window.location.search).get('token') || '';
+var token = new URLSearchParams(window.location.search).get('token') || localStorage.getItem('auth_token') || '';
 var userBranch = ''; // 'trader' or 'no-trader'
 var activeQuestions = []; // set after filter question
 var totalQuestions = 8; // filter + 7 branch questions
 
-// GTM Conversion Tracking on Load
-window.dataLayer = window.dataLayer || [];
-window.dataLayer.push({
-  event: 'lead_registration_success',
-  token: token
-});
-window.dataLayer.push({
-  event: 'Lead',
-  token: token
-});
+// GTM Conversion Tracking on Load (Fires only once per session)
+if (token && !sessionStorage.getItem('lead_pixel_fired')) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'lead_registration_success',
+    token: token
+  });
+  window.dataLayer.push({
+    event: 'Lead',
+    token: token
+  });
+  sessionStorage.setItem('lead_pixel_fired', 'true');
+  console.log('GTM lead_registration_success and Lead events pushed.');
+}
 
 // ========================================
 // SCREEN MANAGEMENT
