@@ -173,7 +173,18 @@ function handleFormSubmit(e) {
     utm_term: utm_term || null
   };
 
-  // 1. POST to Supabase — create lead and get auth_token
+  // 1. Fire GHL webhook immediately (no wait needed)
+  var ghlData = Object.assign({}, leadData, {
+    source: 'landing_ingresarios'
+  });
+
+  fetch(GHL_WEBHOOK, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(ghlData)
+  }).catch(function () {});
+
+  // 2. POST to Supabase — create lead and get auth_token
   fetch(SUPABASE_URL + '/rest/v1/leads', {
     method: 'POST',
     headers: {
@@ -187,7 +198,6 @@ function handleFormSubmit(e) {
   .then(function (res) {
     if (!res.ok) {
       return res.json().then(function (err) {
-        // If duplicate email, fetch the existing token
         if (err.code === '23505') {
           return fetch(SUPABASE_URL + '/rest/v1/rpc/get_token_by_email', {
             method: 'POST',
@@ -214,11 +224,9 @@ function handleFormSubmit(e) {
       token = data;
     }
 
-    // Generate magic link
-    var magicLink = 'https://taller.ingresarios.net/app?token=' + token;
-
-    // Update the lead with the magic link
+    // Fire magic link PATCH + GHL update in background (no wait)
     if (token) {
+      var magicLink = 'https://taller.ingresarios.net/app?token=' + token;
       fetch(SUPABASE_URL + '/rest/v1/leads?auth_token=eq.' + token, {
         method: 'PATCH',
         headers: {
@@ -227,23 +235,17 @@ function handleFormSubmit(e) {
           'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
         },
         body: JSON.stringify({ magic_link: magicLink })
-      }).catch(function () {}); // fire and forget
+      }).catch(function () {});
+
+      // Update GHL with token + magic link
+      fetch(GHL_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.assign({}, ghlData, { auth_token: token, magic_link: magicLink }))
+      }).catch(function () {});
     }
 
-    // 2. POST to GHL webhook (in parallel, fire and forget)
-    var ghlData = Object.assign({}, leadData, {
-      magic_link: magicLink,
-      auth_token: token,
-      source: 'landing_ingresarios'
-    });
-
-    fetch(GHL_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(ghlData)
-    }).catch(function () {}); // fire and forget
-
-    // 3. Push conversion event to GTM dataLayer
+    // GTM event
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: 'registro_lead',
@@ -253,21 +255,19 @@ function handleFormSubmit(e) {
       saboteur_test_pending: true
     });
 
-    // 4. Show success and redirect to test
+    // Show success and redirect FAST
     btn.innerHTML = '✓ ¡INSCRIPCIÓN REALIZADA!';
-
-    setTimeout(function () {
-      if (token) {
+    if (token) {
+      setTimeout(function () {
         window.location.href = 'test.html?token=' + token;
-      } else {
-        // Fallback: show success without redirect
-        btn.innerHTML = originalText;
-        btn.style.pointerEvents = '';
-        btn.style.opacity = '';
-        form.reset();
-        populateUTMs();
-      }
-    }, 1200);
+      }, 400);
+    } else {
+      btn.innerHTML = originalText;
+      btn.style.pointerEvents = '';
+      btn.style.opacity = '';
+      form.reset();
+      populateUTMs();
+    }
   })
   .catch(function (err) {
     console.error('Registration error:', err);
