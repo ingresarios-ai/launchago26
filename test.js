@@ -582,3 +582,87 @@ function trackProgress(milestone) {
     console.error('Progress tracking error:', err);
   });
 }
+
+// ========================================
+// SUBMIT MISSION RESPONSE
+// ========================================
+
+function submitMission() {
+  var responseEl = document.getElementById('mission-response');
+  var btn = document.getElementById('btn-submit-mission');
+  var response = responseEl.value.trim();
+
+  if (!response) {
+    responseEl.style.borderColor = '#ef4444';
+    responseEl.setAttribute('placeholder', '⚠️ Escribe tu respuesta antes de enviar...');
+    setTimeout(function () {
+      responseEl.style.borderColor = '';
+      responseEl.setAttribute('placeholder', '🎯 Mi Saboteador me hizo: ...\n📍 Lo que debí hacer: ...');
+    }, 2500);
+    return;
+  }
+
+  btn.style.pointerEvents = 'none';
+  btn.style.opacity = '0.7';
+  btn.innerHTML = 'Enviando...';
+
+  // 1. Save to Supabase
+  fetch(SUPABASE_URL + '/rest/v1/mission_responses', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({
+      auth_token: token,
+      mission_id: 'mission_01',
+      response: response,
+      points: 20
+    })
+  })
+  .then(function () {
+    // 2. Track milestone
+    trackProgress('mission_01_completed');
+
+    // 3. Fire GHL webhook if configured
+    if (GHL_WEBHOOK_MISSION) {
+      fetch(GHL_WEBHOOK_MISSION, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event: 'mission_completed',
+          auth_token: token,
+          mission_id: 'mission_01',
+          response: response,
+          timestamp: new Date().toISOString()
+        })
+      }).catch(function () {});
+    }
+
+    // 4. GTM event
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'mission_completed',
+      mission_id: 'mission_01'
+    });
+
+    // 5. Success state
+    btn.innerHTML = '✅ ¡MISIÓN COMPLETADA! +20 pts';
+    btn.style.background = 'rgba(34, 197, 94, 0.2)';
+    btn.style.borderColor = 'var(--green)';
+    btn.style.opacity = '1';
+    responseEl.disabled = true;
+    responseEl.style.opacity = '0.6';
+  })
+  .catch(function (err) {
+    console.error('Mission submit error:', err);
+    btn.innerHTML = '⚠️ Error — Intenta de nuevo';
+    btn.style.pointerEvents = '';
+    btn.style.opacity = '';
+    setTimeout(function () {
+      btn.innerHTML = 'COMPLETAR MISIÓN  +20 pts';
+    }, 2500);
+  });
+}

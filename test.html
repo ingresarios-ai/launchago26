@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="test.css?v=3" />
+  <link rel="stylesheet" href="test.css?v=4" />
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -99,17 +99,28 @@
         </a>
       </div>
 
-      <!-- Secondary Actions -->
+      <!-- Secondary + Continue -->
       <div class="test-result__secondary">
+        <button class="test-btn" onclick="showScreen('screen-next-steps'); window.scrollTo(0,0);">
+          CONTINUAR
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
         <button class="test-btn test-btn--secondary" id="btn-share" onclick="shareResult()">
           COMPARTIR MI RESULTADO
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         </button>
       </div>
+    </div>
+  </div>
 
-      <!-- ========== STEP 2: Video de Bienvenida ========== -->
-      <div class="test-result__step-section">
-        <div class="test-result__step-number">2</div>
+  <!-- ==================== NEXT STEPS SCREEN ==================== -->
+  <div class="test-screen" id="screen-next-steps">
+    <div class="test-result">
+      <p class="test-result__label">TU ENTRENAMIENTO COMIENZA AHORA</p>
+
+      <!-- ========== Video de Bienvenida ========== -->
+      <div class="test-result__step-section test-result__step-section--first">
+        <div class="test-result__step-number">1</div>
         <div class="test-result__step-content">
           <h3 class="test-result__step-title">Mira tu video de bienvenida</h3>
           <p class="test-result__step-desc">Juan tiene un mensaje importante para ti antes de que comience el entrenamiento.</p>
@@ -122,9 +133,9 @@
         </div>
       </div>
 
-      <!-- ========== STEP 3: Primera Misión ========== -->
+      <!-- ========== Primera Misión ========== -->
       <div class="test-result__step-section">
-        <div class="test-result__step-number">3</div>
+        <div class="test-result__step-number">2</div>
         <div class="test-result__step-content">
           <h3 class="test-result__step-title">Tu primera misión</h3>
           <p class="test-result__step-desc">Antes de que comience el evento, tu Saboteador necesita saber que estás observándolo. Esta es tu primera microacción:</p>
@@ -135,11 +146,11 @@
             </div>
             <h4 class="test-result__mission-title">Atrapa a tu Saboteador</h4>
             <p class="test-result__mission-text">Durante las próximas 24 horas, identifica <strong>un momento</strong> en tu vida donde tu Saboteador (<span id="mission-saboteur-name">tu saboteador</span>) haya tomado una decisión financiera por ti. No lo juzgues — solo obsérvalo.</p>
-            <p class="test-result__mission-text">Escríbelo en el grupo de WhatsApp con el formato:</p>
-            <div class="test-result__mission-example">
-              <p>🎯 <strong>Mi Saboteador me hizo:</strong> [describe la situación]</p>
-              <p>📍 <strong>Lo que debí hacer:</strong> [describe la alternativa]</p>
-            </div>
+            <p class="test-result__mission-text">Escríbelo aquí:</p>
+            <textarea class="test-result__mission-input" id="mission-response" rows="4" placeholder="🎯 Mi Saboteador me hizo: ...&#10;📍 Lo que debí hacer: ..."></textarea>
+            <button class="test-btn" id="btn-submit-mission" onclick="submitMission()">
+              COMPLETAR MISIÓN  +20 pts
+            </button>
             <p class="test-result__mission-note">💡 La vulnerabilidad es la base de este entrenamiento. No hay respuestas correctas — hay respuestas honestas.</p>
           </div>
         </div>
@@ -150,6 +161,6 @@
     </div>
   </div>
 
-  <script src="test.js?v=5"></script>
+  <script src="test.js?v=6"></script>
 </body>
 </html>
