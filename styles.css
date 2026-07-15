@@ -1297,7 +1297,7 @@ a {
 
   /* Hero — fix logo overlap */
   .hero {
-    padding-top: 180px;
+    padding-top: 120px;
     min-height: auto;
     padding-bottom: 50px;
   }
