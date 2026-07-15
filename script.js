@@ -243,7 +243,17 @@ function handleFormSubmit(e) {
       body: JSON.stringify(ghlData)
     }).catch(function () {}); // fire and forget
 
-    // 3. Show success and redirect to test
+    // 3. Push conversion event to GTM dataLayer
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'registro_lead',
+      lead_email: email,
+      lead_name: name,
+      lead_landing: landing,
+      saboteur_test_pending: true
+    });
+
+    // 4. Show success and redirect to test
     btn.innerHTML = '✓ ¡INSCRIPCIÓN REALIZADA!';
 
     setTimeout(function () {

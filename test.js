@@ -310,6 +310,15 @@ function showResult() {
     });
   }, 300);
 
+  // Push test completion event to GTM dataLayer
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'test_saboteador_completado',
+    saboteur_type: dominant,
+    saboteur_name: sab.name,
+    scores: scores
+  });
+
   // Save to Supabase
   saveResult(dominant);
 }
