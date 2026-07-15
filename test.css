@@ -463,17 +463,102 @@ body {
   color: var(--text-white);
 }
 
-.test-result__back {
-  display: inline-block;
-  margin-top: 16px;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 0.2s;
+/* ========================================
+   WHATSAPP CTA SECTION
+   ======================================== */
+
+.test-result__whatsapp-section {
+  margin-top: 32px;
+  padding: 28px 24px;
+  background: linear-gradient(135deg, rgba(37, 211, 102, 0.06) 0%, rgba(37, 211, 102, 0.02) 100%);
+  border: 1px solid rgba(37, 211, 102, 0.2);
+  border-radius: 18px;
+  text-align: center;
 }
 
-.test-result__back:hover {
-  color: var(--green);
+.test-result__whatsapp-header {
+  margin-bottom: 14px;
+}
+
+.test-result__step-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  background: rgba(37, 211, 102, 0.12);
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #25D366;
+  letter-spacing: 0.12em;
+}
+
+.test-result__whatsapp-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-white);
+  margin-bottom: 8px;
+}
+
+.test-result__whatsapp-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-gray);
+  margin-bottom: 20px;
+  max-width: 460px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.test-btn--whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 18px 28px;
+  background: #25D366;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(37, 211, 102, 0.35);
+  transition: all 0.25s ease;
+  animation: pulseWhatsapp 2s ease infinite;
+}
+
+.test-btn--whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(37, 211, 102, 0.45);
+}
+
+@keyframes pulseWhatsapp {
+  0%, 100% { box-shadow: 0 4px 24px rgba(37, 211, 102, 0.35); }
+  50% { box-shadow: 0 4px 32px rgba(37, 211, 102, 0.5), 0 0 0 6px rgba(37, 211, 102, 0.08); }
+}
+
+/* ========================================
+   SECONDARY ACTIONS
+   ======================================== */
+
+.test-result__secondary {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.test-result__event-note {
+  margin-top: 16px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.test-result__event-note strong {
+  color: var(--text-white);
 }
 
 /* ========================================
