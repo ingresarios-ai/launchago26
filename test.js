@@ -681,3 +681,41 @@ function submitMission() {
     }, 2500);
   });
 }
+
+// ========================================
+// COUNTDOWN TIMER — Aug 3, 2026
+// ========================================
+var testEventDate = new Date('2026-08-04T02:00:00Z'); // Aug 3, 8PM CDT = Aug 4 02:00 UTC
+
+function updateTestCountdown() {
+  var now = new Date();
+  var diff = testEventDate - now;
+
+  var daysEl = document.getElementById('test-days');
+  var hoursEl = document.getElementById('test-hours');
+  var minsEl = document.getElementById('test-minutes');
+  var secsEl = document.getElementById('test-seconds');
+
+  if (!daysEl || !hoursEl || !minsEl || !secsEl) return;
+
+  if (diff <= 0) {
+    daysEl.textContent = '00';
+    hoursEl.textContent = '00';
+    minsEl.textContent = '00';
+    secsEl.textContent = '00';
+    return;
+  }
+
+  var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  daysEl.textContent = days < 10 ? '0' + days : days;
+  hoursEl.textContent = hours < 10 ? '0' + hours : hours;
+  minsEl.textContent = minutes < 10 ? '0' + minutes : minutes;
+  secsEl.textContent = seconds < 10 ? '0' + seconds : seconds;
+}
+
+updateTestCountdown();
+setInterval(updateTestCountdown, 1000);

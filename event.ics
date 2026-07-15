@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ingresarios//El Juego Mental del Dinero//ES
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:el-juego-mental-del-dinero-2026@ingresarios.net
+SEQUENCE:0
+STATUS:CONFIRMED
+DTSTART:20260803T200000
+DTEND:20260803T213000
+RRULE:FREQ=DAILY;COUNT=14
+SUMMARY:El Juego Mental del Dinero - INGRESARIOS
+DESCRIPTION:Entrenamiento en vivo por Zoom. 10 días para aprender a quitarle el control a tu Saboteador.
+LOCATION:Zoom Live
+END:VEVENT
+END:VCALENDAR
