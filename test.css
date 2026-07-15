@@ -78,7 +78,7 @@ body {
    ======================================== */
 
 .test-intro {
-  max-width: 520px;
+  max-width: 700px;
   text-align: center;
   animation: fadeUp 0.6s ease-out;
 }
@@ -188,7 +188,7 @@ body {
    ======================================== */
 
 .test-question {
-  max-width: 600px;
+  max-width: 700px;
   width: 100%;
   animation: fadeUp 0.4s ease-out;
 }
@@ -219,16 +219,16 @@ body {
 
 .test-option {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 18px 20px;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
   cursor: pointer;
   transition: all 0.25s ease;
   text-align: left;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   line-height: 1.5;
   color: var(--text-gray);
 }
@@ -332,11 +332,11 @@ body {
    ======================================== */
 
 .test-result {
-  max-width: 520px;
+  max-width: 680px;
   width: 100%;
   text-align: center;
   animation: fadeUp 0.6s ease-out;
-  padding: 40px 0;
+  padding: 60px 0;
 }
 
 .test-result__label {
@@ -635,7 +635,7 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
-  padding: 20px;
+  padding: 32px;
 }
 
 .test-result__mission-header {
@@ -779,5 +779,9 @@ body {
   .test-btn {
     width: 100%;
     padding: 16px 24px;
+  }
+
+  .test-result__mission {
+    padding: 20px;
   }
 }
