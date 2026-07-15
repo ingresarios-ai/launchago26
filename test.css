@@ -228,7 +228,7 @@ body {
   cursor: pointer;
   transition: all 0.25s ease;
   text-align: left;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   line-height: 1.5;
   color: var(--text-gray);
 }
@@ -499,8 +499,8 @@ body {
   }
 
   .test-option {
-    padding: 14px 16px;
-    font-size: 1rem;
+    padding: 16px 18px;
+    font-size: 1.1rem;
   }
 
   .test-result__card-name {
