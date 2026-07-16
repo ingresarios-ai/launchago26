@@ -785,5 +785,5 @@ function initRouter() {
 initRouter();
 
 function goToApp() {
-  window.location.href = '/app';
+  window.location.href = 'app.html';
 }

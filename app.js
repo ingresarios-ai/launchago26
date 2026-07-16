@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // If no saboteur is set, they haven't finished the test
   if (!dominant) {
-    window.location.href = '/test';
+    window.location.href = 'test.html';
     return;
   }
 
