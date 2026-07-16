@@ -13,11 +13,20 @@
   <title>El Juego Mental del Dinero — Taller Gratuito en Vivo</title>
   <meta name="description" content="Descubre el saboteador mental que controla tus decisiones financieras y aprende a neutralizarlo. En vivo por Zoom, del 3 al 16 de agosto del 2026." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  
+  <!-- Preload LCP Image -->
+  <link rel="preload" href="referencias/logo.webp" as="image" type="image/webp" fetchpriority="high" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css" />
-  <link rel="stylesheet" href="styles.css?v=33" />
+  
+  <!-- Non-blocking load for intlTelInput CSS -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css" as="style" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css" /></noscript>
+
+  <link rel="stylesheet" href="styles.css?v=34" />
   <!-- SEO & Social Share -->
   <meta property="og:title" content="Evoluciona tu Genoma Financiero" />
   <meta property="og:description" content="Únete a un entrenamiento de 14 días para quitarle el control a tu Saboteador Financiero. Aprende a pensar, actuar y ganar como los mejores." />

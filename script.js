@@ -325,7 +325,7 @@ document.head.appendChild(style);
 // TSPARTICLES BACKGROUND (GENOMA / NETWORK)
 // ========================================
 
-document.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("load", function () {
   if (window.tsParticles) {
     tsParticles.load("tsparticles", {
       fpsLimit: 60,
