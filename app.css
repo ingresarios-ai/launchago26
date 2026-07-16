@@ -1088,6 +1088,10 @@ body {
   align-items: center;
   justify-content: center;
 }
+.live-icon svg {
+  width: 24px;
+  height: 24px;
+}
 .live-card.active .live-icon {
   color: var(--primary);
 }
