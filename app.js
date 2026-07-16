@@ -9,15 +9,14 @@ var GHL_WEBHOOK_APP = ''; // TODO: Add webhook URL for when the user enters the 
 var GHL_WEBHOOK_MISSION = 'https://services.leadconnectorhq.com/hooks/5lqXoVlR4T1kO7P6Jb9/webhook-trigger/446a81ca-9430-4e3e-8c3f-7f7813a0429f';
 var GHL_WEBHOOK_INTENTION = 'https://services.leadconnectorhq.com/hooks/5lqXoVlR4T1kO7P6Jb9/webhook-trigger/intention-webhook-id'; // To be configured
 
-const OBJECTIVE_STORAGE_KEY = 'genoma_user_objective';
+const INVITATIONS_STORAGE_KEY = 'genoma_invitations_sent';
 
 // State
 let userData = {
   name: '',
   email: '',
   saboteur: 'Vengador',
-  points: 0,
-  objective: ''
+  points: 0
 };
 
 // Saboteur Data map
@@ -31,71 +30,6 @@ var saboteurs = {
 // ------------------------------------------------------------------
 // UI STATE & ONBOARDING
 // ------------------------------------------------------------------
-
-function checkUIState() {
-  const savedObjective = localStorage.getItem(OBJECTIVE_STORAGE_KEY);
-  const onboardingOverlay = document.getElementById('onboarding-overlay');
-  
-  if (savedObjective && onboardingOverlay) {
-    // If objective is already saved, hide the overlay immediately
-    onboardingOverlay.style.display = 'none';
-    userData.objective = savedObjective;
-    document.body.classList.remove('app-locked');
-  } else if (onboardingOverlay) {
-    // Show overlay and lock body scroll
-    onboardingOverlay.style.display = 'flex';
-    document.body.classList.add('app-locked');
-  }
-}
-
-function setupEventListeners() {
-  // Handle Radio Button Selection for Objective
-  const objectiveRadios = document.querySelectorAll('input[name="user-objective"]');
-  const btnObjective = document.getElementById('btn-objective');
-  
-  if (objectiveRadios.length > 0 && btnObjective) {
-    objectiveRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        btnObjective.removeAttribute('disabled');
-      });
-    });
-  }
-}
-
-function submitObjective() {
-  const btn = document.getElementById('btn-objective');
-  const selectedRadio = document.querySelector('input[name="user-objective"]:checked');
-  
-  if (!selectedRadio) return;
-  
-  // Visual feedback
-  const originalText = btn.innerHTML;
-  btn.innerHTML = `Guardado <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`;
-  btn.style.background = 'var(--text-main)';
-  btn.style.color = '#000';
-  
-  const value = selectedRadio.value;
-  localStorage.setItem(OBJECTIVE_STORAGE_KEY, value);
-  userData.objective = value;
-
-  // Add points for completing onboarding
-  // awardPoints(10); // Assuming awardPoints is defined elsewhere
-  
-  // Fade out the overlay smoothly
-  setTimeout(() => {
-    const onboardingOverlay = document.getElementById('onboarding-overlay');
-    if (onboardingOverlay) {
-      onboardingOverlay.style.opacity = '0';
-      onboardingOverlay.style.transition = 'opacity 0.5s ease';
-      
-      setTimeout(() => {
-        onboardingOverlay.style.display = 'none';
-        document.body.classList.remove('app-locked');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 500);
-    }
-  }, 600);
-}
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -116,12 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
   document.body.style.opacity = '1';
   document.body.style.pointerEvents = 'auto';
   
-  // --- 4. Setup Event Listeners ---
-  setupEventListeners();
-
-  // --- 5. Check UI State ---
-  checkUIState();
-
   initApp();
 
   function trackAppEntered(token) {

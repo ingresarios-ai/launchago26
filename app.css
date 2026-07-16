@@ -40,29 +40,12 @@ body {
   min-height: 100vh;
 }
 
-body.app-locked {
-  overflow: hidden;
-}
-
-.onboarding-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 14, 19, 0.9);
-  backdrop-filter: blur(8px);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.onboarding-modal {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-xl);
-  padding: 32px;
-  max-width: 480px;
-  width: 100%;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ========================================
@@ -320,69 +303,54 @@ body.app-locked {
   color: var(--text-muted);
 }
 
-/* --- ONBOARDING OVERLAY --- */
-.onboarding-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  z-index: 9999;
-  display: flex;
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn-primary {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-}
-.onboarding-modal {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 24px;
-  width: 100%;
-  max-width: 480px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-  transform: translateY(0);
-  opacity: 1;
-}
-
-/* --- OBJECTIVE OPTIONS --- */
-.objective-options {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 20px;
-  margin-top: 12px;
-}
-.objective-chip {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  background: var(--bg-dark);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--green);
+  color: var(--bg-dark);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all 0.2s ease;
-  color: var(--text-muted);
-  font-size: 14px;
-  font-weight: 500;
+  transition: all 0.2s;
+  box-shadow: 0 2px 12px rgba(34, 197, 94, 0.2);
 }
-.objective-chip input[type="radio"] {
-  display: none;
-}
-.objective-chip:hover {
-  border-color: rgba(0, 255, 170, 0.3);
-}
-.objective-chip:has(input[type="radio"]:checked) {
-  border-color: var(--green);
-  background: rgba(0, 255, 170, 0.05);
-  color: var(--text-main);
-  box-shadow: 0 0 15px rgba(0, 255, 170, 0.1);
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
 }
 
-/* Buttons */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--text-white);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* --- LEADERBOARD & REWARDS --- */
 .btn-primary {
   display: inline-flex;
   align-items: center;

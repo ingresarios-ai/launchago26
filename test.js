@@ -287,6 +287,7 @@ function renderFilterQuestion() {
         userBranch = this.getAttribute('data-branch');
         activeQuestions = userBranch === 'trader' ? traderQuestions : noTraderQuestions;
         answers.push(userBranch);
+        localStorage.setItem('genoma_user_branch', userBranch);
 
         // Move to first real question
         setTimeout(function () {
