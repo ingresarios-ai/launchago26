@@ -1,192 +1,236 @@
 // ========================================
-// GENOMA APP LOGIC
+// GENOMA CERO - JOURNEY ENGINE
 // ========================================
 
-// Configuration
-var SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
-var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
-var GHL_WEBHOOK_APP = ''; // TODO: Add webhook URL for when the user enters the app
-var GHL_WEBHOOK_MISSION = 'https://services.leadconnectorhq.com/hooks/5lqXoVlR4T1kO7P6Jb9/webhook-trigger/446a81ca-9430-4e3e-8c3f-7f7813a0429f';
-var GHL_WEBHOOK_INTENTION = 'https://services.leadconnectorhq.com/hooks/5lqXoVlR4T1kO7P6Jb9/webhook-trigger/intention-webhook-id'; // To be configured
+const STORAGE_KEY = 'genoma_current_activity';
+const MAX_ACTIVITIES = 10;
 
-const INVITATIONS_STORAGE_KEY = 'genoma_invitations_sent';
+// Current state (starts at 1 if not set)
+let currentActivity = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
 
-// State
-let userData = {
-  name: '',
-  email: '',
-  saboteur: 'Vengador',
-  points: 0
+// Activity Data Map (Phase 1 implementations)
+const activitiesData = {
+  1: {
+    title: "Bienvenido a GENOMA",
+    reward: "+20 pts",
+    render: () => `
+      <p class="activity-desc">Tu viaje para recuperar el control comienza aquí. Observa el video, entiende las reglas del juego y da el primer paso.</p>
+      <div class="video-wrapper">
+        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" frameborder="0" allow="autoplay; encrypted-media" style="position:absolute; top:0; left:0;" allowfullscreen></iframe>
+      </div>
+      <div class="checklist">
+        <label class="check-item" onclick="this.classList.toggle('checked')">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>He visto el video completo</span>
+        </label>
+        <label class="check-item" onclick="this.classList.toggle('checked')">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>Agregado al calendario</span>
+        </label>
+      </div>
+    `
+  },
+  4: {
+    title: "Diseña tu entorno",
+    reward: "+20 pts",
+    render: () => `
+      <p class="activity-desc">El éxito es predecible si preparas tu entorno. Verifica que tienes todo listo antes del evento en vivo.</p>
+      <div class="checklist" id="checklist-act4">
+        <label class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>Tengo libreta exclusiva</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>Tengo audífonos listos</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>Tengo Zoom actualizado</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>Ya bloqueé mi agenda</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>Tengo conexión estable</span>
+        </label>
+      </div>
+    `
+  },
+  6: {
+    title: "Cumple una promesa",
+    reward: "+15 pts",
+    render: () => `
+      <p class="activity-desc">Ejecuta una acción pequeña que tome menos de 5 minutos y cumplela AHORA. El compromiso se construye con victorias pequeñas.</p>
+      <textarea class="text-input" id="promise-input" rows="3" placeholder="Ej: Voy a tomar un vaso de agua y respirar 2 minutos..."></textarea>
+      <label class="check-item" onclick="toggleCheck(this)" id="promise-check" style="display:none; margin-bottom: 24px;">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>¡Promesa Cumplida!</span>
+      </label>
+    `
+  }
 };
 
-// Saboteur Data map
-var saboteurs = {
-  vengador: { emoji: '🔥', name: 'El Vengador' },
-  euforico: { emoji: '🎰', name: 'El Eufórico' },
-  impaciente: { emoji: '⚡', name: 'El Impaciente' },
-  paralizado: { emoji: '🧊', name: 'El Paralizado' }
-};
-
-// ------------------------------------------------------------------
-// UI STATE & ONBOARDING
-// ------------------------------------------------------------------
-
-document.addEventListener('DOMContentLoaded', function () {
-
-  // 1. Check Magic Link & WhatsApp Progress
-  var params = new URLSearchParams(window.location.search);
-  var urlToken = params.get('token');
-  var token = urlToken || localStorage.getItem('auth_token') || '';
+document.addEventListener('DOMContentLoaded', () => {
+  renderJourney();
   
-  if (!token) {
-    window.location.href = '/';
-    return;
-  }
-  
-  if (urlToken) {
-    localStorage.setItem('auth_token', urlToken);
-  }
-
-  document.body.style.opacity = '1';
-  document.body.style.pointerEvents = 'auto';
-  
-  initApp();
-
-  function trackAppEntered(token) {
-    if (!token || sessionStorage.getItem('app_entered_tracked')) return;
-    
-    // 1. Supabase Track
-    fetch(SUPABASE_URL + '/rest/v1/user_progress', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({
-        auth_token: token,
-        milestone: 'app_entered',
-        completed_at: new Date().toISOString()
-      })
-    }).then(function(r) {
-      if (r.ok) sessionStorage.setItem('app_entered_tracked', 'true');
-    }).catch(function() {});
-
-    // 2. GHL Webhook
-    if (GHL_WEBHOOK_APP) {
-      fetch(GHL_WEBHOOK_APP, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ auth_token: token, action: 'app_entered' })
-      }).catch(function() {});
+  // Track saboteur from test
+  const saboteur = localStorage.getItem('saboteur_result');
+  if (saboteur) {
+    const sabMap = {
+      vengador: { emoji: '🔥', name: 'El Vengador' },
+      euforico: { emoji: '🎰', name: 'El Eufórico' },
+      impaciente: { emoji: '⚡', name: 'El Impaciente' },
+      paralizado: { emoji: '🧊', name: 'El Paralizado' }
+    };
+    if (sabMap[saboteur]) {
+      document.getElementById('saboteur-emoji').textContent = sabMap[saboteur].emoji;
+      document.getElementById('saboteur-name').textContent = sabMap[saboteur].name;
     }
-  }
-
-  function initApp() {
-    var userEmail = localStorage.getItem('user_email') || '';
-    var dominant = localStorage.getItem('saboteur_result');
-
-    if (!dominant) {
-      window.location.href = 'test.html';
-      return;
-    }
-
-    trackAppEntered(token);
-
-    var sab = saboteurs[dominant];
-    if (sab) {
-      document.getElementById('saboteur-emoji').textContent = sab.emoji;
-      document.getElementById('saboteur-name').textContent = sab.name;
-      
-      var missionSab = document.getElementById('mission-saboteur');
-      if (missionSab) {
-        missionSab.textContent = sab.name;
-      }
-    }
-
-    // No sidebar in new layout
   }
 });
 
 // ========================================
-// INTERACTIONS
+// CORE ENGINE FUNCTIONS
 // ========================================
 
-function submitIntention() {
-  var inputEl = document.getElementById('intention-input');
-  var btnEl = document.getElementById('btn-intention');
-  var val = inputEl.value.trim();
+function renderJourney() {
+  // Update progress bar
+  const progressPercent = Math.min(((currentActivity - 1) / MAX_ACTIVITIES) * 100, 100);
+  document.getElementById('journey-progress-fill').style.width = \`\${progressPercent}%\`;
+  document.getElementById('current-day-text').textContent = currentActivity;
 
-  if (!val) {
-    inputEl.style.borderColor = '#ef4444';
-    setTimeout(function () { inputEl.style.borderColor = ''; }, 2000);
-    return;
-  }
+  // Update nodes
+  const nodes = document.querySelectorAll('.node');
+  const connectors = document.querySelectorAll('.node-connector');
 
-  btnEl.style.pointerEvents = 'none';
-  btnEl.innerHTML = 'Guardando...';
+  nodes.forEach((node, index) => {
+    const actId = parseInt(node.getAttribute('data-act'));
+    
+    // Reset classes
+    node.className = 'node';
+    
+    if (actId < currentActivity) {
+      node.classList.add('completed');
+    } else if (actId === currentActivity) {
+      node.classList.add('active');
+    } else {
+      node.classList.add('locked');
+    }
+  });
 
-  var token = localStorage.getItem('auth_token') || '';
-  var email = localStorage.getItem('user_email') || '';
-
-  // Fire Webhook or save to DB (Silently for now)
-  // fetch(GHL_WEBHOOK_INTENTION, { ... })
-
-  setTimeout(function () {
-    btnEl.innerHTML = '✓ Intención Establecida';
-    btnEl.style.background = 'transparent';
-    btnEl.style.border = '1px solid var(--green)';
-    btnEl.style.color = 'var(--green)';
-    inputEl.disabled = true;
-  }, 800);
+  // Update connectors
+  connectors.forEach((conn, index) => {
+    // If the node ABOVE this connector is completed, connector is completed
+    // Since DOM order matches, connector index 0 is between node 0 and 1
+    const correspondingNodeActId = parseInt(nodes[index].getAttribute('data-act'));
+    if (correspondingNodeActId < currentActivity) {
+      conn.classList.add('completed');
+    } else {
+      conn.classList.remove('completed');
+    }
+  });
 }
 
-function submitMission() {
-  var responseEl = document.getElementById('mission-input');
-  var btn = document.getElementById('btn-mission');
-  var response = responseEl.value.trim();
-
-  if (!response) {
-    responseEl.style.borderColor = '#ef4444';
-    responseEl.setAttribute('placeholder', 'Escribe algo antes de enviar...');
-    setTimeout(function () {
-      responseEl.style.borderColor = '';
-      responseEl.setAttribute('placeholder', 'Mi Saboteador me hizo...');
-    }, 2500);
+function openActivity(actId) {
+  if (actId > currentActivity) {
+    // Locked! Maybe show a small toast, but for now just do nothing.
     return;
   }
 
-  btn.style.pointerEvents = 'none';
-  btn.style.opacity = '0.7';
-  btn.innerHTML = 'Enviando...';
+  const modal = document.getElementById('activity-modal');
+  const content = document.getElementById('activity-content');
+  const pointsIndicator = document.getElementById('activity-points-indicator');
+  const rewardText = document.getElementById('activity-reward-text');
 
-  var token = localStorage.getItem('auth_token') || '';
-  var userEmail = localStorage.getItem('user_email') || '';
+  // Load Content
+  const data = activitiesData[actId];
+  if (data) {
+    pointsIndicator.style.display = 'flex';
+    rewardText.textContent = data.reward;
+    
+    let html = \`<h2 class="activity-title">\${data.title}</h2>\`;
+    html += data.render();
+    
+    // Footer button
+    if (actId === currentActivity) {
+      html += \`
+        <div class="activity-footer">
+          <button class="btn-primary" style="width:100%" onclick="completeActivity(\${actId})">Completar Actividad</button>
+        </div>
+      \`;
+    } else {
+      html += \`
+        <div class="activity-footer">
+          <button class="btn-secondary" style="width:100%" onclick="closeActivity()">Cerrar</button>
+        </div>
+      \`;
+    }
+    
+    content.innerHTML = html;
 
-  // Fire GHL webhook
-  if (GHL_WEBHOOK_MISSION) {
-    fetch(GHL_WEBHOOK_MISSION, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event: 'mission_completed',
-        auth_token: token,
-        email: userEmail,
-        mission_id: 'mission_01',
-        response: response,
-        timestamp: new Date().toISOString()
-      })
-    }).catch(function () {});
+    // Specific logic listeners
+    if (actId === 6) {
+      const input = document.getElementById('promise-input');
+      const check = document.getElementById('promise-check');
+      input.addEventListener('input', () => {
+        if (input.value.trim().length > 3) {
+          check.style.display = 'flex';
+        } else {
+          check.style.display = 'none';
+        }
+      });
+    }
+
+  } else {
+    // Phase placeholder
+    pointsIndicator.style.display = 'none';
+    content.innerHTML = \`
+      <h2 class="activity-title">Próximamente</h2>
+      <p class="activity-desc">Esta actividad está en construcción para la Fase 2 del despliegue.</p>
+      <div class="activity-footer">
+        <button class="btn-primary" style="width:100%" onclick="completeActivity(\${actId})">Simular Completado</button>
+      </div>
+    \`;
   }
 
-  // Visual success
-  setTimeout(function () {
-    btn.innerHTML = '✓ Misión Completada';
-    btn.style.opacity = '1';
-    btn.style.background = 'rgba(34, 197, 94, 0.1)';
-    btn.style.color = 'var(--green)';
-    btn.style.borderColor = 'var(--green)';
-    responseEl.disabled = true;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeActivity() {
+  const modal = document.getElementById('activity-modal');
+  modal.classList.remove('open');
+  document.body.style.overflow = 'auto';
+  
+  // Clean up content after animation
+  setTimeout(() => {
+    document.getElementById('activity-content').innerHTML = '';
+  }, 400);
+}
+
+function completeActivity(actId) {
+  // 1. Confetti animation
+  const btn = document.querySelector('.activity-footer button');
+  btn.style.animation = 'popConfetti 0.6s ease';
+  btn.innerHTML = '¡Completado! 🎉';
+  
+  setTimeout(() => {
+    // 2. Advance state if it's the current one
+    if (actId === currentActivity && currentActivity < MAX_ACTIVITIES) {
+      currentActivity++;
+      localStorage.setItem(STORAGE_KEY, currentActivity.toString());
+      renderJourney();
+    }
+    
+    // 3. Close
+    closeActivity();
   }, 1000);
+}
+
+// Helpers
+function toggleCheck(el) {
+  el.classList.toggle('checked');
 }
