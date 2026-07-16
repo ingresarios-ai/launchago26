@@ -66,15 +66,5 @@
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // ========================================
-  // GTM — Thank You Page View
-  // ========================================
-
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'thank_you_page_view',
-    saboteur_type: saboteurType,
-    user_branch: branch
-  });
 
 })();

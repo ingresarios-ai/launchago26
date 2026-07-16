@@ -219,17 +219,8 @@ var totalQuestions = 8; // filter + 7 branch questions
 
 // GTM Conversion Tracking on Load (Fires only once per session)
 if (token && !sessionStorage.getItem('lead_pixel_fired')) {
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'lead_registration_success',
-    token: token
-  });
-  window.dataLayer.push({
-    event: 'Lead',
-    token: token
-  });
   sessionStorage.setItem('lead_pixel_fired', 'true');
-  console.log('GTM lead_registration_success and Lead events pushed.');
+  console.log('Lead pixel tracked by GTM native pageview.');
 }
 
 // ========================================
@@ -466,15 +457,7 @@ function showResult(skipPushState) {
     });
   }, 300);
 
-  // GTM event
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'test_saboteador_completado',
-    saboteur_type: dominant,
-    saboteur_name: sab.name,
-    user_branch: userBranch,
-    scores: scores
-  });
+
 
   // Save to Supabase
   saveResult(dominant);
@@ -577,13 +560,7 @@ function whatsappClicked() {
   // 2. Save progress to Supabase
   trackProgress('whatsapp_clicked');
 
-  // 3. GTM event
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'whatsapp_clicked',
-    saboteur: dominant,
-    branch: userBranch
-  });
+
 }
 
 // ========================================
@@ -670,12 +647,7 @@ function submitMission() {
       }).catch(function () {});
     }
 
-    // 4. GTM event
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'mission_completed',
-      mission_id: 'mission_01'
-    });
+
 
     // 5. Success state
     btn.innerHTML = '✅ ¡MISIÓN COMPLETADA! +20 pts';
@@ -745,11 +717,7 @@ function navigateTo(path, screenId) {
   showScreen(screenId);
   window.scrollTo(0,0);
   
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'virtual_pageview',
-    page_path: path
-  });
+
 }
 
 window.addEventListener('popstate', function (event) {

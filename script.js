@@ -245,26 +245,14 @@ function handleFormSubmit(e) {
       }).catch(function () {});
     }
 
-    // GTM event
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'registro_lead',
-      lead_email: email,
-      lead_name: name,
-      lead_landing: landing,
-      saboteur_test_pending: true
-    });
-
     // Show success and redirect FAST
     btn.innerHTML = '✓ ¡INSCRIPCIÓN REALIZADA!';
     if (token) {
       localStorage.setItem('auth_token', token);
       localStorage.setItem('user_email', email);
       // Remove pixel fired session flag so it triggers fresh on test load
-      setTimeout(function() {
-        sessionStorage.removeItem('lead_pixel_fired');
-        window.location.href = 'test.html';
-      }, 500);
+      sessionStorage.removeItem('lead_pixel_fired');
+      window.location.href = 'test.html';
     } else {
       btn.innerHTML = originalText;
       btn.style.pointerEvents = '';

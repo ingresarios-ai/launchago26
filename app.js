@@ -17,12 +17,6 @@ var saboteurs = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  // 1. Fire GTM Event
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'virtual_pageview',
-    page_path: '/app'
-  });
 
   // 2. Load User State from LocalStorage
   var token = localStorage.getItem('auth_token') || '';
