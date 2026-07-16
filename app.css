@@ -11,6 +11,11 @@
   --text-white: #ffffff;
   --text-secondary: #b0b8c4;
   --text-muted: #6b7280;
+  
+  /* Fallback aliases for journey components */
+  --text-main: #ffffff;
+  --surface: rgba(15, 20, 28, 0.85);
+  --yellow: #facc15;
 
   --green: #22c55e;
   --green-dim: rgba(34, 197, 94, 0.08);
