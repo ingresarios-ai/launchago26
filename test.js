@@ -761,7 +761,7 @@ function initRouter() {
 // ========================================
 function verifyMagicLink() {
   if (!token) {
-    initRouter();
+    window.location.href = '/';
     return;
   }
 

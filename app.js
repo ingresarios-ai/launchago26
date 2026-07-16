@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var token = urlToken || localStorage.getItem('auth_token') || '';
   
   if (!token) {
-    // window.location.href = '/';
+    window.location.href = '/';
     return;
   }
   
