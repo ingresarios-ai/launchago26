@@ -210,6 +210,11 @@ var answers = [];
 var scores = { vengador: 0, euforico: 0, impaciente: 0, paralizado: 0 };
 var token = new URLSearchParams(window.location.search).get('token') || localStorage.getItem('auth_token') || '';
 
+// Persist token to localStorage so app.html can pick it up
+if (token && !localStorage.getItem('auth_token')) {
+  localStorage.setItem('auth_token', token);
+}
+
 if (!token) {
   // window.location.href = '/';
 }
@@ -863,5 +868,6 @@ function goToApp() {
     }
     return;
   }
-  window.location.href = 'app.html';
+  var t = localStorage.getItem('auth_token') || token;
+  window.location.href = 'app.html' + (t ? '?token=' + t : '');
 }
