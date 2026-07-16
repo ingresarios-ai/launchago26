@@ -530,8 +530,8 @@ a {
 }
 
 .hero__form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
   width: 100%;
   max-width: 700px;
@@ -540,32 +540,8 @@ a {
   margin-right: auto;
 }
 
-#hero-name {
-  grid-column: 1 / 2;
-}
-#hero-email {
-  grid-column: 2 / 3;
-}
-.hero__form .iti {
-  grid-column: 1 / -1;
-}
-.hero__form .form__checkbox {
-  grid-column: 1 / -1;
-  justify-content: center;
-}
 .hero__form .btn {
-  grid-column: 1 / -1;
   width: 100%;
-}
-
-@media (max-width: 600px) {
-  .hero__form {
-    grid-template-columns: 1fr;
-  }
-  #hero-name,
-  #hero-email {
-    grid-column: 1 / -1;
-  }
 }
 
 .hero__bonus {
