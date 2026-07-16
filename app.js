@@ -33,33 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
     localStorage.setItem('auth_token', urlToken);
   }
 
-  document.body.style.opacity = '0.5';
-  document.body.style.pointerEvents = 'none';
-
-  fetch(SUPABASE_URL + '/rest/v1/rpc/get_progress_by_token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
-    body: JSON.stringify({ p_token: token })
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(progress) {
-    var hasWhatsapp = progress && progress.length > 0 && progress.some(function(p) { return p.milestone === 'whatsapp_clicked'; });
-    var hasLocalWhatsapp = localStorage.getItem('whatsapp_clicked_local') === 'true';
-    if (!hasWhatsapp && !hasLocalWhatsapp) {
-      window.location.href = 'test.html?token=' + token;
-      return;
-    }
-    
-    document.body.style.opacity = '1';
-    document.body.style.pointerEvents = 'auto';
-    initApp();
-  })
-  .catch(function(err) {
-    console.error('Magic link check failed', err);
-    document.body.style.opacity = '1';
-    document.body.style.pointerEvents = 'auto';
-    initApp();
-  });
+  document.body.style.opacity = '1';
+  document.body.style.pointerEvents = 'auto';
+  initApp();
 
   function trackAppEntered(token) {
     if (!token || sessionStorage.getItem('app_entered_tracked')) return;
