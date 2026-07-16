@@ -104,32 +104,22 @@ function renderJourney() {
 
   // Update nodes
   const nodes = document.querySelectorAll('.node');
-  const connectors = document.querySelectorAll('.node-connector');
 
-  nodes.forEach((node, index) => {
+  nodes.forEach((node) => {
     const actId = parseInt(node.getAttribute('data-act'));
+    const connector = node.querySelector('.node-connector-line');
     
     // Reset classes
     node.className = 'node';
+    if (connector) connector.classList.remove('completed');
     
     if (actId < currentActivity) {
       node.classList.add('completed');
+      if (connector) connector.classList.add('completed');
     } else if (actId === currentActivity) {
       node.classList.add('active');
     } else {
       node.classList.add('locked');
-    }
-  });
-
-  // Update connectors
-  connectors.forEach((conn, index) => {
-    // If the node ABOVE this connector is completed, connector is completed
-    // Since DOM order matches, connector index 0 is between node 0 and 1
-    const correspondingNodeActId = parseInt(nodes[index].getAttribute('data-act'));
-    if (correspondingNodeActId < currentActivity) {
-      conn.classList.add('completed');
-    } else {
-      conn.classList.remove('completed');
     }
   });
 }
