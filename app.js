@@ -81,6 +81,18 @@ const activitiesData = {
       </div>
     `
   },
+  4: {
+    title: "Observa tus decisiones",
+    reward: "+15 pts",
+    render: () => `
+      <p class="activity-desc">Tu saboteador vive en tus hábitos diarios. Registra aquí una situación de hoy donde sentiste el impulso de tu patrón dominante.</p>
+      <textarea class="text-input" id="decisions-input" rows="3" placeholder="Ej: Hoy sentí urgencia de operar tras una pequeña pérdida..."></textarea>
+      <label class="check-item" onclick="toggleCheck(this)" id="decisions-check" style="display:none; margin-bottom: 24px;">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Situación Registrada</span>
+      </label>
+    `
+  },
   5: {
     title: "Cumple una promesa",
     reward: "+15 pts",
@@ -91,6 +103,63 @@ const activitiesData = {
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
         <span>¡Promesa Cumplida!</span>
       </label>
+    `
+  },
+  6: {
+    title: "Comparte tu avance",
+    reward: "+20 pts",
+    render: () => `
+      <p class="activity-desc">El aislamiento es el mejor amigo de tu Saboteador. Únete a tu tribu y comparte qué patrón descubriste en ti.</p>
+      <a href="https://chat.whatsapp.com/DmyOUUMaHAdLxC0xo2Lr9b" target="_blank" class="btn-secondary" style="display:block; text-align:center; text-decoration:none; margin-bottom: 16px;">
+        Ir a la Comunidad (WhatsApp)
+      </a>
+      <label class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Ya me uní y compartí mi patrón</span>
+      </label>
+    `
+  },
+  7: {
+    title: "Conoce a GENY",
+    reward: "+15 pts",
+    render: () => `
+      <p class="activity-desc">GENY es nuestra inteligencia artificial diseñada para operar contigo. Aprende sus 3 reglas sagradas antes de entrar a la sala.</p>
+      <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+        <p style="margin: 0 0 8px 0; color: var(--text-main);"><strong>1.</strong> No toma decisiones emocionales.</p>
+        <p style="margin: 0 0 8px 0; color: var(--text-main);"><strong>2.</strong> Opera 100% por probabilidad.</p>
+        <p style="margin: 0; color: var(--text-main);"><strong>3.</strong> Nunca se salta el plan de trading.</p>
+      </div>
+      <label class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Comprendo las reglas de GENY</span>
+      </label>
+    `
+  },
+  8: {
+    title: "Confirma tu asistencia",
+    reward: "+20 pts",
+    render: () => `
+      <p class="activity-desc">Llegó el momento de la verdad. Confirma tu pase de entrada al Día 1 de GENOMA.</p>
+      <div style="text-align:center; margin-bottom: 16px;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" style="margin-bottom: 12px;">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </div>
+      <label class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Confirmo mi asistencia en vivo</span>
+      </label>
+    `
+  },
+  9: {
+    title: "¡Todo Listo!",
+    reward: "+50 pts",
+    render: () => `
+      <div style="text-align: center; padding: 20px 0;">
+        <div style="font-size: 64px; margin-bottom: 16px;">🚀</div>
+        <h3 style="color: var(--green); font-size: 1.5rem; margin-bottom: 8px;">Genoma Cero Completado</h3>
+        <p class="activity-desc" style="margin-bottom: 24px;">Has neutralizado a tu Saboteador y preparado tu entorno. Estás oficialmente listo para el evento.</p>
+      </div>
     `
   }
 };
@@ -184,6 +253,18 @@ function openActivity(actId) {
     content.innerHTML = html;
 
     // Specific logic listeners
+    if (actId === 4) {
+      const input = document.getElementById('decisions-input');
+      const check = document.getElementById('decisions-check');
+      input.addEventListener('input', () => {
+        if (input.value.trim().length > 3) {
+          check.style.display = 'flex';
+        } else {
+          check.style.display = 'none';
+        }
+      });
+    }
+    
     if (actId === 5) {
       const input = document.getElementById('promise-input');
       const check = document.getElementById('promise-check');
