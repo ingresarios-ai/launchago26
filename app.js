@@ -9,6 +9,17 @@ var GHL_WEBHOOK_APP = ''; // TODO: Add webhook URL for when the user enters the 
 var GHL_WEBHOOK_MISSION = 'https://services.leadconnectorhq.com/hooks/5lqXoVlR4T1kO7P6Jb9/webhook-trigger/446a81ca-9430-4e3e-8c3f-7f7813a0429f';
 var GHL_WEBHOOK_INTENTION = 'https://services.leadconnectorhq.com/hooks/5lqXoVlR4T1kO7P6Jb9/webhook-trigger/intention-webhook-id'; // To be configured
 
+const OBJECTIVE_STORAGE_KEY = 'genoma_user_objective';
+
+// State
+let userData = {
+  name: '',
+  email: '',
+  saboteur: 'Vengador',
+  points: 0,
+  objective: ''
+};
+
 // Saboteur Data map
 var saboteurs = {
   vengador: { emoji: '🔥', name: 'El Vengador' },
@@ -16,6 +27,70 @@ var saboteurs = {
   impaciente: { emoji: '⚡', name: 'El Impaciente' },
   paralizado: { emoji: '🧊', name: 'El Paralizado' }
 };
+
+// ------------------------------------------------------------------
+// UI STATE & ONBOARDING
+// ------------------------------------------------------------------
+
+function checkUIState() {
+  const savedObjective = localStorage.getItem(OBJECTIVE_STORAGE_KEY);
+  const onboardingCard = document.getElementById('onboarding-card');
+  
+  if (savedObjective && onboardingCard) {
+    // If objective is already saved, hide the onboarding card
+    onboardingCard.style.display = 'none';
+    userData.objective = savedObjective;
+  }
+}
+
+function setupEventListeners() {
+  // Handle Radio Button Selection for Objective
+  const objectiveRadios = document.querySelectorAll('input[name="user-objective"]');
+  const btnObjective = document.getElementById('btn-objective');
+  
+  if (objectiveRadios.length > 0 && btnObjective) {
+    objectiveRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        btnObjective.removeAttribute('disabled');
+      });
+    });
+  }
+}
+
+function submitObjective() {
+  const btn = document.getElementById('btn-objective');
+  const selectedRadio = document.querySelector('input[name="user-objective"]:checked');
+  
+  if (!selectedRadio) return;
+  
+  // Visual feedback
+  const originalText = btn.innerHTML;
+  btn.innerHTML = `Guardado <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`;
+  btn.style.background = 'var(--text-main)';
+  btn.style.color = '#000';
+  
+  const value = selectedRadio.value;
+  localStorage.setItem(OBJECTIVE_STORAGE_KEY, value);
+  userData.objective = value;
+
+  // Add points for completing onboarding
+  // awardPoints(10); // Assuming awardPoints is defined elsewhere
+  
+  // Collapse the section smoothly
+  setTimeout(() => {
+    const onboardingCard = document.getElementById('onboarding-card');
+    if (onboardingCard) {
+      onboardingCard.style.opacity = '0';
+      onboardingCard.style.transform = 'translateY(-10px)';
+      onboardingCard.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      
+      setTimeout(() => {
+        onboardingCard.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 400);
+    }
+  }, 800);
+}
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -35,6 +110,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.body.style.opacity = '1';
   document.body.style.pointerEvents = 'auto';
+  
+  // --- 4. Setup Event Listeners ---
+  setupEventListeners();
+
+  // --- 5. Check UI State ---
+  checkUIState();
+
   initApp();
 
   function trackAppEntered(token) {

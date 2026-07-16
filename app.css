@@ -295,6 +295,40 @@ body {
   color: var(--text-muted);
 }
 
+/* --- OBJECTIVE OPTIONS --- */
+.objective-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  margin-top: 12px;
+}
+.objective-chip {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+.objective-chip input[type="radio"] {
+  display: none;
+}
+.objective-chip:hover {
+  border-color: rgba(0, 255, 170, 0.3);
+}
+.objective-chip:has(input[type="radio"]:checked) {
+  border-color: var(--green);
+  background: rgba(0, 255, 170, 0.05);
+  color: var(--text-main);
+  box-shadow: 0 0 15px rgba(0, 255, 170, 0.1);
+}
+
 /* Buttons */
 .btn-primary {
   display: inline-flex;

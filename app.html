@@ -56,14 +56,48 @@
   <!-- MAIN CONTENT -->
   <main class="app-container">
 
-    <!-- HERO: Clear Next Step -->
-    <section class="hero-step">
+    <!-- STEP 1: TU OBJETIVO -->
+    <section class="action-card" id="onboarding-card">
       <div class="step-indicator">
         <span class="step-number">1</span>
-        <span class="step-label">TU SIGUIENTE PASO</span>
+        <span class="step-label">TU OBJETIVO PRINCIPAL</span>
       </div>
-      <h1 class="hero-title">Mira el Manifiesto Genoma</h1>
-      <p class="hero-subtitle">Este video corto te explica cómo funciona el entrenamiento. Es tu punto de partida.</p>
+      <h2 class="action-title">¿Qué esperas lograr en estos 10 días?</h2>
+      <p class="action-desc">Antes de empezar, necesitamos saber en qué punto estás para que esta experiencia te dé exactamente lo que necesitas.</p>
+      
+      <div class="objective-options">
+        <label class="objective-chip">
+          <input type="radio" name="user-objective" value="consistencia" />
+          <span>Dominar mi Saboteador y ser consistente</span>
+        </label>
+        <label class="objective-chip">
+          <input type="radio" name="user-objective" value="estrategia" />
+          <span>Operar con algoritmos institucionales</span>
+        </label>
+        <label class="objective-chip">
+          <input type="radio" name="user-objective" value="fondeo" />
+          <span>Pasar mi próxima prueba de fondeo</span>
+        </label>
+        <label class="objective-chip">
+          <input type="radio" name="user-objective" value="iniciar" />
+          <span>Aprender desde cero y evitar errores caros</span>
+        </label>
+      </div>
+
+      <button class="btn-primary" id="btn-objective" onclick="submitObjective()" disabled>
+        Guardar Objetivo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </button>
+    </section>
+
+    <!-- STEP 2: EL MANIFIESTO -->
+    <section class="hero-step">
+      <div class="step-indicator">
+        <span class="step-number">2</span>
+        <span class="step-label">EL MANIFIESTO</span>
+      </div>
+      <h1 class="hero-title">El Proceso de los 10 Días</h1>
+      <p class="hero-subtitle">Mira el Manifiesto Genoma. Aquí te explicamos cómo funciona el entrenamiento: 1 misión en la mañana, 1 sesión en vivo en la noche. Así todos los días.</p>
       
       <div class="video-card">
         <div class="video-wrapper">
@@ -77,10 +111,10 @@
       </div>
     </section>
 
-    <!-- STEP 2: Daily Intention -->
+    <!-- STEP 3: Daily Intention -->
     <section class="action-card">
       <div class="step-indicator">
-        <span class="step-number">2</span>
+        <span class="step-number">3</span>
         <span class="step-label">ACCIÓN DIARIA</span>
       </div>
       <h2 class="action-title">Establece tu intención de hoy</h2>
@@ -92,12 +126,12 @@
       </button>
     </section>
 
-    <!-- STEP 3: Mission -->
+    <!-- STEP 4: Mission -->
     <section class="action-card mission-variant">
       <div class="mission-top">
         <div class="step-indicator">
-          <span class="step-number">3</span>
-          <span class="step-label">MISIÓN</span>
+          <span class="step-number">4</span>
+          <span class="step-label">MISIÓN 1</span>
         </div>
         <span class="points-badge">+20 pts</span>
       </div>
