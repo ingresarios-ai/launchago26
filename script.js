@@ -271,12 +271,12 @@ function handleFormSubmit(e) {
   })
   .catch(function (err) {
     console.error('Registration error:', err);
-    btn.innerHTML = '⚠️ Error — Intenta de nuevo';
+    btn.innerHTML = '⚠️ Error: ' + (err.message || 'Intenta de nuevo');
     setTimeout(function () {
       btn.innerHTML = originalText;
       btn.style.pointerEvents = '';
       btn.style.opacity = '';
-    }, 3000);
+    }, 4000);
   });
 }
 
