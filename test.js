@@ -559,6 +559,8 @@ function whatsappClicked() {
   var dominant = document.getElementById('result-card').getAttribute('data-type');
   var sab = saboteurs[dominant];
 
+  localStorage.setItem('whatsapp_clicked_local', 'true');
+
   // 1. Fire GHL webhook (fire and forget)
   if (GHL_WEBHOOK_WHATSAPP) {
     fetch(GHL_WEBHOOK_WHATSAPP, {
@@ -851,5 +853,15 @@ function verifyMagicLink() {
 verifyMagicLink();
 
 function goToApp() {
+  var clicked = localStorage.getItem('whatsapp_clicked_local');
+  if (!clicked) {
+    alert('⚠️ Por favor, haz clic en el botón para unirte al grupo de WhatsApp antes de continuar.');
+    var btn = document.getElementById('whatsapp-link');
+    if (btn) {
+      btn.style.transform = 'scale(1.05)';
+      setTimeout(function() { btn.style.transform = 'scale(1)'; }, 300);
+    }
+    return;
+  }
   window.location.href = 'app.html';
 }

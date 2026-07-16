@@ -44,7 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
   .then(function(r) { return r.json(); })
   .then(function(progress) {
     var hasWhatsapp = progress && progress.length > 0 && progress.some(function(p) { return p.milestone === 'whatsapp_clicked'; });
-    if (!hasWhatsapp) {
+    var hasLocalWhatsapp = localStorage.getItem('whatsapp_clicked_local') === 'true';
+    if (!hasWhatsapp && !hasLocalWhatsapp) {
       window.location.href = 'test.html?token=' + token;
       return;
     }
