@@ -1644,11 +1644,6 @@ a {
     background-color: var(--bg-dark);
   }
 
-  /* Hide the absolute bg layer since video is below */
-  .hero__bg {
-    display: none;
-  }
-
   .hero__content {
     padding-top: 10px;
     padding-bottom: 60px;
