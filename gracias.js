@@ -5,7 +5,13 @@
 (function () {
   // Read URL params
   var params = new URLSearchParams(window.location.search);
-  var token = params.get('token') || '';
+  var token = params.get('token') || localStorage.getItem('auth_token') || '';
+  
+  if (!token) {
+    window.location.href = 'index.html';
+    return;
+  }
+
   var saboteurType = params.get('saboteur') || 'vengador';
   var branch = params.get('branch') || '';
 

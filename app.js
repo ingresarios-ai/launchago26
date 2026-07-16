@@ -26,6 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 2. Load User State from LocalStorage
   var token = localStorage.getItem('auth_token') || '';
+  
+  if (!token) {
+    window.location.href = 'index.html';
+    return;
+  }
   var userEmail = localStorage.getItem('user_email') || '';
   var dominant = localStorage.getItem('saboteur_result');
 
