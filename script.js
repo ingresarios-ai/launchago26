@@ -354,7 +354,7 @@ window.addEventListener("load", function () {
           color: "#22c55e",
           distance: 150,
           enable: true,
-          opacity: 0.3,
+          opacity: 0.5, // Brighter links
           width: 1
         },
         move: {
@@ -372,16 +372,16 @@ window.addEventListener("load", function () {
             enable: true,
             area: 800
           },
-          value: 60 // Low density for elegance
+          value: 100 // Increased density
         },
         opacity: {
-          value: 0.4
+          value: 0.7 // Increased opacity
         },
         shape: {
           type: "circle"
         },
         size: {
-          value: { min: 1, max: 3 }
+          value: { min: 2, max: 4 } // Slightly larger particles
         }
       },
       detectRetina: true

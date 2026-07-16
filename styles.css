@@ -418,7 +418,7 @@ a {
 #tsparticles {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 5; /* Ensure it is above the dark overlay but below content */
 }
 
 .hero__video-overlay {
