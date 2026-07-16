@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function renderJourney() {
   // Update progress bar
   const progressPercent = Math.min(((currentActivity - 1) / MAX_ACTIVITIES) * 100, 100);
-  document.getElementById('journey-progress-fill').style.width = \`\${progressPercent}%\`;
+  document.getElementById('journey-progress-fill').style.width = `${progressPercent}%`;
   document.getElementById('current-day-text').textContent = currentActivity;
 
   // Update nodes
@@ -141,22 +141,22 @@ function openActivity(actId) {
     pointsIndicator.style.display = 'flex';
     rewardText.textContent = data.reward;
     
-    let html = \`<h2 class="activity-title">\${data.title}</h2>\`;
+    let html = `<h2 class="activity-title">${data.title}</h2>`;
     html += data.render();
     
     // Footer button
     if (actId === currentActivity) {
-      html += \`
+      html += `
         <div class="activity-footer">
-          <button class="btn-primary" style="width:100%" onclick="completeActivity(\${actId})">Completar Actividad</button>
+          <button class="btn-primary" style="width:100%" onclick="completeActivity(${actId})">Completar Actividad</button>
         </div>
-      \`;
+      `;
     } else {
-      html += \`
+      html += `
         <div class="activity-footer">
           <button class="btn-secondary" style="width:100%" onclick="closeActivity()">Cerrar</button>
         </div>
-      \`;
+      `;
     }
     
     content.innerHTML = html;
@@ -177,13 +177,13 @@ function openActivity(actId) {
   } else {
     // Phase placeholder
     pointsIndicator.style.display = 'none';
-    content.innerHTML = \`
+    content.innerHTML = `
       <h2 class="activity-title">Próximamente</h2>
       <p class="activity-desc">Esta actividad está en construcción para la Fase 2 del despliegue.</p>
       <div class="activity-footer">
-        <button class="btn-primary" style="width:100%" onclick="completeActivity(\${actId})">Simular Completado</button>
+        <button class="btn-primary" style="width:100%" onclick="completeActivity(${actId})">Simular Completado</button>
       </div>
-    \`;
+    `;
   }
 
   modal.classList.add('open');
