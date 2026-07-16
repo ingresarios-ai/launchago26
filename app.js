@@ -15,8 +15,8 @@ const activitiesData = {
     reward: "+20 pts",
     render: () => `
       <p class="activity-desc">Tu viaje para recuperar el control comienza aquí. Observa el video, entiende las reglas del juego y da el primer paso.</p>
-      <div class="video-wrapper">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" frameborder="0" allow="autoplay; encrypted-media" style="position:absolute; top:0; left:0;" allowfullscreen></iframe>
+      <div style="margin-bottom: 24px;">
+        <vturb-smartplayer id="vid-6a595795c02fb54b9a39a625" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 176.66666666666666% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
       </div>
       <div class="checklist">
         <label class="check-item" onclick="this.classList.toggle('checked')">
@@ -261,6 +261,15 @@ function openActivity(actId) {
     content.innerHTML = html;
 
     // Specific logic listeners
+    if (actId === 1) {
+      const oldScript = document.querySelector('script[src*="6a595795c02fb54b9a39a625"]');
+      if (oldScript) oldScript.remove();
+      var s = document.createElement("script");
+      s.src = "https://scripts.converteai.net/6f88db54-0f9b-4a7c-af05-9ae2f56f3fdf/players/6a595795c02fb54b9a39a625/v4/player.js";
+      s.async = true;
+      document.head.appendChild(s);
+    }
+    
     if (actId === 4) {
       const input = document.getElementById('decisions-input');
       const check = document.getElementById('decisions-check');
