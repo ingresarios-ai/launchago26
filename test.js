@@ -470,11 +470,14 @@ function showResult(skipPushState) {
 function saveResult(dominant) {
   if (!token) return;
 
-  fetch(SUPABASE_URL + '/rest/v1/leads?auth_token=eq.' + token + '&select=id', {
+  fetch(SUPABASE_URL + '/rest/v1/rpc/get_lead_by_token', {
+    method: 'POST',
     headers: {
+      'Content-Type': 'application/json',
       'apikey': SUPABASE_ANON_KEY,
       'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
-    }
+    },
+    body: JSON.stringify({ p_token: token })
   })
   .then(function (res) { return res.json(); })
   .then(function (leads) {
@@ -762,8 +765,10 @@ function verifyMagicLink() {
     return;
   }
 
-  fetch(SUPABASE_URL + '/rest/v1/user_progress?auth_token=eq.' + token, {
-    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+  fetch(SUPABASE_URL + '/rest/v1/rpc/get_progress_by_token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
+    body: JSON.stringify({ p_token: token })
   })
   .then(function(r) { return r.json(); })
   .then(function(progress) {
@@ -777,15 +782,19 @@ function verifyMagicLink() {
       return;
     }
 
-    fetch(SUPABASE_URL + '/rest/v1/leads?auth_token=eq.' + token, {
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+    fetch(SUPABASE_URL + '/rest/v1/rpc/get_lead_by_token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
+      body: JSON.stringify({ p_token: token })
     })
     .then(function(r) { return r.json(); })
     .then(function(leads) {
       if (leads && leads.length > 0) {
         var leadId = leads[0].id;
-        fetch(SUPABASE_URL + '/rest/v1/saboteur_test?lead_id=eq.' + leadId, {
-          headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+        fetch(SUPABASE_URL + '/rest/v1/rpc/get_test_by_lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
+          body: JSON.stringify({ p_lead_id: leadId })
         })
         .then(function(r) { return r.json(); })
         .then(function(tests) {

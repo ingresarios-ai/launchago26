@@ -227,14 +227,14 @@ function handleFormSubmit(e) {
     // Fire magic link PATCH + GHL update in background (no wait)
     if (token) {
       var magicLink = 'https://taller.ingresarios.net/app?token=' + token;
-      fetch(SUPABASE_URL + '/rest/v1/leads?auth_token=eq.' + token, {
-        method: 'PATCH',
+      fetch(SUPABASE_URL + '/rest/v1/rpc/update_magic_link', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'apikey': SUPABASE_ANON_KEY,
           'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
         },
-        body: JSON.stringify({ magic_link: magicLink })
+        body: JSON.stringify({ p_token: token, p_magic_link: magicLink })
       }).catch(function () {});
 
       // Update GHL with token + magic link

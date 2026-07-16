@@ -35,8 +35,10 @@ document.addEventListener('DOMContentLoaded', function () {
   document.body.style.opacity = '0.5';
   document.body.style.pointerEvents = 'none';
 
-  fetch(SUPABASE_URL + '/rest/v1/user_progress?auth_token=eq.' + token, {
-    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+  fetch(SUPABASE_URL + '/rest/v1/rpc/get_progress_by_token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
+    body: JSON.stringify({ p_token: token })
   })
   .then(function(r) { return r.json(); })
   .then(function(progress) {
