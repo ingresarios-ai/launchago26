@@ -364,13 +364,14 @@ a {
   align-items: center;
   padding-top: 70px;
   overflow: hidden;
+  background-color: transparent;
 }
 
 .hero__bg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-color: #0A0E13; /* Deep dark background */
+  background-color: transparent;
   overflow: hidden;
 }
 
@@ -416,9 +417,10 @@ a {
 }
 
 #tsparticles {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  z-index: 5; /* Ensure it is above the dark overlay but below content */
+  z-index: 0;
+  pointer-events: none;
 }
 
 .hero__video-overlay {
@@ -599,7 +601,7 @@ a {
    ======================================== */
 .for-who {
   padding: var(--section-padding);
-  background-color: var(--bg-dark);
+  background-color: rgba(10, 14, 19, 0.75);
   position: relative;
   overflow: hidden;
 }
@@ -774,7 +776,7 @@ a {
    ======================================== */
 .testimonials {
   padding: var(--section-padding);
-  background-color: var(--bg-dark);
+  background-color: rgba(10, 14, 19, 0.75);
   position: relative;
 }
 
@@ -1457,7 +1459,7 @@ a {
    ======================================== */
 .footer-cta {
   padding: var(--section-padding);
-  background-color: var(--bg-dark);
+  background-color: rgba(10, 14, 19, 0.75);
   border-top: 1px solid var(--border-subtle);
 }
 
@@ -1641,7 +1643,7 @@ a {
     padding-top: 95px;
     min-height: auto;
     padding-bottom: 0;
-    background-color: var(--bg-dark);
+    background-color: transparent;
   }
 
   .hero__content {
@@ -1807,7 +1809,7 @@ a {
 
 .roadmap {
   padding: 80px 24px;
-  background: var(--bg-dark);
+  background: rgba(10, 14, 19, 0.75);
   position: relative;
 }
 
