@@ -210,7 +210,7 @@ var scores = { vengador: 0, euforico: 0, impaciente: 0, paralizado: 0 };
 var token = new URLSearchParams(window.location.search).get('token') || localStorage.getItem('auth_token') || '';
 
 if (!token) {
-  window.location.href = 'index.html';
+  window.location.href = '/';
 }
 var userEmail = localStorage.getItem('user_email') || '';
 var userBranch = ''; // 'trader' or 'no-trader'
