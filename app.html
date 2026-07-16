@@ -53,16 +53,10 @@
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
-  <main class="app-container">
-
-    <!-- STEP 1: TU OBJETIVO -->
-    <section class="action-card" id="onboarding-card">
-      <div class="step-indicator">
-        <span class="step-number">1</span>
-        <span class="step-label">TU OBJETIVO PRINCIPAL</span>
-      </div>
-      <h2 class="action-title">¿Qué esperas lograr en estos 10 días?</h2>
+  <!-- ONBOARDING OVERLAY -->
+  <div class="onboarding-overlay" id="onboarding-overlay">
+    <div class="onboarding-modal">
+      <h2 class="action-title">¡Bienvenido a Genoma!</h2>
       <p class="action-desc">Antes de empezar, necesitamos saber en qué punto estás para que esta experiencia te dé exactamente lo que necesitas.</p>
       
       <div class="objective-options">
@@ -85,17 +79,17 @@
       </div>
 
       <button class="btn-primary" id="btn-objective" onclick="submitObjective()" disabled>
-        Guardar Objetivo
+        Comenzar Entrenamiento
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
       </button>
-    </section>
+    </div>
+  </div>
 
-    <!-- STEP 2: EL MANIFIESTO -->
+  <!-- MAIN CONTENT -->
+  <main class="app-container">
+
+    <!-- HERO: El Manifiesto -->
     <section class="hero-step">
-      <div class="step-indicator">
-        <span class="step-number">2</span>
-        <span class="step-label">EL MANIFIESTO</span>
-      </div>
       <h1 class="hero-title">El Proceso de los 10 Días</h1>
       <p class="hero-subtitle">Mira el Manifiesto Genoma. Aquí te explicamos cómo funciona el entrenamiento: 1 misión en la mañana, 1 sesión en vivo en la noche. Así todos los días.</p>
       
@@ -111,10 +105,10 @@
       </div>
     </section>
 
-    <!-- STEP 3: Daily Intention -->
+    <!-- STEP 1: Daily Intention -->
     <section class="action-card">
       <div class="step-indicator">
-        <span class="step-number">3</span>
+        <span class="step-number">1</span>
         <span class="step-label">ACCIÓN DIARIA</span>
       </div>
       <h2 class="action-title">Establece tu intención de hoy</h2>
@@ -126,11 +120,11 @@
       </button>
     </section>
 
-    <!-- STEP 4: Mission -->
+    <!-- STEP 2: Mission -->
     <section class="action-card mission-variant">
       <div class="mission-top">
         <div class="step-indicator">
-          <span class="step-number">4</span>
+          <span class="step-number">2</span>
           <span class="step-label">MISIÓN 1</span>
         </div>
         <span class="points-badge">+20 pts</span>

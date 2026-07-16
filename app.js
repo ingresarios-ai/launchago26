@@ -34,12 +34,17 @@ var saboteurs = {
 
 function checkUIState() {
   const savedObjective = localStorage.getItem(OBJECTIVE_STORAGE_KEY);
-  const onboardingCard = document.getElementById('onboarding-card');
+  const onboardingOverlay = document.getElementById('onboarding-overlay');
   
-  if (savedObjective && onboardingCard) {
-    // If objective is already saved, hide the onboarding card
-    onboardingCard.style.display = 'none';
+  if (savedObjective && onboardingOverlay) {
+    // If objective is already saved, hide the overlay immediately
+    onboardingOverlay.style.display = 'none';
     userData.objective = savedObjective;
+    document.body.classList.remove('app-locked');
+  } else if (onboardingOverlay) {
+    // Show overlay and lock body scroll
+    onboardingOverlay.style.display = 'flex';
+    document.body.classList.add('app-locked');
   }
 }
 
@@ -76,20 +81,20 @@ function submitObjective() {
   // Add points for completing onboarding
   // awardPoints(10); // Assuming awardPoints is defined elsewhere
   
-  // Collapse the section smoothly
+  // Fade out the overlay smoothly
   setTimeout(() => {
-    const onboardingCard = document.getElementById('onboarding-card');
-    if (onboardingCard) {
-      onboardingCard.style.opacity = '0';
-      onboardingCard.style.transform = 'translateY(-10px)';
-      onboardingCard.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    const onboardingOverlay = document.getElementById('onboarding-overlay');
+    if (onboardingOverlay) {
+      onboardingOverlay.style.opacity = '0';
+      onboardingOverlay.style.transition = 'opacity 0.5s ease';
       
       setTimeout(() => {
-        onboardingCard.style.display = 'none';
+        onboardingOverlay.style.display = 'none';
+        document.body.classList.remove('app-locked');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 400);
+      }, 500);
     }
-  }, 800);
+  }, 600);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
