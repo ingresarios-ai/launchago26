@@ -261,8 +261,10 @@ function handleFormSubmit(e) {
       localStorage.setItem('auth_token', token);
       localStorage.setItem('user_email', email);
       // Remove pixel fired session flag so it triggers fresh on test load
-      sessionStorage.removeItem('lead_pixel_fired');
-      window.location.href = 'test.html';
+      setTimeout(function() {
+        sessionStorage.removeItem('lead_pixel_fired');
+        window.location.href = 'test.html';
+      }, 500);
     } else {
       btn.innerHTML = originalText;
       btn.style.pointerEvents = '';
