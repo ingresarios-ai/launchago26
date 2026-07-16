@@ -370,20 +370,49 @@ a {
   position: absolute;
   inset: 0;
   z-index: 0;
+  background-color: #0A0E13; /* Deep dark background */
+  overflow: hidden;
 }
 
-.hero__video {
+/* Animated Glassmorphism Orbs */
+.hero__bg-orb {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  animation: floatOrb 15s ease-in-out infinite;
+  pointer-events: none;
   z-index: 0;
 }
 
-.hero__video--mobile {
-  display: none;
+.hero__bg-orb--1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0) 70%);
+  top: -10%;
+  right: -5%;
+  animation-delay: 0s;
+}
+
+.hero__bg-orb--2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 70%);
+  bottom: -20%;
+  left: -10%;
+  animation-delay: -7.5s;
+}
+
+/* Optional subtle grid for a more "tech" feel */
+.hero__bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .hero__video-overlay {
@@ -391,25 +420,24 @@ a {
   inset: 0;
   background: linear-gradient(
     90deg,
-    rgba(10, 14, 19, 0.92) 0%,
-    rgba(10, 14, 19, 0.75) 40%,
-    rgba(10, 14, 19, 0.3) 70%,
-    rgba(10, 14, 19, 0.15) 100%
+    rgba(10, 14, 19, 0.95) 0%,
+    rgba(10, 14, 19, 0.6) 50%,
+    rgba(10, 14, 19, 0.1) 100%
   );
-  z-index: 1;
+  z-index: 2;
+  pointer-events: none;
 }
 
-/* Green ambient glow behind image area */
-.hero__bg::after {
-  content: '';
-  position: absolute;
-  top: 10%;
-  right: 15%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(ellipse, rgba(34, 197, 94, 0.12) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 1;
+@keyframes floatOrb {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
 }
 
 .hero__content {
@@ -432,10 +460,7 @@ a {
   margin-bottom: 24px;
 }
 
-/* Mobile-only video below the form — hidden on desktop */
-.hero__video--below-form {
-  display: none;
-}
+
 
 .hero__eyebrow {
   font-family: var(--font-heading);
@@ -1609,26 +1634,6 @@ a {
   .hero__content {
     padding-top: 10px;
     padding-bottom: 60px;
-  }
-
-  /* Hide both background videos on mobile — video appears below form instead */
-  .hero__video--desktop,
-  .hero__video--mobile {
-    display: none;
-  }
-
-  /* Show video below the form on mobile */
-  .hero__video--below-form {
-    display: block;
-    width: calc(100% + 48px);
-    margin-left: -24px;
-    margin-right: -24px;
-    margin-top: 24px;
-    height: 220px;
-    object-fit: cover;
-    object-position: center top;
-    border-radius: 0;
-    opacity: 0.85;
   }
 
   .hero__logo {
