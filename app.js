@@ -3,7 +3,7 @@
 // ========================================
 
 const STORAGE_KEY = 'genoma_current_activity';
-const MAX_ACTIVITIES = 10;
+const MAX_ACTIVITIES = 9;
 
 // Current state (starts at 1 if not set)
 let currentActivity = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
@@ -31,32 +31,8 @@ const activitiesData = {
     `
   },
   2: {
-    title: "Punto de Partida",
-    reward: "+30 pts",
-    render: () => {
-      const hasTest = localStorage.getItem('saboteur_result');
-      if (hasTest) {
-        return `
-          <p class="activity-desc">Detectamos que ya completaste tu Test de Saboteador durante tu registro inicial. ¡Excelente iniciativa!</p>
-          <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid var(--green); padding: 16px; border-radius: 12px; margin-top: 16px;">
-            <h4 style="color: var(--green); margin:0 0 8px 0; display:flex; align-items:center; gap:8px;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              Diagnóstico Completado
-            </h4>
-            <p style="color: var(--green); margin:0; font-size:0.9rem; opacity: 0.9;">Tus datos genómicos ya están guardados en la bóveda. Puedes reclamar tus puntos de inmediato.</p>
-          </div>
-        `;
-      } else {
-        return `
-          <p class="activity-desc">Para poder avanzar, necesitamos perfilar tu Genoma y descubrir qué Saboteador te está frenando.</p>
-          <button class="btn-primary" style="margin-top: 16px;" onclick="window.location.href='test.html'">Ir al Diagnóstico AHORA</button>
-        `;
-      }
-    }
-  },
-  3: {
     title: "Tu Patrón Dominante",
-    reward: "+15 pts",
+    reward: "+30 pts",
     render: () => {
       const saboteur = localStorage.getItem('saboteur_result') || 'vengador';
       const sabMap = {
@@ -76,12 +52,12 @@ const activitiesData = {
       `;
     }
   },
-  4: {
+  3: {
     title: "Diseña tu entorno",
     reward: "+20 pts",
     render: () => `
       <p class="activity-desc">El éxito es predecible si preparas tu entorno. Verifica que tienes todo listo antes del evento en vivo.</p>
-      <div class="checklist" id="checklist-act4">
+      <div class="checklist" id="checklist-act3">
         <label class="check-item" onclick="toggleCheck(this)">
           <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span>Tengo libreta exclusiva</span>
@@ -105,7 +81,7 @@ const activitiesData = {
       </div>
     `
   },
-  6: {
+  5: {
     title: "Cumple una promesa",
     reward: "+15 pts",
     render: () => `
@@ -208,7 +184,7 @@ function openActivity(actId) {
     content.innerHTML = html;
 
     // Specific logic listeners
-    if (actId === 6) {
+    if (actId === 5) {
       const input = document.getElementById('promise-input');
       const check = document.getElementById('promise-check');
       input.addEventListener('input', () => {
