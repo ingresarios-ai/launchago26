@@ -30,6 +30,52 @@ const activitiesData = {
       </div>
     `
   },
+  2: {
+    title: "Punto de Partida",
+    reward: "+30 pts",
+    render: () => {
+      const hasTest = localStorage.getItem('saboteur_result');
+      if (hasTest) {
+        return `
+          <p class="activity-desc">Detectamos que ya completaste tu Test de Saboteador durante tu registro inicial. ¡Excelente iniciativa!</p>
+          <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid var(--green); padding: 16px; border-radius: 12px; margin-top: 16px;">
+            <h4 style="color: var(--green); margin:0 0 8px 0; display:flex; align-items:center; gap:8px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Diagnóstico Completado
+            </h4>
+            <p style="color: var(--green); margin:0; font-size:0.9rem; opacity: 0.9;">Tus datos genómicos ya están guardados en la bóveda. Puedes reclamar tus puntos de inmediato.</p>
+          </div>
+        `;
+      } else {
+        return `
+          <p class="activity-desc">Para poder avanzar, necesitamos perfilar tu Genoma y descubrir qué Saboteador te está frenando.</p>
+          <button class="btn-primary" style="margin-top: 16px;" onclick="window.location.href='test.html'">Ir al Diagnóstico AHORA</button>
+        `;
+      }
+    }
+  },
+  3: {
+    title: "Tu Patrón Dominante",
+    reward: "+15 pts",
+    render: () => {
+      const saboteur = localStorage.getItem('saboteur_result') || 'vengador';
+      const sabMap = {
+        vengador: { emoji: '🔥', name: 'El Vengador', desc: 'Sientes la necesidad urgente de recuperar lo perdido inmediatamente, rompiendo tus reglas y aumentando tu riesgo por venganza emocional.' },
+        euforico: { emoji: '🎰', name: 'El Eufórico', desc: 'Ganas y te sientes invencible. Aumentas el tamaño de tu posición ignorando tu plan por exceso de confianza.' },
+        impaciente: { emoji: '⚡', name: 'El Impaciente', desc: 'No puedes esperar. Entras al mercado antes de que tu sistema te dé confirmación por miedo a quedarte fuera (FOMO).' },
+        paralizado: { emoji: '🧊', name: 'El Paralizado', desc: 'El miedo a equivocarte te congela. Ves pasar las oportunidades claras frente a ti y no ejecutas por sobrepensarlo todo.' }
+      };
+      const info = sabMap[saboteur];
+      return `
+        <p class="activity-desc">Los resultados de tu diagnóstico revelan que este es el principal patrón mental que debes dominar para tener éxito.</p>
+        <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 24px; border-radius: 16px; text-align: center; margin-top: 16px;">
+          <div style="font-size: 48px; margin-bottom: 12px;">${info.emoji}</div>
+          <h3 style="color: var(--text-main); font-size: 1.5rem; margin: 0 0 8px 0;">${info.name}</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin:0;">${info.desc}</p>
+        </div>
+      `;
+    }
+  },
   4: {
     title: "Diseña tu entorno",
     reward: "+20 pts",
