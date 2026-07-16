@@ -184,14 +184,13 @@ function handleFormSubmit(e) {
     body: JSON.stringify(ghlData)
   }).catch(function () {});
 
-  // 2. POST to Supabase — create lead and get auth_token
+  // 2. POST to Supabase — create lead
   fetch(SUPABASE_URL + '/rest/v1/leads', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'apikey': SUPABASE_ANON_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-      'Prefer': 'return=representation'
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
     },
     body: JSON.stringify(leadData)
   })
@@ -212,7 +211,16 @@ function handleFormSubmit(e) {
         throw new Error(err.message || 'Error al registrar');
       });
     }
-    return res.json();
+    // Si fue exitoso, igual obtenemos el token de forma segura con la función RPC
+    return fetch(SUPABASE_URL + '/rest/v1/rpc/get_token_by_email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+      },
+      body: JSON.stringify({ p_email: email })
+    }).then(function(r) { return r.json(); });
   })
   .then(function (data) {
     var token = '';
