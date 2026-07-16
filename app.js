@@ -5,6 +5,7 @@
 // Configuration
 var SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
 var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
+var GHL_WEBHOOK_APP = ''; // TODO: Add webhook URL for when the user enters the app
 var GHL_WEBHOOK_MISSION = 'https://services.leadconnectorhq.com/hooks/5lqXoVlR4T1kO7P6Jb9/webhook-trigger/446a81ca-9430-4e3e-8c3f-7f7813a0429f';
 var GHL_WEBHOOK_INTENTION = 'https://services.leadconnectorhq.com/hooks/5lqXoVlR4T1kO7P6Jb9/webhook-trigger/intention-webhook-id'; // To be configured
 
@@ -59,6 +60,37 @@ document.addEventListener('DOMContentLoaded', function () {
     initApp();
   });
 
+  function trackAppEntered(token) {
+    if (!token || sessionStorage.getItem('app_entered_tracked')) return;
+    
+    // 1. Supabase Track
+    fetch(SUPABASE_URL + '/rest/v1/user_progress', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        auth_token: token,
+        milestone: 'app_entered',
+        completed_at: new Date().toISOString()
+      })
+    }).then(function(r) {
+      if (r.ok) sessionStorage.setItem('app_entered_tracked', 'true');
+    }).catch(function() {});
+
+    // 2. GHL Webhook
+    if (GHL_WEBHOOK_APP) {
+      fetch(GHL_WEBHOOK_APP, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ auth_token: token, action: 'app_entered' })
+      }).catch(function() {});
+    }
+  }
+
   function initApp() {
     var userEmail = localStorage.getItem('user_email') || '';
     var dominant = localStorage.getItem('saboteur_result');
@@ -67,6 +99,8 @@ document.addEventListener('DOMContentLoaded', function () {
       window.location.href = 'test.html';
       return;
     }
+
+    trackAppEntered(token);
 
     var sab = saboteurs[dominant];
     if (sab) {

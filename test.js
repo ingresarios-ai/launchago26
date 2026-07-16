@@ -10,6 +10,7 @@ var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 var GHL_WEBHOOK_WHATSAPP = 'https://services.leadconnectorhq.com/hooks/jTugwykceKyJlATOSvkb/webhook-trigger/c17e220a-db9c-42ba-8665-421ed7c223a4';
 var GHL_WEBHOOK_VIDEO = '';    // TODO: add when ready
 var GHL_WEBHOOK_MISSION = '';  // TODO: add when ready
+var GHL_WEBHOOK_TEST = '';     // TODO: add when ready
 
 // ========================================
 // PREGUNTA FILTRO
@@ -499,7 +500,22 @@ function saveResult(dominant) {
       })
     });
   })
-  .then(function () { console.log('Test result saved'); })
+  .then(function () { 
+    console.log('Test result saved'); 
+    
+    // Fire GHL Webhook for Test Completion
+    if (GHL_WEBHOOK_TEST) {
+      fetch(GHL_WEBHOOK_TEST, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          auth_token: token, 
+          saboteur_type: dominant,
+          action: 'test_completed'
+        })
+      }).catch(function() {});
+    }
+  })
   .catch(function (err) { console.error('Error saving:', err); });
 }
 
