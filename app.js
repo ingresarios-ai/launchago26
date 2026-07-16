@@ -106,16 +106,16 @@ const activitiesData = {
     `
   },
   6: {
-    title: "Comparte tu avance",
+    title: "Activa tus notificaciones",
     reward: "+20 pts",
     render: () => `
-      <p class="activity-desc">El aislamiento es el mejor amigo de tu Saboteador. Únete a tu tribu y comparte qué patrón descubriste en ti.</p>
+      <p class="activity-desc">Toda la comunicación oficial, recursos exclusivos y el enlace de acceso al evento en vivo se enviarán por nuestro grupo VIP de WhatsApp. Únete ahora para asegurar tu lugar.</p>
       <a href="https://chat.whatsapp.com/DmyOUUMaHAdLxC0xo2Lr9b" target="_blank" class="btn-secondary" style="display:block; text-align:center; text-decoration:none; margin-bottom: 16px;">
-        Ir a la Comunidad (WhatsApp)
+        Unirme al Grupo de WhatsApp
       </a>
       <label class="check-item" onclick="toggleCheck(this)">
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Ya me uní y compartí mi patrón</span>
+        <span>Ya me uní al grupo oficial</span>
       </label>
     `
   },
