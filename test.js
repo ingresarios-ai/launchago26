@@ -10,7 +10,7 @@ var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 var GHL_WEBHOOK_WHATSAPP = 'https://services.leadconnectorhq.com/hooks/jTugwykceKyJlATOSvkb/webhook-trigger/c17e220a-db9c-42ba-8665-421ed7c223a4';
 var GHL_WEBHOOK_VIDEO = '';    // TODO: add when ready
 var GHL_WEBHOOK_MISSION = '';  // TODO: add when ready
-var GHL_WEBHOOK_TEST = '';     // TODO: add when ready
+var GHL_WEBHOOK_TEST = 'https://services.leadconnectorhq.com/hooks/jTugwykceKyJlATOSvkb/webhook-trigger/AF9SlEmf2Qj2H4GxsFjf';
 
 // ========================================
 // PREGUNTA FILTRO
