@@ -772,20 +772,6 @@ function initRouter() {
     } else {
       navigateTo('/test', 'screen-intro');
     }
-  } else if (path === '/app') {
-    if (hasResult) {
-       var storedScores = localStorage.getItem('saboteur_scores');
-       if (storedScores) {
-          scores = JSON.parse(storedScores);
-          // Briefly render result to populate DOM, then switch to app
-          showResult(true); 
-          navigateTo('/app', 'screen-next-steps');
-       } else {
-          navigateTo('/test', 'screen-intro');
-       }
-    } else {
-       navigateTo('/test', 'screen-intro');
-    }
   } else {
     // Default to /test
     if (path !== '/test') {
@@ -799,5 +785,5 @@ function initRouter() {
 initRouter();
 
 function goToApp() {
-  navigateTo('/app', 'screen-next-steps');
+  window.location.href = '/app';
 }
