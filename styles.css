@@ -381,9 +381,9 @@ a {
   border-radius: 50%;
   filter: blur(80px);
   opacity: 0.6;
-  animation: floatOrb 15s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
+  will-change: transform;
 }
 
 .hero__bg-orb--1 {
@@ -392,7 +392,6 @@ a {
   background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0) 70%);
   top: -10%;
   right: -5%;
-  animation-delay: 0s;
 }
 
 .hero__bg-orb--2 {
@@ -401,7 +400,6 @@ a {
   background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 70%);
   bottom: -20%;
   left: -10%;
-  animation-delay: -7.5s;
 }
 
 /* Optional subtle grid for a more "tech" feel */
@@ -436,17 +434,7 @@ a {
   pointer-events: none;
 }
 
-@keyframes floatOrb {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-}
+
 
 .hero__content {
   position: relative;
