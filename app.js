@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var token = localStorage.getItem('auth_token') || '';
   
   if (!token) {
-    window.location.href = '/';
+    // window.location.href = '/';
     return;
   }
   var userEmail = localStorage.getItem('user_email') || '';

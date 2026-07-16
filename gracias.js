@@ -8,7 +8,7 @@
   var token = params.get('token') || localStorage.getItem('auth_token') || '';
   
   if (!token) {
-    window.location.href = '/';
+    // window.location.href = '/';
     return;
   }
 
