@@ -52,10 +52,154 @@
     </div>
   </header>
 
-  <!-- MAIN CONTENT: THE JOURNEY PATH -->
-  <main class="app-container journey-container">
+  <!-- MAIN CONTENT -->
+  <main class="app-container">
+
+    <!-- VISTA 1: DASHBOARD -->
+    <div id="view-dashboard" class="view-section">
+      
+      <!-- Reloj -->
+      <section class="dashboard-hero">
+        <h1 class="hero-title">Tu Entrenamiento Comienza En:</h1>
+        <div class="countdown-clock" id="countdown-clock">
+          <div class="time-box"><span id="cd-days">00</span><small>DÍAS</small></div>
+          <span class="time-sep">:</span>
+          <div class="time-box"><span id="cd-hours">00</span><small>HR</small></div>
+          <span class="time-sep">:</span>
+          <div class="time-box"><span id="cd-mins">00</span><small>MIN</small></div>
+          <span class="time-sep">:</span>
+          <div class="time-box"><span id="cd-secs">00</span><small>SEG</small></div>
+        </div>
+        <p class="hero-date">3 de Agosto • 7:00 PM (Colombia)</p>
+      </section>
+
+      <!-- Genoma 0 (Acceso) -->
+      <section class="dashboard-module" onclick="showJourney()">
+        <div class="module-info">
+          <h2 class="module-title">Preparación: Genoma 0</h2>
+          <p class="module-desc">Descubre tu Saboteador y diseña tu entorno antes del evento.</p>
+          <div class="module-progress">
+            <div class="progress-fill" id="dashboard-g0-progress" style="width: 10%;"></div>
+          </div>
+          <p class="module-status"><span id="dashboard-g0-text">1</span> de 9 completado</p>
+        </div>
+        <div class="module-action">
+          <button class="btn-primary">Entrar <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        </div>
+      </section>
+
+      <!-- Agenda -->
+      <section class="dashboard-lives">
+        <h2 class="lives-title">Entrenamiento en Vivo</h2>
+        <div class="lives-list">
+          
+          <div class="live-card locked" data-live="1">
+            <div class="live-date">3 AGO</div>
+            <div class="live-info">
+              <h4>1. Descubre tu Genoma</h4>
+              <p>7:00 PM (CO)</p>
+            </div>
+            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          </div>
+
+          <div class="live-card locked" data-live="2">
+            <div class="live-date">4 AGO</div>
+            <div class="live-info">
+              <h4>2. El Código Invisible</h4>
+              <p>7:00 PM (CO)</p>
+            </div>
+            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          </div>
+
+          <div class="live-card locked" data-live="3">
+            <div class="live-date">5 AGO</div>
+            <div class="live-info">
+              <h4>3. Rompe el Patrón</h4>
+              <p>7:00 PM (CO)</p>
+            </div>
+            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          </div>
+
+          <div class="live-card locked" data-live="4">
+            <div class="live-date">6 AGO</div>
+            <div class="live-info">
+              <h4>4. Domina tu Estado</h4>
+              <p>7:00 PM (CO)</p>
+            </div>
+            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          </div>
+
+          <div class="live-card locked" data-live="5">
+            <div class="live-date">7 AGO</div>
+            <div class="live-info">
+              <h4>5. El Método PEDEM</h4>
+              <p>7:00 PM (CO)</p>
+            </div>
+            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          </div>
+
+          <div class="live-card locked" data-live="6">
+            <div class="live-date">8 AGO</div>
+            <div class="live-info">
+              <h4>6. Decisiones que Transforman</h4>
+              <p>7:00 PM (CO)</p>
+            </div>
+            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          </div>
+
+          <div class="live-card locked" data-live="7">
+            <div class="live-date">9 AGO</div>
+            <div class="live-info">
+              <h4>7. Construye tu Nueva Identidad</h4>
+              <p>7:00 PM (CO)</p>
+            </div>
+            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          </div>
+
+          <div class="live-card locked" data-live="8">
+            <div class="live-date">10 AGO</div>
+            <div class="live-info">
+              <h4>8. GENY: Tu Copiloto de Alto Desempeño</h4>
+              <p>7:00 PM (CO)</p>
+            </div>
+            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          </div>
+
+          <div class="live-card locked" data-live="9">
+            <div class="live-date">11 AGO</div>
+            <div class="live-info">
+              <h4>9. Integra el Sistema</h4>
+              <p>7:00 PM (CO)</p>
+            </div>
+            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          </div>
+
+          <div class="live-card locked" data-live="10">
+            <div class="live-date">12 AGO</div>
+            <div class="live-info">
+              <h4>10. Activa tu Nuevo Genoma</h4>
+              <p>7:00 PM (CO)</p>
+            </div>
+            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- VISTA 2: JOURNEY (Genoma 0) -->
+    <div id="view-journey" class="view-section" style="display:none;">
+      
+      <div style="padding: 16px 20px;">
+        <button class="btn-back" onclick="showDashboard()" style="background: none; border: none; color: var(--text-white); display: flex; align-items: center; gap: 8px; font-size: 1rem; cursor: pointer; padding: 0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          Volver al Panel
+        </button>
+      </div>
+
+      <div class="journey-container">
     
-    <!-- PROGRESS HEADER -->
+        <!-- PROGRESS HEADER -->
     <div class="journey-header">
       <h1 class="journey-title">GENOMA CERO</h1>
       <p class="journey-subtitle">Prepárate para el evento. 10 días, 10 misiones.</p>
@@ -234,8 +378,9 @@
         </button>
 
       </div>
-    </div>
-
+      </div>
+    </div> <!-- END JOURNEY CONTAINER -->
+    </div> <!-- END VIEW JOURNEY -->
   </main>
 
   <!-- ACTIVITY MODAL (FULLSCREEN) -->

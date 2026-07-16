@@ -213,6 +213,14 @@ function renderJourney() {
       node.classList.add('locked');
     }
   });
+
+  // Sync dashboard module progress
+  const dashProgress = document.getElementById('dashboard-g0-progress');
+  const dashText = document.getElementById('dashboard-g0-text');
+  if (dashProgress && dashText) {
+    dashProgress.style.width = `${progressPercent}%`;
+    dashText.textContent = Math.min(currentActivity, MAX_ACTIVITIES);
+  }
 }
 
 function openActivity(actId) {
@@ -327,3 +335,66 @@ function completeActivity(actId) {
 function toggleCheck(el) {
   el.classList.toggle('checked');
 }
+
+// ========================================
+// DASHBOARD VIEWS & LOGIC
+// ========================================
+
+function showDashboard() {
+  document.getElementById('view-journey').style.display = 'none';
+  document.getElementById('view-dashboard').style.display = 'block';
+  // Scroll to top
+  window.scrollTo(0, 0);
+}
+
+function showJourney() {
+  document.getElementById('view-dashboard').style.display = 'none';
+  document.getElementById('view-journey').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+// ========================================
+// COUNTDOWN TIMER
+// ========================================
+
+function initCountdown() {
+  // Target: August 3, 2026, 19:00:00 (Colombia Time is UTC-5)
+  // Local dates in JS read the system timezone. To be safe, we parse an ISO string with offset.
+  const targetDate = new Date("2026-08-03T19:00:00-05:00").getTime();
+  
+  const elDays = document.getElementById('cd-days');
+  const elHours = document.getElementById('cd-hours');
+  const elMins = document.getElementById('cd-mins');
+  const elSecs = document.getElementById('cd-secs');
+
+  if (!elDays) return; // Guard if not found
+
+  function update() {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+      elDays.textContent = "00";
+      elHours.textContent = "00";
+      elMins.textContent = "00";
+      elSecs.textContent = "00";
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+    elDays.textContent = String(days).padStart(2, '0');
+    elHours.textContent = String(hours).padStart(2, '0');
+    elMins.textContent = String(mins).padStart(2, '0');
+    elSecs.textContent = String(secs).padStart(2, '0');
+  }
+
+  update(); // Initial call
+  setInterval(update, 1000);
+}
+
+// Start Countdown on load
+initCountdown();
