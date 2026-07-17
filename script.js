@@ -173,17 +173,9 @@ function handleFormSubmit(e) {
     utm_term: utm_term || null
   };
 
-  // 1. Fire GHL webhook immediately (no wait needed)
   var ghlData = Object.assign({}, leadData, {
     source: 'landing_ingresarios'
   });
-
-  fetch(GHL_WEBHOOK, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(ghlData)
-  }).catch(function () {});
-
   // 2. POST to Supabase — create lead
   fetch(SUPABASE_URL + '/rest/v1/leads', {
     method: 'POST',
