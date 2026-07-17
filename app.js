@@ -14,23 +14,46 @@ const activitiesData = {
     title: "Preparación: Genoma 0",
     reward: "+20 pts",
     render: () => {
+      // Always show the welcome video
+      return `
+        <p class="activity-desc">Tu viaje para recuperar el control comienza aquí. Observa el video, entiende las reglas del juego y da el primer paso.</p>
+        <div style="margin-bottom: 24px;">
+          <vturb-smartplayer id="vid-6a595795c02fb54b9a39a625" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 176.66666666666666% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
+        </div>
+        <div class="checklist">
+          <label class="check-item" onclick="this.classList.toggle('checked')">
+            <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span>He visto el video completo</span>
+          </label>
+          <label class="check-item" onclick="this.classList.toggle('checked')">
+            <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span>Agregado al calendario</span>
+          </label>
+        </div>
+      `;
+    }
+  },
+  2: {
+    title: "Test del Saboteador",
+    reward: "+30 pts",
+    render: () => {
       const hasSaboteur = localStorage.getItem('saboteur_result');
       if (hasSaboteur) {
-        // Already completed test — show welcome video
+        // Already completed test — show result summary
+        const saboteur = hasSaboteur;
+        const sabMap = {
+          vengador: { emoji: '🔥', name: 'El Vengador', desc: 'Sientes la necesidad urgente de recuperar lo perdido inmediatamente, rompiendo tus reglas y aumentando tu riesgo por venganza emocional.' },
+          euforico: { emoji: '🎰', name: 'El Eufórico', desc: 'Ganas y te sientes invencible. Aumentas el tamaño de tu posición ignorando tu plan por exceso de confianza.' },
+          impaciente: { emoji: '⚡', name: 'El Impaciente', desc: 'No puedes esperar. Entras al mercado antes de que tu sistema te dé confirmación por miedo a quedarte fuera (FOMO).' },
+          paralizado: { emoji: '🧊', name: 'El Paralizado', desc: 'El miedo a equivocarte te congela. Ves pasar las oportunidades claras frente a ti y no ejecutas por sobrepensarlo todo.' }
+        };
+        const info = sabMap[saboteur] || sabMap.vengador;
         return `
-          <p class="activity-desc">Tu viaje para recuperar el control comienza aquí. Observa el video, entiende las reglas del juego y da el primer paso.</p>
-          <div style="margin-bottom: 24px;">
-            <vturb-smartplayer id="vid-6a595795c02fb54b9a39a625" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 176.66666666666666% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
-          </div>
-          <div class="checklist">
-            <label class="check-item" onclick="this.classList.toggle('checked')">
-              <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <span>He visto el video completo</span>
-            </label>
-            <label class="check-item" onclick="this.classList.toggle('checked')">
-              <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <span>Agregado al calendario</span>
-            </label>
+          <p class="activity-desc">Los resultados de tu diagnóstico revelan que este es el principal patrón mental que debes dominar para tener éxito.</p>
+          <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 24px; border-radius: 16px; text-align: center; margin-top: 16px;">
+            <div style="font-size: 48px; margin-bottom: 12px;">${info.emoji}</div>
+            <h3 style="color: var(--text-main); font-size: 1.5rem; margin: 0 0 8px 0;">${info.name}</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin:0;">${info.desc}</p>
           </div>
         `;
       } else {
@@ -80,28 +103,6 @@ const activitiesData = {
           </div>
         `;
       }
-    }
-  },
-  2: {
-    title: "Tu Patrón Dominante",
-    reward: "+30 pts",
-    render: () => {
-      const saboteur = localStorage.getItem('saboteur_result') || 'vengador';
-      const sabMap = {
-        vengador: { emoji: '🔥', name: 'El Vengador', desc: 'Sientes la necesidad urgente de recuperar lo perdido inmediatamente, rompiendo tus reglas y aumentando tu riesgo por venganza emocional.' },
-        euforico: { emoji: '🎰', name: 'El Eufórico', desc: 'Ganas y te sientes invencible. Aumentas el tamaño de tu posición ignorando tu plan por exceso de confianza.' },
-        impaciente: { emoji: '⚡', name: 'El Impaciente', desc: 'No puedes esperar. Entras al mercado antes de que tu sistema te dé confirmación por miedo a quedarte fuera (FOMO).' },
-        paralizado: { emoji: '🧊', name: 'El Paralizado', desc: 'El miedo a equivocarte te congela. Ves pasar las oportunidades claras frente a ti y no ejecutas por sobrepensarlo todo.' }
-      };
-      const info = sabMap[saboteur];
-      return `
-        <p class="activity-desc">Los resultados de tu diagnóstico revelan que este es el principal patrón mental que debes dominar para tener éxito.</p>
-        <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 24px; border-radius: 16px; text-align: center; margin-top: 16px;">
-          <div style="font-size: 48px; margin-bottom: 12px;">${info.emoji}</div>
-          <h3 style="color: var(--text-main); font-size: 1.5rem; margin: 0 0 8px 0;">${info.name}</h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin:0;">${info.desc}</p>
-        </div>
-      `;
     }
   },
   3: {
@@ -323,6 +324,12 @@ function openActivity(actId) {
         s.async = true;
         document.head.appendChild(s);
       });
+    }
+
+    // If Activity 2 has the test (not yet completed), hide "Completar" until test finishes
+    if (actId === 2 && !localStorage.getItem('saboteur_result')) {
+      const footer = document.querySelector('.activity-footer');
+      if (footer) footer.style.display = 'none';
     }
     
     if (actId === 4) {
