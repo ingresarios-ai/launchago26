@@ -11,24 +11,76 @@ let currentActivity = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
 // Activity Data Map (Phase 1 implementations)
 const activitiesData = {
   1: {
-    title: "Bienvenido a GENOMA",
+    title: "Preparación: Genoma 0",
     reward: "+20 pts",
-    render: () => `
-      <p class="activity-desc">Tu viaje para recuperar el control comienza aquí. Observa el video, entiende las reglas del juego y da el primer paso.</p>
-      <div style="margin-bottom: 24px;">
-        <vturb-smartplayer id="vid-6a595795c02fb54b9a39a625" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 176.66666666666666% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
-      </div>
-      <div class="checklist">
-        <label class="check-item" onclick="this.classList.toggle('checked')">
-          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>He visto el video completo</span>
-        </label>
-        <label class="check-item" onclick="this.classList.toggle('checked')">
-          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>Agregado al calendario</span>
-        </label>
-      </div>
-    `
+    render: () => {
+      const hasSaboteur = localStorage.getItem('saboteur_result');
+      if (hasSaboteur) {
+        // Already completed test — show welcome video
+        return `
+          <p class="activity-desc">Tu viaje para recuperar el control comienza aquí. Observa el video, entiende las reglas del juego y da el primer paso.</p>
+          <div style="margin-bottom: 24px;">
+            <vturb-smartplayer id="vid-6a595795c02fb54b9a39a625" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 176.66666666666666% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
+          </div>
+          <div class="checklist">
+            <label class="check-item" onclick="this.classList.toggle('checked')">
+              <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span>He visto el video completo</span>
+            </label>
+            <label class="check-item" onclick="this.classList.toggle('checked')">
+              <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span>Agregado al calendario</span>
+            </label>
+          </div>
+        `;
+      } else {
+        // No test done yet — render the saboteur test inline
+        return `
+          <div id="inline-test">
+            <div id="test-intro-section">
+              <div style="text-align:center; margin-bottom: 20px;">
+                <div style="font-size: 48px; margin-bottom: 12px;">🧠</div>
+                <h3 style="color: var(--text-main); font-size: 1.3rem; margin: 0 0 8px 0;">Test del Saboteador</h3>
+              </div>
+              <p class="activity-desc">Dos personas con la misma estrategia: una quiebra, la otra vive de esto. La diferencia nunca fue la estrategia — fue <strong>quién ejecutaba.</strong></p>
+              <p class="activity-desc" style="margin-bottom: 4px;">Responde 8 situaciones reales y descubre cuál de los <strong>4 saboteadores</strong> controla tu cuenta.</p>
+              <p style="color: var(--text-muted); font-size: 0.8rem; display: flex; align-items: center; gap: 6px; margin-bottom: 20px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                2 minutos
+              </p>
+              <button class="btn-primary" style="width:100%" onclick="startInlineTest()">DESCUBRIR MI SABOTEADOR</button>
+            </div>
+            <div id="test-question-section" style="display:none;">
+              <div style="margin-bottom: 16px;">
+                <div class="inline-test-progress-track">
+                  <div class="inline-test-progress-fill" id="inline-test-progress" style="width: 0%;"></div>
+                </div>
+                <p id="inline-test-counter" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Pregunta 1 de 8</p>
+              </div>
+              <h3 id="inline-test-question" style="color: var(--text-main); font-size: 1.1rem; margin-bottom: 16px; line-height: 1.4;"></h3>
+              <div id="inline-test-options"></div>
+            </div>
+            <div id="test-analyzing-section" style="display:none; text-align: center; padding: 40px 0;">
+              <div style="font-size: 48px; margin-bottom: 16px; animation: spin 2s linear infinite;">🧠</div>
+              <h3 style="color: var(--text-main); font-size: 1.2rem; margin-bottom: 12px;">Analizando tus respuestas...</h3>
+              <div class="inline-test-progress-track" style="margin-bottom: 12px;">
+                <div class="inline-test-progress-fill" id="analyzing-progress" style="width: 0%;"></div>
+              </div>
+              <p id="analyzing-step-text" style="color: var(--text-muted); font-size: 0.85rem;">Identificando patrones mentales...</p>
+            </div>
+            <div id="test-result-section" style="display:none;">
+              <p style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em; color: var(--text-muted); text-align: center; margin-bottom: 12px;">TU SABOTEADOR DOMINANTE ES</p>
+              <div id="inline-result-card" style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 24px; border-radius: 16px; text-align: center; margin-bottom: 16px;">
+                <div id="inline-result-emoji" style="font-size: 48px; margin-bottom: 8px;"></div>
+                <h3 id="inline-result-name" style="color: var(--text-main); font-size: 1.5rem; margin: 0 0 8px 0;"></h3>
+                <p id="inline-result-desc" style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin: 0;"></p>
+              </div>
+              <div id="inline-result-scores" style="margin-bottom: 20px;"></div>
+            </div>
+          </div>
+        `;
+      }
+    }
   },
   2: {
     title: "Tu Patrón Dominante",
@@ -262,12 +314,15 @@ function openActivity(actId) {
 
     // Specific logic listeners
     if (actId === 1) {
-      const oldScript = document.querySelector('script[src*="6a595795c02fb54b9a39a625"]');
-      if (oldScript) oldScript.remove();
-      var s = document.createElement("script");
-      s.src = "https://scripts.converteai.net/6f88db54-0f9b-4a7c-af05-9ae2f56f3fdf/players/6a595795c02fb54b9a39a625/v4/player.js";
-      s.async = true;
-      document.head.appendChild(s);
+      // Defer script load by one frame so the vturb-smartplayer container is rendered first
+      requestAnimationFrame(() => {
+        const oldScript = document.querySelector('script[src*="6a595795c02fb54b9a39a625"]');
+        if (oldScript) oldScript.remove();
+        var s = document.createElement("script");
+        s.src = "https://scripts.converteai.net/6f88db54-0f9b-4a7c-af05-9ae2f56f3fdf/players/6a595795c02fb54b9a39a625/v4/player.js";
+        s.async = true;
+        document.head.appendChild(s);
+      });
     }
     
     if (actId === 4) {
@@ -407,3 +462,362 @@ function initCountdown() {
 
 // Start Countdown on load
 initCountdown();
+
+// ========================================
+// INLINE SABOTEUR TEST ENGINE
+// Runs inside Activity 1 modal
+// ========================================
+
+const SUPABASE_URL_TEST = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
+const SUPABASE_ANON_KEY_TEST = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
+const GHL_WEBHOOK_TEST = 'https://services.leadconnectorhq.com/hooks/jTugwykceKyJlATOSvkb/webhook-trigger/AF9SlEmf2Qj2H4GxsFjf';
+
+const inlineFilterQuestion = {
+  text: '¿Ya operas en mercados financieros (Forex, cripto, acciones, futuros)?',
+  options: [
+    { text: 'Sí, ya opero o he operado activamente.', branch: 'trader' },
+    { text: 'Aún no, pero quiero empezar o estoy aprendiendo.', branch: 'no-trader' }
+  ]
+};
+
+const inlineTraderQuestions = [
+  { text: 'Acabas de cerrar una operación con pérdida. ¿Cuál es tu primer impulso?', options: [
+    { text: 'Abrir otra posición inmediatamente para recuperar lo perdido.', scores: [3, 0, 1, 0] },
+    { text: 'Buscar la siguiente señal rápido, necesito sentir que estoy avanzando.', scores: [0, 0, 3, 0] },
+    { text: 'Cerrar la plataforma. No quiero ver los números.', scores: [0, 0, 0, 3] },
+    { text: 'Revisar qué salió mal con calma y anotar la lección.', scores: [0, 1, 0, 0] }
+  ]},
+  { text: 'Llevas 3 operaciones ganadoras seguidas. ¿Qué haces?', options: [
+    { text: 'Aumento el tamaño de la posición — estoy en racha.', scores: [0, 3, 0, 0] },
+    { text: 'Busco más entradas, el mercado me está dando la razón.', scores: [0, 1, 3, 0] },
+    { text: 'Sigo el plan exactamente igual, sin cambiar el riesgo.', scores: [0, 0, 0, 0] },
+    { text: 'Me da miedo que la racha se acabe y dejo de operar.', scores: [0, 0, 0, 3] }
+  ]},
+  { text: 'Ves una oportunidad pero no cumple al 100% con tu plan de trading. ¿Qué haces?', options: [
+    { text: 'Entro igual — si espero la señal perfecta, pierdo la oportunidad.', scores: [0, 0, 3, 0] },
+    { text: 'No entro, pero me quedo mirando la pantalla esperando que se confirme.', scores: [0, 0, 1, 2] },
+    { text: 'La descarto completamente y busco una que cumpla las reglas.', scores: [0, 0, 0, 0] },
+    { text: 'Pienso: "ya me perdí muchas así" y entro con posición más grande.', scores: [2, 1, 1, 0] }
+  ]},
+  { text: 'Tu stop loss se activa y el precio se da la vuelta justo después. ¿Qué sientes?', options: [
+    { text: 'Rabia — voy a entrar de nuevo con más volumen para compensar.', scores: [3, 0, 1, 0] },
+    { text: 'Frustración, pero entiendo que forma parte del proceso.', scores: [0, 0, 0, 0] },
+    { text: 'Reentro inmediatamente sin pensarlo, el precio va para donde dije.', scores: [1, 0, 3, 0] },
+    { text: 'Me paralizo. Empiezo a dudar de toda mi estrategia.', scores: [0, 0, 0, 3] }
+  ]},
+  { text: 'Es viernes y piensas en tu semana de trading. ¿Cuál es tu reflexión más frecuente?', options: [
+    { text: '"Si no hubiera perdido ese trade del martes, estaría en positivo."', scores: [3, 0, 0, 0] },
+    { text: '"Fue una gran semana, el lunes voy con todo."', scores: [0, 3, 0, 0] },
+    { text: '"Operé demasiado. Muchas entradas sin filtro."', scores: [0, 0, 3, 0] },
+    { text: '"Vi muchas oportunidades pero no tomé ninguna."', scores: [0, 0, 0, 3] }
+  ]},
+  { text: 'Llevas una operación con buena ganancia y el precio empieza a retroceder. ¿Qué haces?', options: [
+    { text: 'Muevo mi take profit más lejos — puedo sacar más.', scores: [0, 3, 0, 0] },
+    { text: 'Cierro inmediatamente antes de que se borre toda la ganancia.', scores: [0, 0, 2, 2] },
+    { text: 'Respeto mi plan: dejo el stop y el take donde los puse.', scores: [0, 0, 0, 0] },
+    { text: 'No sé qué hacer. Congelo la pantalla y espero.', scores: [0, 0, 0, 3] }
+  ]},
+  { text: 'Si pudieras cambiar UNA cosa de tu forma de operar, ¿cuál sería?', options: [
+    { text: 'Dejar de intentar recuperar las pérdidas en la misma sesión.', scores: [3, 0, 0, 0] },
+    { text: 'No sobreoperar cuando las cosas van bien.', scores: [0, 3, 0, 0] },
+    { text: 'Tener más paciencia para esperar las buenas señales.', scores: [0, 0, 3, 0] },
+    { text: 'Dejar de analizar tanto y empezar a ejecutar.', scores: [0, 0, 0, 3] }
+  ]}
+];
+
+const inlineNoTraderQuestions = [
+  { text: 'Haces una inversión o compra importante y pierdes dinero. ¿Cuál es tu reacción?', options: [
+    { text: 'Busco recuperar ese dinero lo más rápido posible, aunque sea arriesgando más.', scores: [3, 0, 1, 0] },
+    { text: 'Necesito actuar ya — no puedo quedarme de brazos cruzados.', scores: [0, 0, 3, 0] },
+    { text: 'Me bloqueo. No quiero pensar más en dinero por un tiempo.', scores: [0, 0, 0, 3] },
+    { text: 'Analizo qué pasó y tomo nota para la próxima vez.', scores: [0, 1, 0, 0] }
+  ]},
+  { text: 'Recibes un ingreso extra que no esperabas. ¿Qué haces?', options: [
+    { text: 'Lo invierto todo de una — hay que aprovechar mientras tengo capital.', scores: [0, 3, 1, 0] },
+    { text: 'Busco la mejor oportunidad rápido antes de que se me vaya la plata.', scores: [0, 1, 3, 0] },
+    { text: 'Lo guardo y espero. Necesito investigar más antes de moverlo.', scores: [0, 0, 0, 3] },
+    { text: 'Divido: una parte la invierto y otra la reservo.', scores: [0, 0, 0, 0] }
+  ]},
+  { text: 'Alguien te habla de una oportunidad de negocio o inversión. ¿Cómo reaccionas?', options: [
+    { text: 'Si suena bien, entro de una. Las oportunidades no esperan.', scores: [0, 0, 3, 0] },
+    { text: 'Investigo, pero al final nunca me decido. Siempre falta algo.', scores: [0, 0, 0, 3] },
+    { text: 'Me emociono y quiero entrar con todo lo que tengo.', scores: [0, 3, 0, 0] },
+    { text: 'Evalúo con calma si encaja con mi situación actual.', scores: [0, 0, 0, 0] }
+  ]},
+  { text: 'Un amigo te cuenta que ganó mucho dinero con algo. ¿Qué sientes?', options: [
+    { text: '"¿Por qué no fui yo? Necesito encontrar MI oportunidad ahora."', scores: [2, 0, 2, 0] },
+    { text: '"Yo también puedo. Voy a meterle con todo."', scores: [1, 3, 0, 0] },
+    { text: 'Me alegro por él, pero sigo con mi camino.', scores: [0, 0, 0, 0] },
+    { text: 'Me desanimo. Siento que siempre llego tarde a todo.', scores: [0, 0, 0, 3] }
+  ]},
+  { text: 'Piensas en tu situación financiera actual. ¿Cuál frase te identifica más?', options: [
+    { text: '"Si no hubiera cometido ese error, estaría mucho mejor."', scores: [3, 0, 0, 0] },
+    { text: '"Siento que estoy a punto de dar un gran salto."', scores: [0, 3, 0, 0] },
+    { text: '"Necesito generar más ingresos ya, no puedo esperar."', scores: [0, 0, 3, 0] },
+    { text: '"Quiero empezar algo, pero no sé por dónde ni cuándo."', scores: [0, 0, 0, 3] }
+  ]},
+  { text: 'Tienes que tomar una decisión financiera importante. ¿Cómo la enfrentas?', options: [
+    { text: 'Decido rápido. Si sale mal, ajusto sobre la marcha.', scores: [0, 1, 3, 0] },
+    { text: 'Siento que si no actúo ahora, la oportunidad desaparece.', scores: [1, 2, 1, 0] },
+    { text: 'Analizo tanto que a veces se me pasa el momento.', scores: [0, 0, 0, 3] },
+    { text: 'Busco información, pido opiniones y luego decido.', scores: [0, 0, 0, 0] }
+  ]},
+  { text: 'Si pudieras cambiar UNA cosa de tu relación con el dinero, ¿cuál sería?', options: [
+    { text: 'Dejar de intentar recuperar lo que ya perdí.', scores: [3, 0, 0, 0] },
+    { text: 'No dejarme llevar por la emoción cuando las cosas van bien.', scores: [0, 3, 0, 0] },
+    { text: 'Tener más paciencia y no actuar por impulso.', scores: [0, 0, 3, 0] },
+    { text: 'Dejar de pensar tanto y empezar a actuar de una vez.', scores: [0, 0, 0, 3] }
+  ]}
+];
+
+const inlineSaboteurs = {
+  vengador: { emoji: '🔥', name: 'EL VENGADOR', desc: 'Actúas desde la revancha. Cada pérdida se convierte en una batalla personal que necesitas ganar.', color: '#ef4444' },
+  euforico: { emoji: '🎰', name: 'EL EUFÓRICO', desc: 'Cuando las cosas van bien, te sientes invencible. Arriesgas más y dejas de seguir las reglas.', color: '#f59e0b' },
+  impaciente: { emoji: '⚡', name: 'EL IMPACIENTE', desc: 'Necesitas acción constante. Actúas antes de tiempo y confundes movimiento con progreso.', color: '#8b5cf6' },
+  paralizado: { emoji: '🧊', name: 'EL PARALIZADO', desc: 'Analizas todo pero no decides nada. El miedo a equivocarte te congela.', color: '#3b82f6' }
+};
+
+// State
+let itCurrentQ = 0;
+let itBranch = '';
+let itQuestions = [];
+let itScores = { vengador: 0, euforico: 0, impaciente: 0, paralizado: 0 };
+let itAnswers = [];
+const itTotalQ = 8;
+
+function startInlineTest() {
+  document.getElementById('test-intro-section').style.display = 'none';
+  document.getElementById('test-question-section').style.display = 'block';
+  
+  // Hide the "Completar Actividad" button during test
+  const footer = document.querySelector('.activity-footer');
+  if (footer) footer.style.display = 'none';
+  
+  renderInlineFilterQ();
+}
+
+function renderInlineFilterQ() {
+  const container = document.getElementById('test-question-section');
+  document.getElementById('inline-test-counter').textContent = 'Pregunta 1 de ' + itTotalQ;
+  document.getElementById('inline-test-question').textContent = inlineFilterQuestion.text;
+  document.getElementById('inline-test-progress').style.width = '0%';
+
+  let html = '';
+  const letters = ['A', 'B'];
+  inlineFilterQuestion.options.forEach((opt, i) => {
+    html += `<button class="inline-test-option" data-branch="${opt.branch}" onclick="selectInlineFilter(this)">
+      <span class="inline-test-option__letter">${letters[i]}</span>
+      <span>${opt.text}</span>
+    </button>`;
+  });
+  document.getElementById('inline-test-options').innerHTML = html;
+}
+
+function selectInlineFilter(btn) {
+  // Disable all
+  document.querySelectorAll('.inline-test-option').forEach(b => b.style.pointerEvents = 'none');
+  btn.classList.add('inline-test-option--selected');
+
+  itBranch = btn.getAttribute('data-branch');
+  itQuestions = itBranch === 'trader' ? inlineTraderQuestions : inlineNoTraderQuestions;
+  itAnswers.push(itBranch);
+  localStorage.setItem('genoma_user_branch', itBranch);
+
+  setTimeout(() => {
+    itCurrentQ = 0;
+    renderInlineQuestion();
+  }, 500);
+}
+
+function renderInlineQuestion() {
+  const q = itQuestions[itCurrentQ];
+  document.getElementById('inline-test-counter').textContent = 'Pregunta ' + (itCurrentQ + 2) + ' de ' + itTotalQ;
+  document.getElementById('inline-test-question').textContent = q.text;
+  document.getElementById('inline-test-progress').style.width = (((itCurrentQ + 1) / itTotalQ) * 100) + '%';
+
+  let html = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    html += `<button class="inline-test-option" data-index="${i}" onclick="selectInlineOption(${i})">
+      <span class="inline-test-option__letter">${letters[i]}</span>
+      <span>${opt.text}</span>
+    </button>`;
+  });
+  document.getElementById('inline-test-options').innerHTML = html;
+}
+
+function selectInlineOption(index) {
+  const q = itQuestions[itCurrentQ];
+  const opt = q.options[index];
+
+  document.querySelectorAll('.inline-test-option').forEach(b => b.style.pointerEvents = 'none');
+  document.querySelectorAll('.inline-test-option')[index].classList.add('inline-test-option--selected');
+
+  itAnswers.push(index);
+  itScores.vengador += opt.scores[0];
+  itScores.euforico += opt.scores[1];
+  itScores.impaciente += opt.scores[2];
+  itScores.paralizado += opt.scores[3];
+
+  setTimeout(() => {
+    itCurrentQ++;
+    if (itCurrentQ < itQuestions.length) {
+      renderInlineQuestion();
+    } else {
+      document.getElementById('inline-test-progress').style.width = '100%';
+      showInlineAnalyzing();
+    }
+  }, 500);
+}
+
+function showInlineAnalyzing() {
+  document.getElementById('test-question-section').style.display = 'none';
+  document.getElementById('test-analyzing-section').style.display = 'block';
+
+  const bar = document.getElementById('analyzing-progress');
+  const text = document.getElementById('analyzing-step-text');
+  const steps = [
+    { progress: 25, text: 'Identificando patrones mentales...' },
+    { progress: 50, text: 'Analizando respuestas emocionales...' },
+    { progress: 75, text: 'Calculando tu arquetipo dominante...' },
+    { progress: 100, text: '¡Resultado encontrado!' }
+  ];
+
+  let i = 0;
+  function nextStep() {
+    if (i < steps.length) {
+      bar.style.width = steps[i].progress + '%';
+      text.textContent = steps[i].text;
+      i++;
+      setTimeout(nextStep, 700);
+    } else {
+      setTimeout(showInlineResult, 500);
+    }
+  }
+  setTimeout(nextStep, 400);
+}
+
+function showInlineResult() {
+  // Find dominant
+  let maxScore = 0;
+  let dominant = 'vengador';
+  Object.keys(itScores).forEach(key => {
+    if (itScores[key] > maxScore) {
+      maxScore = itScores[key];
+      dominant = key;
+    }
+  });
+
+  const sab = inlineSaboteurs[dominant];
+
+  // Save to localStorage
+  localStorage.setItem('saboteur_result', dominant);
+  localStorage.setItem('saboteur_scores', JSON.stringify(itScores));
+
+  // Update topbar
+  const sabMap = {
+    vengador: { emoji: '🔥', name: 'El Vengador' },
+    euforico: { emoji: '🎰', name: 'El Eufórico' },
+    impaciente: { emoji: '⚡', name: 'El Impaciente' },
+    paralizado: { emoji: '🧊', name: 'El Paralizado' }
+  };
+  if (sabMap[dominant]) {
+    document.getElementById('saboteur-emoji').textContent = sabMap[dominant].emoji;
+    document.getElementById('saboteur-name').textContent = sabMap[dominant].name;
+  }
+
+  // Render result
+  document.getElementById('test-analyzing-section').style.display = 'none';
+  document.getElementById('test-result-section').style.display = 'block';
+
+  document.getElementById('inline-result-emoji').textContent = sab.emoji;
+  document.getElementById('inline-result-name').textContent = sab.name;
+  document.getElementById('inline-result-name').style.color = sab.color;
+  document.getElementById('inline-result-desc').textContent = sab.desc;
+
+  // Score bars
+  const totalMax = Math.max(itScores.vengador, itScores.euforico, itScores.impaciente, itScores.paralizado, 1);
+  const sabKeys = [
+    { key: 'vengador', label: '🔥 Vengador', color: '#ef4444' },
+    { key: 'euforico', label: '🎰 Eufórico', color: '#f59e0b' },
+    { key: 'impaciente', label: '⚡ Impaciente', color: '#8b5cf6' },
+    { key: 'paralizado', label: '🧊 Paralizado', color: '#3b82f6' }
+  ];
+
+  let scoresHtml = '';
+  sabKeys.forEach(s => {
+    const pct = Math.round((itScores[s.key] / totalMax) * 100);
+    scoresHtml += `<div style="margin-bottom: 10px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+        <span style="font-size:0.8rem;color:${s.color};font-weight:600;">${s.label}</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">${itScores[s.key]} pts</span>
+      </div>
+      <div style="height:6px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden;">
+        <div style="width:${pct}%;height:100%;background:${s.color};border-radius:100px;transition:width 0.8s ease;"></div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('inline-result-scores').innerHTML = scoresHtml;
+
+  // Show the "Completar Actividad" button again
+  const footer = document.querySelector('.activity-footer');
+  if (footer) footer.style.display = 'block';
+
+  // Save to Supabase
+  const token = localStorage.getItem('auth_token') || '';
+  if (token) {
+    fetch(SUPABASE_URL_TEST + '/rest/v1/rpc/get_lead_by_token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY_TEST,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY_TEST
+      },
+      body: JSON.stringify({ p_token: token })
+    })
+    .then(res => res.json())
+    .then(leads => {
+      if (!leads || !leads.length) return;
+      const leadId = leads[0].id;
+
+      return fetch(SUPABASE_URL_TEST + '/rest/v1/saboteur_test', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY_TEST,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY_TEST
+        },
+        body: JSON.stringify({
+          lead_id: leadId,
+          answers: { branch: itBranch, responses: itAnswers },
+          saboteur_type: dominant,
+          scores: itScores
+        })
+      });
+    })
+    .then(() => {
+      // Fire GHL Webhook
+      if (GHL_WEBHOOK_TEST) {
+        fetch(GHL_WEBHOOK_TEST, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            auth_token: token,
+            saboteur_type: dominant,
+            action: 'test_completed'
+          })
+        }).catch(() => {});
+      }
+    })
+    .catch(err => console.error('Error saving test:', err));
+  }
+
+  // Push GTM event
+  if (window.dataLayer) {
+    window.dataLayer.push({
+      event: 'saboteur_test_completed',
+      saboteur_type: dominant,
+      branch: itBranch
+    });
+  }
+}

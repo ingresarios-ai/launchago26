@@ -10,13 +10,23 @@
   <!-- End Google Tag Manager -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>¡Bienvenido a GENOMA! — Tu entrenamiento comienza</title>
-  <meta name="description" content="Tu Saboteador ha sido identificado. Únete al grupo y comienza tu primer entrenamiento mental." />
+  <title>¡Registro Completo! — Solo te falta un paso</title>
+  <meta name="description" content="Tu registro está casi completo. Únete al grupo de WhatsApp para acceder a la plataforma del taller." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="gracias.css?v=1" />
+  <link rel="stylesheet" href="gracias.css?v=2" />
+
+  <!-- SEO & Social Share -->
+  <meta property="og:title" content="¡Registro Completo! — Ingresarios" />
+  <meta property="og:description" content="Tu registro está casi completo. Únete al grupo de WhatsApp para acceder a la plataforma del taller." />
+  <meta property="og:image" content="https://taller.ingresarios.net/socialshare.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="¡Registro Completo! — Ingresarios" />
+  <meta name="twitter:description" content="Tu registro está casi completo. Únete al grupo de WhatsApp para acceder." />
+  <meta name="twitter:image" content="https://taller.ingresarios.net/socialshare.png" />
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -26,67 +36,63 @@
 
   <div class="ty">
 
-    <!-- ========== HERO: Welcome + Saboteur Summary ========== -->
+    <!-- ========== HERO ========== -->
     <section class="ty-hero">
-      <div class="ty-hero__badge">✅ REGISTRO COMPLETO</div>
-      <h1 class="ty-hero__title">Tu Saboteador ha sido <span class="text-green">identificado</span></h1>
-      <div class="ty-saboteur-mini" id="saboteur-card">
-        <span class="ty-saboteur-mini__emoji" id="sab-emoji">🔥</span>
-        <div>
-          <p class="ty-saboteur-mini__name" id="sab-name">EL VENGADOR</p>
-          <p class="ty-saboteur-mini__desc">Ahora sabes quién sabotea tus decisiones. El siguiente paso es entrenarte para quitárselo de las manos.</p>
-        </div>
-      </div>
+      <div class="ty-hero__badge">✅ REGISTRO EXITOSO</div>
+      <h1 class="ty-hero__title">¡Felicidades! Tu registro está <span class="text-green">casi completo</span></h1>
+      <p class="ty-hero__subtitle">Solo te falta <strong>un paso</strong> para acceder a la plataforma del taller.</p>
     </section>
 
-    <!-- ========== STEP 1: Únete al grupo de WhatsApp ========== -->
-    <section class="ty-step">
-      <div class="ty-step__number">1</div>
+    <!-- ========== PROGRESS BAR ========== -->
+    <section class="ty-progress">
+      <div class="ty-progress__header">
+        <span class="ty-progress__label">Tu progreso</span>
+        <span class="ty-progress__percent" id="progress-percent">90%</span>
+      </div>
+      <div class="ty-progress__track">
+        <div class="ty-progress__fill" id="progress-fill" style="width: 90%;"></div>
+      </div>
+      <p class="ty-progress__hint" id="progress-hint">Te falta completar 1 paso</p>
+    </section>
+
+    <!-- ========== STEP 1: WhatsApp (ACTIVE) ========== -->
+    <section class="ty-step ty-step--active" id="step-1">
+      <div class="ty-step__header">
+        <div class="ty-step__number">1</div>
+        <div class="ty-step__status" id="step1-status">PENDIENTE</div>
+      </div>
       <div class="ty-step__content">
         <h2 class="ty-step__title">Únete al grupo de entrenamiento</h2>
         <p class="ty-step__desc">Este es tu Círculo de Entrenamiento. Aquí recibirás microacciones diarias, actualizaciones del evento y contacto directo con la comunidad.</p>
-        <a href="https://chat.whatsapp.com/DmyOUUMaHAdLxC0xo2Lr9b" id="whatsapp-link" class="ty-btn ty-btn--whatsapp" target="_blank" rel="noopener">
+        <a href="https://chat.whatsapp.com/DmyOUUMaHAdLxC0xo2Lr9b" id="whatsapp-btn" class="ty-btn ty-btn--whatsapp" target="_blank" rel="noopener">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           UNIRME AL GRUPO DE WHATSAPP
         </a>
       </div>
     </section>
 
-    <!-- ========== STEP 2: Video de Bienvenida ========== -->
-    <section class="ty-step">
-      <div class="ty-step__number">2</div>
-      <div class="ty-step__content">
-        <h2 class="ty-step__title">Mira tu video de bienvenida</h2>
-        <p class="ty-step__desc">Juan tiene un mensaje importante para ti antes de que comience el entrenamiento.</p>
-        <div class="ty-video" id="welcome-video">
-          <div class="ty-video__placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="var(--green)"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            <p>Video de bienvenida próximamente</p>
-          </div>
+    <!-- ========== STEP 2: Plataforma (LOCKED) ========== -->
+    <section class="ty-step ty-step--locked" id="step-2">
+      <div class="ty-step__header">
+        <div class="ty-step__number ty-step__number--locked">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
+        <div class="ty-step__status ty-step__status--locked" id="step2-status">BLOQUEADO</div>
       </div>
-    </section>
-
-    <!-- ========== STEP 3: Primera Misión ========== -->
-    <section class="ty-step">
-      <div class="ty-step__number">3</div>
       <div class="ty-step__content">
-        <h2 class="ty-step__title">Tu primera misión</h2>
-        <p class="ty-step__desc">Antes de que comience el evento, tu Saboteador necesita saber que estás observándolo. Esta es tu primera microacción:</p>
-        <div class="ty-mission">
-          <div class="ty-mission__header">
-            <span class="ty-mission__tag">MISIÓN 01</span>
-            <span class="ty-mission__points">+20 Puntos de Control</span>
-          </div>
-          <h3 class="ty-mission__title">Atrapa a tu Saboteador</h3>
-          <p class="ty-mission__instruction">Durante las próximas 24 horas, identifica <strong>un momento</strong> en tu vida donde tu Saboteador (<span id="mission-saboteur-name">El Vengador</span>) haya tomado una decisión financiera por ti. No lo juzgues — solo obsérvalo.</p>
-          <p class="ty-mission__instruction">Escríbelo en el grupo de WhatsApp con el formato:</p>
-          <div class="ty-mission__example">
-            <p>🎯 <strong>Mi Saboteador me hizo:</strong> [describe la situación]</p>
-            <p>📍 <strong>Lo que debí hacer:</strong> [describe la alternativa]</p>
-          </div>
-          <p class="ty-mission__note">💡 La vulnerabilidad es la base de este entrenamiento. No hay respuestas correctas — hay respuestas honestas.</p>
+        <h2 class="ty-step__title ty-step__title--locked">Accede a la plataforma del taller</h2>
+        <p class="ty-step__desc">Aquí encontrarás tu entrenamiento pre-evento, tu diagnóstico y todo lo que necesitas antes del día 1.</p>
+        
+        <!-- Locked overlay -->
+        <div class="ty-step__locked-msg" id="locked-msg">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Desbloquea este paso uniéndote al grupo de WhatsApp
         </div>
+
+        <!-- Hidden button (revealed after WA click) -->
+        <a href="#" id="platform-btn" class="ty-btn ty-btn--platform" style="display: none;">
+          🚀 ENTRAR A LA PLATAFORMA
+        </a>
       </div>
     </section>
 
@@ -113,6 +119,6 @@
 
   </div>
 
-  <script src="gracias.js?v=1"></script>
+  <script src="gracias.js?v=2"></script>
 </body>
 </html>
