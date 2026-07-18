@@ -265,11 +265,59 @@ document.addEventListener('DOMContentLoaded', () => {
 // CORE ENGINE FUNCTIONS
 // ========================================
 
+function calculatePoints(activityLevel) {
+  const pointsMap = {
+    1: 20,
+    2: 30,
+    3: 20,
+    4: 15,
+    5: 15,
+    6: 20,
+    7: 15,
+    8: 20,
+    9: 50
+  };
+  let total = 0;
+  for (let i = 1; i < activityLevel; i++) {
+    total += pointsMap[i] || 0;
+  }
+  return total;
+}
+
+function updatePointsDisplay() {
+  const pts = calculatePoints(currentActivity);
+  const completedCount = Math.min(currentActivity - 1, 9);
+
+  // Topbar Points Badge
+  const elTopbarPoints = document.getElementById('topbar-points-text');
+  if (elTopbarPoints) {
+    elTopbarPoints.textContent = `${pts} pts`;
+  }
+
+  // Dashboard Points Val
+  const elDashPoints = document.getElementById('dashboard-points-val');
+  if (elDashPoints) {
+    elDashPoints.textContent = pts;
+  }
+
+  // Dashboard Completed Val
+  const elDashCompleted = document.getElementById('dashboard-completed-val');
+  if (elDashCompleted) {
+    elDashCompleted.textContent = completedCount;
+  }
+
+  // Journey Points Text
+  const elJourneyPoints = document.getElementById('journey-points-text');
+  if (elJourneyPoints) {
+    elJourneyPoints.textContent = pts;
+  }
+}
+
 function renderJourney() {
   // Update progress bar
   const progressPercent = Math.min(((currentActivity - 1) / MAX_ACTIVITIES) * 100, 100);
   document.getElementById('journey-progress-fill').style.width = `${progressPercent}%`;
-  document.getElementById('current-day-text').textContent = currentActivity;
+  document.getElementById('current-day-text').textContent = Math.min(currentActivity, MAX_ACTIVITIES);
 
   // Update nodes
   const nodes = document.querySelectorAll('.node');
@@ -299,6 +347,9 @@ function renderJourney() {
     dashProgress.style.width = `${progressPercent}%`;
     dashText.textContent = Math.min(currentActivity, MAX_ACTIVITIES);
   }
+
+  // Sync gamification displays
+  updatePointsDisplay();
 }
 
 function openActivity(actId) {
@@ -416,7 +467,7 @@ function completeActivity(actId) {
   
   setTimeout(() => {
     // 2. Advance state if it's the current one
-    if (actId === currentActivity && currentActivity < MAX_ACTIVITIES) {
+    if (actId === currentActivity) {
       currentActivity++;
       localStorage.setItem(STORAGE_KEY, currentActivity.toString());
       renderJourney();

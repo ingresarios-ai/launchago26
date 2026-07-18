@@ -42,6 +42,10 @@
       <img src="logo-genoma.webp" alt="Genoma Logo" style="height: 28px; width: auto;" />
     </div>
     <div class="topbar__profile">
+      <div class="topbar__points" id="topbar-points-badge" title="Tus puntos acumulados">
+        <span class="topbar__emoji">⚡</span>
+        <span id="topbar-points-text" class="topbar__name" style="color: var(--yellow);">0 pts</span>
+      </div>
       <div class="topbar__saboteur">
         <span id="saboteur-emoji" class="topbar__emoji">👤</span>
         <span id="saboteur-name" class="topbar__name">Mi Perfil</span>
@@ -72,6 +76,30 @@
           <div class="time-box"><span id="cd-secs">00</span><small>SEG</small></div>
         </div>
         <p class="hero-date">3 de Agosto • 7:00 PM (Colombia)</p>
+      </section>
+
+      <!-- SCOREBOARD WIDGETS -->
+      <section class="dashboard-scoreboard">
+        <div class="score-card">
+          <div class="score-card__icon">⚡</div>
+          <div class="score-card__content">
+            <span class="score-card__label">Puntos Acumulados</span>
+            <div class="score-card__value">
+              <span id="dashboard-points-val" class="score-card__number">0</span>
+              <span class="score-card__total">/ 205 pts</span>
+            </div>
+          </div>
+        </div>
+        <div class="score-card">
+          <div class="score-card__icon">🎯</div>
+          <div class="score-card__content">
+            <span class="score-card__label">Misiones Completadas</span>
+            <div class="score-card__value">
+              <span id="dashboard-completed-val" class="score-card__number">0</span>
+              <span class="score-card__total">/ 9</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- Genoma 0 (Acceso) -->
@@ -208,7 +236,10 @@
       <div class="journey-progress-bar">
         <div class="progress-fill" id="journey-progress-fill" style="width: 10%;"></div>
       </div>
-      <p class="progress-text">Día <span id="current-day-text">1</span> de 9</p>
+      <div class="journey-progress-meta">
+        <p class="progress-text">Misión <span id="current-day-text">1</span> de 9</p>
+        <p class="progress-text progress-text--points">⚡ <span id="journey-points-text">0</span> / 205 pts</p>
+      </div>
     </div>
 
     <!-- CHAPTER 1 -->
