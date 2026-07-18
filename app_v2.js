@@ -231,6 +231,34 @@ document.addEventListener('DOMContentLoaded', () => {
     history.replaceState(null, '', '/app');
   }
 
+  // 1b. Load progress from Supabase
+  const token = localStorage.getItem('auth_token') || '';
+  if (token) {
+    fetch('https://chnpzcpczjtdsbfmjhei.supabase.co/rest/v1/rpc/get_progress_by_token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU'
+      },
+      body: JSON.stringify({ p_token: token })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.length > 0) {
+        const dbProgress = data[0];
+        if (dbProgress.activation_score) {
+          const localProgress = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
+          const finalProgress = Math.max(localProgress, dbProgress.activation_score);
+          localStorage.setItem(STORAGE_KEY, finalProgress.toString());
+          currentActivity = finalProgress;
+          renderJourney();
+        }
+      }
+    })
+    .catch(err => console.error('Error fetching progress:', err));
+  }
+
   // 2. Render initial journey progress
   renderJourney();
   
@@ -246,6 +274,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sabMap[saboteur]) {
       document.getElementById('saboteur-emoji').textContent = sabMap[saboteur].emoji;
       document.getElementById('saboteur-name').textContent = sabMap[saboteur].name;
+    }
+
+    // If they have completed the test, their progress should be at least 3
+    const localProgress = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
+    if (localProgress < 3) {
+      localStorage.setItem(STORAGE_KEY, '3');
+      currentActivity = 3;
+      renderJourney();
+      saveProgress(3);
     }
   }
 
@@ -459,6 +496,28 @@ function closeActivity() {
   }, 400);
 }
 
+function saveProgress(actId) {
+  const token = localStorage.getItem('auth_token') || '';
+  if (!token) return;
+
+  const pts = calculatePoints(actId);
+
+  fetch('https://chnpzcpczjtdsbfmjhei.supabase.co/rest/v1/rpc/save_user_progress', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU'
+    },
+    body: JSON.stringify({
+      p_token: token,
+      p_activity: actId,
+      p_points: pts
+    })
+  })
+  .catch(err => console.error('Error saving progress:', err));
+}
+
 function completeActivity(actId) {
   // 1. Confetti animation
   const btn = document.querySelector('.activity-footer button');
@@ -471,6 +530,9 @@ function completeActivity(actId) {
       currentActivity++;
       localStorage.setItem(STORAGE_KEY, currentActivity.toString());
       renderJourney();
+      
+      // Save progress to Supabase
+      saveProgress(currentActivity);
     }
     
     // 3. Close

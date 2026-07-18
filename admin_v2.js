@@ -545,7 +545,7 @@ function renderLeadsTable() {
   const pageLeads = filteredLeads.slice(start, end);
 
   if (pageLeads.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted">No se encontraron leads con los filtros seleccionados.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10" class="text-center text-muted">No se encontraron leads con los filtros seleccionados.</td></tr>';
     return;
   }
 
@@ -574,6 +574,24 @@ function renderLeadsTable() {
       testBadge = `<span class="badge ${badgeClass}">${typeCapitalized}</span>`;
     }
 
+    // Progreso
+    const currentAct = l.activation_score || 1;
+    const completedMissions = Math.min(Math.max(0, currentAct - 1), 9);
+    const progressPct = Math.round((completedMissions / 9) * 100);
+    const totalPoints = l.total_points || 0;
+    
+    const progressHTML = `
+      <div style="min-width: 100px;">
+        <div style="font-size:0.75rem; font-weight:600; display:flex; justify-content:space-between; margin-bottom:3px; color:var(--text-white);">
+          <span>${completedMissions}/9 mis.</span>
+          <span style="color:var(--yellow); font-weight:700;">⚡${totalPoints}</span>
+        </div>
+        <div style="height:6px; background:rgba(255,255,255,0.08); border-radius:100px; overflow:hidden;">
+          <div style="width:${progressPct}%; height:100%; background:linear-gradient(90deg, #f59e0b, #22c55e); border-radius:100px;"></div>
+        </div>
+      </div>
+    `;
+
     const row = document.createElement('tr');
     row.innerHTML = `
       <td><strong>${l.name || '-'}</strong></td>
@@ -586,6 +604,7 @@ function renderLeadsTable() {
       <td><span class="badge badge--gray">${l.utm_campaign || 'ninguna'}</span></td>
       <td>${surveyBadge}</td>
       <td>${testBadge}</td>
+      <td>${progressHTML}</td>
       <td style="font-size:0.82rem; color:var(--text-muted);">${dateStr}</td>
       <td>
         <button class="btn btn--secondary btn--sm btn-view-lead" data-id="${l.id}">Detalles</button>

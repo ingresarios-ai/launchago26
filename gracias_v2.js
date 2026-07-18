@@ -58,18 +58,17 @@
     }
 
     // Save progress to Supabase
-    fetch(SUPABASE_URL + '/rest/v1/user_progress', {
+    fetch(SUPABASE_URL + '/rest/v1/rpc/save_user_progress', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'apikey': SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-        'Prefer': 'return=minimal'
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
       },
       body: JSON.stringify({
-        auth_token: token,
-        milestone: 'whatsapp_clicked',
-        completed_at: new Date().toISOString()
+        p_token: token,
+        p_activity: 3, // Bumps progress to Activity 3 (completed Activity 2: Test)
+        p_points: 50
       })
     }).catch(function () {});
 
