@@ -20,6 +20,8 @@ const leadsPerPage = 15;
 // Chart.js instances
 let chartUtmSourceInstance = null;
 let chartLandingInstance = null;
+let chartTestParticipationInstance = null;
+let chartTestArchetypesInstance = null;
 
 // ===== DOM INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -597,6 +599,109 @@ function renderLeadsTable() {
       const leadId = e.currentTarget.dataset.id;
       showLeadModal(leadId);
     });
+  });
+
+  // Render analytics charts for the leads list
+  renderLeadsCharts();
+}
+
+function renderLeadsCharts() {
+  const ctxParticipation = document.getElementById('chart-test-participation');
+  const ctxArchetypes = document.getElementById('chart-test-archetypes');
+  if (!ctxParticipation || !ctxArchetypes) return;
+
+  // Calculate participation and archetype frequencies based on filteredLeads
+  let completedCount = 0;
+  let pendingCount = 0;
+  const archetypeCounts = {
+    vengador: 0,
+    euforico: 0,
+    impaciente: 0,
+    paralizado: 0
+  };
+
+  filteredLeads.forEach(l => {
+    if (l.saboteur_test) {
+      completedCount++;
+      const type = l.saboteur_test.saboteur_type;
+      if (type && archetypeCounts.hasOwnProperty(type)) {
+        archetypeCounts[type]++;
+      }
+    } else {
+      pendingCount++;
+    }
+  });
+
+  // Destroy previous chart instances safely
+  if (chartTestParticipationInstance) {
+    chartTestParticipationInstance.destroy();
+  }
+  if (chartTestArchetypesInstance) {
+    chartTestArchetypesInstance.destroy();
+  }
+
+  // Draw Participation Pie Chart
+  chartTestParticipationInstance = new Chart(ctxParticipation, {
+    type: 'pie',
+    data: {
+      labels: ['Completado', 'Pendiente'],
+      datasets: [{
+        data: [completedCount, pendingCount],
+        backgroundColor: ['rgba(34, 197, 94, 0.75)', 'rgba(239, 68, 68, 0.75)'],
+        borderColor: ['#22c55e', '#ef4444'],
+        borderWidth: 1.5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: {
+            color: '#cbd5e1',
+            font: { family: 'Inter', size: 10 }
+          }
+        }
+      }
+    }
+  });
+
+  // Draw Archetypes Pie Chart
+  chartTestArchetypesInstance = new Chart(ctxArchetypes, {
+    type: 'pie',
+    data: {
+      labels: ['Vengador', 'Eufórico', 'Impaciente', 'Paralizado'],
+      datasets: [{
+        data: [
+          archetypeCounts.vengador,
+          archetypeCounts.euforico,
+          archetypeCounts.impaciente,
+          archetypeCounts.paralizado
+        ],
+        backgroundColor: [
+          'rgba(239, 68, 68, 0.75)',
+          'rgba(245, 158, 11, 0.75)',
+          'rgba(59, 130, 246, 0.75)',
+          'rgba(139, 92, 246, 0.75)'
+        ],
+        borderColor: ['#ef4444', '#f59e0b', '#3b82f6', '#8b5cf6'],
+        borderWidth: 1.5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: {
+            color: '#cbd5e1',
+            font: { family: 'Inter', size: 10 }
+          }
+        }
+      }
+    }
   });
 }
 

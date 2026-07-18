@@ -219,6 +219,22 @@
             </button>
           </div>
 
+          <!-- ===== LEADS CHARTS ROW ===== -->
+          <div class="analytics-layout" style="margin-bottom: 28px;">
+            <div class="analytics-card" style="flex: 1; min-width: 300px; height: 320px;">
+              <div class="card-title">Participación en el Test (Completado vs No)</div>
+              <div style="position:relative; height:200px;">
+                <canvas id="chart-test-participation"></canvas>
+              </div>
+            </div>
+            <div class="analytics-card" style="flex: 1; min-width: 300px; height: 320px;">
+              <div class="card-title">Distribución de Arquetipos Dominantes</div>
+              <div style="position:relative; height:200px;">
+                <canvas id="chart-test-archetypes"></canvas>
+              </div>
+            </div>
+          </div>
+
           <!-- FILTERS BAR -->
           <div class="filters-bar">
             <div class="search-input-wrapper">
@@ -443,6 +459,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="admin.js?v=4"></script>
+  <script src="admin.js?v=5"></script>
 </body>
 </html>
