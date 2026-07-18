@@ -5,7 +5,7 @@
 const SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
 
-const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/jTugwykceKyJlATOSvkb/webhook-trigger/vSizZsL8C5AkTPpMlfDf';
+let GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/jTugwykceKyJlATOSvkb/webhook-trigger/vSizZsL8C5AkTPpMlfDf';
 
 let currentStep = 1;
 let leadData = null;
@@ -16,7 +16,69 @@ let itiInstance = null;
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', init);
 
+async function loadWebhook() {
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/system_settings?key=eq.ghl_survey_webhook', {
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+      }
+    });
+    const data = await res.json();
+    if (data && data.length > 0 && data[0].value) {
+      GHL_WEBHOOK = data[0].value;
+    }
+  } catch (err) {
+    console.warn('Error loading survey webhook setting:', err);
+  }
+}
+
+function trackVisit(pageName) {
+  try {
+    const sessionKey = 'tracked_visit_' + pageName;
+    if (sessionStorage.getItem(sessionKey)) return;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const utm_source = urlParams.get('utm_source') || null;
+    const utm_medium = urlParams.get('utm_medium') || null;
+    const utm_campaign = urlParams.get('utm_campaign') || null;
+    const utm_content = urlParams.get('utm_content') || null;
+    const utm_term = urlParams.get('utm_term') || null;
+
+    let sessionId = sessionStorage.getItem('analytics_session_id');
+    if (!sessionId) {
+      sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
+      sessionStorage.setItem('analytics_session_id', sessionId);
+    }
+
+    fetch(SUPABASE_URL + '/rest/v1/analytics_pageviews', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        page: pageName,
+        utm_source: utm_source,
+        utm_medium: utm_medium,
+        utm_campaign: utm_campaign,
+        utm_content: utm_content,
+        utm_term: utm_term,
+        session_id: sessionId
+      })
+    }).catch(function() {});
+
+    sessionStorage.setItem(sessionKey, 'true');
+  } catch (err) {
+    console.warn('Analytics tracking error:', err);
+  }
+}
+
 async function init() {
+  loadWebhook();
+  trackVisit('encuesta');
   const token = new URLSearchParams(window.location.search).get('t');
   
   if (!token) {

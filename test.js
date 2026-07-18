@@ -857,6 +857,50 @@ function verifyMagicLink() {
 
 // Initialize router on load
 verifyMagicLink();
+trackVisit('test');
+
+function trackVisit(pageName) {
+  try {
+    var sessionKey = 'tracked_visit_' + pageName;
+    if (sessionStorage.getItem(sessionKey)) return;
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var utm_source = urlParams.get('utm_source') || null;
+    var utm_medium = urlParams.get('utm_medium') || null;
+    var utm_campaign = urlParams.get('utm_campaign') || null;
+    var utm_content = urlParams.get('utm_content') || null;
+    var utm_term = urlParams.get('utm_term') || null;
+
+    var sessionId = sessionStorage.getItem('analytics_session_id');
+    if (!sessionId) {
+      sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
+      sessionStorage.setItem('analytics_session_id', sessionId);
+    }
+
+    fetch(SUPABASE_URL + '/rest/v1/analytics_pageviews', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        page: pageName,
+        utm_source: utm_source,
+        utm_medium: utm_medium,
+        utm_campaign: utm_campaign,
+        utm_content: utm_content,
+        utm_term: utm_term,
+        session_id: sessionId
+      })
+    }).catch(function() {});
+
+    sessionStorage.setItem(sessionKey, 'true');
+  } catch (err) {
+    console.warn('Analytics tracking error:', err);
+  }
+}
 
 function goToApp() {
   var t = localStorage.getItem('auth_token') || token;

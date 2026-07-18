@@ -4,7 +4,8 @@
     { "source": "/test", "destination": "/test.html" },
     { "source": "/resultado", "destination": "/test.html" },
     { "source": "/app", "destination": "/app.html" },
-    { "source": "/encuesta", "destination": "/encuesta.html" }
+    { "source": "/encuesta", "destination": "/encuesta.html" },
+    { "source": "/admin", "destination": "/admin.html" }
   ],
   "headers": [
     {
