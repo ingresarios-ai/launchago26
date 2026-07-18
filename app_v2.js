@@ -222,9 +222,19 @@ const activitiesData = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 1. Process Magic Link token from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlToken = urlParams.get('token');
+  if (urlToken) {
+    localStorage.setItem('auth_token', urlToken);
+    // Clean address bar to hide token
+    history.replaceState(null, '', '/app');
+  }
+
+  // 2. Render initial journey progress
   renderJourney();
   
-  // Track saboteur from test
+  // 3. Track saboteur from test
   const saboteur = localStorage.getItem('saboteur_result');
   if (saboteur) {
     const sabMap = {
@@ -237,6 +247,17 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('saboteur-emoji').textContent = sabMap[saboteur].emoji;
       document.getElementById('saboteur-name').textContent = sabMap[saboteur].name;
     }
+  }
+
+  // 4. Auto-open Activity 1 on first entry to guide the user
+  const hasEntered = localStorage.getItem('app_has_entered');
+  if (!hasEntered) {
+    localStorage.setItem('app_has_entered', 'true');
+    currentActivity = 1;
+    localStorage.setItem(STORAGE_KEY, '1');
+    renderJourney();
+    showJourney();
+    openActivity(1);
   }
 });
 
