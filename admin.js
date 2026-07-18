@@ -182,14 +182,43 @@ function switchTab(tab) {
 // ===== LOAD DATA FROM SUPABASE =====
 async function loadData() {
   try {
-    // 1. Fetch leads (select only required summary columns to make it fast)
-    allLeads = await dbFetch('/rest/v1/leads?select=*,survey_responses(id)&order=created_at.desc');
+    // 1. Fetch leads via secure admin RPC function
+    allLeads = await dbFetch('/rest/v1/rpc/admin_get_leads', {
+      method: 'POST',
+      body: JSON.stringify({ p_email: authEmail, p_password: authPass })
+    });
     
-    // 2. Fetch page visits
-    allVisits = await dbFetch('/rest/v1/analytics_pageviews?select=*');
+    // Process survey counts mapping (survey_responses count for each lead)
+    // We will do this by looking up the responses locally since we retrieve both lists securely.
+    
+    // 2. Fetch page visits via secure admin RPC function
+    allVisits = await dbFetch('/rest/v1/rpc/admin_get_pageviews', {
+      method: 'POST',
+      body: JSON.stringify({ p_email: authEmail, p_password: authPass })
+    });
 
-    // 3. Fetch surveys with joined lead info
-    allSurveys = await dbFetch('/rest/v1/survey_responses?select=*,leads(name,email)&order=created_at.desc');
+    // 3. Fetch surveys via secure admin RPC function
+    allSurveys = await dbFetch('/rest/v1/rpc/admin_get_surveys', {
+      method: 'POST',
+      body: JSON.stringify({ p_email: authEmail, p_password: authPass })
+    });
+
+    // Match survey responses back to the lead objects in-memory for UI badges
+    const surveyLeadIds = new Set(allSurveys.map(s => s.lead_id));
+    allLeads.forEach(l => {
+      l.survey_responses = surveyLeadIds.has(l.id) ? [{ id: true }] : [];
+    });
+
+    // Also link lead details to surveys in-memory since REST joined leads isn't directly returned by RPC
+    allSurveys.forEach(s => {
+      const parentLead = allLeads.find(l => l.id === s.lead_id);
+      if (parentLead) {
+        s.leads = {
+          name: parentLead.name,
+          email: parentLead.email
+        };
+      }
+    });
 
     // Populate filters & build dashboard
     populateFilterOptions();
@@ -613,16 +642,17 @@ async function handleSaveWebhooks(e) {
   statusEl.style.display = 'none';
 
   try {
-    // Upsert both registration and survey webhook settings
-    await dbFetch('/rest/v1/system_settings', {
+    // Save webhooks via secure admin RPC function
+    await dbFetch('/rest/v1/rpc/admin_update_settings', {
       method: 'POST',
-      headers: {
-        'Prefer': 'resolution=merge-duplicates'
-      },
-      body: JSON.stringify([
-        { key: 'ghl_registration_webhook', value: regVal, updated_at: new Date().toISOString() },
-        { key: 'ghl_survey_webhook', value: survVal, updated_at: new Date().toISOString() }
-      ])
+      body: JSON.stringify({
+        p_email: authEmail,
+        p_password: authPass,
+        p_settings: {
+          ghl_registration_webhook: regVal,
+          ghl_survey_webhook: survVal
+        }
+      })
     });
 
     statusEl.className = 'status-msg success';
