@@ -151,6 +151,22 @@ function handleFormSubmit(e) {
   const utm_content = form.querySelector('input[name="utm_content"]').value;
   const utm_term = form.querySelector('input[name="utm_term"]').value;
 
+  // Detect traffic source from UTMs and override landing
+  var detectedLanding = landing; // keep original as fallback
+  var utmAll = [utm_source, utm_medium, utm_campaign, utm_content, utm_term]
+    .filter(Boolean).join(' ').toLowerCase();
+  if (utmAll) {
+    if (/\b(ig|instagram)\b/.test(utmAll)) {
+      detectedLanding = 'Instagram';
+    } else if (/\b(meta|facebook|fb)\b/.test(utmAll)) {
+      detectedLanding = 'Facebook';
+    } else if (/\b(yt|youtube)\b/.test(utmAll)) {
+      detectedLanding = 'Youtube';
+    } else if (/\bgoogle\b/.test(utmAll)) {
+      detectedLanding = 'Google';
+    }
+  }
+
   // Disable button
   btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><svg width="16" height="16" viewBox="0 0 24 24" style="animation:spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="30 70"/></svg> REGISTRANDO...</span>';
   btn.style.pointerEvents = 'none';
@@ -165,7 +181,7 @@ function handleFormSubmit(e) {
   }
 
   const leadData = {
-    name, email, phone, landing,
+    name, email, phone, landing: detectedLanding,
     utm_source: utm_source || null,
     utm_medium: utm_medium || null,
     utm_campaign: utm_campaign || null,
