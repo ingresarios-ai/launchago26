@@ -30,10 +30,11 @@ async function init() {
         'apikey': SUPABASE_ANON_KEY,
         'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
       },
-      body: JSON.stringify({ token_input: token })
+      body: JSON.stringify({ p_token: token })
     });
 
-    const lead = await leadRes.json();
+    const leadResult = await leadRes.json();
+    const lead = Array.isArray(leadResult) ? leadResult[0] : leadResult;
 
     if (!lead || !lead.id) {
       showError();
