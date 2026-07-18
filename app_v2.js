@@ -231,8 +231,14 @@ document.addEventListener('DOMContentLoaded', () => {
     history.replaceState(null, '', '/app');
   }
 
-  // 1b. Load progress from Supabase
   const token = localStorage.getItem('auth_token') || '';
+  if (!token) {
+    // No active session/token, redirect immediately to optin landing page
+    window.location.href = '/';
+    return;
+  }
+
+  // 1b. Load progress from Supabase
   if (token) {
     fetch('https://chnpzcpczjtdsbfmjhei.supabase.co/rest/v1/rpc/get_progress_by_token', {
       method: 'POST',
