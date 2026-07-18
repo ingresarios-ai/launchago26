@@ -12,6 +12,7 @@ let currentTab = 'dashboard';
 let allLeads = [];
 let allVisits = [];
 let allSurveys = [];
+let allTests = [];
 let filteredLeads = [];
 let leadsPage = 1;
 const leadsPerPage = 15;
@@ -65,6 +66,7 @@ function setupEventListeners() {
   document.getElementById('lead-search').addEventListener('input', handleFilterChange);
   document.getElementById('filter-landing').addEventListener('change', handleFilterChange);
   document.getElementById('filter-survey').addEventListener('change', handleFilterChange);
+  document.getElementById('filter-test').addEventListener('change', handleFilterChange);
 
   // Leads Pagination
   document.getElementById('btn-prev-page').addEventListener('click', () => {
@@ -214,10 +216,24 @@ async function loadData() {
       body: JSON.stringify({ p_email: authEmail, p_password: authPass })
     });
 
+    // 4. Fetch tests via secure admin RPC function
+    allTests = await dbFetch('/rest/v1/rpc/admin_get_tests', {
+      method: 'POST',
+      body: JSON.stringify({ p_email: authEmail, p_password: authPass })
+    });
+
     // Match survey responses back to the lead objects in-memory for UI badges
     const surveyLeadIds = new Set(allSurveys.map(s => s.lead_id));
+    
+    // Match test results back to the lead objects in-memory for UI badges & filtering
+    const testLeadMap = {};
+    allTests.forEach(t => {
+      testLeadMap[t.lead_id] = t;
+    });
+
     allLeads.forEach(l => {
       l.survey_responses = surveyLeadIds.has(l.id) ? [{ id: true }] : [];
+      l.saboteur_test = testLeadMap[l.id] || null;
     });
 
     // Also link lead details to surveys in-memory since REST joined leads isn't directly returned by RPC
@@ -476,6 +492,7 @@ function handleFilterChange() {
   const search = document.getElementById('lead-search').value.toLowerCase().trim();
   const landingFilter = document.getElementById('filter-landing').value;
   const surveyFilter = document.getElementById('filter-survey').value;
+  const testFilter = document.getElementById('filter-test').value;
 
   filteredLeads = allLeads.filter(l => {
     // Search
@@ -495,7 +512,14 @@ function handleFilterChange() {
       (surveyFilter === 'si' && answered) ||
       (surveyFilter === 'no' && !answered);
 
-    return searchMatch && landingMatch && surveyMatch;
+    // Test check
+    const tookTest = !!l.saboteur_test;
+    const testMatch = !testFilter ||
+      (testFilter === 'si' && tookTest) ||
+      (testFilter === 'no' && !tookTest) ||
+      (['vengador', 'euforico', 'impaciente', 'paralizado'].includes(testFilter) && tookTest && l.saboteur_test.saboteur_type === testFilter);
+
+    return searchMatch && landingMatch && surveyMatch && testMatch;
   });
 
   leadsPage = 1;
@@ -518,7 +542,7 @@ function renderLeadsTable() {
   const pageLeads = filteredLeads.slice(start, end);
 
   if (pageLeads.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">No se encontraron leads con los filtros seleccionados.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted">No se encontraron leads con los filtros seleccionados.</td></tr>';
     return;
   }
 
@@ -527,6 +551,25 @@ function renderLeadsTable() {
     
     const hasSurvey = l.survey_responses && l.survey_responses.length > 0;
     const surveyBadge = hasSurvey ? '<span class="badge badge--green">Sí</span>' : '<span class="badge badge--red">No</span>';
+
+    const testObj = l.saboteur_test;
+    let testBadge = '<span class="badge badge--red">No</span>';
+    if (testObj) {
+      const type = testObj.saboteur_type || 'completado';
+      let badgeClass = 'badge--blue';
+      if (type === 'vengador') badgeClass = 'badge--red';
+      else if (type === 'euforico') badgeClass = 'badge--orange';
+      else if (type === 'impaciente') badgeClass = 'badge--orange'; // Eufórico is yellow/orange, Impaciente is purple/orange in css we did badge--orange and badge--purple
+      else if (type === 'paralizado') badgeClass = 'badge--purple';
+      
+      if (type === 'euforico') badgeClass = 'badge--orange'; // eufórico maps to badge--orange
+      if (type === 'impaciente') badgeClass = 'badge--blue'; // impaciente maps to badge--blue
+      if (type === 'paralizado') badgeClass = 'badge--purple'; // paralizado maps to badge--purple
+      if (type === 'vengador') badgeClass = 'badge--red'; // vengador maps to badge--red
+      
+      const typeCapitalized = type.charAt(0).toUpperCase() + type.slice(1);
+      testBadge = `<span class="badge ${badgeClass}">${typeCapitalized}</span>`;
+    }
 
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -539,6 +582,7 @@ function renderLeadsTable() {
       <td><span class="badge badge--gray">${l.utm_source || 'directo'}</span></td>
       <td><span class="badge badge--gray">${l.utm_campaign || 'ninguna'}</span></td>
       <td>${surveyBadge}</td>
+      <td>${testBadge}</td>
       <td style="font-size:0.82rem; color:var(--text-muted);">${dateStr}</td>
       <td>
         <button class="btn btn--secondary btn--sm btn-view-lead" data-id="${l.id}">Detalles</button>
@@ -728,6 +772,73 @@ function showLeadModal(leadId) {
     });
   } else {
     answersGrid.innerHTML = '<p class="text-muted">El lead aún no ha completado la encuesta de lanzamiento.</p>';
+  }
+
+  // Check Saboteur Test Answers
+  const testContainer = document.getElementById('modal-test-results');
+  testContainer.innerHTML = '';
+
+  const test = l.saboteur_test;
+  if (test) {
+    // Archetype metadata mapper matching test.js
+    const archetypes = {
+      vengador: { emoji: '🔥', name: 'EL VENGADOR', desc: 'Actúas desde la revancha. Cada pérdida se convierte en una batalla personal que necesitas ganar, así que aumentas el riesgo para "recuperar". El problema: ni el mercado ni el dinero te deben nada.', insight: 'Tu Saboteador se activa después de cada pérdida. Te susurra: "recupéralo ya". Pero las decisiones tomadas desde la rabia amplían la pérdida el 78% de las veces.', color: '#ef4444', fillClass: 'fill-red' },
+      euforico: { emoji: '🎰', name: 'EL EUFÓRICO', desc: 'Cuando las cosas van bien, te sientes invencible. Arriesgas más, dejas de seguir las reglas y sobreactúas. Tu peor enemigo no es el fracaso — es el éxito mal gestionado.', insight: 'Tu Saboteador se activa cuando las cosas van bien. Te convence de que "estás en racha" y que las reglas ya no aplican. Las personas más peligrosas con el dinero no son las que pierden — son las que no saben ganar.', color: '#f59e0b', fillClass: 'fill-yellow' },
+      impaciente: { emoji: '⚡', name: 'EL IMPACIENTE', desc: 'Necesitas acción constante. Actúas antes de tiempo, decides sin confirmación y confundes movimiento con progreso. Tu bolsillo paga el costo de tu ansiedad.', insight: 'Tu Saboteador te hace creer que si no estás actuando, estás perdiendo. Pero las mejores decisiones financieras suelen ser las que NO tomas impulsivamente. La paciencia no es pasividad — es precisión.', color: '#8b5cf6', fillClass: 'fill-purple' },
+      paralizado: { emoji: '🧊', name: 'EL PARALIZADO', desc: 'Analizas todo pero no decides nada. El miedo a equivocarte te congela y las oportunidades pasan frente a ti mientras buscas "más información". Tu inacción también cuesta dinero.', insight: 'Tu Saboteador usa la perfección como excusa para la inacción. Te convence de que necesitas más datos, más seguridad. Pero el costo de NO actuar es invisible — y acumulativo.', color: '#3b82f6', fillClass: 'fill-blue' }
+    };
+
+    const type = test.saboteur_type || 'vengador';
+    const profile = archetypes[type] || archetypes.vengador;
+    
+    // Draw Banner & Description
+    let html = `
+      <div class="archetype-banner">
+        <span class="archetype-emoji">${profile.emoji}</span>
+        <div class="archetype-title">
+          <h4>${profile.name}</h4>
+          <span class="badge" style="background:${profile.color}20; color:${profile.color}; border:1px solid ${profile.color}40;">Tipo Dominante</span>
+        </div>
+      </div>
+      <p class="archetype-desc">${profile.desc}</p>
+      <p class="archetype-insight"><strong>Perspectiva:</strong> ${profile.insight}</p>
+      
+      <div class="scores-header">Puntuaciones por Arquetipo</div>
+    `;
+
+    // Render scores progress bars
+    const scores = test.scores || {};
+    const keys = ['vengador', 'euforico', 'impaciente', 'paralizado'];
+    keys.forEach(k => {
+      const arch = archetypes[k];
+      const val = scores[k] || 0;
+      // Max score is 21 (7 questions * 3 pts)
+      const percent = Math.min(Math.round((val / 21) * 100), 100);
+      
+      html += `
+        <div class="archetype-bar-row">
+          <span>${arch.name.split(' ')[1]}</span>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill ${arch.fillClass}" style="width: ${percent}%"></div>
+          </div>
+          <span class="score-num">${val} pts</span>
+        </div>
+      `;
+    });
+
+    // Add branch info
+    const branch = (test.answers && test.answers.branch) || 'Desconocida';
+    const dateStr = test.completed_at ? new Date(test.completed_at).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
+    html += `
+      <div style="margin-top:14px; padding-top: 10px; border-top: 1px solid var(--border-subtle); font-size:0.82rem; color:var(--text-muted); line-height: 1.5;">
+        <div><strong>Perfil del Test:</strong> ${branch === 'trader' ? 'Trader Activo 📈' : 'No-Trader / Principiante 🪙'}</div>
+        <div><strong>Completado el:</strong> ${dateStr}</div>
+      </div>
+    `;
+
+    testContainer.innerHTML = html;
+  } else {
+    testContainer.innerHTML = '<p class="text-muted">El lead aún no ha realizado el test del saboteador.</p>';
   }
 
   document.getElementById('lead-modal').style.display = 'flex';

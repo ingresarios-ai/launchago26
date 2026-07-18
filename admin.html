@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="admin.css?v=2" />
 </head>
 <body>
 
@@ -234,6 +234,15 @@
                 <option value="si">Encuesta: Completada</option>
                 <option value="no">Encuesta: Pendiente</option>
               </select>
+              <select id="filter-test">
+                <option value="">Test: Todos</option>
+                <option value="si">Test: Realizado</option>
+                <option value="no">Test: Pendiente</option>
+                <option value="vengador">Test: El Vengador</option>
+                <option value="euforico">Test: El Eufórico</option>
+                <option value="impaciente">Test: El Impaciente</option>
+                <option value="paralizado">Test: El Paralizado</option>
+              </select>
             </div>
           </div>
 
@@ -248,12 +257,13 @@
                   <th>UTM Source</th>
                   <th>UTM Campaign</th>
                   <th>Encuesta</th>
+                  <th>Test</th>
                   <th>Registro</th>
                   <th>Detalle</th>
                 </tr>
               </thead>
               <tbody id="leads-tbody">
-                <tr><td colspan="8" class="text-center text-muted">Cargando leads...</td></tr>
+                <tr><td colspan="9" class="text-center text-muted">Cargando leads...</td></tr>
               </tbody>
             </table>
           </div>
@@ -420,11 +430,19 @@
           </div>
         </div>
 
+        <div class="modal-section" style="margin-top:20px;" id="modal-section-test">
+          <h3>Resultado del Test del Saboteador</h3>
+          <div class="test-results-container" id="modal-test-results">
+            <!-- Dynamic list of test results and scores -->
+            <p class="text-muted">El lead aún no ha realizado el test.</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="admin.js?v=3"></script>
+  <script src="admin.js?v=4"></script>
 </body>
 </html>
