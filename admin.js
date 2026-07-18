@@ -191,6 +191,13 @@ async function loadData() {
       method: 'POST',
       body: JSON.stringify({ p_email: authEmail, p_password: authPass })
     });
+
+    // Unify "Landing A Org" with "Facebook"
+    allLeads.forEach(l => {
+      if (l.landing === 'Landing A Org') {
+        l.landing = 'Facebook';
+      }
+    });
     
     // Process survey counts mapping (survey_responses count for each lead)
     // We will do this by looking up the responses locally since we retrieve both lists securely.
