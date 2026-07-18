@@ -941,3 +941,37 @@ body {
   font-weight: bold;
   color: var(--text-secondary);
 }
+
+/* ========== SUB TABLE FOR ADMINS LIST ========== */
+.table-container-sub {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.02);
+}
+
+.sub-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.sub-table th, .sub-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.sub-table th {
+  background: rgba(255,255,255,0.03);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+
+.sub-table tr:last-child td {
+  border-bottom: none;
+}

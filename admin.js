@@ -97,6 +97,7 @@ function setupEventListeners() {
   // Settings Forms
   document.getElementById('settings-webhooks-form').addEventListener('submit', handleSaveWebhooks);
   document.getElementById('settings-password-form').addEventListener('submit', handleSavePassword);
+  document.getElementById('settings-new-admin-form').addEventListener('submit', handleCreateAdminSubmit);
 }
 
 // ===== AUTH CHECK =====
@@ -963,6 +964,9 @@ async function buildSettingsTab() {
   } catch (err) {
     console.error('Error loading webhooks configuration:', err);
   }
+
+  // Load registered system administrators
+  loadAdminsList();
 }
 
 async function handleSaveWebhooks(e) {
@@ -1057,6 +1061,85 @@ async function handleSavePassword(e) {
   } finally {
     btn.disabled = false;
     btn.textContent = 'Cambiar Contraseña';
+  }
+}
+
+async function handleCreateAdminSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btn-create-admin');
+  const statusEl = document.getElementById('admin-create-status');
+
+  const nameVal = document.getElementById('new-admin-name').value.trim();
+  const emailVal = document.getElementById('new-admin-email').value.trim();
+  const passVal = document.getElementById('new-admin-password').value;
+
+  btn.disabled = true;
+  btn.textContent = 'Registrando...';
+  statusEl.style.display = 'none';
+
+  try {
+    await dbFetch('/rest/v1/rpc/admin_create_user', {
+      method: 'POST',
+      body: JSON.stringify({
+        p_admin_email: authEmail,
+        p_admin_password: authPass,
+        p_new_email: emailVal,
+        p_new_name: nameVal,
+        p_new_password: passVal
+      })
+    });
+
+    statusEl.textContent = '¡Administrador registrado exitosamente!';
+    statusEl.className = 'status-msg success';
+    statusEl.style.display = 'block';
+
+    // Clear form fields
+    document.getElementById('settings-new-admin-form').reset();
+
+    // Reload admins list
+    loadAdminsList();
+
+  } catch (err) {
+    console.error('Error creating admin:', err);
+    statusEl.textContent = '❌ Error: ' + (err.message || 'Error al registrar al administrador.');
+    statusEl.className = 'status-msg error';
+    statusEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Registrar Administrador';
+  }
+}
+
+async function loadAdminsList() {
+  const tbody = document.getElementById('admins-list-tbody');
+  if (!tbody) return;
+
+  try {
+    const admins = await dbFetch('/rest/v1/rpc/admin_get_users', {
+      method: 'POST',
+      body: JSON.stringify({ p_email: authEmail, p_password: authPass })
+    });
+
+    tbody.innerHTML = '';
+    if (admins.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No hay administradores registrados.</td></tr>';
+      return;
+    }
+
+    admins.forEach(adm => {
+      const dateStr = adm.created_at ? new Date(adm.created_at).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '-';
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><strong>${adm.name || '-'}</strong></td>
+        <td>${adm.email}</td>
+        <td style="font-size:0.82rem; color:var(--text-muted);">${dateStr}</td>
+      `;
+      tbody.appendChild(row);
+    });
+
+  } catch (err) {
+    console.error('Error loading admins list:', err);
+    tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">Error al cargar administradores.</td></tr>';
   }
 }
 

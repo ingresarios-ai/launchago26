@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="stylesheet" href="admin.css?v=2" />
+  <link rel="stylesheet" href="admin.css?v=3" />
 </head>
 <body>
 
@@ -400,6 +400,53 @@
               </form>
             </div>
 
+            <!-- SYSTEM ADMINISTRATORS -->
+            <div class="analytics-card" style="margin-top:24px;">
+              <div class="card-title">👥 Administradores del Sistema</div>
+              <p class="card-desc" style="color:rgba(255,255,255,0.6); font-size:0.88rem; margin-bottom:20px;">
+                Crea nuevas cuentas de administrador para ingresar al sistema. No requiere confirmación de correo.
+              </p>
+
+              <form id="settings-new-admin-form" style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle);">
+                <div class="input-group">
+                  <label for="new-admin-name">Nombre Completo</label>
+                  <input type="text" id="new-admin-name" style="width:100%;" required placeholder="Nombre del administrador" />
+                </div>
+
+                <div class="input-group" style="margin-top:16px;">
+                  <label for="new-admin-email">Correo Electrónico</label>
+                  <input type="email" id="new-admin-email" style="width:100%;" required placeholder="admin@correo.com" />
+                </div>
+
+                <div class="input-group" style="margin-top:16px;">
+                  <label for="new-admin-password">Contraseña</label>
+                  <input type="password" id="new-admin-password" style="width:100%;" required placeholder="Mínimo 6 caracteres" minlength="6" />
+                </div>
+
+                <div id="admin-create-status" class="status-msg" style="display:none; margin-top:12px;"></div>
+
+                <button type="submit" class="btn btn--primary" style="margin-top:20px;" id="btn-create-admin">
+                  Registrar Administrador
+                </button>
+              </form>
+
+              <div class="card-subtitle-small" style="font-weight: 600; font-size: 0.95rem; margin-bottom: 12px; color: var(--text-secondary);">Administradores Registrados</div>
+              <div class="table-container-sub">
+                <table class="sub-table" id="admins-list-table">
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Correo</th>
+                      <th>Registro</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admins-list-tbody">
+                    <tr><td colspan="3" class="text-center text-muted">Cargando administradores...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
         </section>
 
@@ -459,6 +506,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="admin.js?v=5"></script>
+  <script src="admin.js?v=6"></script>
 </body>
 </html>
