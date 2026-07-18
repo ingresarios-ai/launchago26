@@ -124,6 +124,21 @@
                 <p class="kpi-value" id="kpi-total-surveys">-</p>
                 <p class="kpi-sub" id="kpi-survey-ratio">-</p>
               </div>
+          </div>
+
+          <!-- CHARTS ROW -->
+          <div class="analytics-layout" style="margin-bottom: 24px;">
+            <div class="analytics-card flex-1">
+              <div class="card-title">Distribución de Leads por Origen (UTM Source)</div>
+              <div style="max-height: 280px; display: flex; justify-content: center; align-items: center; padding: 10px;">
+                <canvas id="chart-utm-source" style="max-width: 250px; max-height: 250px;"></canvas>
+              </div>
+            </div>
+            <div class="analytics-card flex-1">
+              <div class="card-title">Distribución de Leads por Canal / Landing</div>
+              <div style="max-height: 280px; display: flex; justify-content: center; align-items: center; padding: 10px;">
+                <canvas id="chart-landing" style="max-width: 250px; max-height: 250px;"></canvas>
+              </div>
             </div>
           </div>
 
@@ -408,6 +423,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

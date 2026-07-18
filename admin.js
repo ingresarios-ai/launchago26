@@ -16,6 +16,10 @@ let filteredLeads = [];
 let leadsPage = 1;
 const leadsPerPage = 15;
 
+// Chart.js instances
+let chartUtmSourceInstance = null;
+let chartLandingInstance = null;
+
 // ===== DOM INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
@@ -245,7 +249,19 @@ function buildAnalytics() {
   document.getElementById('kpi-total-leads').textContent = totalLeads;
   document.getElementById('kpi-total-visits').textContent = uniqueVisitsCount;
   
-  const convRate = uniqueVisitsCount > 0 ? ((totalLeads / uniqueVisitsCount) * 100).toFixed(1) : '0';
+  // Mathematically Correct Conversion Rate:
+  // We only count leads that registered AFTER the page views tracking started.
+  let leadsAfterFirstVisitCount = 0;
+  if (allVisits.length > 0) {
+    const visitTimestamps = allVisits.map(v => new Date(v.created_at).getTime());
+    const firstVisitTime = Math.min(...visitTimestamps);
+    // Buffer by 5 seconds just in case clocks differ slightly
+    const startTimeThreshold = firstVisitTime - 5000;
+    
+    leadsAfterFirstVisitCount = allLeads.filter(l => new Date(l.created_at).getTime() >= startTimeThreshold).length;
+  }
+
+  const convRate = uniqueVisitsCount > 0 ? ((leadsAfterFirstVisitCount / uniqueVisitsCount) * 100).toFixed(1) : '0';
   document.getElementById('kpi-conversion-rate').textContent = convRate + '%';
   document.getElementById('kpi-total-surveys').textContent = totalSurveys;
 
@@ -271,7 +287,17 @@ function buildAnalytics() {
   sourceTableBody.innerHTML = '';
   Object.keys(utmSources).sort((a,b) => utmSources[b].leads - utmSources[a].leads).forEach(src => {
     const data = utmSources[src];
-    const rate = data.visits > 0 ? ((data.leads / data.visits) * 100).toFixed(1) + '%' : '100.0%';
+    // For local conversion rate per UTM: only count matching leads registered after pageview tracking
+    let matchingLeadsCount = 0;
+    if (allVisits.length > 0) {
+      const visitTimestamps = allVisits.map(v => new Date(v.created_at).getTime());
+      const firstVisitTime = Math.min(...visitTimestamps) - 5000;
+      matchingLeadsCount = allLeads.filter(l => (l.utm_source || 'Tráfico Directo / Orgánico') === src && new Date(l.created_at).getTime() >= firstVisitTime).length;
+    } else {
+      matchingLeadsCount = data.leads;
+    }
+
+    const rate = data.visits > 0 ? ((matchingLeadsCount / data.visits) * 100).toFixed(1) + '%' : '0.0%';
     const row = document.createElement('tr');
     row.innerHTML = `
       <td><strong>${src}</strong></td>
@@ -331,6 +357,100 @@ function buildAnalytics() {
       campaignTableBody.appendChild(row);
     });
   }
+
+  // Draw Pie Charts
+  renderPieCharts(utmSources, landings);
+}
+
+// ===== RENDER PIE CHARTS =====
+function renderPieCharts(utmSources, landings) {
+  if (typeof Chart === 'undefined') return;
+
+  // 1. UTM Source Chart
+  const ctxUtm = document.getElementById('chart-utm-source').getContext('2d');
+  if (chartUtmSourceInstance) {
+    chartUtmSourceInstance.destroy();
+  }
+
+  const sortedUtmKeys = Object.keys(utmSources).sort((a, b) => utmSources[b].leads - utmSources[a].leads);
+  const utmLabels = sortedUtmKeys;
+  const utmData = sortedUtmKeys.map(k => utmSources[k].leads);
+
+  chartUtmSourceInstance = new Chart(ctxUtm, {
+    type: 'pie',
+    data: {
+      labels: utmLabels,
+      datasets: [{
+        data: utmData,
+        backgroundColor: [
+          'rgba(59, 130, 246, 0.75)', // blue
+          'rgba(16, 185, 129, 0.75)', // green
+          'rgba(168, 85, 247, 0.75)', // purple
+          'rgba(250, 204, 21, 0.75)', // yellow
+          'rgba(239, 68, 68, 0.75)',  // red
+          'rgba(100, 116, 139, 0.75)'  // slate
+        ],
+        borderWidth: 1,
+        borderColor: '#0f141a'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: {
+            color: '#cbd5e1',
+            font: { family: 'Inter', size: 9 }
+          }
+        }
+      }
+    }
+  });
+
+  // 2. Landing Chart
+  const ctxLanding = document.getElementById('chart-landing').getContext('2d');
+  if (chartLandingInstance) {
+    chartLandingInstance.destroy();
+  }
+
+  const sortedLandingKeys = Object.keys(landings).sort((a, b) => landings[b] - landings[a]);
+  const landingLabels = sortedLandingKeys;
+  const landingData = sortedLandingKeys.map(k => landings[k]);
+
+  chartLandingInstance = new Chart(ctxLanding, {
+    type: 'pie',
+    data: {
+      labels: landingLabels,
+      datasets: [{
+        data: landingData,
+        backgroundColor: [
+          'rgba(16, 185, 129, 0.75)', // green
+          'rgba(59, 130, 246, 0.75)', // blue
+          'rgba(168, 85, 247, 0.75)', // purple
+          'rgba(250, 204, 21, 0.75)', // yellow
+          'rgba(239, 68, 68, 0.75)',  // red
+          'rgba(100, 116, 139, 0.75)'  // slate
+        ],
+        borderWidth: 1,
+        borderColor: '#0f141a'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: {
+            color: '#cbd5e1',
+            font: { family: 'Inter', size: 9 }
+          }
+        }
+      }
+    }
+  });
 }
 
 // ===== LEADS TAB CONTROL =====
