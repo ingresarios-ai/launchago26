@@ -906,3 +906,38 @@ function goToApp() {
   var t = localStorage.getItem('auth_token') || token;
   window.location.href = 'app.html' + (t ? '?token=' + t : '');
 }
+
+function retakeTest() {
+  if (!confirm('¿Estás seguro de que quieres repetir el test? Tus respuestas actuales se borrarán.')) return;
+  
+  var btn = document.getElementById('btn-retake');
+  var origHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = 'Reiniciando...';
+  
+  fetch(SUPABASE_URL + '/rest/v1/rpc/reset_lead_test', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+    },
+    body: JSON.stringify({ p_token: token })
+  })
+  .then(function(res) {
+    localStorage.removeItem('saboteur_result');
+    localStorage.removeItem('saboteur_scores');
+    localStorage.removeItem('genoma_user_branch');
+    localStorage.removeItem('user_branch');
+    
+    // Redirect to test start screen
+    window.location.href = 'test.html?token=' + token;
+  })
+  .catch(function(err) {
+    console.error('Error resetting test:', err);
+    btn.disabled = false;
+    btn.innerHTML = origHtml;
+    alert('Hubo un error al reiniciar el test. Por favor intenta de nuevo.');
+  });
+}
+

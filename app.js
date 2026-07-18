@@ -53,7 +53,11 @@ const activitiesData = {
           <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 24px; border-radius: 16px; text-align: center; margin-top: 16px;">
             <div style="font-size: 48px; margin-bottom: 12px;">${info.emoji}</div>
             <h3 style="color: var(--text-main); font-size: 1.5rem; margin: 0 0 8px 0;">${info.name}</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin:0;">${info.desc}</p>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin:0 0 20px 0;">${info.desc}</p>
+            <button class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="retakeTest()">
+              REPETIR EL TEST
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            </button>
           </div>
         `;
       } else {
@@ -828,3 +832,34 @@ function showInlineResult() {
     });
   }
 }
+
+function retakeTest() {
+  if (!confirm('¿Estás seguro de que quieres repetir el test? Tus respuestas actuales se borrarán.')) return;
+  
+  const token = localStorage.getItem('auth_token') || '';
+  if (!token) return;
+  
+  fetch(SUPABASE_URL_TEST + '/rest/v1/rpc/reset_lead_test', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY_TEST,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY_TEST
+    },
+    body: JSON.stringify({ p_token: token })
+  })
+  .then(() => {
+    localStorage.removeItem('saboteur_result');
+    localStorage.removeItem('saboteur_scores');
+    localStorage.removeItem('genoma_user_branch');
+    localStorage.removeItem('user_branch');
+    
+    // Reload page to start test inline
+    location.reload();
+  })
+  .catch(err => {
+    console.error('Error resetting test:', err);
+    alert('Hubo un error al reiniciar el test.');
+  });
+}
+
