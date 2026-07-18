@@ -145,7 +145,7 @@
 
     // Show platform button
     platformBtn.style.display = 'flex';
-    platformBtn.href = 'app.html?token=' + token;
+    platformBtn.href = '/app?token=' + token;
   }
 
   // ========================================

@@ -802,7 +802,7 @@ function verifyMagicLink() {
     }
 
     if (hasWhatsapp) {
-      window.location.href = '/app.html';
+      window.location.href = '/app';
       return;
     }
 
@@ -904,7 +904,7 @@ function trackVisit(pageName) {
 
 function goToApp() {
   var t = localStorage.getItem('auth_token') || token;
-  window.location.href = 'app.html' + (t ? '?token=' + t : '');
+  window.location.href = '/app' + (t ? '?token=' + t : '');
 }
 
 function retakeTest() {
@@ -931,7 +931,7 @@ function retakeTest() {
     localStorage.removeItem('user_branch');
     
     // Redirect to test start screen
-    window.location.href = 'test.html?token=' + token;
+    window.location.href = '/test?token=' + token;
   })
   .catch(function(err) {
     console.error('Error resetting test:', err);
