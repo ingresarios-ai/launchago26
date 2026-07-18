@@ -227,6 +227,7 @@ function handleFormSubmit(e) {
     // Fire magic link PATCH + GHL update in background (no wait)
     if (token) {
       var magicLink = 'https://taller.ingresarios.net/app?token=' + token;
+      var magicLinkEncuesta = 'https://taller.ingresarios.net/encuesta?t=' + token;
       fetch(SUPABASE_URL + '/rest/v1/rpc/update_magic_link', {
         method: 'POST',
         headers: {
@@ -237,11 +238,23 @@ function handleFormSubmit(e) {
         body: JSON.stringify({ p_token: token, p_magic_link: magicLink })
       }).catch(function () {});
 
-      // Update GHL with token + magic link
+      // Save magic_link_encuesta to leads table
+      fetch(SUPABASE_URL + '/rest/v1/leads?auth_token=eq.' + token, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ magic_link_encuesta: magicLinkEncuesta })
+      }).catch(function () {});
+
+      // Update GHL with token + magic links
       fetch(GHL_WEBHOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.assign({}, ghlData, { auth_token: token, magic_link: magicLink }))
+        body: JSON.stringify(Object.assign({}, ghlData, { auth_token: token, magic_link: magicLink, 'contact.el__magic_link_encuesta': magicLinkEncuesta }))
       }).catch(function () {});
     }
 

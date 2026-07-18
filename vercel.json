@@ -3,7 +3,8 @@
   "rewrites": [
     { "source": "/test", "destination": "/test.html" },
     { "source": "/resultado", "destination": "/test.html" },
-    { "source": "/app", "destination": "/app.html" }
+    { "source": "/app", "destination": "/app.html" },
+    { "source": "/encuesta", "destination": "/encuesta.html" }
   ],
   "headers": [
     {

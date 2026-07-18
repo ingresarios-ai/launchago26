@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Encuesta | El Juego Mental del Dinero</title>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PG9F8H6M');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="encuesta.css?v=1" />
+
+  <meta property="og:title" content="Encuesta | El Juego Mental del Dinero" />
+  <meta property="og:description" content="Ayúdanos a personalizar tu experiencia en el entrenamiento." />
+  <meta property="og:image" content="https://taller.ingresarios.net/socialshare.png" />
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PG9F8H6M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- LOADING STATE -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Cargando tu encuesta...</p>
+  </div>
+
+  <!-- ERROR STATE -->
+  <div id="error-screen" class="error-screen" style="display:none;">
+    <div class="error-card">
+      <div class="error-icon">⚠️</div>
+      <h2 class="error-title">Link inválido</h2>
+      <p class="error-desc">Este enlace no es válido o ha expirado. Si crees que es un error, contacta a soporte.</p>
+    </div>
+  </div>
+
+  <!-- ALREADY COMPLETED STATE -->
+  <div id="completed-screen" class="completed-screen" style="display:none;">
+    <div class="completed-card">
+      <div class="completed-icon">✅</div>
+      <h2 class="completed-title">¡Ya completaste la encuesta!</h2>
+      <p class="completed-desc">Gracias por tu tiempo. Nos vemos en el entrenamiento del <strong>3 de agosto</strong>.</p>
+      <a href="https://walink.co/0fe865" target="_blank" class="btn btn--primary" style="margin-top:20px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Únete al grupo de WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- SURVEY FORM -->
+  <div id="survey-screen" class="survey-screen" style="display:none;">
+    
+    <!-- Header -->
+    <header class="survey-header">
+      <img src="logo-genoma.webp" alt="Genoma Logo" class="survey-logo" />
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progress-bar" style="width: 0%;"></div>
+    </div>
+
+    <!-- Intro Card -->
+    <div class="survey-intro" id="survey-intro">
+      <div class="intro-emoji">💡</div>
+      <h1 class="intro-title">¡Ayúdame a personalizar tu experiencia, <span id="user-name">amigo</span>!</h1>
+      <p class="intro-desc">Estamos a días de iniciar <strong>El Juego Mental del Dinero</strong> (del 3 al 16 de agosto) y quiero asegurarme de que el contenido sea exactamente lo que necesitas.</p>
+      <p class="intro-time">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Toma menos de 5 minutos · 100% confidencial
+      </p>
+    </div>
+
+    <!-- FORM -->
+    <form id="survey-form" autocomplete="off">
+
+      <!-- ========== STEP 1: Perfil Demográfico ========== -->
+      <div class="step" data-step="1">
+        <div class="step-label">Paso 1 de 2 — Tu perfil</div>
+
+        <!-- Q1: Edad -->
+        <div class="question-card">
+          <label class="q-label">¿En qué rango de edad te encuentras? <span class="required">*</span></label>
+          <div class="radio-group" data-name="edad">
+            <label class="radio-option"><input type="radio" name="edad" value="Menos de 18" required><span>Menos de 18</span></label>
+            <label class="radio-option"><input type="radio" name="edad" value="18-30"><span>18 - 30</span></label>
+            <label class="radio-option"><input type="radio" name="edad" value="31-35"><span>31 - 35</span></label>
+            <label class="radio-option"><input type="radio" name="edad" value="36-44"><span>36 - 44</span></label>
+            <label class="radio-option"><input type="radio" name="edad" value="45-54"><span>45 - 54</span></label>
+            <label class="radio-option"><input type="radio" name="edad" value="55-64"><span>55 - 64</span></label>
+            <label class="radio-option"><input type="radio" name="edad" value="Más de 65"><span>Más de 65</span></label>
+          </div>
+        </div>
+
+        <!-- Q2: País -->
+        <div class="question-card">
+          <label class="q-label">¿En qué país vives actualmente? <span class="required">*</span></label>
+          <div class="radio-group" data-name="pais">
+            <label class="radio-option"><input type="radio" name="pais" value="Colombia" required><span>🇨🇴 Colombia</span></label>
+            <label class="radio-option"><input type="radio" name="pais" value="USA"><span>🇺🇸 Estados Unidos</span></label>
+            <label class="radio-option"><input type="radio" name="pais" value="Canadá"><span>🇨🇦 Canadá</span></label>
+            <label class="radio-option"><input type="radio" name="pais" value="Chile"><span>🇨🇱 Chile</span></label>
+            <label class="radio-option"><input type="radio" name="pais" value="España"><span>🇪🇸 España</span></label>
+            <label class="radio-option"><input type="radio" name="pais" value="México"><span>🇲🇽 México</span></label>
+            <label class="radio-option"><input type="radio" name="pais" value="Perú"><span>🇵🇪 Perú</span></label>
+            <label class="radio-option"><input type="radio" name="pais" value="Venezuela"><span>🇻🇪 Venezuela</span></label>
+            <label class="radio-option"><input type="radio" name="pais" value="Otro"><span>🌎 Otro</span></label>
+          </div>
+        </div>
+
+        <!-- Q3: Género -->
+        <div class="question-card">
+          <label class="q-label">¿Con qué género te identificas? <span class="required">*</span></label>
+          <div class="radio-group radio-inline" data-name="genero">
+            <label class="radio-option"><input type="radio" name="genero" value="Femenino" required><span>Femenino</span></label>
+            <label class="radio-option"><input type="radio" name="genero" value="Masculino"><span>Masculino</span></label>
+          </div>
+        </div>
+
+        <!-- Q4: Situación -->
+        <div class="question-card">
+          <label class="q-label">¿Cuál es la situación que más te define hoy? <span class="required">*</span></label>
+          <div class="radio-group" data-name="situacion">
+            <label class="radio-option"><input type="radio" name="situacion" value="Emprendedor" required><span>🚀 Emprendedor / Dueño de negocio</span></label>
+            <label class="radio-option"><input type="radio" name="situacion" value="Freelancer"><span>💻 Freelancer / Independiente</span></label>
+            <label class="radio-option"><input type="radio" name="situacion" value="Empleado"><span>🏢 Empleado</span></label>
+            <label class="radio-option"><input type="radio" name="situacion" value="Jubilado"><span>🏖️ Jubilado / Retirado</span></label>
+            <label class="radio-option"><input type="radio" name="situacion" value="Sin empleo"><span>🔍 Buscando empleo</span></label>
+            <label class="radio-option"><input type="radio" name="situacion" value="Servicios profesionales"><span>⚙️ Servicios profesionales</span></label>
+          </div>
+        </div>
+
+        <!-- Q5: Área de trabajo -->
+        <div class="question-card">
+          <label class="q-label">Descríbeme brevemente tu área de trabajo <span class="required">*</span></label>
+          <textarea name="area_trabajo" class="q-textarea" placeholder="Ej: Soy profesional en ventas con 5 años de experiencia..." rows="3" required></textarea>
+        </div>
+
+        <!-- Q6: Estudios -->
+        <div class="question-card">
+          <label class="q-label">¿Cuál es tu último grado de estudios? <span class="required">*</span></label>
+          <div class="radio-group" data-name="estudios">
+            <label class="radio-option"><input type="radio" name="estudios" value="Primaria" required><span>Primaria</span></label>
+            <label class="radio-option"><input type="radio" name="estudios" value="Secundaria"><span>Secundaria</span></label>
+            <label class="radio-option"><input type="radio" name="estudios" value="Bachillerato"><span>Bachillerato</span></label>
+            <label class="radio-option"><input type="radio" name="estudios" value="Técnico / Tecnológico"><span>Técnico / Tecnológico</span></label>
+            <label class="radio-option"><input type="radio" name="estudios" value="Universitario"><span>Universitario</span></label>
+            <label class="radio-option"><input type="radio" name="estudios" value="Maestría / Posgrado"><span>Maestría / Posgrado</span></label>
+            <label class="radio-option"><input type="radio" name="estudios" value="Doctorado"><span>Doctorado</span></label>
+          </div>
+        </div>
+
+        <!-- Q7: Ingresos -->
+        <div class="question-card">
+          <label class="q-label">¿En qué rango se encuentran tus ingresos mensuales en USD? <span class="required">*</span></label>
+          <div class="radio-group" data-name="ingresos">
+            <label class="radio-option"><input type="radio" name="ingresos" value="Sin ingresos fijos" required><span>Sin ingresos fijos</span></label>
+            <label class="radio-option"><input type="radio" name="ingresos" value="Menos de $499"><span>Menos de $499</span></label>
+            <label class="radio-option"><input type="radio" name="ingresos" value="$500 - $999"><span>$500 - $999</span></label>
+            <label class="radio-option"><input type="radio" name="ingresos" value="$1,000 - $1,499"><span>$1,000 - $1,499</span></label>
+            <label class="radio-option"><input type="radio" name="ingresos" value="$1,500 - $2,499"><span>$1,500 - $2,499</span></label>
+            <label class="radio-option"><input type="radio" name="ingresos" value="$2,500 - $3,499"><span>$2,500 - $3,499</span></label>
+            <label class="radio-option"><input type="radio" name="ingresos" value="Más de $3,500"><span>Más de $3,500</span></label>
+          </div>
+        </div>
+
+        <!-- Q8: Hijos -->
+        <div class="question-card">
+          <label class="q-label">¿Tienes hijos? <span class="required">*</span></label>
+          <div class="radio-group radio-inline" data-name="tiene_hijos">
+            <label class="radio-option"><input type="radio" name="tiene_hijos" value="Sí" required><span>Sí</span></label>
+            <label class="radio-option"><input type="radio" name="tiene_hijos" value="No"><span>No</span></label>
+          </div>
+        </div>
+
+        <!-- Q9: Tiempo conociendo -->
+        <div class="question-card">
+          <label class="q-label">¿Cuánto tiempo hace que me conoces? <span class="required">*</span></label>
+          <div class="radio-group" data-name="tiempo_conociendo">
+            <label class="radio-option"><input type="radio" name="tiempo_conociendo" value="Menos de 7 días" required><span>Menos de 7 días</span></label>
+            <label class="radio-option"><input type="radio" name="tiempo_conociendo" value="7 a 30 días"><span>7 a 30 días</span></label>
+            <label class="radio-option"><input type="radio" name="tiempo_conociendo" value="1 a 3 meses"><span>1 a 3 meses</span></label>
+            <label class="radio-option"><input type="radio" name="tiempo_conociendo" value="3 a 6 meses"><span>3 a 6 meses</span></label>
+            <label class="radio-option"><input type="radio" name="tiempo_conociendo" value="6 meses a 1 año"><span>6 meses a 1 año</span></label>
+            <label class="radio-option"><input type="radio" name="tiempo_conociendo" value="Más de 1 año"><span>Más de 1 año</span></label>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button type="button" class="btn btn--primary btn--next" onclick="nextStep(1)">
+            Siguiente
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ========== STEP 2: Objetivos e Inversión ========== -->
+      <div class="step" data-step="2" style="display:none;">
+        <div class="step-label">Paso 2 de 2 — Tus objetivos</div>
+
+        <!-- Q10: Razón -->
+        <div class="question-card">
+          <label class="q-label">¿Cuál es tu razón principal para inscribirte a este entrenamiento?</label>
+          <textarea name="razon_inscripcion" class="q-textarea" placeholder="Cuéntame qué te motivó..." rows="3"></textarea>
+        </div>
+
+        <!-- Q11: Mayor reto -->
+        <div class="question-card">
+          <label class="q-label">¿Cuál es tu mayor reto para construir riqueza? <span class="required">*</span></label>
+          <textarea name="mayor_reto" class="q-textarea" placeholder="Ej: No sé cómo empezar, no tengo capital, me da miedo perder..." rows="3" required></textarea>
+        </div>
+
+        <!-- Q12: Por qué inversión -->
+        <div class="question-card">
+          <label class="q-label">¿Por qué quieres saber de inversión y/o trading?</label>
+          <textarea name="por_que_inversion" class="q-textarea" placeholder="Cuéntame tu motivación..." rows="3"></textarea>
+        </div>
+
+        <!-- Q13: Ha invertido -->
+        <div class="question-card">
+          <label class="q-label">¿Alguna vez has invertido en acciones, bonos, criptomonedas o similar? <span class="required">*</span></label>
+          <div class="radio-group radio-inline" data-name="ha_invertido">
+            <label class="radio-option"><input type="radio" name="ha_invertido" value="Sí" required><span>Sí, he invertido</span></label>
+            <label class="radio-option"><input type="radio" name="ha_invertido" value="Nunca"><span>Nunca he invertido</span></label>
+          </div>
+        </div>
+
+        <!-- Q14: Tema específico -->
+        <div class="question-card">
+          <label class="q-label">¿Hay algún tema específico que te gustaría que cubramos en el entrenamiento?</label>
+          <textarea name="tema_especifico" class="q-textarea" placeholder="Ej: Cómo analizar gráficos, psicología del trading..." rows="3"></textarea>
+        </div>
+
+        <!-- Q15: Nivel experiencia -->
+        <div class="question-card">
+          <label class="q-label">Del 0 al 5, ¿cuál es tu nivel de experiencia en trading? <span class="required">*</span></label>
+          <div class="radio-group" data-name="nivel_experiencia">
+            <label class="radio-option"><input type="radio" name="nivel_experiencia" value="0 - Nunca he operado" required><span><strong>0</strong> — Nunca he operado</span></label>
+            <label class="radio-option"><input type="radio" name="nivel_experiencia" value="1 - He visto videos"><span><strong>1</strong> — He visto videos / cursos</span></label>
+            <label class="radio-option"><input type="radio" name="nivel_experiencia" value="2 - He abierto una cuenta demo"><span><strong>2</strong> — He abierto una cuenta demo</span></label>
+            <label class="radio-option"><input type="radio" name="nivel_experiencia" value="3 - He operado con dinero real"><span><strong>3</strong> — He operado con dinero real</span></label>
+            <label class="radio-option"><input type="radio" name="nivel_experiencia" value="4 - Opero frecuentemente"><span><strong>4</strong> — Opero frecuentemente</span></label>
+            <label class="radio-option"><input type="radio" name="nivel_experiencia" value="5 - Soy rentable consistentemente"><span><strong>5</strong> — Soy rentable consistentemente</span></label>
+          </div>
+        </div>
+
+        <!-- Q16: Pregunta del café -->
+        <div class="question-card">
+          <label class="q-label">Si tomaras un café conmigo por 1 hora, ¿qué me preguntarías? <span class="required">*</span></label>
+          <textarea name="pregunta_cafe" class="q-textarea" placeholder="Esta es tu oportunidad de preguntar lo que quieras..." rows="4" required></textarea>
+        </div>
+
+        <div class="step-nav step-nav--split">
+          <button type="button" class="btn btn--secondary btn--back" onclick="prevStep(2)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            Atrás
+          </button>
+          <button type="submit" class="btn btn--primary btn--submit" id="submit-btn">
+            Enviar respuestas
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- SUCCESS / THANK YOU -->
+    <div id="thank-you" class="thank-you" style="display:none;">
+      <div class="thank-you-card">
+        <div class="thank-you-icon">🎉</div>
+        <h2 class="thank-you-title">¡Gracias por responder!</h2>
+        <p class="thank-you-desc">Tus respuestas nos ayudarán a crear una experiencia personalizada para ti. Nos vemos el <strong>3 de agosto</strong> en vivo.</p>
+        <a href="https://walink.co/0fe865" target="_blank" class="btn btn--primary" style="margin-top:24px; width:100%;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Únete al grupo de WhatsApp
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="encuesta.js?v=1"></script>
+</body>
+</html>
