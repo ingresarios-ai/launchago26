@@ -239,29 +239,24 @@ async function loadData() {
 
 // ===== ANALS & METRICS GENERATION =====
 function buildAnalytics() {
+  // We only count visits and leads after tracking was deployed (2026-07-18 05:00:00 UTC)
+  // to avoid historic data skew (which results in unrealistic > 100% conversion rates).
+  const TRACKING_START_TIME = new Date('2026-07-18T05:00:00Z').getTime();
+
   // KPIs
   const totalLeads = allLeads.length;
-  // Unique visits based on session_id or unique IPs on landing page
-  const landingVisits = allVisits.filter(v => v.page === 'landing');
-  const uniqueVisitsCount = new Set(landingVisits.map(v => v.session_id || Math.random().toString())).size;
+  const landingVisits = allVisits.filter(v => v.page === 'landing' && new Date(v.created_at).getTime() >= TRACKING_START_TIME);
+  const uniqueVisitsCount = new Set(landingVisits.map(v => v.session_id)).size;
   const totalSurveys = allSurveys.length;
 
   document.getElementById('kpi-total-leads').textContent = totalLeads;
   document.getElementById('kpi-total-visits').textContent = uniqueVisitsCount;
   
-  // Mathematically Correct Conversion Rate:
-  // We only count leads that registered AFTER the page views tracking started.
-  let leadsAfterFirstVisitCount = 0;
-  if (allVisits.length > 0) {
-    const visitTimestamps = allVisits.map(v => new Date(v.created_at).getTime());
-    const firstVisitTime = Math.min(...visitTimestamps);
-    // Buffer by 5 seconds just in case clocks differ slightly
-    const startTimeThreshold = firstVisitTime - 5000;
-    
-    leadsAfterFirstVisitCount = allLeads.filter(l => new Date(l.created_at).getTime() >= startTimeThreshold).length;
-  }
+  // Leads registered since tracking deployment
+  const leadsAfterTracking = allLeads.filter(l => new Date(l.created_at).getTime() >= TRACKING_START_TIME);
+  const leadsAfterTrackingCount = leadsAfterTracking.length;
 
-  const convRate = uniqueVisitsCount > 0 ? ((leadsAfterFirstVisitCount / uniqueVisitsCount) * 100).toFixed(1) : '0';
+  const convRate = uniqueVisitsCount > 0 ? ((leadsAfterTrackingCount / uniqueVisitsCount) * 100).toFixed(1) : '0';
   document.getElementById('kpi-conversion-rate').textContent = convRate + '%';
   document.getElementById('kpi-total-surveys').textContent = totalSurveys;
 
@@ -270,16 +265,19 @@ function buildAnalytics() {
 
   // UTM Source table aggregation
   const utmSources = {};
-  // Track visits
+  
+  // 1. Gather all unique UTM sources from visits and leads
   landingVisits.forEach(v => {
     const src = v.utm_source || 'Tráfico Directo / Orgánico';
     if (!utmSources[src]) utmSources[src] = { visits: 0, leads: 0 };
     utmSources[src].visits++;
   });
-  // Track leads
+  
   allLeads.forEach(l => {
     const src = l.utm_source || 'Tráfico Directo / Orgánico';
     if (!utmSources[src]) utmSources[src] = { visits: 0, leads: 0 };
+    // We increment historical leads for the raw table display so data isn't empty,
+    // but we compute conversion correctly using the tracked subset.
     utmSources[src].leads++;
   });
 
@@ -287,21 +285,16 @@ function buildAnalytics() {
   sourceTableBody.innerHTML = '';
   Object.keys(utmSources).sort((a,b) => utmSources[b].leads - utmSources[a].leads).forEach(src => {
     const data = utmSources[src];
-    // For local conversion rate per UTM: only count matching leads registered after pageview tracking
-    let matchingLeadsCount = 0;
-    if (allVisits.length > 0) {
-      const visitTimestamps = allVisits.map(v => new Date(v.created_at).getTime());
-      const firstVisitTime = Math.min(...visitTimestamps) - 5000;
-      matchingLeadsCount = allLeads.filter(l => (l.utm_source || 'Tráfico Directo / Orgánico') === src && new Date(l.created_at).getTime() >= firstVisitTime).length;
-    } else {
-      matchingLeadsCount = data.leads;
-    }
-
-    const rate = data.visits > 0 ? ((matchingLeadsCount / data.visits) * 100).toFixed(1) + '%' : '0.0%';
+    
+    // Calculate conversions strictly within the tracking window
+    const srcVisits = landingVisits.filter(v => (v.utm_source || 'Tráfico Directo / Orgánico') === src).length;
+    const srcLeads = leadsAfterTracking.filter(l => (l.utm_source || 'Tráfico Directo / Orgánico') === src).length;
+    
+    const rate = srcVisits > 0 ? ((srcLeads / srcVisits) * 100).toFixed(1) + '%' : '0.0%';
     const row = document.createElement('tr');
     row.innerHTML = `
       <td><strong>${src}</strong></td>
-      <td>${data.visits}</td>
+      <td>${srcVisits}</td>
       <td>${data.leads}</td>
       <td><span class="badge ${parseFloat(rate) > 10 ? 'badge--green' : 'badge--gray'}">${rate}</span></td>
     `;
