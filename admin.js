@@ -1127,11 +1127,11 @@ async function loadAdminsList() {
     }
 
     admins.forEach(adm => {
-      const dateStr = adm.created_at ? new Date(adm.created_at).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '-';
+      const dateStr = adm.out_created_at ? new Date(adm.out_created_at).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '-';
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td><strong>${adm.name || '-'}</strong></td>
-        <td>${adm.email}</td>
+        <td><strong>${adm.out_name || '-'}</strong></td>
+        <td>${adm.out_email}</td>
         <td style="font-size:0.82rem; color:var(--text-muted);">${dateStr}</td>
       `;
       tbody.appendChild(row);
