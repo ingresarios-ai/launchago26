@@ -48,6 +48,32 @@ async function dbFetch(path, options = {}) {
   return res.json();
 }
 
+async function dbFetchAll(path, bodyParams = {}) {
+  let allRows = [];
+  let page = 0;
+  let fetchedAll = false;
+  
+  while (!fetchedAll && page < 100) {
+    const rangeStart = page * 1000;
+    const rangeEnd = rangeStart + 999;
+    const chunk = await dbFetch(path, {
+      method: 'POST',
+      headers: {
+        'Range': `${rangeStart}-${rangeEnd}`
+      },
+      body: JSON.stringify(bodyParams)
+    });
+    
+    allRows = allRows.concat(chunk);
+    if (chunk.length < 1000) {
+      fetchedAll = true;
+    } else {
+      page++;
+    }
+  }
+  return allRows;
+}
+
 // ===== EVENT LISTENERS =====
 function setupEventListeners() {
   // Login Form
@@ -191,11 +217,10 @@ function switchTab(tab) {
 // ===== LOAD DATA FROM SUPABASE =====
 async function loadData() {
   try {
+    const authParams = { p_email: authEmail, p_password: authPass };
+
     // 1. Fetch leads via secure admin RPC function
-    allLeads = await dbFetch('/rest/v1/rpc/admin_get_leads', {
-      method: 'POST',
-      body: JSON.stringify({ p_email: authEmail, p_password: authPass })
-    });
+    allLeads = await dbFetchAll('/rest/v1/rpc/admin_get_leads', authParams);
 
     // Unify "Landing A Org" with "Facebook"
     allLeads.forEach(l => {
@@ -208,22 +233,13 @@ async function loadData() {
     // We will do this by looking up the responses locally since we retrieve both lists securely.
     
     // 2. Fetch page visits via secure admin RPC function
-    allVisits = await dbFetch('/rest/v1/rpc/admin_get_pageviews', {
-      method: 'POST',
-      body: JSON.stringify({ p_email: authEmail, p_password: authPass })
-    });
+    allVisits = await dbFetchAll('/rest/v1/rpc/admin_get_pageviews', authParams);
 
     // 3. Fetch surveys via secure admin RPC function
-    allSurveys = await dbFetch('/rest/v1/rpc/admin_get_surveys', {
-      method: 'POST',
-      body: JSON.stringify({ p_email: authEmail, p_password: authPass })
-    });
+    allSurveys = await dbFetchAll('/rest/v1/rpc/admin_get_surveys', authParams);
 
     // 4. Fetch tests via secure admin RPC function
-    allTests = await dbFetch('/rest/v1/rpc/admin_get_tests', {
-      method: 'POST',
-      body: JSON.stringify({ p_email: authEmail, p_password: authPass })
-    });
+    allTests = await dbFetchAll('/rest/v1/rpc/admin_get_tests', authParams);
 
     // Match survey responses back to the lead objects in-memory for UI badges
     const surveyLeadIds = new Set(allSurveys.map(s => s.lead_id));
