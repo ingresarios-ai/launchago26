@@ -54,14 +54,15 @@ async function dbFetchAll(path, bodyParams = {}) {
   let fetchedAll = false;
   
   while (!fetchedAll && page < 100) {
-    const rangeStart = page * 1000;
-    const rangeEnd = rangeStart + 999;
+    const offset = page * 1000;
+    const requestParams = Object.assign({}, bodyParams, {
+      p_limit: 1000,
+      p_offset: offset
+    });
+    
     const chunk = await dbFetch(path, {
       method: 'POST',
-      headers: {
-        'Range': `${rangeStart}-${rangeEnd}`
-      },
-      body: JSON.stringify(bodyParams)
+      body: JSON.stringify(requestParams)
     });
     
     allRows = allRows.concat(chunk);
