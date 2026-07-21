@@ -299,6 +299,14 @@ async function handleAuthenticatedSubmit(e) {
   formData.forEach((value, key) => { data[key] = value; });
 
   try {
+    // Save session locally
+    if (leadData && leadData.auth_token) {
+      localStorage.setItem('auth_token', leadData.auth_token);
+    }
+    if (leadData && leadData.email) {
+      localStorage.setItem('user_email', leadData.email);
+    }
+
     // 1. Save to Supabase
     const saveRes = await fetch(SUPABASE_URL + '/rest/v1/survey_responses', {
       method: 'POST',
@@ -329,7 +337,7 @@ async function handleAuthenticatedSubmit(e) {
       })
     });
 
-    if (!saveRes.ok) {
+    if (!saveRes.ok && saveRes.status !== 409) {
       throw new Error('Error saving to database');
     }
 
@@ -362,13 +370,13 @@ async function handleAnonymousSubmit(e) {
   formData.forEach((value, key) => { data[key] = value; });
 
   // Get registration data
-  const name = data.reg_name || '';
-  const email = data.reg_email || '';
+  const name = (data.reg_name || '').trim();
+  const email = (data.reg_email || '').trim().toLowerCase();
   var phone = '';
   if (itiInstance) {
     phone = itiInstance.getNumber();
   }
-  if (!phone) phone = data.reg_phone || '';
+  if (!phone) phone = (data.reg_phone || '').trim();
 
   try {
     // 1. Create lead in Supabase
@@ -384,17 +392,25 @@ async function handleAnonymousSubmit(e) {
       headers: {
         'Content-Type': 'application/json',
         'apikey': SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=representation'
       },
       body: JSON.stringify(leadPayload)
     });
 
     var token = '';
 
-    if (!createRes.ok) {
+    if (createRes.ok) {
+      const createdData = await createRes.json();
+      if (Array.isArray(createdData) && createdData.length > 0) {
+        token = createdData[0].auth_token || '';
+      } else if (createdData) {
+        token = createdData.auth_token || '';
+      }
+    } else {
       const errData = await createRes.json();
       if (errData.code === '23505') {
-        // Already registered — get token
+        // Already registered — get token via RPC
         const tokenRes = await fetch(SUPABASE_URL + '/rest/v1/rpc/get_token_by_email', {
           method: 'POST',
           headers: {
@@ -413,8 +429,10 @@ async function handleAnonymousSubmit(e) {
       } else {
         throw new Error(errData.message || 'Error al registrar');
       }
-    } else {
-      // New lead created — get token
+    }
+
+    if (!token) {
+      // Fallback query if token still empty
       const tokenRes = await fetch(SUPABASE_URL + '/rest/v1/rpc/get_token_by_email', {
         method: 'POST',
         headers: {
@@ -450,19 +468,9 @@ async function handleAnonymousSubmit(e) {
     if (!lead || !lead.id) throw new Error('Lead not found');
     leadData = lead;
 
-    // 3. Save magic links
+    // 3. Save magic links on lead
     var magicLink = 'https://taller.ingresarios.net/app?token=' + token;
     var magicLinkEncuesta = 'https://taller.ingresarios.net/encuesta?t=' + token;
-
-    fetch(SUPABASE_URL + '/rest/v1/rpc/update_magic_link', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
-      },
-      body: JSON.stringify({ p_token: token, p_magic_link: magicLink })
-    }).catch(function() {});
 
     fetch(SUPABASE_URL + '/rest/v1/leads?auth_token=eq.' + token, {
       method: 'PATCH',
@@ -472,7 +480,10 @@ async function handleAnonymousSubmit(e) {
         'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({ magic_link_encuesta: magicLinkEncuesta })
+      body: JSON.stringify({
+        magic_link: magicLink,
+        magic_link_encuesta: magicLinkEncuesta
+      })
     }).catch(function() {});
 
     // 4. Save survey responses
@@ -570,11 +581,17 @@ function showThankYou() {
 
 // ===== GHL WEBHOOK (authenticated mode) =====
 async function sendToGHL(data) {
+  var magicLink = leadData ? ('https://taller.ingresarios.net/app?token=' + (leadData.auth_token || '')) : '';
+  var magicLinkEncuesta = leadData ? ('https://taller.ingresarios.net/encuesta?t=' + (leadData.auth_token || '')) : '';
+
   const payload = {
     // Lead identification
     email: leadData.email,
     name: leadData.name,
     phone: leadData.phone,
+    auth_token: leadData.auth_token || '',
+    magic_link: magicLink,
+    'contact.el__magic_link_encuesta': magicLinkEncuesta,
     // Survey responses with field keys
     'contact.el__rango_de_edad': data.edad || '',
     'contact.el__pas': data.pais || '',
@@ -601,3 +618,4 @@ async function sendToGHL(data) {
     body: JSON.stringify(payload)
   });
 }
+
