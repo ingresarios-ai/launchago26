@@ -292,15 +292,12 @@ function handleFormSubmit(e) {
       },
       body: JSON.stringify({ p_email: email })
     }).then(function(r) { return r.json(); });
-  })
   .then(function (data) {
     var token = '';
     if (Array.isArray(data) && data.length > 0) {
-      token = data[0].auth_token;
-    } else if (data && data.auth_token) {
-      token = data.auth_token;
-    } else if (typeof data === 'string') {
-      token = data;
+      token = data[0].get_token_by_email || data[0].auth_token || '';
+    } else if (data) {
+      token = data.get_token_by_email || data.auth_token || (typeof data === 'string' ? data : '');
     }
 
     // Fire magic link PATCH + GHL update in background (no wait)
