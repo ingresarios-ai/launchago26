@@ -291,7 +291,8 @@ function handleFormSubmit(e) {
         'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
       },
       body: JSON.stringify({ p_email: email })
-    }).then(function(r) { return r.json(); });
+    }).then(function(r) { return r.json(); })
+  })
   .then(function (data) {
     var token = '';
     if (Array.isArray(data) && data.length > 0) {
