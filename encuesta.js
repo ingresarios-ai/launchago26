@@ -406,9 +406,9 @@ async function handleAnonymousSubmit(e) {
         });
         const tokenData = await tokenRes.json();
         if (Array.isArray(tokenData) && tokenData.length > 0) {
-          token = tokenData[0].get_token_by_email || tokenData[0].auth_token || '';
+          token = tokenData[0].get_token_by_email || tokenData[0].auth_token || (typeof tokenData[0] === 'string' ? tokenData[0] : '');
         } else if (tokenData) {
-          token = tokenData.get_token_by_email || tokenData.auth_token || '';
+          token = tokenData.get_token_by_email || tokenData.auth_token || (typeof tokenData === 'string' ? tokenData : '');
         }
       } else {
         throw new Error(errData.message || 'Error al registrar');
@@ -426,9 +426,9 @@ async function handleAnonymousSubmit(e) {
       });
       const tokenData = await tokenRes.json();
       if (Array.isArray(tokenData) && tokenData.length > 0) {
-        token = tokenData[0].get_token_by_email || tokenData[0].auth_token || '';
+        token = tokenData[0].get_token_by_email || tokenData[0].auth_token || (typeof tokenData[0] === 'string' ? tokenData[0] : '');
       } else if (tokenData) {
-        token = tokenData.get_token_by_email || tokenData.auth_token || '';
+        token = tokenData.get_token_by_email || tokenData.auth_token || (typeof tokenData === 'string' ? tokenData : '');
       }
     }
 
