@@ -120,6 +120,8 @@ function setupEventListeners() {
   // Export Buttons
   document.getElementById('btn-export-leads').addEventListener('click', exportLeadsCSV);
   document.getElementById('btn-export-surveys').addEventListener('click', exportSurveysCSV);
+  const btnExportPreact = document.getElementById('btn-export-preactivities');
+  if (btnExportPreact) btnExportPreact.addEventListener('click', exportPreactivitiesCSV);
 
   // Settings Forms
   document.getElementById('settings-webhooks-form').addEventListener('submit', handleSaveWebhooks);
@@ -272,6 +274,7 @@ async function loadData() {
     buildAnalytics();
     buildLeadsTab();
     buildSurveysTab();
+    buildPreactivitiesTab();
     buildSettingsTab();
 
   } catch (err) {
@@ -1260,3 +1263,67 @@ function triggerCSVDownload(filename, headers, rows) {
   link.click();
   document.body.removeChild(link);
 }
+
+// ===== PRE-ACTIVITIES TAB =====
+let allPreactivities = [];
+
+function buildPreactivitiesTab() {
+  const tbody = document.getElementById('preactivities-tbody');
+  if (!tbody) return;
+
+  // Filter pageviews for preactivity submissions
+  allPreactivities = (allVisits || []).filter(v => v.page && v.page.startsWith('preactividad'));
+
+  const count1 = allPreactivities.filter(v => v.page === 'preactividad1_submission').length;
+  const count2 = allPreactivities.filter(v => v.page === 'preactividad2_submission').length;
+
+  const kpi1 = document.getElementById('kpi-preact1-count');
+  const kpi2 = document.getElementById('kpi-preact2-count');
+  if (kpi1) kpi1.textContent = count1;
+  if (kpi2) kpi2.textContent = count2;
+
+  tbody.innerHTML = '';
+
+  if (allPreactivities.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted" style="padding: 24px;">Aún no hay respuestas registradas de pre-actividades.</td></tr>';
+    return;
+  }
+
+  allPreactivities.forEach(item => {
+    const isAct1 = item.page === 'preactividad1_submission';
+    const actBadge = isAct1 
+      ? '<span class="badge badge--orange">Pre-Actividad 1 (Mindset)</span>'
+      : '<span class="badge badge--green">Pre-Actividad 2 (Dinero Quieto)</span>';
+      
+    const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('es-ES', { 
+      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' 
+    }) : '-';
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td style="font-size:0.85rem; color:var(--text-muted);">${dateStr}</td>
+      <td>${actBadge}</td>
+      <td><strong style="color:var(--text-white);">✉️ ${item.utm_source || 'Sin correo'}</strong></td>
+      <td style="font-weight:600; color:var(--text-white);">${item.utm_medium || '-'}</td>
+      <td style="font-size:0.88rem; color:var(--text-secondary); max-width:320px; word-break:break-word;">${item.utm_campaign || '-'}</td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+function exportPreactivitiesCSV() {
+  if (!allPreactivities || allPreactivities.length === 0) {
+    alert('No hay respuestas de pre-actividades para exportar.');
+    return;
+  }
+  const headers = ['Fecha', 'Actividad', 'Correo Usuario', 'Respuesta Principal', 'Detalle / Reflexion'];
+  const rows = allPreactivities.map(item => [
+    item.created_at || '',
+    item.page === 'preactividad1_submission' ? 'Pre-Actividad 1 (Mindset)' : 'Pre-Actividad 2 (Dinero Quieto)',
+    item.utm_source || '',
+    item.utm_medium || '',
+    item.utm_campaign || ''
+  ]);
+  triggerCSVDownload('preactividades_lanzamiento.csv', headers, rows);
+}
+
