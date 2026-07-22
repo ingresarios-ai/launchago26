@@ -1,0 +1,106 @@
+/* ========================================
+   PRE-ACTIVIDAD #2 — CALCULATOR STYLES
+   ======================================== */
+
+.input-with-currency {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-currency .currency-symbol {
+  position: absolute;
+  left: 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--yellow);
+  pointer-events: none;
+}
+
+.input-with-currency .currency-code {
+  position: absolute;
+  right: 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.input-with-currency .num-input {
+  padding-left: 36px;
+  padding-right: 54px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* IMPACT DIAGNOSTIC CARD */
+.impact-card {
+  margin-top: 16px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 14px;
+  padding: 16px 18px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.impact-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.impact-icon {
+  font-size: 1.2rem;
+}
+
+.impact-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #f87171;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 520px) {
+  .impact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.impact-item {
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.impact-item .label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.impact-item .val-loss {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #f87171;
+}
+
+.impact-item .val-loss-big {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #ef4444;
+}

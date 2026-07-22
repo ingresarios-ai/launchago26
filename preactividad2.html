@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Pre-Actividad #2 | Genoma Financiero</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="app_v2.css?v=20250721" />
+  <link rel="stylesheet" href="preactividad1.css?v=1" />
+  <link rel="stylesheet" href="preactividad2.css?v=1" />
+  
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__brand">
+      <img src="logo-genoma.webp" alt="Genoma Logo" style="height: 28px; width: auto;" />
+    </div>
+    <div class="topbar__profile">
+      <div class="topbar__points" style="border-color: rgba(250, 204, 21, 0.3);">
+        <span class="topbar__emoji">⚡</span>
+        <span class="topbar__name" style="color: var(--yellow);">Calentamiento</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="preact-container">
+    <div class="preact-badge">
+      <span>🔥 RUMBO AL TALLER · DIA -7</span>
+    </div>
+
+    <h1 class="preact-title">Pre-Actividad #2:<br /><span class="highlight">El Costo de Tener tu Dinero Quieto</span></h1>
+    <p class="preact-subtitle">El dinero guardado en el banco o debajo del colchón pierde valor cada día. Descubre tu costo de oportunidad actual.</p>
+
+    <form id="form-preact2" class="preact-card" onsubmit="handlePreact2Submit(event)">
+      
+      <!-- SECCION 1: CALCULADORA CAPITAL -->
+      <div class="form-group">
+        <label class="form-label">
+          <span class="step-num">1</span>
+          ¿Cuánto dinero tienes actualmente guardado sin generar rendimiento? (USD)
+        </label>
+        
+        <div class="input-with-currency">
+          <span class="currency-symbol">$</span>
+          <input type="number" id="input-idle-money" class="form-input num-input" placeholder="Ej: 2000" min="0" step="50" oninput="calculateLoss()" required />
+          <span class="currency-code">USD</span>
+        </div>
+
+        <!-- TARJETA DE IMPACTO EN TIEMPO REAL -->
+        <div id="impact-card" class="impact-card" style="display: none;">
+          <div class="impact-header">
+            <span class="impact-icon">⚠️</span>
+            <span class="impact-title">Diagnóstico de Pérdida por Inflación</span>
+          </div>
+          <div class="impact-grid">
+            <div class="impact-item">
+              <span class="label">Pérdida estimada en 1 año</span>
+              <span id="loss-1yr" class="val-loss">$0 USD</span>
+            </div>
+            <div class="impact-item">
+              <span class="label">Pérdida en 5 años (poder de compra)</span>
+              <span id="loss-5yr" class="val-loss-big">$0 USD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCION 2: MONTO MENSUAL POSIBLE -->
+      <div class="form-group" style="margin-top: 28px;">
+        <label class="form-label">
+          <span class="step-num">2</span>
+          ¿Qué monto mensual podrías destinar para invertir y poner a producir?
+        </label>
+        
+        <div class="options-grid" id="options-monthly">
+          <button type="button" class="opt-btn" onclick="selectMonthly(this, '$50 - $100 USD')">
+            💵 $50 - $100 USD / mes
+          </button>
+          <button type="button" class="opt-btn" onclick="selectMonthly(this, '$100 - $300 USD')">
+            💵 $100 - $300 USD / mes
+          </button>
+          <button type="button" class="opt-btn" onclick="selectMonthly(this, '$300 - $500 USD')">
+            🚀 $300 - $500 USD / mes
+          </button>
+          <button type="button" class="opt-btn" onclick="selectMonthly(this, 'Más de $500 USD')">
+            🔥 Más de $500 USD / mes
+          </button>
+        </div>
+      </div>
+
+      <!-- SECCION 3: IDENTIFICACION (BLOQUE INTELIGENTE) -->
+      <div id="auth-block" class="form-group auth-block" style="margin-top: 24px;">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- BOTON DE ENVIO -->
+      <button type="submit" id="btn-submit" class="btn-primary-submit">
+        <span>Enviar Actividad</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
+
+      <div id="feedback-msg" class="feedback-msg" style="display: none;"></div>
+    </form>
+  </main>
+
+  <script src="preactividad2.js?v=1"></script>
+</body>
+</html>

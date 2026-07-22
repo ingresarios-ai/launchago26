@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Pre-Actividad #1 | Genoma Financiero</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="app_v2.css?v=20250721" />
+  <link rel="stylesheet" href="preactividad1.css?v=1" />
+  
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__brand">
+      <img src="logo-genoma.webp" alt="Genoma Logo" style="height: 28px; width: auto;" />
+    </div>
+    <div class="topbar__profile">
+      <div class="topbar__points" style="border-color: rgba(250, 204, 21, 0.3);">
+        <span class="topbar__emoji">⚡</span>
+        <span class="topbar__name" style="color: var(--yellow);">Calentamiento</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="preact-container">
+    <div class="preact-badge">
+      <span>🔥 RUMBO AL TALLER · DIA -10</span>
+    </div>
+
+    <h1 class="preact-title">Pre-Actividad #1:<br /><span class="highlight">Desmantela tu Creencia Limitante</span></h1>
+    <p class="preact-subtitle">El problema financiero no es de información, es mental. Identifica la frase heredada de tu infancia para tomar el control.</p>
+
+    <form id="form-preact1" class="preact-card" onsubmit="handlePreact1Submit(event)">
+      
+      <!-- SECCION 1: FRASE INFANCIA -->
+      <div class="form-group">
+        <label class="form-label">
+          <span class="step-num">1</span>
+          ¿Cuál fue la frase sobre el dinero que más escuchaste en tu infancia?
+        </label>
+        
+        <div class="options-grid" id="options-phrases">
+          <button type="button" class="opt-btn" onclick="selectPhrase(this, 'El dinero no crece en los árboles')">
+            "El dinero no crece en los árboles"
+          </button>
+          <button type="button" class="opt-btn" onclick="selectPhrase(this, 'Los ricos son codiciosos o mala gente')">
+            "Los ricos son mala gente / codiciosos"
+          </button>
+          <button type="button" class="opt-btn" onclick="selectPhrase(this, 'No hay dinero / No alcanza')">
+            "No hay dinero / No nos alcanza"
+          </button>
+          <button type="button" class="opt-btn" onclick="selectPhrase(this, 'Para ganar dinero hay que matarse trabajando')">
+            "Para ganar dinero hay que matarse trabajando"
+          </button>
+        </div>
+
+        <input type="text" id="input-phrase-custom" class="form-input" placeholder="O escribe tu propia frase aquí..." style="margin-top: 12px;" />
+      </div>
+
+      <!-- SECCION 2: REFLEXION -->
+      <div class="form-group" style="margin-top: 24px;">
+        <label class="form-label">
+          <span class="step-num">2</span>
+          ¿Cómo sientes que esta frase te ha limitado hasta el día de hoy?
+        </label>
+        <textarea id="input-reflection" class="form-textarea" rows="3" placeholder="Ej: Me da miedo arriesgarme a invertir o siento culpa cuando gano bien..." required></textarea>
+      </div>
+
+      <!-- SECCION 3: IDENTIFICACION (BLOQUE INTELIGENTE) -->
+      <div id="auth-block" class="form-group auth-block" style="margin-top: 24px;">
+        <!-- Injected via JS depending on if user is recognized or not -->
+      </div>
+
+      <!-- BOTON DE ENVIO -->
+      <button type="submit" id="btn-submit" class="btn-primary-submit">
+        <span>Enviar Actividad</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
+
+      <div id="feedback-msg" class="feedback-msg" style="display: none;"></div>
+    </form>
+  </main>
+
+  <script src="preactividad1.js?v=1"></script>
+</body>
+</html>
