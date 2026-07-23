@@ -328,11 +328,21 @@ function handleFormSubmit(e) {
       }).catch(function () {});
 
       // Update GHL with token + magic links
-      fetch(GHL_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.assign({}, ghlData, { auth_token: token, magic_link: magicLink, 'contact.el__magic_link_encuesta': magicLinkEncuesta }))
-      }).catch(function () {});
+      // Use sendBeacon (survives page navigation) with fetch fallback
+      var webhookPayload = JSON.stringify(Object.assign({}, ghlData, { auth_token: token, magic_link: magicLink, 'contact.el__magic_link_encuesta': magicLinkEncuesta }));
+      var beaconSent = false;
+      if (navigator.sendBeacon) {
+        beaconSent = navigator.sendBeacon(GHL_WEBHOOK, new Blob([webhookPayload], { type: 'application/json' }));
+      }
+      // Fetch fallback: if sendBeacon failed or unavailable, use fetch with keepalive
+      if (!beaconSent) {
+        fetch(GHL_WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: webhookPayload,
+          keepalive: true
+        }).catch(function () {});
+      }
     }
 
     // Show success and redirect FAST
