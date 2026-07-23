@@ -1,0 +1,92 @@
+/* ========================================
+   V2 VARIANT — PENSIONES THEME
+   Azul profundo + Dorado (confianza / madurez financiera)
+   Overrides the green theme from styles.css
+   ======================================== */
+
+:root {
+  /* Override background tones — deeper blue */
+  --bg-dark: #0a0d1a;
+  --bg-card: #101528;
+  --bg-card-inner: #151b30;
+  --bg-input: #1a2040;
+  --bg-marquee: #0c0f1c;
+  --border-subtle: #1e2848;
+  --border-card: #1c2640;
+
+  /* Override green accent → gold */
+  --green-primary: #D4A853;
+  --green-glow: #E8C46A;
+  --green-dark: #8B6914;
+  --green-accent: #A67C2E;
+}
+
+/* Glow text override */
+.text-green-glow {
+  color: #E8C46A !important;
+  text-shadow: 0 0 20px rgba(212, 168, 83, 0.4), 0 0 40px rgba(212, 168, 83, 0.15) !important;
+}
+
+/* CTA buttons — gold gradient */
+.btn--primary {
+  background: linear-gradient(135deg, #D4A853 0%, #B8892E 100%) !important;
+  color: #0a0d1a !important;
+  box-shadow: 0 4px 25px rgba(212, 168, 83, 0.35), 0 0 40px rgba(212, 168, 83, 0.1) !important;
+}
+
+.btn--primary:hover {
+  background: linear-gradient(135deg, #E8C46A 0%, #D4A853 100%) !important;
+  box-shadow: 0 6px 35px rgba(212, 168, 83, 0.5), 0 0 60px rgba(212, 168, 83, 0.15) !important;
+}
+
+/* Hero subtitle glow */
+.hero__subtitle {
+  text-shadow: 0 0 30px rgba(212, 168, 83, 0.2);
+}
+
+/* Form focus states */
+.form__input:focus {
+  border-color: #D4A853 !important;
+  box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.15) !important;
+}
+
+/* Checkbox accent */
+.form__checkbox input[type="checkbox"]:checked {
+  background-color: #D4A853 !important;
+  border-color: #D4A853 !important;
+}
+
+/* Section accent lines / borders */
+.step-item::before,
+.engine-container::before {
+  background: linear-gradient(180deg, #D4A853, transparent) !important;
+}
+
+/* Countdown numbers */
+.countdown__number {
+  color: #E8C46A !important;
+}
+
+/* Links */
+.form__link {
+  color: #E8C46A !important;
+}
+
+/* Particles override — gold tones via inline style override */
+/* (handled in v2.html inline script) */
+
+/* Badge / eyebrow accents */
+.hero__eyebrow {
+  color: #D4A853 !important;
+}
+
+/* Scroll indicator and misc green → gold */
+.green-glow,
+[class*="green"] {
+  /* Selective override via specificity */
+}
+
+/* Footer CTA section gradient tweak */
+.footer-cta {
+  background: linear-gradient(180deg, #0a0d1a 0%, #101528 50%, #0a0d1a 100%) !important;
+}
