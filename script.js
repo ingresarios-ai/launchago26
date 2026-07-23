@@ -328,31 +328,24 @@ function handleFormSubmit(e) {
       }).catch(function () {});
 
       // Update GHL with token + magic links
-      // Use sendBeacon (survives page navigation) with fetch fallback
+      // Use fetch with keepalive (survives page navigation AND supports CORS preflight)
       var webhookPayload = JSON.stringify(Object.assign({}, ghlData, { auth_token: token, magic_link: magicLink, 'contact.el__magic_link_encuesta': magicLinkEncuesta }));
-      var beaconSent = false;
-      if (navigator.sendBeacon) {
-        beaconSent = navigator.sendBeacon(GHL_WEBHOOK, new Blob([webhookPayload], { type: 'application/json' }));
-      }
-      // Fetch fallback: if sendBeacon failed or unavailable, use fetch with keepalive
-      if (!beaconSent) {
-        fetch(GHL_WEBHOOK, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: webhookPayload,
-          keepalive: true
-        }).catch(function () {});
-      }
+      fetch(GHL_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: webhookPayload,
+        keepalive: true
+      }).catch(function () {});
     }
 
-    // Show success and redirect FAST
+    // Show success and redirect — small delay ensures keepalive fetch initiates
     btn.innerHTML = '✓ ¡INSCRIPCIÓN REALIZADA!';
     if (token) {
       localStorage.setItem('auth_token', token);
       localStorage.setItem('user_email', email);
       // Remove pixel fired session flag so it triggers fresh on test load
       sessionStorage.removeItem('lead_pixel_fired');
-      window.location.href = 'gracias.html';
+      setTimeout(function () { window.location.href = 'gracias.html'; }, 150);
     } else {
       btn.innerHTML = originalText;
       btn.style.pointerEvents = '';
