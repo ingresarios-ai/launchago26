@@ -90,3 +90,50 @@
 .footer-cta {
   background: linear-gradient(180deg, #0a0d1a 0%, #101528 50%, #0a0d1a 100%) !important;
 }
+
+/* Hero background orbs — gold instead of green */
+.hero__bg-orb--1 {
+  background: radial-gradient(circle, rgba(212, 168, 83, 0.15) 0%, rgba(212, 168, 83, 0) 70%) !important;
+}
+.hero__bg-orb--2 {
+  background: radial-gradient(circle, rgba(184, 137, 46, 0.1) 0%, rgba(184, 137, 46, 0) 70%) !important;
+}
+
+/* Live pulse badge — gold */
+.top-bar__badge:nth-child(2) {
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.15), rgba(212, 168, 83, 0.05)) !important;
+  border-color: rgba(212, 168, 83, 0.4) !important;
+  color: #D4A853 !important;
+}
+.top-bar__badge:nth-child(2) svg {
+  stroke: #D4A853 !important;
+}
+
+/* For-who section card top border */
+.for-who__card-wrapper {
+  border-top-color: #D4A853 !important;
+}
+
+/* Professor image border */
+.professor__image-wrapper {
+  border-color: rgba(212, 168, 83, 0.2) !important;
+}
+
+/* Quote card accent */
+.professor__quote-card {
+  background: rgba(212, 168, 83, 0.03) !important;
+  border-left-color: #D4A853 !important;
+}
+
+/* Marquee diamond */
+.marquee__diamond {
+  color: #D4A853 !important;
+}
+
+/* What you learn section glow */
+.what-you-learn::before {
+  background: radial-gradient(circle, rgba(212, 168, 83, 0.03) 0%, transparent 70%) !important;
+}
+.for-who::before {
+  background: radial-gradient(ellipse at center, rgba(212, 168, 83, 0.05) 0%, transparent 70%) !important;
+}
