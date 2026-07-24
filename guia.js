@@ -153,19 +153,6 @@ document.addEventListener('DOMContentLoaded', function () {
 populateUTMs();
 
 // ========================================
-// SCROLL TO FORM (urgency CTA)
-// ========================================
-
-document.getElementById('scroll-to-form').addEventListener('click', function (e) {
-  e.preventDefault();
-  var form = document.getElementById('lm-form');
-  if (form) {
-    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    form.querySelector('input[name="name"]').focus();
-  }
-});
-
-// ========================================
 // SCROLL REVEAL ANIMATIONS
 // ========================================
 
