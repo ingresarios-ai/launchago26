@@ -283,7 +283,8 @@ document.getElementById('lm-form').addEventListener('submit', function (e) {
     localStorage.setItem('lm_pdf_title', 'La Ruta del Inversionista desde Cero');
 
     setTimeout(function () {
-      window.location.href = 'guia-gracias.html';
+      var redirectUrl = window.__lmRedirectUrl || 'guia-gracias.html';
+      window.location.href = redirectUrl;
     }, 400);
   }).catch(function (err) {
     console.error('Registration error:', err);

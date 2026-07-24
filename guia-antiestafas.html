@@ -186,34 +186,25 @@
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
   <script src="guia.js"></script>
 
-  <!-- Override: lead magnet identifier for this specific guide -->
+  <!-- Override: lead magnet identifier + redirect for this specific guide -->
   <script>
     (function() {
-      // Override the landing + lead_magnet hidden fields for this specific PDF
+      // Override the hidden fields for this specific PDF
       var form = document.getElementById('lm-form');
       if (form) {
         form.querySelector('input[name="landing"]').value = 'Lead Magnet Guia Anti-Estafas';
         form.querySelector('input[name="lead_magnet"]').value = 'guia_anti_estafas';
       }
 
-      // Override redirect to the anti-estafas thank you page
-      var originalSubmit = form.onsubmit;
-      // We'll store the PDF identifier so guia-gracias knows which PDF to serve
-      var origListener = null;
-
-      // After guia.js sets localStorage, override the redirect target
-      var origSetItem = localStorage.setItem.bind(localStorage);
-      var setCount = 0;
-      localStorage.setItem = function(key, value) {
-        origSetItem(key, value);
-        if (key === 'lm_name') setCount++;
-        // After all lm_ items are set, store the lead magnet type
-        if (setCount >= 1) {
-          origSetItem('lm_lead_magnet', 'guia_anti_estafas');
-          origSetItem('lm_pdf_url', '/referencias/Guia-Anti-Estafas-del-Inversionista.pdf');
-          origSetItem('lm_pdf_title', 'Guía Anti-Estafas del Inversionista');
-        }
-      };
+      // Override the redirect target — guia.js redirects to guia-gracias.html,
+      // we intercept and send to the anti-estafas-specific TY page instead
+      var _origHref = Object.getOwnPropertyDescriptor(window.Location.prototype, 'href');
+      var redirectOverride = setInterval(function() {
+        // Wait for guia.js to set up, then monkey-patch the redirect
+      }, 50);
+      // Simpler: override window.location.href assignment via a MutationObserver on navigate
+      // Actually the simplest: just override after guia.js loads
+      window.__lmRedirectUrl = 'guia-antiestafas-gracias.html';
     })();
   </script>
 </body>

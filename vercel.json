@@ -11,7 +11,8 @@
     { "source": "/preactividad2", "destination": "/preactividad2.html" },
     { "source": "/guia", "destination": "/guia.html" },
     { "source": "/guia-gracias", "destination": "/guia-gracias.html" },
-    { "source": "/guia-antiestafas", "destination": "/guia-antiestafas.html" }
+    { "source": "/guia-antiestafas", "destination": "/guia-antiestafas.html" },
+    { "source": "/guia-antiestafas-gracias", "destination": "/guia-antiestafas-gracias.html" }
   ],
   "headers": [
     {
