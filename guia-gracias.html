@@ -63,7 +63,7 @@
       </div>
       <div class="gt-step__content">
         <h2 class="gt-step__title">Descarga tu guía</h2>
-        <p class="gt-step__desc">"La Ruta del Inversionista desde Cero" — 10 páginas con los 5 pasos exactos y la checklist de arranque.</p>
+        <p class="gt-step__desc" id="step1-desc">"La Ruta del Inversionista desde Cero" — 10 páginas con los 5 pasos exactos y la checklist de arranque.</p>
         <a href="/referencias/La-Ruta-del-Inversionista-desde-Cero.pdf"
            id="download-btn"
            class="gt-btn gt-btn--download"
@@ -136,5 +136,19 @@
   </main>
 
   <script src="guia-gracias.js"></script>
+
+  <!-- Dynamic PDF override based on which lead magnet the user came from -->
+  <script>
+    (function() {
+      var pdfUrl = localStorage.getItem('lm_pdf_url');
+      var pdfTitle = localStorage.getItem('lm_pdf_title');
+      if (pdfUrl && pdfTitle) {
+        var downloadBtn = document.getElementById('download-btn');
+        var stepDesc = document.getElementById('step1-desc');
+        if (downloadBtn) downloadBtn.href = pdfUrl;
+        if (stepDesc) stepDesc.textContent = '"' + pdfTitle + '" — 10 páginas con checklist y protocolo de verificación incluidos.';
+      }
+    })();
+  </script>
 </body>
 </html>

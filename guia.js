@@ -278,6 +278,9 @@ document.getElementById('lm-form').addEventListener('submit', function (e) {
     localStorage.setItem('lm_utm_campaign', utm_campaign || '');
     localStorage.setItem('lm_utm_content', utm_content || '');
     localStorage.setItem('lm_utm_term', utm_term || '');
+    localStorage.setItem('lm_lead_magnet', lead_magnet);
+    localStorage.setItem('lm_pdf_url', '/referencias/La-Ruta-del-Inversionista-desde-Cero.pdf');
+    localStorage.setItem('lm_pdf_title', 'La Ruta del Inversionista desde Cero');
 
     setTimeout(function () {
       window.location.href = 'guia-gracias.html';
