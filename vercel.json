@@ -8,7 +8,9 @@
     { "source": "/encuesta", "destination": "/encuesta.html" },
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/preactividad1", "destination": "/preactividad1.html" },
-    { "source": "/preactividad2", "destination": "/preactividad2.html" }
+    { "source": "/preactividad2", "destination": "/preactividad2.html" },
+    { "source": "/guia", "destination": "/guia.html" },
+    { "source": "/guia-gracias", "destination": "/guia-gracias.html" }
   ],
   "headers": [
     {
