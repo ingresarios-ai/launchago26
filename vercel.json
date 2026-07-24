@@ -13,7 +13,8 @@
     { "source": "/guia-gracias", "destination": "/guia-gracias.html" },
     { "source": "/guia-antiestafas", "destination": "/guia-antiestafas.html" },
     { "source": "/guia-antiestafas-gracias", "destination": "/guia-antiestafas-gracias.html" },
-    { "source": "/cuanto-tienes", "destination": "/cuanto-tienes.html" }
+    { "source": "/cuanto-tienes", "destination": "/cuanto-tienes.html" },
+    { "source": "/club-cerrado", "destination": "/club-cerrado.html" }
   ],
   "headers": [
     {
