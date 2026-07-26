@@ -78,6 +78,10 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             Pre-Actividades 🔥
           </button>
+          <button class="nav-item" data-tab="leadmagnets">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Lead Magnets 🧲
+          </button>
           <button class="nav-item" data-tab="settings">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             Configuración
@@ -127,6 +131,14 @@
                 <h3>Encuestas</h3>
                 <p class="kpi-value" id="kpi-total-surveys">-</p>
                 <p class="kpi-sub" id="kpi-survey-ratio">-</p>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon icon-purple">🧲</div>
+              <div class="kpi-info">
+                <h3>Lead Magnets</h3>
+                <p class="kpi-value" id="kpi-total-lm">-</p>
+                <p class="kpi-sub" id="kpi-lm-conv-sub">- inscritos al taller</p>
               </div>
             </div>
           </div>
@@ -294,6 +306,106 @@
             <button class="btn btn--sm btn--secondary" id="btn-prev-page" disabled>Anterior</button>
             <span class="page-indicator" id="page-indicator">Página 1 de 1</span>
             <button class="btn btn--sm btn--secondary" id="btn-next-page" disabled>Siguiente</button>
+          </div>
+        </section>
+
+        <!-- ===== SECTION: LEAD MAGNETS ===== -->
+        <section id="tab-leadmagnets" class="tab-panel">
+          <div class="panel-header panel-header--split">
+            <div>
+              <h1>Embudos de Lead Magnets 🧲</h1>
+              <p class="panel-subtitle">Seguimiento de descargas de PDFs y conversión hacia el Taller</p>
+            </div>
+            <button class="btn btn--secondary" id="btn-export-leadmagnets">
+              Descargar CSV
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+          </div>
+
+          <!-- LEAD MAGNETS KPI GRID -->
+          <div class="kpi-grid" style="margin-bottom: 24px;">
+            <div class="kpi-card">
+              <div class="kpi-icon icon-blue">📥</div>
+              <div class="kpi-info">
+                <h3>Descargas PDF</h3>
+                <p class="kpi-value" id="kpi-lm-total">0</p>
+                <p class="kpi-sub">Total acumulado</p>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon icon-green">🎓</div>
+              <div class="kpi-info">
+                <h3>Inscritos al Taller</h3>
+                <p class="kpi-value" id="kpi-lm-converted">0</p>
+                <p class="kpi-sub" id="kpi-lm-conv-rate">0% conversión</p>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon icon-yellow">🗺️</div>
+              <div class="kpi-info">
+                <h3>Ruta Inversionista</h3>
+                <p class="kpi-value" id="kpi-lm-ruta">0</p>
+                <p class="kpi-sub" id="kpi-lm-ruta-conv">0 en taller</p>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon icon-purple">🛡️</div>
+              <div class="kpi-info">
+                <h3>Guía Anti-Estafas</h3>
+                <p class="kpi-value" id="kpi-lm-antiestafas">0</p>
+                <p class="kpi-sub" id="kpi-lm-antiestafas-conv">0 en taller</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FILTERS BAR -->
+          <div class="filters-bar">
+            <div class="search-input-wrapper">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="search-icon"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="lm-search" placeholder="Buscar por nombre, correo, teléfono o UTM..." />
+            </div>
+            <div class="filter-group">
+              <select id="filter-lm-type">
+                <option value="">Todos los Lead Magnets</option>
+                <option value="ruta">🗺️ Ruta del Inversionista</option>
+                <option value="antiestafas">🛡️ Guía Anti-Estafas</option>
+              </select>
+              <select id="filter-lm-taller">
+                <option value="">Estado Taller: Todos</option>
+                <option value="si">🟢 Inscritos al Taller</option>
+                <option value="no">⚪ Solo Descargó PDF</option>
+              </select>
+              <select id="filter-lm-source">
+                <option value="">Todas las Fuentes (UTM)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- TABLE CONTAINER -->
+          <div class="main-table-container">
+            <table class="main-table" id="leadmagnets-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Contacto</th>
+                  <th>Lead Magnet</th>
+                  <th>Inscrito al Taller</th>
+                  <th>Origen / UTM</th>
+                  <th>Fecha Descarga</th>
+                </tr>
+              </thead>
+              <tbody id="leadmagnets-tbody">
+                <tr><td colspan="7" class="text-center text-muted">Cargando datos de lead magnets...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PAGINATION -->
+          <div class="pagination" id="lm-pagination">
+            <button class="btn btn--sm btn--secondary" id="btn-lm-prev-page" disabled>Anterior</button>
+            <span class="page-indicator" id="lm-page-indicator">Página 1 de 1</span>
+            <button class="btn btn--sm btn--secondary" id="btn-lm-next-page" disabled>Siguiente</button>
           </div>
         </section>
 
@@ -548,6 +660,13 @@
           <div class="survey-answers-grid" id="modal-survey-answers">
             <!-- Dynamic list of survey Q&As -->
             <p class="text-muted">El lead aún no ha completado la encuesta.</p>
+          </div>
+        </div>
+
+        <div class="modal-section" style="margin-top:20px;" id="modal-section-leadmagnet">
+          <h3>Información de Lead Magnet 🧲</h3>
+          <div class="survey-answers-grid" id="modal-leadmagnet-info">
+            <p class="text-muted">El lead no proviene de una descarga de Lead Magnet.</p>
           </div>
         </div>
 

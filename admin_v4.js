@@ -13,9 +13,27 @@ let allLeads = [];
 let allVisits = [];
 let allSurveys = [];
 let allTests = [];
+let allLeadMagnets = [];
 let filteredLeads = [];
+let filteredLeadMagnets = [];
 let leadsPage = 1;
 const leadsPerPage = 15;
+let lmPage = 1;
+const lmPerPage = 15;
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>"']/g, function (m) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+  });
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '-';
+  return new Date(dateStr).toLocaleDateString('es-ES', {
+    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+  });
+}
 
 // Chart.js instances
 let chartUtmSourceInstance = null;
@@ -122,6 +140,35 @@ function setupEventListeners() {
   document.getElementById('btn-export-surveys').addEventListener('click', exportSurveysCSV);
   const btnExportPreact = document.getElementById('btn-export-preactivities');
   if (btnExportPreact) btnExportPreact.addEventListener('click', exportPreactivitiesCSV);
+  const btnExportLm = document.getElementById('btn-export-leadmagnets');
+  if (btnExportLm) btnExportLm.addEventListener('click', exportLeadMagnetsCSV);
+
+  // Lead Magnets Filters
+  const lmSearch = document.getElementById('lm-search');
+  if (lmSearch) lmSearch.addEventListener('input', handleLmFilterChange);
+  const filterLmType = document.getElementById('filter-lm-type');
+  if (filterLmType) filterLmType.addEventListener('change', handleLmFilterChange);
+  const filterLmTaller = document.getElementById('filter-lm-taller');
+  if (filterLmTaller) filterLmTaller.addEventListener('change', handleLmFilterChange);
+  const filterLmSource = document.getElementById('filter-lm-source');
+  if (filterLmSource) filterLmSource.addEventListener('change', handleLmFilterChange);
+
+  // Lead Magnets Pagination
+  const btnLmPrev = document.getElementById('btn-lm-prev-page');
+  if (btnLmPrev) btnLmPrev.addEventListener('click', () => {
+    if (lmPage > 1) {
+      lmPage--;
+      renderLeadMagnetsTable();
+    }
+  });
+  const btnLmNext = document.getElementById('btn-lm-next-page');
+  if (btnLmNext) btnLmNext.addEventListener('click', () => {
+    const totalPages = Math.ceil(filteredLeadMagnets.length / lmPerPage) || 1;
+    if (lmPage < totalPages) {
+      lmPage++;
+      renderLeadMagnetsTable();
+    }
+  });
 
   // Settings Forms
   document.getElementById('settings-webhooks-form').addEventListener('submit', handleSaveWebhooks);
@@ -244,6 +291,41 @@ async function loadData() {
     // 4. Fetch tests via secure admin RPC function
     allTests = await dbFetchAll('/rest/v1/rpc/admin_get_tests', authParams);
 
+    // 5. Fetch lead magnets via RPC (with direct REST fallback)
+    try {
+      allLeadMagnets = await dbFetchAll('/rest/v1/rpc/admin_get_leads_magnets', authParams);
+    } catch (err) {
+      try {
+        allLeadMagnets = await dbFetch('/rest/v1/leads_magnets?select=*&order=created_at.desc', { method: 'GET' });
+      } catch (e) {
+        allLeadMagnets = [];
+      }
+    }
+
+    // Cross-reference Lead Magnets with Workshop Leads by email
+    const workshopEmailMap = new Map();
+    allLeads.forEach(l => {
+      if (l.email) workshopEmailMap.set(l.email.toLowerCase().trim(), l);
+    });
+
+    allLeadMagnets.forEach(lm => {
+      const lmEmail = (lm.email || '').toLowerCase().trim();
+      const parentWorkshopLead = workshopEmailMap.get(lmEmail);
+      lm.is_workshop_registered = !!parentWorkshopLead;
+      lm.workshop_lead = parentWorkshopLead || null;
+    });
+
+    // Also link Lead Magnet data to taller lead objects in memory
+    const lmEmailMap = new Map();
+    allLeadMagnets.forEach(lm => {
+      if (lm.email) lmEmailMap.set(lm.email.toLowerCase().trim(), lm);
+    });
+
+    allLeads.forEach(l => {
+      const lmObj = lmEmailMap.get((l.email || '').toLowerCase().trim());
+      l.lead_magnet_info = lmObj || null;
+    });
+
     // Match survey responses back to the lead objects in-memory for UI badges
     const surveyLeadIds = new Set(allSurveys.map(s => s.lead_id));
     
@@ -275,6 +357,7 @@ async function loadData() {
     buildLeadsTab();
     buildSurveysTab();
     buildPreactivitiesTab();
+    buildLeadMagnetsTab();
     buildSettingsTab();
 
   } catch (err) {
@@ -308,6 +391,16 @@ function buildAnalytics() {
 
   const surveyRatio = totalLeads > 0 ? ((totalSurveys / totalLeads) * 100).toFixed(1) : '0';
   document.getElementById('kpi-survey-ratio').textContent = `${surveyRatio}% de leads completados`;
+
+  // Lead Magnets Dashboard KPI
+  const lmCount = allLeadMagnets.length;
+  const lmConvCount = allLeadMagnets.filter(lm => lm.is_workshop_registered).length;
+  const lmConvRate = lmCount > 0 ? ((lmConvCount / lmCount) * 100).toFixed(1) : '0';
+
+  const elLmTotal = document.getElementById('kpi-total-lm');
+  const elLmSub = document.getElementById('kpi-lm-conv-sub');
+  if (elLmTotal) elLmTotal.textContent = lmCount;
+  if (elLmSub) elLmSub.textContent = `${lmConvCount} inscritos (${lmConvRate}%)`;
 
   // UTM Source table aggregation
   const utmSources = {};
@@ -612,16 +705,22 @@ function renderLeadsTable() {
       </div>
     `;
 
+    // Landing / Lead Magnet Badge
+    let landingBadge = `<span class="badge badge--blue">${escapeHtml(l.landing || 'Registro')}</span>`;
+    if (l.lead_magnet_info || (l.landing && l.landing.includes('Lead Magnet'))) {
+      landingBadge = `<span class="badge badge--purple">🧲 ${escapeHtml(l.landing || 'Lead Magnet')}</span>`;
+    }
+
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td><strong>${l.name || '-'}</strong></td>
+      <td><strong>${escapeHtml(l.name || '-')}</strong></td>
       <td>
-        <div style="font-size:0.85rem;">✉️ ${l.email || '-'}</div>
-        <div style="font-size:0.8rem; color:var(--text-secondary); margin-top:2px;">📱 ${l.phone || '-'}</div>
+        <div style="font-size:0.85rem;">✉️ ${escapeHtml(l.email || '-')}</div>
+        <div style="font-size:0.8rem; color:var(--text-secondary); margin-top:2px;">📱 ${escapeHtml(l.phone || '-')}</div>
       </td>
-      <td><span class="badge badge--blue">${l.landing || 'Registro'}</span></td>
-      <td><span class="badge badge--gray">${l.utm_source || 'directo'}</span></td>
-      <td><span class="badge badge--gray">${l.utm_campaign || 'ninguna'}</span></td>
+      <td>${landingBadge}</td>
+      <td><span class="badge badge--gray">${escapeHtml(l.utm_source || 'directo')}</span></td>
+      <td><span class="badge badge--gray">${escapeHtml(l.utm_campaign || 'ninguna')}</span></td>
       <td>${surveyBadge}</td>
       <td>${testBadge}</td>
       <td>${progressHTML}</td>
@@ -917,6 +1016,42 @@ function showLeadModal(leadId) {
     });
   } else {
     answersGrid.innerHTML = '<p class="text-muted">El lead aún no ha completado la encuesta de lanzamiento.</p>';
+  }
+
+  // Check Lead Magnet Download
+  const lmInfoContainer = document.getElementById('modal-leadmagnet-info');
+  if (lmInfoContainer) {
+    lmInfoContainer.innerHTML = '';
+    const lmObj = l.lead_magnet_info || allLeadMagnets.find(lm => (lm.email || '').toLowerCase().trim() === (l.email || '').toLowerCase().trim());
+    if (lmObj) {
+      const rawType = (lmObj.lead_magnet || lmObj.landing || '').toLowerCase();
+      let lmName = '🗺️ La Ruta del Inversionista desde Cero';
+      if (rawType.includes('estafa') || rawType.includes('anti')) {
+        lmName = '🛡️ Guía Anti-Estafas del Inversionista';
+      }
+      const lmDate = lmObj.created_at ? formatDate(lmObj.created_at) : '-';
+
+      lmInfoContainer.innerHTML = `
+        <div class="survey-answer-row">
+          <span class="survey-q">PDF Descargado</span>
+          <span class="survey-a"><strong style="color:var(--text-white);">${lmName}</strong></span>
+        </div>
+        <div class="survey-answer-row">
+          <span class="survey-q">Fecha de Descarga</span>
+          <span class="survey-a">${lmDate}</span>
+        </div>
+        <div class="survey-answer-row">
+          <span class="survey-q">Landing de Captación</span>
+          <span class="survey-a">${escapeHtml(lmObj.landing || '-')}</span>
+        </div>
+        <div class="survey-answer-row">
+          <span class="survey-q">UTM Source</span>
+          <span class="survey-a">${escapeHtml(lmObj.utm_source || 'directo')}</span>
+        </div>
+      `;
+    } else {
+      lmInfoContainer.innerHTML = '<p class="text-muted">El lead no proviene de una descarga de Lead Magnet.</p>';
+    }
   }
 
   // Check Saboteur Test Answers
@@ -1326,4 +1461,198 @@ function exportPreactivitiesCSV() {
   ]);
   triggerCSVDownload('preactividades_lanzamiento.csv', headers, rows);
 }
+
+// ===== LEAD MAGNETS TAB CONTROL =====
+function buildLeadMagnetsTab() {
+  const total = allLeadMagnets.length;
+  const convertedCount = allLeadMagnets.filter(lm => lm.is_workshop_registered).length;
+  const convRate = total > 0 ? ((convertedCount / total) * 100).toFixed(1) : '0';
+
+  // Breakdown by PDF guide
+  const rutaLeads = allLeadMagnets.filter(lm => {
+    const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
+    return type.includes('ruta') || type.includes('inversionista');
+  });
+  const rutaTotal = rutaLeads.length;
+  const rutaConv = rutaLeads.filter(lm => lm.is_workshop_registered).length;
+
+  const antiLeads = allLeadMagnets.filter(lm => {
+    const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
+    return type.includes('estafa') || type.includes('anti');
+  });
+  const antiTotal = antiLeads.length;
+  const antiConv = antiLeads.filter(lm => lm.is_workshop_registered).length;
+
+  // Set KPIs
+  const elTotal = document.getElementById('kpi-lm-total');
+  const elConv = document.getElementById('kpi-lm-converted');
+  const elRate = document.getElementById('kpi-lm-conv-rate');
+  const elRuta = document.getElementById('kpi-lm-ruta');
+  const elRutaConv = document.getElementById('kpi-lm-ruta-conv');
+  const elAnti = document.getElementById('kpi-lm-antiestafas');
+  const elAntiConv = document.getElementById('kpi-lm-antiestafas-conv');
+
+  if (elTotal) elTotal.textContent = total;
+  if (elConv) elConv.textContent = convertedCount;
+  if (elRate) elRate.textContent = `${convRate}% conversión al taller`;
+  if (elRuta) elRuta.textContent = rutaTotal;
+  if (elRutaConv) elRutaConv.textContent = `${rutaConv} en taller`;
+  if (elAnti) elAnti.textContent = antiTotal;
+  if (elAntiConv) elAntiConv.textContent = `${antiConv} en taller`;
+
+  // Populate source options dropdown
+  const sources = new Set(allLeadMagnets.map(lm => lm.utm_source || 'directo'));
+  const sourceSelect = document.getElementById('filter-lm-source');
+  if (sourceSelect) {
+    sourceSelect.innerHTML = '<option value="">Todas las Fuentes (UTM)</option>' +
+      Array.from(sources).map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+  }
+
+  handleLmFilterChange();
+}
+
+function handleLmFilterChange() {
+  const searchTerm = (document.getElementById('lm-search')?.value || '').toLowerCase().trim();
+  const lmType = document.getElementById('filter-lm-type')?.value || '';
+  const tallerStatus = document.getElementById('filter-lm-taller')?.value || '';
+  const source = document.getElementById('filter-lm-source')?.value || '';
+
+  filteredLeadMagnets = allLeadMagnets.filter(lm => {
+    // Search filter
+    if (searchTerm) {
+      const name = (lm.name || '').toLowerCase();
+      const email = (lm.email || '').toLowerCase();
+      const phone = (lm.phone || '').toLowerCase();
+      const utm = (lm.utm_source || '').toLowerCase();
+      if (!name.includes(searchTerm) && !email.includes(searchTerm) && !phone.includes(searchTerm) && !utm.includes(searchTerm)) {
+        return false;
+      }
+    }
+
+    // Lead Magnet Type filter
+    if (lmType === 'ruta') {
+      const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
+      if (!type.includes('ruta') && !type.includes('inversionista')) return false;
+    } else if (lmType === 'antiestafas') {
+      const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
+      if (!type.includes('estafa') && !type.includes('anti')) return false;
+    }
+
+    // Taller status filter
+    if (tallerStatus === 'si' && !lm.is_workshop_registered) return false;
+    if (tallerStatus === 'no' && lm.is_workshop_registered) return false;
+
+    // Source filter
+    if (source && (lm.utm_source || 'directo') !== source) return false;
+
+    return true;
+  });
+
+  lmPage = 1;
+  renderLeadMagnetsTable();
+}
+
+function renderLeadMagnetsTable() {
+  const tbody = document.getElementById('leadmagnets-tbody');
+  if (!tbody) return;
+
+  const total = filteredLeadMagnets.length;
+  const totalPages = Math.ceil(total / lmPerPage) || 1;
+  if (lmPage > totalPages) lmPage = totalPages;
+
+  const startIdx = (lmPage - 1) * lmPerPage;
+  const endIdx = startIdx + lmPerPage;
+  const pageItems = filteredLeadMagnets.slice(startIdx, endIdx);
+
+  const pageIndicator = document.getElementById('lm-page-indicator');
+  if (pageIndicator) pageIndicator.textContent = `Página ${lmPage} de ${totalPages} (${total} total)`;
+
+  const btnPrev = document.getElementById('btn-lm-prev-page');
+  const btnNext = document.getElementById('btn-lm-next-page');
+  if (btnPrev) btnPrev.disabled = lmPage <= 1;
+  if (btnNext) btnNext.disabled = lmPage >= totalPages;
+
+  if (pageItems.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted" style="padding: 24px;">No se encontraron descargas de lead magnets.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = pageItems.map((lm, idx) => {
+    const rowNum = startIdx + idx + 1;
+    const name = escapeHtml(lm.name || 'Sin nombre');
+    const email = escapeHtml(lm.email || 'Sin correo');
+    const phone = escapeHtml(lm.phone || 'Sin teléfono');
+    
+    // Identify lead magnet type nicely
+    const rawType = (lm.lead_magnet || lm.landing || '').toLowerCase();
+    let lmBadge = '<span class="badge badge--blue">🗺️ Ruta Inversionista</span>';
+    if (rawType.includes('estafa') || rawType.includes('anti')) {
+      lmBadge = '<span class="badge badge--purple">🛡️ Guía Anti-Estafas</span>';
+    }
+
+    // Workshop registration status
+    let tallerBadge = lm.is_workshop_registered
+      ? '<span class="badge badge--green" style="background:rgba(34, 197, 94, 0.15); color:#4ade80; border:1px solid rgba(34, 197, 94, 0.3);">🟢 Inscrito al Taller</span>'
+      : '<span class="badge badge--gray">⚪ Solo Descargó PDF</span>';
+
+    // Source
+    const source = escapeHtml(lm.utm_source || 'directo');
+    const date = formatDate(lm.created_at);
+
+    return `
+      <tr>
+        <td><strong>#${rowNum}</strong></td>
+        <td><strong>${name}</strong></td>
+        <td>
+          <div style="font-size:0.85rem;">✉️ ${email}</div>
+          <div style="font-size:0.8rem; color:var(--text-secondary); margin-top:2px;">📱 ${phone}</div>
+        </td>
+        <td>${lmBadge}</td>
+        <td>${tallerBadge}</td>
+        <td><span class="badge badge--gray">${source}</span></td>
+        <td style="font-size:0.82rem; color:var(--text-muted);">${date}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function exportLeadMagnetsCSV() {
+  if (!filteredLeadMagnets || filteredLeadMagnets.length === 0) {
+    alert('No hay leads magnets para exportar.');
+    return;
+  }
+
+  const headers = [
+    'Nombre',
+    'Email',
+    'Telefono',
+    'Lead Magnet',
+    'Inscrito al Taller',
+    'Landing',
+    'UTM Source',
+    'UTM Medium',
+    'UTM Campaign',
+    'UTM Content',
+    'UTM Term',
+    'Fecha Descarga'
+  ];
+
+  const rows = filteredLeadMagnets.map(lm => [
+    lm.name || '',
+    lm.email || '',
+    lm.phone || '',
+    lm.lead_magnet || lm.landing || '',
+    lm.is_workshop_registered ? 'SI' : 'NO',
+    lm.landing || '',
+    lm.utm_source || '',
+    lm.utm_medium || '',
+    lm.utm_campaign || '',
+    lm.utm_content || '',
+    lm.utm_term || '',
+    lm.created_at || ''
+  ]);
+
+  triggerCSVDownload('lead_magnets_descargas.csv', headers, rows);
+}
+
 
