@@ -44,12 +44,6 @@ function formatDate(dateStr) {
   });
 }
 
-// Chart.js instances
-let chartUtmSourceInstance = null;
-let chartLandingInstance = null;
-let chartTestParticipationInstance = null;
-let chartTestArchetypesInstance = null;
-
 // ===== DOM INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
@@ -202,11 +196,27 @@ async function checkAuth() {
 }
 
 async function verifyCredentials(email, password) {
-  const result = await dbFetch('/rest/v1/rpc/verify_admin_user', {
-    method: 'POST',
-    body: JSON.stringify({ p_email: email, p_password: password })
-  });
-  return !!result;
+  try {
+    const result = await dbFetch('/rest/v1/rpc/verify_admin_user', {
+      method: 'POST',
+      body: JSON.stringify({ p_email: email, p_password: password })
+    });
+    if (result === true) return true;
+    if (result === false) return false;
+    if (Array.isArray(result)) {
+      if (result.length === 0) return false;
+      const first = result[0];
+      if (typeof first === 'boolean') return first;
+      if (typeof first === 'object' && first !== null) {
+        const val = first.verify_admin_user ?? first.verify_user ?? Object.values(first)[0];
+        return !!val;
+      }
+    }
+    return !!result;
+  } catch (err) {
+    console.error('verifyCredentials error:', err);
+    return false;
+  }
 }
 
 function showLoginForm() {
