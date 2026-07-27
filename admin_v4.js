@@ -21,6 +21,15 @@ const leadsPerPage = 15;
 let lmPage = 1;
 const lmPerPage = 15;
 
+// Chart.js instances
+let chartUtmSourceInstance = null;
+let chartLandingInstance = null;
+let chartTestParticipationInstance = null;
+let chartTestArchetypesInstance = null;
+let chartSurveyConversionInstance = null;
+let chartSurveyExperienceInstance = null;
+let chartSurveyAgeInstance = null;
+
 function escapeHtml(str) {
   if (!str) return '';
   return String(str).replace(/[&<>"']/g, function (m) {
@@ -849,23 +858,37 @@ function buildSurveysTab() {
   const listEl = document.getElementById('survey-responses-list');
   listEl.innerHTML = '';
 
+  const totalLeadsCount = allLeads.length;
+  const completedSurveysCount = allSurveys.length;
+  const pendingSurveysCount = Math.max(0, totalLeadsCount - completedSurveysCount);
+  const surveyConvRate = totalLeadsCount > 0 ? ((completedSurveysCount / totalLeadsCount) * 100).toFixed(1) : '0';
+
+  const elConv = document.getElementById('stat-survey-conv');
+  const elSub = document.getElementById('stat-survey-sub');
+  const elTotal = document.getElementById('stat-survey-total');
+
+  if (elConv) elConv.textContent = `${surveyConvRate}%`;
+  if (elSub) elSub.textContent = `${completedSurveysCount} de ${totalLeadsCount} leads`;
+  if (elTotal) elTotal.textContent = completedSurveysCount;
+
   if (allSurveys.length === 0) {
     listEl.innerHTML = '<div class="text-center text-muted" style="padding:40px 0;">Aún no se han recibido respuestas a la encuesta.</div>';
-    
-    document.getElementById('stat-top-reto').textContent = 'Ninguno';
     document.getElementById('stat-top-edad').textContent = '-';
     document.getElementById('stat-top-pais').textContent = '-';
+    renderSurveyCharts(0, totalLeadsCount, {}, {});
     return;
   }
 
-  // Aggregate values for summary cards
+  // Aggregate values for summary cards & charts
   const ageCounts = {};
   const countryCounts = {};
+  const expCounts = {};
   const retosList = [];
 
   allSurveys.forEach(s => {
     if (s.edad) ageCounts[s.edad] = (ageCounts[s.edad] || 0) + 1;
     if (s.pais) countryCounts[s.pais] = (countryCounts[s.pais] || 0) + 1;
+    if (s.ha_invertido) expCounts[s.ha_invertido] = (expCounts[s.ha_invertido] || 0) + 1;
     if (s.mayor_reto) retosList.push(s.mayor_reto);
 
     // Render individual survey card
@@ -957,7 +980,105 @@ function buildSurveysTab() {
   });
 
   const topReto = Object.keys(retoStats).sort((a,b) => retoStats[b] - retoStats[a])[0] || 'Varios/Otros';
-  document.getElementById('stat-top-reto').textContent = topReto;
+
+  // Render Charts for Survey Conversion & Demographics
+  renderSurveyCharts(completedSurveysCount, pendingSurveysCount, expCounts, ageCounts);
+}
+
+function renderSurveyCharts(completedCount, pendingCount, expCounts, ageCounts) {
+  const ctxConv = document.getElementById('chart-survey-conversion');
+  const ctxExp = document.getElementById('chart-survey-experience');
+  const ctxAge = document.getElementById('chart-survey-age');
+  if (!ctxConv || !ctxExp || !ctxAge) return;
+
+  // Destroy previous chart instances
+  if (chartSurveyConversionInstance) chartSurveyConversionInstance.destroy();
+  if (chartSurveyExperienceInstance) chartSurveyExperienceInstance.destroy();
+  if (chartSurveyAgeInstance) chartSurveyAgeInstance.destroy();
+
+  // 1. Conversion Pie Chart
+  chartSurveyConversionInstance = new Chart(ctxConv, {
+    type: 'doughnut',
+    data: {
+      labels: ['Encuesta Completada', 'Pendiente de Encuesta'],
+      datasets: [{
+        data: [completedCount, pendingCount],
+        backgroundColor: ['rgba(34, 197, 94, 0.8)', 'rgba(234, 179, 8, 0.6)'],
+        borderColor: ['#22c55e', '#eab308'],
+        borderWidth: 1.5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: '#cbd5e1', font: { family: 'Inter', size: 11 } }
+        }
+      }
+    }
+  });
+
+  // 2. Experience Chart
+  const expLabels = Object.keys(expCounts);
+  const expData = Object.values(expCounts);
+  chartSurveyExperienceInstance = new Chart(ctxExp, {
+    type: 'pie',
+    data: {
+      labels: expLabels.length > 0 ? expLabels : ['Sin datos'],
+      datasets: [{
+        data: expData.length > 0 ? expData : [1],
+        backgroundColor: [
+          'rgba(59, 130, 246, 0.8)',
+          'rgba(168, 85, 247, 0.8)',
+          'rgba(34, 197, 94, 0.8)',
+          'rgba(245, 158, 11, 0.8)',
+          'rgba(239, 68, 68, 0.8)'
+        ],
+        borderWidth: 1.5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: '#cbd5e1', font: { family: 'Inter', size: 10 } }
+        }
+      }
+    }
+  });
+
+  // 3. Age Distribution Chart
+  const ageLabels = Object.keys(ageCounts);
+  const ageData = Object.values(ageCounts);
+  chartSurveyAgeInstance = new Chart(ctxAge, {
+    type: 'bar',
+    data: {
+      labels: ageLabels.length > 0 ? ageLabels : ['Sin datos'],
+      datasets: [{
+        label: 'Participantes',
+        data: ageData.length > 0 ? ageData : [0],
+        backgroundColor: 'rgba(34, 197, 94, 0.75)',
+        borderColor: '#22c55e',
+        borderWidth: 1,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { ticks: { color: '#cbd5e1', font: { family: 'Inter', size: 10 } }, grid: { display: false } },
+        y: { ticks: { color: '#94a3b8', font: { family: 'Inter', size: 10 }, stepSize: 1 }, grid: { color: 'rgba(255,255,255,0.05)' } }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
 }
 
 // ===== LEAD DETAIL MODAL =====

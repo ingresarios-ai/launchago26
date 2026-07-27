@@ -424,21 +424,57 @@
           <!-- SURVEY METRICS CARDS -->
           <div class="kpi-grid" style="margin-bottom:24px;">
             <div class="kpi-card">
+              <div class="kpi-icon icon-green">📈</div>
               <div class="kpi-info">
-                <h3>Top Reto en Inversiones</h3>
-                <p class="kpi-value text-glow-yellow" id="stat-top-reto" style="font-size: 1.5rem; height:40px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Cargando...</p>
+                <h3>Tasa Conversión Encuesta</h3>
+                <p class="kpi-value text-glow-green" id="stat-survey-conv">0%</p>
+                <p class="kpi-sub" id="stat-survey-sub">0 de 0 leads</p>
               </div>
             </div>
             <div class="kpi-card">
+              <div class="kpi-icon icon-blue">📋</div>
               <div class="kpi-info">
-                <h3>Rango de Edad Promedio</h3>
-                <p class="kpi-value text-glow-blue" id="stat-top-edad" style="font-size: 1.8rem; height:40px;">-</p>
+                <h3>Encuestas Completadas</h3>
+                <p class="kpi-value text-glow-blue" id="stat-survey-total">0</p>
+                <p class="kpi-sub">Respuestas recibidas</p>
               </div>
             </div>
             <div class="kpi-card">
+              <div class="kpi-icon icon-yellow">👤</div>
+              <div class="kpi-info">
+                <h3>Rango de Edad Principal</h3>
+                <p class="kpi-value text-glow-yellow" id="stat-top-edad" style="font-size: 1.5rem;">-</p>
+                <p class="kpi-sub">Segmento dominante</p>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon icon-purple">🌎</div>
               <div class="kpi-info">
                 <h3>País Principal</h3>
-                <p class="kpi-value text-glow-green" id="stat-top-pais" style="font-size: 1.8rem; height:40px;">-</p>
+                <p class="kpi-value text-glow-green" id="stat-top-pais" style="font-size: 1.5rem;">-</p>
+                <p class="kpi-sub">Mayor audiencia</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- SURVEY CHARTS ROW -->
+          <div class="analytics-layout" style="margin-bottom: 28px;">
+            <div class="analytics-card" style="flex: 1; min-width: 280px; height: 320px;">
+              <div class="card-title">Conversión de Encuesta (% Leads Registrados)</div>
+              <div style="position:relative; height:210px;">
+                <canvas id="chart-survey-conversion"></canvas>
+              </div>
+            </div>
+            <div class="analytics-card" style="flex: 1; min-width: 280px; height: 320px;">
+              <div class="card-title">¿Ha Invertido Antes? (Experiencia Previa)</div>
+              <div style="position:relative; height:210px;">
+                <canvas id="chart-survey-experience"></canvas>
+              </div>
+            </div>
+            <div class="analytics-card" style="flex: 1; min-width: 280px; height: 320px;">
+              <div class="card-title">Distribución por Rango de Edad</div>
+              <div style="position:relative; height:210px;">
+                <canvas id="chart-survey-age"></canvas>
               </div>
             </div>
           </div>
