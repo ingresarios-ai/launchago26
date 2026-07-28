@@ -13,11 +13,25 @@
   })(window,document,'script','dataLayer','GTM-PG9F8H6M');</script>
   <!-- End Google Tag Manager -->
   
+  <!-- Strict Anti-Cache Directives -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="stylesheet" href="app_v2.css?v=20250721" />
+  
+  <!-- Dynamic Anti-Cache CSS Loader -->
+  <script>
+    (function() {
+      var css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = 'app_v2.css?v=' + Date.now();
+      document.head.appendChild(css);
+    })();
+  </script>
   
   <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -475,6 +489,13 @@
     </div>
   </div>
 
-  <script src="app_v3.js?v=20260728_v11"></script>
+  <!-- Dynamic Anti-Cache JS Loader -->
+  <script>
+    (function() {
+      var js = document.createElement('script');
+      js.src = 'app_v3.js?v=' + Date.now();
+      document.body.appendChild(js);
+    })();
+  </script>
 </body>
 </html>
