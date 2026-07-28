@@ -1076,16 +1076,10 @@ const liveSessionsData = {
     resourceName: "Guía: Anatomía de los 4 Saboteadores Financieros (PDF)",
     resourceLink: "#",
     missionTitle: "Misión del Día 1: Identifica tu Saboteador",
-    missionDesc: "Realiza el Test del Saboteador (8 preguntas) y confirma tu arquetipo mental dominante para recibir tus 30 Puntos de Control.",
+    missionDesc: "Realiza o repite el Test del Saboteador (8 preguntas) para descubrir o actualizar tu arquetipo mental dominante.",
     renderMission: () => `
-      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 18px; border-radius: 12px; margin-bottom: 16px; text-align:center;">
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 8px;">Tu Saboteador dominante detectado:</p>
-        <div id="live1-saboteur-box" style="font-weight: 800; color: var(--yellow); font-size: 1.2rem; margin-bottom: 14px;">Cargando resultado...</div>
-        <button class="btn-secondary" style="width: 100%; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="closeActivity(); showJourney(); openActivity(2);">
-          <span>🧠</span> VER / REALIZAR TEST DEL SABOTEADOR
-        </button>
-      </div>
-      <label class="check-item" onclick="toggleCheck(this)">
+      <div id="live1-saboteur-container"></div>
+      <label class="check-item" onclick="toggleCheck(this)" style="margin-top:14px;">
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
         <span>Confirmar asistencia en vivo + Resultado de mi Saboteador</span>
       </label>
@@ -1391,18 +1385,158 @@ function openLiveSession(dayNum) {
     } catch(e) {}
   }
 
-  // Fill saboteur box if Day 1
+  // Render standalone Saboteur test UI for Day 1
   if (dayNum === 1) {
-    const sab = localStorage.getItem('saboteur_result');
-    const elBox = document.getElementById('live1-saboteur-box');
-    if (elBox) {
-      if (sab) {
-        const sabNames = { vengador: '🔥 EL VENGADOR', euforico: '🎰 EL EUFÓRICO', impaciente: '⚡ EL IMPACIENTE', paralizado: '🧊 EL PARALIZADO' };
-        elBox.textContent = sabNames[sab] || 'SABOTEADOR DETECTADO';
-      } else {
-        elBox.textContent = '⚠️ Aún no has realizado el Test del Saboteador';
+    renderLive1SaboteurUI();
+  }
+}
+
+let l1QIndex = 0;
+let l1Branch = '';
+let l1Questions = [];
+let l1Scores = { vengador: 0, euforico: 0, impaciente: 0, paralizado: 0 };
+let l1Answers = [];
+
+function renderLive1SaboteurUI() {
+  const container = document.getElementById('live1-saboteur-container');
+  if (!container) return;
+
+  const sab = localStorage.getItem('saboteur_result');
+  if (sab && inlineSaboteurs[sab]) {
+    const info = inlineSaboteurs[sab];
+    container.innerHTML = `
+      <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 20px; border-radius: 14px; text-align: center; margin-bottom: 12px;">
+        <p style="color: var(--text-muted); font-size: 0.78rem; letter-spacing:0.1em; font-weight:700; margin-bottom: 8px;">TU SABOTEADOR DOMINANTE DETECTADO</p>
+        <div style="font-size: 44px; margin-bottom: 6px;">${info.emoji}</div>
+        <h3 style="color: ${info.color}; font-size: 1.4rem; margin: 0 0 8px 0; font-weight:800;">${info.name}</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.4; margin:0 0 16px 0;">${info.desc}</p>
+        <button class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="startLive1Test()">
+          <span>🔄</span> REPETIR / VOLVER A HACER EL TEST
+        </button>
+      </div>
+    `;
+  } else {
+    container.innerHTML = `
+      <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 20px; border-radius: 14px; text-align: center; margin-bottom: 12px;">
+        <div style="font-size: 40px; margin-bottom: 8px;">🧠</div>
+        <h3 style="color: var(--text-main); font-size: 1.2rem; margin: 0 0 8px 0;">Test del Saboteador (8 Preguntas)</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; margin-bottom: 16px;">Descubre cuál de los 4 Saboteadores Financieros opera en tu mente.</p>
+        <button class="btn-primary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="startLive1Test()">
+          <span>🧠</span> COMENZAR TEST AHORA
+        </button>
+      </div>
+    `;
+  }
+}
+
+function startLive1Test() {
+  l1QIndex = 0;
+  l1Branch = '';
+  l1Questions = [];
+  l1Scores = { vengador: 0, euforico: 0, impaciente: 0, paralizado: 0 };
+  l1Answers = [];
+  renderLive1FilterQ();
+}
+
+function renderLive1FilterQ() {
+  const container = document.getElementById('live1-saboteur-container');
+  if (!container) return;
+
+  let html = `
+    <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 18px; border-radius: 14px; margin-bottom: 12px;">
+      <div style="margin-bottom: 12px;">
+        <div class="inline-test-progress-track"><div class="inline-test-progress-fill" style="width: 0%;"></div></div>
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Pregunta 1 de 8</p>
+      </div>
+      <h3 style="color: var(--text-main); font-size: 1.05rem; margin-bottom: 14px; line-height: 1.4;">${inlineFilterQuestion.text}</h3>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+  `;
+  const letters = ['A', 'B'];
+  inlineFilterQuestion.options.forEach((opt, i) => {
+    html += `<button class="inline-test-option" onclick="selectLive1Filter('${opt.branch}')">
+      <span class="inline-test-option__letter">${letters[i]}</span>
+      <span>${opt.text}</span>
+    </button>`;
+  });
+  html += `</div></div>`;
+  container.innerHTML = html;
+}
+
+function selectLive1Filter(branch) {
+  l1Branch = branch;
+  l1Questions = branch === 'trader' ? inlineTraderQuestions : inlineNoTraderQuestions;
+  l1Answers.push(branch);
+  l1QIndex = 0;
+  renderLive1Question();
+}
+
+function renderLive1Question() {
+  const container = document.getElementById('live1-saboteur-container');
+  if (!container) return;
+  const q = l1Questions[l1QIndex];
+
+  const pct = Math.round(((l1QIndex + 1) / 8) * 100);
+  let html = `
+    <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 18px; border-radius: 14px; margin-bottom: 12px;">
+      <div style="margin-bottom: 12px;">
+        <div class="inline-test-progress-track"><div class="inline-test-progress-fill" style="width: ${pct}%;"></div></div>
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Pregunta ${l1QIndex + 2} de 8</p>
+      </div>
+      <h3 style="color: var(--text-main); font-size: 1.05rem; margin-bottom: 14px; line-height: 1.4;">${q.text}</h3>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+  `;
+  const letters = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    html += `<button class="inline-test-option" onclick="selectLive1Option(${i})">
+      <span class="inline-test-option__letter">${letters[i]}</span>
+      <span>${opt.text}</span>
+    </button>`;
+  });
+  html += `</div></div>`;
+  container.innerHTML = html;
+}
+
+function selectLive1Option(index) {
+  const q = l1Questions[l1QIndex];
+  const opt = q.options[index];
+
+  l1Answers.push(index);
+  l1Scores.vengador += opt.scores[0];
+  l1Scores.euforico += opt.scores[1];
+  l1Scores.impaciente += opt.scores[2];
+  l1Scores.paralizado += opt.scores[3];
+
+  l1QIndex++;
+  if (l1QIndex < l1Questions.length) {
+    renderLive1Question();
+  } else {
+    // Finish test
+    let maxScore = -1;
+    let dominant = 'vengador';
+    Object.keys(l1Scores).forEach(k => {
+      if (l1Scores[k] > maxScore) {
+        maxScore = l1Scores[k];
+        dominant = k;
       }
+    });
+
+    localStorage.setItem('saboteur_result', dominant);
+    localStorage.setItem('saboteur_scores', JSON.stringify(l1Scores));
+
+    // Update topbar
+    const sabMap = {
+      vengador: { emoji: '🔥', name: 'El Vengador' },
+      euforico: { emoji: '🎰', name: 'El Eufórico' },
+      impaciente: { emoji: '⚡', name: 'El Impaciente' },
+      paralizado: { emoji: '🧊', name: 'El Paralizado' }
+    };
+    if (sabMap[dominant]) {
+      document.getElementById('saboteur-emoji').textContent = sabMap[dominant].emoji;
+      document.getElementById('saboteur-name').textContent = sabMap[dominant].name;
     }
+
+    renderLive1SaboteurUI();
+    showMissionToast(`🧠 Diagnóstico completado: Tu saboteador es ${inlineSaboteurs[dominant].name}`);
   }
 }
 
