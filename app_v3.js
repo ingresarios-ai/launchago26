@@ -8,6 +8,25 @@ const MAX_ACTIVITIES = 9;
 // Current state (starts at 1 if not set)
 let currentActivity = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
 
+function switchDashboardTab(tabName) {
+  const btn1 = document.getElementById('tab-btn-phase1');
+  const btn2 = document.getElementById('tab-btn-phase2');
+  const content1 = document.getElementById('tab-content-phase1');
+  const content2 = document.getElementById('tab-content-phase2');
+
+  if (tabName === 'phase1') {
+    if (btn1) btn1.classList.add('active');
+    if (btn2) btn2.classList.remove('active');
+    if (content1) content1.classList.add('active');
+    if (content2) content2.classList.remove('active');
+  } else {
+    if (btn2) btn2.classList.add('active');
+    if (btn1) btn1.classList.remove('active');
+    if (content2) content2.classList.add('active');
+    if (content1) content1.classList.remove('active');
+  }
+}
+
 // Activity Data Map (Phase 1 implementations)
 const activitiesData = {
   1: {
@@ -465,6 +484,10 @@ function updateNextStepHero() {
   const g0Pct = Math.round((g0Done / 9) * 100);
   if (phase1Sub) {
     phase1Sub.textContent = `Genoma 0 • ${g0Done}/9 Completadas (${g0Pct}%) 🟢`;
+  }
+  const tabBadge = document.getElementById('tab-phase1-badge');
+  if (tabBadge) {
+    tabBadge.textContent = `Genoma 0 (${g0Done}/9)`;
   }
 
   if (currentActivity <= MAX_ACTIVITIES) {

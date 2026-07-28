@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   
-  <link rel="stylesheet" href="app_v2.css?v=20260728_v15" />
+  <link rel="stylesheet" href="app_v2.css?v=20260728_v16" />
   
   <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -72,246 +72,249 @@
     <!-- VISTA 1: DASHBOARD -->
     <div id="view-dashboard" class="view-section">
       
-      <!-- NAVEGADOR DE FASES DE ENTRENAMIENTO -->
-      <div class="phase-stepper">
-        <div class="phase-step active" id="phase-step-1" onclick="showJourney()">
-          <div class="phase-step-num">1</div>
-          <div class="phase-step-info">
-            <span class="phase-step-title">Fase 1: Preparación</span>
-            <span class="phase-step-sub" id="phase-1-sub">Genoma 0 • Misiones 1-9 🟢</span>
-          </div>
+      <!-- CINTILLO RELOJ COMPACTO ESTILO LANDING -->
+      <div class="landing-countdown" id="dashboard-countdown">
+        <span class="countdown-eyebrow">⏳ EL ENTRENAMIENTO EN VIVO COMIENZA EN:</span>
+        <div class="countdown-units">
+          <div class="cd-unit"><span id="cd-days" class="cd-num">06</span><span class="cd-lbl">DÍAS</span></div>
+          <span class="cd-dots">:</span>
+          <div class="cd-unit"><span id="cd-hours" class="cd-num">02</span><span class="cd-lbl">HORAS</span></div>
+          <span class="cd-dots">:</span>
+          <div class="cd-unit"><span id="cd-mins" class="cd-num">18</span><span class="cd-lbl">MIN</span></div>
+          <span class="cd-dots">:</span>
+          <div class="cd-unit"><span id="cd-secs" class="cd-num">05</span><span class="cd-lbl">SEG</span></div>
         </div>
-        <div class="phase-step-line"></div>
-        <div class="phase-step" id="phase-step-2" onclick="const el = document.querySelector('.dashboard-lives'); if (el) el.scrollIntoView({behavior:'smooth'});">
-          <div class="phase-step-num">2</div>
-          <div class="phase-step-info">
-            <span class="phase-step-title">Fase 2: En Vivo</span>
-            <span class="phase-step-sub">3 al 14 de Agosto 🔴</span>
-          </div>
-        </div>
+        <div class="countdown-date-chip">🗓️ 3 de Agosto • 7:00 PM (Colombia)</div>
       </div>
 
-      <!-- HERO DE ACCIÓN PRINCIPAL: TU PRÓXIMO PASO -->
-      <section class="next-step-card" id="next-step-hero">
-        <div class="next-step-header">
-          <div class="next-step-badge">
-            <span class="pulse-dot"></span>
-            <span id="next-step-badge-text">PASO 1: PREPARACIÓN • MISIÓN 1 DE 19</span>
-          </div>
-          <span class="next-step-status-tag" id="next-step-status-tag">EN PROGRESO 🟢</span>
-        </div>
+      <!-- NAVEGADOR DE PESTAÑAS PRINCIPALES (DUAL TAB) -->
+      <div class="dash-tab-nav">
+        <button class="dash-tab-btn active" id="tab-btn-phase1" onclick="switchDashboardTab('phase1')">
+          <span class="tab-dot green"></span>
+          <span class="tab-title">🟢 FASE 1: PREPARACIÓN</span>
+          <span class="tab-badge" id="tab-phase1-badge">Genoma 0</span>
+        </button>
+        <button class="dash-tab-btn" id="tab-btn-phase2" onclick="switchDashboardTab('phase2')">
+          <span class="tab-dot red"></span>
+          <span class="tab-title">🔴 FASE 2: CLASES EN VIVO</span>
+          <span class="tab-badge red">3-14 AGO</span>
+        </button>
+      </div>
+
+      <!-- PESTAÑA 1: FASE 1 PREPARACIÓN (GENOMA 0) -->
+      <div class="dash-tab-content active" id="tab-content-phase1">
         
-        <div class="next-step-body">
-          <h2 id="next-step-title" class="next-step-title">1. Bienvenido al Reacondicionamiento</h2>
-          <p id="next-step-desc" class="next-step-desc">Mira el video de bienvenida para activar tu entrenamiento y desbloquear tus primeros +20 Puntos de Control.</p>
-        </div>
-        
-        <div class="next-step-action-row">
-          <button class="btn-primary btn-next-step" id="next-step-btn" onclick="continueNextStep()">
-            <span>COMENZAR MISIÓN AHORA</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </button>
-        </div>
-
-        <div class="next-step-footer">
-          <div class="next-step-progress-track">
-            <div class="next-step-progress-fill" id="next-step-progress-fill" style="width: 5%;"></div>
-          </div>
-          <span class="next-step-progress-text" id="next-step-progress-text">Progreso total: 0 de 19 misiones completadas</span>
-        </div>
-      </section>
-
-      <!-- Reloj -->
-      <section class="dashboard-hero">
-        <h1 class="hero-title">Tu Entrenamiento Comienza En:</h1>
-        <div class="countdown-clock" id="countdown-clock">
-          <div class="time-box"><span id="cd-days">00</span><small>DÍAS</small></div>
-          <span class="time-sep">:</span>
-          <div class="time-box"><span id="cd-hours">00</span><small>HR</small></div>
-          <span class="time-sep">:</span>
-          <div class="time-box"><span id="cd-mins">00</span><small>MIN</small></div>
-          <span class="time-sep">:</span>
-          <div class="time-box"><span id="cd-secs">00</span><small>SEG</small></div>
-        </div>
-        <p class="hero-date">3 de Agosto • 7:00 PM (Colombia)</p>
-      </section>
-
-      <!-- SCOREBOARD WIDGETS -->
-      <section class="dashboard-scoreboard">
-        <div class="score-card">
-          <div class="score-card__icon">⚡</div>
-          <div class="score-card__content">
-            <span class="score-card__label">Puntos Acumulados</span>
-            <div class="score-card__value">
-              <span id="dashboard-points-val" class="score-card__number">0</span>
-              <span class="score-card__total">/ 540 pts</span>
+        <!-- HERO DE ACCIÓN PRINCIPAL: TU PRÓXIMO PASO -->
+        <section class="next-step-card" id="next-step-hero">
+          <div class="next-step-header">
+            <div class="next-step-badge">
+              <span class="pulse-dot"></span>
+              <span id="next-step-badge-text">PASO 1: PREPARACIÓN • MISIÓN 1 DE 19</span>
             </div>
+            <span class="next-step-status-tag" id="next-step-status-tag">DISPONIBLE AHORA 🟢</span>
           </div>
-        </div>
-        <div class="score-card">
-          <div class="score-card__icon">🎯</div>
-          <div class="score-card__content">
-            <span class="score-card__label">Misiones Completadas</span>
-            <div class="score-card__value">
-              <span id="dashboard-completed-val" class="score-card__number">0</span>
-              <span class="score-card__total">/ 19</span>
-            </div>
+          
+          <div class="next-step-body">
+            <h2 id="next-step-title" class="next-step-title">1. Bienvenido al Reacondicionamiento</h2>
+            <p id="next-step-desc" class="next-step-desc">Mira el video de bienvenida para activar tu entrenamiento y desbloquear tus primeros +20 Puntos de Control.</p>
           </div>
-        </div>
-        <div class="score-card">
-          <div class="score-card__icon" id="dashboard-rank-icon">🔴</div>
-          <div class="score-card__content">
-            <span class="score-card__label">Rango de Dominio</span>
-            <div class="score-card__value">
-              <span id="dashboard-rank-title" style="font-size:0.95rem; color:#ef4444; font-weight:800;">Operador Reactivo</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Genoma 0 (Acceso) -->
-      <section class="dashboard-module" onclick="showJourney()">
-        <div class="module-info">
-          <h2 class="module-title">Preparación: Genoma 0</h2>
-          <p class="module-desc">Descubre tu Saboteador y diseña tu entorno antes del evento.</p>
-          <div class="module-progress">
-            <div class="progress-fill" id="dashboard-g0-progress" style="width: 10%;"></div>
-          </div>
-          <p class="module-status"><span id="dashboard-g0-text">1</span> de 9 completado</p>
-        </div>
-        <div class="module-action">
-          <button class="btn-primary">Entrar <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-        </div>
-      </section>
-
-      <!-- ESCENARIO DE ENTRENAMIENTO EN VIVO (BROADCAST STAGE) -->
-      <section class="dashboard-lives-stage" class="dashboard-lives">
-        <div class="lives-stage-banner">
-          <div class="stage-top-tag">
-            <span class="pulse-dot-red"></span>
-            <span>FASE CUMBRE • TRANSMISIÓN EN DIRECTO</span>
-          </div>
-          <h2 class="stage-title">🔴 FASE 2: ENTRENAMIENTO EN VIVO</h2>
-          <p class="stage-subtitle">10 Transmisiones Interactivas en Vivo con Juan Diego Gómez & Equipo (3 al 14 de Agosto • 7:00 PM CO). Asiste cada noche para ganar +300 Puntos de Control y subir al Rango de Dominio.</p>
-        </div>
-
-        <!-- TARJETA DESTACADA: CLASE EN VIVO DÍA 1 -->
-        <div class="live-featured-card" onclick="openLiveSession(1)">
-          <div class="featured-badge">
-            <span>🔥 PRÓXIMA CLASE EN VIVO • DÍA 1</span>
-          </div>
-          <div class="featured-content">
-            <h3 class="featured-title">🔴 Día 1: La Anatomía del Saboteador</h3>
-            <p class="featured-desc">Descubre el patrón invisible que sabotea tus operaciones financieras. Incluye el Test del Saboteador en vivo.</p>
-            <div class="featured-meta">
-              <span class="meta-item">🗓️ Lunes 3 de Agosto</span>
-              <span class="meta-item">⏰ 7:00 PM (Colombia / Perú / México)</span>
-              <span class="meta-item reward">⚡ +30 Puntos de Control</span>
-            </div>
-          </div>
-          <div class="featured-cta">
-            <button class="btn-live-hero">
-              <span>🔴 ENTRAR A LA SALA DE TRANSMISIÓN EN VIVO</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          
+          <div class="next-step-action-row">
+            <button class="btn-primary btn-next-step" id="next-step-btn" onclick="continueNextStep()">
+              <span>COMENZAR MISIÓN AHORA</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </div>
-        </div>
 
-        <h3 class="lives-grid-title">📅 CALENDARIO DE CLASES EN VIVO (DÍAS 1 AL 10)</h3>
-        <div class="lives-list">
-          
-          <div class="live-card" data-live="1" onclick="openLiveSession(1)" style="cursor:pointer;">
-            <div class="live-date">3 AGO</div>
-            <div class="live-info">
-              <h4>1. La Anatomía del Saboteador</h4>
-              <p>7:00 PM (CO) • +30 PC</p>
+          <div class="next-step-footer">
+            <div class="next-step-progress-track">
+              <div class="next-step-progress-fill" id="next-step-progress-fill" style="width: 5%;"></div>
             </div>
-            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <span class="next-step-progress-text" id="next-step-progress-text">Progreso total: 0 de 19 misiones completadas</span>
+          </div>
+        </section>
+
+        <!-- SCOREBOARD WIDGETS -->
+        <section class="dashboard-scoreboard">
+          <div class="score-card">
+            <div class="score-card__icon">⚡</div>
+            <div class="score-card__content">
+              <span class="score-card__label">Puntos Acumulados</span>
+              <div class="score-card__value">
+                <span id="dashboard-points-val" class="score-card__number">0</span>
+                <span class="score-card__total">/ 540 pts</span>
+              </div>
+            </div>
+          </div>
+          <div class="score-card">
+            <div class="score-card__icon">🎯</div>
+            <div class="score-card__content">
+              <span class="score-card__label">Misiones Completadas</span>
+              <div class="score-card__value">
+                <span id="dashboard-completed-val" class="score-card__number">0</span>
+                <span class="score-card__total">/ 19</span>
+              </div>
+            </div>
+          </div>
+          <div class="score-card">
+            <div class="score-card__icon" id="dashboard-rank-icon">🔴</div>
+            <div class="score-card__content">
+              <span class="score-card__label">Rango de Dominio</span>
+              <div class="score-card__value">
+                <span id="dashboard-rank-title" style="font-size:0.95rem; color:#ef4444; font-weight:800;">Operador Reactivo</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MAPA COMPLETO DE PREPARACIÓN GENOMA 0 -->
+        <section class="dashboard-module" onclick="showJourney()">
+          <div class="module-info">
+            <h2 class="module-title">Mapa de 9 Misiones: Genoma 0</h2>
+            <p class="module-desc">Descubre tu Saboteador y diseña tu entorno antes del evento.</p>
+            <div class="module-progress">
+              <div class="progress-fill" id="dashboard-g0-progress" style="width: 10%;"></div>
+            </div>
+            <p class="module-status"><span id="dashboard-g0-text">1</span> de 9 completado</p>
+          </div>
+          <div class="module-action">
+            <button class="btn-primary">Ver Mapa Completo <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+          </div>
+        </section>
+      </div>
+
+      <!-- PESTAÑA 2: FASE 2 ENTRENAMIENTO EN VIVO -->
+      <div class="dash-tab-content" id="tab-content-phase2">
+        <!-- ESCENARIO DE ENTRENAMIENTO EN VIVO (BROADCAST STAGE) -->
+        <section class="dashboard-lives-stage" class="dashboard-lives">
+          <div class="lives-stage-banner">
+            <div class="stage-top-tag">
+              <span class="pulse-dot-red"></span>
+              <span>FASE CUMBRE • TRANSMISIÓN EN DIRECTO</span>
+            </div>
+            <h2 class="stage-title">🔴 FASE 2: ENTRENAMIENTO EN VIVO</h2>
+            <p class="stage-subtitle">10 Transmisiones Interactivas en Vivo con Juan Diego Gómez & Equipo (3 al 14 de Agosto • 7:00 PM CO). Asiste cada noche para ganar +300 Puntos de Control y subir al Rango de Dominio.</p>
           </div>
 
-          <div class="live-card" data-live="2" onclick="openLiveSession(2)" style="cursor:pointer;">
-            <div class="live-date">4 AGO</div>
-            <div class="live-info">
-              <h4>2. Cuenta Abierta: El Espejo de la Mente</h4>
-              <p>7:00 PM (CO) • +30 PC</p>
+          <!-- TARJETA DESTACADA: CLASE EN VIVO DÍA 1 -->
+          <div class="live-featured-card" onclick="openLiveSession(1)">
+            <div class="featured-badge">
+              <span>🔥 PRÓXIMA CLASE EN VIVO • DÍA 1</span>
             </div>
-            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <div class="featured-content">
+              <h3 class="featured-title">🔴 Día 1: La Anatomía del Saboteador</h3>
+              <p class="featured-desc">Descubre el patrón invisible que sabotea tus operaciones financieras. Incluye el Test del Saboteador en vivo.</p>
+              <div class="featured-meta">
+                <span class="meta-item">🗓️ Lunes 3 de Agosto</span>
+                <span class="meta-item">⏰ 7:00 PM (Colombia / Perú / México)</span>
+                <span class="meta-item reward">⚡ +30 Puntos de Control</span>
+              </div>
+            </div>
+            <div class="featured-cta">
+              <button class="btn-live-hero">
+                <span>🔴 ENTRAR A LA SALA DE TRANSMISIÓN EN VIVO</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </button>
+            </div>
           </div>
 
-          <div class="live-card" data-live="3" onclick="openLiveSession(3)" style="cursor:pointer;">
-            <div class="live-date">5 AGO</div>
-            <div class="live-info">
-              <h4>3. P — El Plan Anti-Saboteador</h4>
-              <p>7:00 PM (CO) • +30 PC (Viral)</p>
+          <h3 class="lives-grid-title">📅 CALENDARIO DE CLASES EN VIVO (DÍAS 1 AL 10)</h3>
+          <div class="lives-list">
+            
+            <div class="live-card" data-live="1" onclick="openLiveSession(1)" style="cursor:pointer;">
+              <div class="live-date">3 AGO</div>
+              <div class="live-info">
+                <h4>1. La Anatomía del Saboteador</h4>
+                <p>7:00 PM (CO) • +30 PC</p>
+              </div>
+              <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
             </div>
-            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          </div>
 
-          <div class="live-card" data-live="4" onclick="openLiveSession(4)" style="cursor:pointer;">
-            <div class="live-date">6 AGO</div>
-            <div class="live-info">
-              <h4>4. E — Ejecución con IA: Conoce a GENY</h4>
-              <p>7:00 PM (CO) • +30 PC</p>
+            <div class="live-card" data-live="2" onclick="openLiveSession(2)" style="cursor:pointer;">
+              <div class="live-date">4 AGO</div>
+              <div class="live-info">
+                <h4>2. Cuenta Abierta: El Espejo de la Mente</h4>
+                <p>7:00 PM (CO) • +30 PC</p>
+              </div>
+              <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
             </div>
-            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          </div>
 
-          <div class="live-card" data-live="5" onclick="openLiveSession(5)" style="cursor:pointer;">
-            <div class="live-date">7 AGO</div>
-            <div class="live-info">
-              <h4>5. D — La Bitácora PEDEM</h4>
-              <p>7:00 PM (CO) • +30 PC</p>
+            <div class="live-card" data-live="3" onclick="openLiveSession(3)" style="cursor:pointer;">
+              <div class="live-date">5 AGO</div>
+              <div class="live-info">
+                <h4>3. P — El Plan Anti-Saboteador</h4>
+                <p>7:00 PM (CO) • +30 PC (Viral)</p>
+              </div>
+              <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
             </div>
-            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          </div>
 
-          <div class="live-card" data-live="6" onclick="openLiveSession(6)" style="cursor:pointer;">
-            <div class="live-date">8 AGO</div>
-            <div class="live-info">
-              <h4>6. E · M — Evaluación: Reditum Sniper</h4>
-              <p>7:00 PM (CO) • +30 PC</p>
+            <div class="live-card" data-live="4" onclick="openLiveSession(4)" style="cursor:pointer;">
+              <div class="live-date">6 AGO</div>
+              <div class="live-info">
+                <h4>4. E — Ejecución con IA: Conoce a GENY</h4>
+                <p>7:00 PM (CO) • +30 PC</p>
+              </div>
+              <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
             </div>
-            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          </div>
 
-          <div class="live-card" data-live="7" onclick="openLiveSession(7)" style="cursor:pointer;">
-            <div class="live-date">9 AGO</div>
-            <div class="live-info">
-              <h4>7. Masterclass: Mente · Sistema · Entorno</h4>
-              <p>7:00 PM (CO) • +35 PC</p>
+            <div class="live-card" data-live="5" onclick="openLiveSession(5)" style="cursor:pointer;">
+              <div class="live-date">7 AGO</div>
+              <div class="live-info">
+                <h4>5. D — La Bitácora PEDEM</h4>
+                <p>7:00 PM (CO) • +30 PC</p>
+              </div>
+              <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
             </div>
-            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          </div>
 
-          <div class="live-card" data-live="8" onclick="openLiveSession(8)" style="cursor:pointer;">
-            <div class="live-date">10 AGO</div>
-            <div class="live-info">
-              <h4>8. Panel de Casos Reales</h4>
-              <p>7:00 PM (CO) • +30 PC</p>
+            <div class="live-card" data-live="6" onclick="openLiveSession(6)" style="cursor:pointer;">
+              <div class="live-date">8 AGO</div>
+              <div class="live-info">
+                <h4>6. E · M — Evaluación: Reditum Sniper</h4>
+                <p>7:00 PM (CO) • +30 PC</p>
+              </div>
+              <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
             </div>
-            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          </div>
 
-          <div class="live-card" data-live="9" onclick="openLiveSession(9)" style="cursor:pointer;">
-            <div class="live-date">11 AGO</div>
-            <div class="live-info">
-              <h4>9. La Nómina del Saboteador</h4>
-              <p>7:00 PM (CO) • +30 PC</p>
+            <div class="live-card" data-live="7" onclick="openLiveSession(7)" style="cursor:pointer;">
+              <div class="live-date">9 AGO</div>
+              <div class="live-info">
+                <h4>7. Masterclass: Mente · Sistema · Entorno</h4>
+                <p>7:00 PM (CO) • +35 PC</p>
+              </div>
+              <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
             </div>
-            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          </div>
 
-          <div class="live-card" data-live="10" onclick="openLiveSession(10)" style="cursor:pointer;">
-            <div class="live-date">12 AGO</div>
-            <div class="live-info">
-              <h4>10. La Gran Final: Premiación</h4>
-              <p>7:00 PM (CO) • +100 PC Bonus</p>
+            <div class="live-card" data-live="8" onclick="openLiveSession(8)" style="cursor:pointer;">
+              <div class="live-date">10 AGO</div>
+              <div class="live-info">
+                <h4>8. Panel de Casos Reales</h4>
+                <p>7:00 PM (CO) • +30 PC</p>
+              </div>
+              <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
             </div>
-            <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          </div>
 
-        </div>
-      </section>
+            <div class="live-card" data-live="9" onclick="openLiveSession(9)" style="cursor:pointer;">
+              <div class="live-date">11 AGO</div>
+              <div class="live-info">
+                <h4>9. La Nómina del Saboteador</h4>
+                <p>7:00 PM (CO) • +30 PC</p>
+              </div>
+              <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            </div>
+
+            <div class="live-card" data-live="10" onclick="openLiveSession(10)" style="cursor:pointer;">
+              <div class="live-date">12 AGO</div>
+              <div class="live-info">
+                <h4>10. La Gran Final: Premiación</h4>
+                <p>7:00 PM (CO) • +100 PC Bonus</p>
+              </div>
+              <div class="live-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
     </div>
 
     <!-- VISTA 2: JOURNEY (Genoma 0) -->
@@ -532,6 +535,6 @@
     </div>
   </div>
 
-  <script src="app_v3.js?v=20260728_v15"></script>
+  <script src="app_v3.js?v=20260728_v16"></script>
 </body>
 </html>
