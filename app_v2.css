@@ -1639,12 +1639,12 @@ body {
 
 .dashboard-scoreboard {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 8px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .dashboard-scoreboard {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -1741,5 +1741,146 @@ body {
   color: var(--yellow) !important;
   font-weight: 700;
   text-shadow: 0 0 10px rgba(250, 204, 21, 0.15);
+}
+
+/* ========================================
+   FULL MOBILE RESPONSIVE ADAPTABILITY
+   ======================================== */
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 10px 14px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .topbar__brand img {
+    height: 26px;
+  }
+
+  .topbar__profile {
+    width: 100%;
+    justify-content: space-between;
+    gap: 6px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+  }
+
+  .topbar__points, 
+  .topbar__step-badge, 
+  .topbar__saboteur,
+  .topbar__wa-btn {
+    padding: 4px 10px;
+    font-size: 0.72rem;
+  }
+
+  .phase-stepper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .phase-step-line {
+    width: 100%;
+    height: 1px;
+  }
+
+  .next-step-card {
+    padding: 16px 14px;
+  }
+
+  .next-step-title {
+    font-size: 1.2rem;
+  }
+
+  .next-step-desc {
+    font-size: 0.84rem;
+  }
+
+  .btn-next-step {
+    width: 100%;
+    font-size: 0.85rem;
+    padding: 12px 14px;
+    justify-content: center;
+  }
+
+  .dashboard-scoreboard {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .score-card {
+    padding: 12px 16px;
+  }
+
+  .score-card__icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.4rem;
+  }
+
+  .score-card__number {
+    font-size: 1.3rem;
+  }
+
+  .dashboard-lives-stage {
+    padding: 20px 14px;
+  }
+
+  .stage-title {
+    font-size: 1.25rem;
+  }
+
+  .stage-subtitle {
+    font-size: 0.82rem;
+  }
+
+  .live-featured-card {
+    padding: 16px 14px;
+  }
+
+  .featured-title {
+    font-size: 1.1rem;
+  }
+
+  .btn-live-hero {
+    font-size: 0.8rem;
+    padding: 12px 12px;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .live-card {
+    padding: 12px 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .live-date {
+    font-size: 0.75rem;
+  }
+
+  .live-info {
+    width: 100%;
+  }
+
+  .live-info h4 {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: 12px 10px 60px;
+    gap: 14px;
+  }
+
+  .btn-next-step span, 
+  .btn-live-hero span {
+    font-size: 0.78rem;
+  }
 }
 
