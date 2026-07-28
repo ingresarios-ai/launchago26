@@ -443,8 +443,78 @@ function renderJourney() {
     dashText.textContent = Math.min(currentActivity, MAX_ACTIVITIES);
   }
 
-  // Sync gamification displays
+  // Sync gamification & hero display
   updatePointsDisplay();
+  updateNextStepHero();
+}
+
+function updateNextStepHero() {
+  const heroBadge = document.getElementById('next-step-badge-text');
+  const heroTitle = document.getElementById('next-step-title');
+  const heroDesc = document.getElementById('next-step-desc');
+  const heroBtn = document.getElementById('next-step-btn');
+  const heroFill = document.getElementById('next-step-progress-fill');
+  const heroText = document.getElementById('next-step-progress-text');
+  const topbarStep = document.getElementById('topbar-step-badge');
+  const statusTag = document.getElementById('next-step-status-tag');
+
+  if (!heroTitle) return;
+
+  if (currentActivity <= MAX_ACTIVITIES) {
+    const act = activitiesData[currentActivity];
+    if (act) {
+      if (heroBadge) heroBadge.textContent = `FASE 1: PREPARACIÓN • MISIÓN ${currentActivity} DE 19`;
+      heroTitle.textContent = `${currentActivity}. ${act.title}`;
+      heroDesc.textContent = `Completa la Misión ${currentActivity} de Genoma Cero para acondicionar tu mente y sumar tus ${act.reward}.`;
+      if (heroBtn) heroBtn.innerHTML = `<span>ABRIR MISIÓN ${currentActivity} AHORA</span> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+      if (topbarStep) topbarStep.textContent = `🎯 Misión ${currentActivity}/19`;
+      if (statusTag) statusTag.textContent = 'EN PROGRESO 🟢';
+    }
+  } else {
+    // All Genoma 0 missions done, check next incomplete live session
+    let nextLive = 10;
+    for (let d = 1; d <= 10; d++) {
+      if (localStorage.getItem(`live_session_${d}_completed`) !== 'true') {
+        nextLive = d;
+        break;
+      }
+    }
+    const liveData = liveSessionsData[nextLive];
+    if (liveData) {
+      if (heroBadge) heroBadge.textContent = `FASE 2: EVENTO EN VIVO • DÍA ${nextLive} DE 10`;
+      heroTitle.textContent = liveData.title;
+      heroDesc.textContent = `Asiste a la sesión en vivo o mira el replay y completa la Misión del Día ${nextLive} para ganar tus ${liveData.reward}.`;
+      if (heroBtn) heroBtn.innerHTML = `<span>VER MISIÓN DEL DÍA ${nextLive}</span> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+      if (topbarStep) topbarStep.textContent = `🎯 Día Live ${nextLive}/10`;
+      if (statusTag) statusTag.textContent = 'EVENTO EN VIVO 🔴';
+    }
+  }
+
+  // Calculate total completed out of 19
+  let completedCount = Math.min(currentActivity - 1, 9);
+  for (let d = 1; d <= 10; d++) {
+    if (localStorage.getItem(`live_session_${d}_completed`) === 'true') completedCount++;
+  }
+  const pct = Math.round((completedCount / 19) * 100);
+  if (heroFill) heroFill.style.width = `${pct}%`;
+  if (heroText) heroText.textContent = `Progreso total: ${pct}% (${completedCount} de 19 misiones completadas)`;
+}
+
+function continueNextStep() {
+  if (currentActivity <= MAX_ACTIVITIES) {
+    showJourney();
+    openActivity(currentActivity);
+  } else {
+    let nextLive = 10;
+    for (let d = 1; d <= 10; d++) {
+      if (localStorage.getItem(`live_session_${d}_completed`) !== 'true') {
+        nextLive = d;
+        break;
+      }
+    }
+    showDashboard();
+    openLiveSession(nextLive);
+  }
 }
 
 function openActivity(actId) {
@@ -1564,6 +1634,7 @@ function completeLiveSession(dayNum) {
   closeActivity();
   updateLiveCardsUI();
   updatePointsDisplay();
+  updateNextStepHero();
   
   const rewardsMap = { 1: 30, 2: 30, 3: 30, 4: 30, 5: 30, 6: 30, 7: 35, 8: 30, 9: 30, 10: 100 };
   const earnedPts = rewardsMap[dayNum] || 30;
@@ -1617,6 +1688,7 @@ function resetPreviewState() {
 // Initial UI update on page load
 document.addEventListener('DOMContentLoaded', () => {
   updateLiveCardsUI();
+  updateNextStepHero();
 });
 
 

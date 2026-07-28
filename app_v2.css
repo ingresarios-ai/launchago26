@@ -125,6 +125,157 @@ body {
   background: rgba(37, 211, 102, 0.2);
 }
 
+.topbar__step-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #4ade80;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.topbar__step-badge:hover {
+  background: rgba(34, 197, 94, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+/* ========================================
+   PRIMARY NEXT STEP HERO CARD
+   ======================================== */
+.next-step-card {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.14) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  box-shadow: 0 12px 32px rgba(34, 197, 94, 0.15), 0 0 0 1px rgba(34, 197, 94, 0.2);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.next-step-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.next-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.next-step-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(34, 197, 94, 0.18);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: #4ade80;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #22c55e;
+  animation: pulse-glow 1.8s infinite;
+}
+
+@keyframes pulse-glow {
+  0% { transform: scale(0.95); opacity: 0.8; box-shadow: 0 0 4px #22c55e; }
+  50% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 14px #22c55e; }
+  100% { transform: scale(0.95); opacity: 0.8; box-shadow: 0 0 4px #22c55e; }
+}
+
+.next-step-status-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--yellow);
+}
+
+.next-step-title {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-white);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.next-step-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.next-step-action-row {
+  margin-bottom: 18px;
+}
+
+.btn-next-step {
+  width: 100%;
+  padding: 16px 24px;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+}
+
+.next-step-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 14px;
+}
+
+.next-step-progress-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.next-step-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #facc15);
+  border-radius: 100px;
+  transition: width 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.next-step-progress-text {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: block;
+}
+
 /* ========================================
    MAIN CONTAINER
    ======================================== */

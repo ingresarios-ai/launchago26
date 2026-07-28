@@ -45,6 +45,8 @@
       <div class="topbar__points" id="topbar-points-badge" title="Tus puntos acumulados">
         <span class="topbar__emoji">⚡</span>
         <span id="topbar-points-text" class="topbar__name" style="color: var(--yellow);">0 pts</span>
+      <div class="topbar__step-badge" id="topbar-step-badge" onclick="continueNextStep()" title="Click para ir a tu siguiente misión">
+        🎯 Misión 1/19
       </div>
       <div class="topbar__saboteur">
         <span id="saboteur-emoji" class="topbar__emoji">👤</span>
@@ -63,6 +65,36 @@
     <!-- VISTA 1: DASHBOARD -->
     <div id="view-dashboard" class="view-section">
       
+      <!-- HERO DE ACCIÓN PRINCIPAL: TU PRÓXIMO PASO -->
+      <section class="next-step-card" id="next-step-hero">
+        <div class="next-step-header">
+          <div class="next-step-badge">
+            <span class="pulse-dot"></span>
+            <span id="next-step-badge-text">PASO 1: PREPARACIÓN • MISIÓN 1 DE 19</span>
+          </div>
+          <span class="next-step-status-tag" id="next-step-status-tag">EN PROGRESO 🟢</span>
+        </div>
+        
+        <div class="next-step-body">
+          <h2 id="next-step-title" class="next-step-title">1. Bienvenido al Reacondicionamiento</h2>
+          <p id="next-step-desc" class="next-step-desc">Mira el video de bienvenida para activar tu entrenamiento y desbloquear tus primeros +20 Puntos de Control.</p>
+        </div>
+        
+        <div class="next-step-action-row">
+          <button class="btn-primary btn-next-step" id="next-step-btn" onclick="continueNextStep()">
+            <span>COMENZAR MISIÓN AHORA</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+
+        <div class="next-step-footer">
+          <div class="next-step-progress-track">
+            <div class="next-step-progress-fill" id="next-step-progress-fill" style="width: 5%;"></div>
+          </div>
+          <span class="next-step-progress-text" id="next-step-progress-text">Progreso total: 0 de 19 misiones completadas</span>
+        </div>
+      </section>
+
       <!-- Reloj -->
       <section class="dashboard-hero">
         <h1 class="hero-title">Tu Entrenamiento Comienza En:</h1>
@@ -443,6 +475,6 @@
     </div>
   </div>
 
-  <script src="app_v3.js?v=20260728_v10"></script>
+  <script src="app_v3.js?v=20260728_v11"></script>
 </body>
 </html>
