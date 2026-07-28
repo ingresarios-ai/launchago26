@@ -2032,6 +2032,16 @@ body {
   .btn-next-step span, 
   .btn-live-hero span {
     font-size: 0.78rem;
+}
+
+@keyframes confettiFall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(80vh) rotate(720deg);
   }
 }
 

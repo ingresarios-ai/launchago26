@@ -685,6 +685,7 @@ function completeActivity(actId) {
 
   const actData = activitiesData[actId];
   const reward = actData ? actData.reward : '+20 PC';
+  triggerConfetti();
   showMissionToast(`🎉 ¡Misión ${actId} completada! ${reward} asignados a tu cuenta.`);
 
   if (actId === currentActivity) {
@@ -1410,6 +1411,43 @@ function copyViralPost() {
   }
 }
 
+function triggerConfetti() {
+  if (typeof confetti === 'function') {
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.5, x: 0.3 },
+      colors: ['#22c55e', '#4ade80', '#fbbf24', '#ffffff', '#ef4444']
+    });
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.5, x: 0.7 },
+      colors: ['#22c55e', '#4ade80', '#fbbf24', '#ffffff', '#ef4444']
+    });
+  } else {
+    const colors = ['#22c55e', '#4ade80', '#fbbf24', '#ef4444', '#3b82f6'];
+    for (let i = 0; i < 35; i++) {
+      const piece = document.createElement('div');
+      piece.style.cssText = `
+        position: fixed;
+        top: 20%;
+        left: ${Math.random() * 100}vw;
+        width: ${8 + Math.random() * 8}px;
+        height: ${8 + Math.random() * 8}px;
+        background: ${colors[Math.floor(Math.random() * colors.length)]};
+        z-index: 100001;
+        pointer-events: none;
+        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+        transform: rotate(${Math.random() * 360}deg);
+        animation: confettiFall ${1.5 + Math.random() * 1.5}s ease-out forwards;
+      `;
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 3000);
+    }
+  }
+}
+
 function showMissionToast(msg) {
   let toast = document.getElementById('app-toast');
   if (!toast) {
@@ -1417,34 +1455,39 @@ function showMissionToast(msg) {
     toast.id = 'app-toast';
     toast.style.cssText = `
       position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: #18181b;
-      border: 1px solid rgba(34, 197, 94, 0.6);
+      top: 20px;
+      left: 50%;
+      transform: translate(-50%, -60px);
+      background: #111827;
+      border: 1px solid rgba(34, 197, 94, 0.8);
       color: #ffffff;
-      padding: 14px 20px;
-      border-radius: 12px;
+      padding: 12px 24px;
+      border-radius: 100px;
       font-weight: 700;
-      font-size: 0.9rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      z-index: 99999;
+      font-size: 0.92rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(34, 197, 94, 0.3);
+      z-index: 100000;
       display: flex;
       align-items: center;
       gap: 10px;
-      transform: translateY(100px);
       opacity: 0;
+      pointer-events: none;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      white-space: nowrap;
+      max-width: 90vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
     `;
     document.body.appendChild(toast);
   }
   toast.innerHTML = msg;
-  toast.style.transform = 'translateY(0)';
+  toast.style.transform = 'translate(-50%, 0)';
   toast.style.opacity = '1';
 
   setTimeout(() => {
-    toast.style.transform = 'translateY(100px)';
+    toast.style.transform = 'translate(-50%, -60px)';
     toast.style.opacity = '0';
-  }, 3500);
+  }, 3800);
 }
 
 function openLiveSession(dayNum) {
@@ -1676,6 +1719,7 @@ function selectLive1Option(index) {
     }
 
     renderLive1SaboteurUI();
+    triggerConfetti();
     showMissionToast(`🧠 Diagnóstico completado: Tu saboteador es ${inlineSaboteurs[dominant].name}`);
   }
 }
@@ -1707,6 +1751,7 @@ function completeLiveSession(dayNum) {
   
   const rewardsMap = { 1: 30, 2: 30, 3: 30, 4: 30, 5: 30, 6: 30, 7: 35, 8: 30, 9: 30, 10: 100 };
   const earnedPts = rewardsMap[dayNum] || 30;
+  triggerConfetti();
   showMissionToast(`🎉 ¡Misión del Día ${dayNum} completada! +${earnedPts} PC asignados a tu cuenta.`);
 
   // Render seamless victory transition inside modal
