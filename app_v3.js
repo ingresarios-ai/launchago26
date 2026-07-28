@@ -1279,7 +1279,8 @@ function openLiveSession(dayNum) {
   `;
 
   content.innerHTML = html;
-  modal.classList.add('active');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
 
   // Fill saboteur box if Day 1
   if (dayNum === 1) {
