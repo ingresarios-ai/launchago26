@@ -647,25 +647,63 @@ function saveProgress(actId) {
 }
 
 function completeActivity(actId) {
-  // 1. Confetti animation
   const btn = document.querySelector('.activity-footer button');
-  btn.style.animation = 'popConfetti 0.6s ease';
-  btn.innerHTML = '¡Completado! 🎉';
-  
-  setTimeout(() => {
-    // 2. Advance state if it's the current one
-    if (actId === currentActivity) {
-      currentActivity++;
-      localStorage.setItem(STORAGE_KEY, currentActivity.toString());
-      renderJourney();
-      
-      // Save progress to Supabase
-      saveProgress(currentActivity);
+  if (btn) {
+    btn.style.animation = 'popConfetti 0.6s ease';
+    btn.innerHTML = '¡Misión Completada! 🎉';
+  }
+
+  const actData = activitiesData[actId];
+  const reward = actData ? actData.reward : '+20 PC';
+  showMissionToast(`🎉 ¡Misión ${actId} completada! ${reward} asignados a tu cuenta.`);
+
+  if (actId === currentActivity) {
+    currentActivity++;
+    localStorage.setItem(STORAGE_KEY, currentActivity.toString());
+    renderJourney();
+    saveProgress(currentActivity);
+  }
+
+  // Render seamless victory transition inside modal
+  const content = document.getElementById('activity-content');
+  if (content) {
+    if (currentActivity <= MAX_ACTIVITIES) {
+      const nextAct = activitiesData[currentActivity];
+      content.innerHTML = `
+        <div style="text-align: center; padding: 30px 10px;">
+          <div style="font-size: 56px; margin-bottom: 12px; animation: popConfetti 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);">🏆</div>
+          <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: #4ade80; margin-bottom: 6px; font-weight:800;">¡Excelente Trabajo!</h2>
+          <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 20px;">Has completado la Misión ${actId} y sumado tus ${reward}.</p>
+          
+          <div style="background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.3); padding: 18px; border-radius: 14px; margin-bottom: 20px; text-align: left;">
+            <span style="font-size: 0.72rem; color: #4ade80; font-weight: 800; text-transform: uppercase; letter-spacing:0.05em;">Siguiente Misión Recomendada:</span>
+            <h3 style="font-size: 1.15rem; color: var(--text-white); margin: 6px 0 4px 0; font-weight:800;">${currentActivity}. ${nextAct ? nextAct.title : ''}</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin:0;">Completa este paso para continuar fortaleciendo tu Genoma Financiero.</p>
+          </div>
+          
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <button class="btn-primary" style="width: 100%; padding: 14px; font-weight:800;" onclick="openActivity(${currentActivity})">
+              <span>AVANZAR A LA MISIÓN ${currentActivity}</span> →
+            </button>
+            <button class="btn-secondary" style="width: 100%; padding: 12px;" onclick="closeActivity()">
+              Volver al Panel Principal
+            </button>
+          </div>
+        </div>
+      `;
+    } else {
+      content.innerHTML = `
+        <div style="text-align: center; padding: 30px 10px;">
+          <div style="font-size: 56px; margin-bottom: 12px;">🔥</div>
+          <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--yellow); margin-bottom: 6px; font-weight:800;">¡Genoma Cero Completado!</h2>
+          <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 20px;">Has completado todas las misiones de preparación. ¡Estás listo para el Evento en Vivo!</p>
+          <button class="btn-primary" style="width: 100%; padding: 14px; font-weight:800;" onclick="closeActivity(); showDashboard();">
+            IR AL EVENTO EN VIVO 🔴
+          </button>
+        </div>
+      `;
     }
-    
-    // 3. Close
-    closeActivity();
-  }, 1000);
+  }
 }
 
 // Helpers
@@ -1631,7 +1669,6 @@ function completeLiveSession(dayNum) {
 
   localStorage.setItem(`live_session_${dayNum}_completed`, 'true');
   
-  closeActivity();
   updateLiveCardsUI();
   updatePointsDisplay();
   updateNextStepHero();
@@ -1639,6 +1676,48 @@ function completeLiveSession(dayNum) {
   const rewardsMap = { 1: 30, 2: 30, 3: 30, 4: 30, 5: 30, 6: 30, 7: 35, 8: 30, 9: 30, 10: 100 };
   const earnedPts = rewardsMap[dayNum] || 30;
   showMissionToast(`🎉 ¡Misión del Día ${dayNum} completada! +${earnedPts} PC asignados a tu cuenta.`);
+
+  // Render seamless victory transition inside modal
+  const content = document.getElementById('activity-content');
+  if (content) {
+    if (dayNum < 10) {
+      const nextDay = dayNum + 1;
+      const nextLive = liveSessionsData[nextDay];
+      content.innerHTML = `
+        <div style="text-align: center; padding: 30px 10px;">
+          <div style="font-size: 56px; margin-bottom: 12px; animation: popConfetti 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);">⚡</div>
+          <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: #4ade80; margin-bottom: 6px; font-weight:800;">¡Día ${dayNum} Completado!</h2>
+          <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 20px;">Has sumado +${earnedPts} Puntos de Control a tu perfil.</p>
+          
+          <div style="background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.3); padding: 18px; border-radius: 14px; margin-bottom: 20px; text-align: left;">
+            <span style="font-size: 0.72rem; color: #4ade80; font-weight: 800; text-transform: uppercase; letter-spacing:0.05em;">Siguiente Día en Vivo:</span>
+            <h3 style="font-size: 1.15rem; color: var(--text-white); margin: 6px 0 4px 0; font-weight:800;">${nextDay}. ${nextLive ? nextLive.title : ''}</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin:0;">${nextLive ? nextLive.dayDate : ''} • 7:00 PM (Colombia)</p>
+          </div>
+          
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <button class="btn-primary" style="width: 100%; padding: 14px; font-weight:800;" onclick="openLiveSession(${nextDay})">
+              <span>VER MISIÓN DEL DÍA ${nextDay}</span> →
+            </button>
+            <button class="btn-secondary" style="width: 100%; padding: 12px;" onclick="closeActivity()">
+              Volver al Panel Principal
+            </button>
+          </div>
+        </div>
+      `;
+    } else {
+      content.innerHTML = `
+        <div style="text-align: center; padding: 30px 10px;">
+          <div style="font-size: 56px; margin-bottom: 12px;">🏆</div>
+          <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--yellow); margin-bottom: 6px; font-weight:800;">¡Entrenamiento Live Finalizado!</h2>
+          <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 20px;">¡Felicitaciones! Has completado todas las 10 Sesiones en Vivo de Genoma Financiero.</p>
+          <button class="btn-primary" style="width: 100%; padding: 14px; font-weight:800;" onclick="closeActivity()">
+            Cerrar y Ver Mi Tablero
+          </button>
+        </div>
+      `;
+    }
+  }
 
   const token = localStorage.getItem('auth_token');
   if (token && token !== 'preview_admin_token') {
