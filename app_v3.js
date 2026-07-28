@@ -224,18 +224,19 @@ const activitiesData = {
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Process Magic Link token or Preview mode (?ver=true / ?ver / ?preview)
   const urlParams = new URLSearchParams(window.location.search);
-  const isVerMode = urlParams.has('ver') || urlParams.has('preview') || urlParams.has('unlock');
+  const isVerMode = urlParams.has('ver') || urlParams.has('preview') || urlParams.has('unlock') || localStorage.getItem('is_ver_preview_mode') === 'true';
+
+  if (urlParams.has('ver') || urlParams.has('preview') || urlParams.has('unlock')) {
+    localStorage.setItem('is_ver_preview_mode', 'true');
+  }
 
   if (isVerMode) {
     localStorage.setItem('auth_token', 'preview_admin_token');
-    localStorage.setItem(STORAGE_KEY, '9');
-    localStorage.setItem('app_has_entered', 'true');
-    currentActivity = 9;
-
-    // Unlock all 10 live sessions in preview mode
-    for (let d = 1; d <= 10; d++) {
-      localStorage.setItem(`live_session_${d}_completed`, 'true');
+    if (!localStorage.getItem(STORAGE_KEY)) {
+      localStorage.setItem(STORAGE_KEY, '9');
     }
+    localStorage.setItem('app_has_entered', 'true');
+    currentActivity = parseInt(localStorage.getItem(STORAGE_KEY)) || 9;
   }
 
   const urlToken = urlParams.get('token');
@@ -1453,13 +1454,30 @@ function updateLiveCardsUI() {
     const day = parseInt(card.getAttribute('data-live'));
     if (!day) return;
     const isDone = localStorage.getItem(`live_session_${day}_completed`) === 'true';
+    const icon = card.querySelector('.live-icon');
     if (isDone) {
       card.style.border = '1px solid rgba(34, 197, 94, 0.4)';
       card.style.background = 'rgba(34, 197, 94, 0.08)';
-      const icon = card.querySelector('.live-icon');
       if (icon) icon.innerHTML = '<span style="color:#4ade80; font-size:1.2rem;">✅</span>';
+    } else {
+      card.style.border = '1px solid var(--border-subtle)';
+      card.style.background = 'var(--surface)';
+      if (icon) icon.innerHTML = '<span style="font-size:1.2rem;">🗓️</span>';
     }
   });
+}
+
+function resetPreviewState() {
+  if (!confirm('¿Deseas reiniciar todas las misiones y puntos para volver a probar desde cero?')) return;
+  for (let d = 1; d <= 10; d++) {
+    localStorage.removeItem(`live_session_${d}_completed`);
+    localStorage.removeItem(`live_session_${d}_data`);
+  }
+  localStorage.setItem(STORAGE_KEY, '9');
+  currentActivity = 9;
+  updateLiveCardsUI();
+  updatePointsDisplay();
+  showMissionToast('🔄 Misiones de prueba reiniciadas. ¡Puedes completar cualquier día desde cero!');
 }
 
 // Initial UI update on page load
