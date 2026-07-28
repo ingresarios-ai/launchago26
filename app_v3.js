@@ -222,13 +222,23 @@ const activitiesData = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Process Magic Link token from URL
+  // 1. Process Magic Link token or Preview mode (?ver=true / ?ver / ?preview)
   const urlParams = new URLSearchParams(window.location.search);
+  const isVerMode = urlParams.has('ver') || urlParams.has('preview') || urlParams.has('unlock');
+
+  if (isVerMode) {
+    localStorage.setItem('auth_token', 'preview_admin_token');
+    localStorage.setItem(STORAGE_KEY, '9');
+    if (!localStorage.getItem('saboteur_result')) {
+      localStorage.setItem('saboteur_result', 'vengador');
+    }
+    currentActivity = 9;
+  }
+
   const urlToken = urlParams.get('token');
   if (urlToken) {
     localStorage.setItem('auth_token', urlToken);
-    // Clean address bar to hide token
-    history.replaceState(null, '', '/app');
+    if (!isVerMode) history.replaceState(null, '', '/app');
   }
 
   const token = localStorage.getItem('auth_token') || '';
