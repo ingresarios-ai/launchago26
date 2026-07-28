@@ -229,10 +229,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (isVerMode) {
     localStorage.setItem('auth_token', 'preview_admin_token');
     localStorage.setItem(STORAGE_KEY, '9');
-    if (!localStorage.getItem('saboteur_result')) {
-      localStorage.setItem('saboteur_result', 'vengador');
-    }
+    localStorage.setItem('saboteur_result', 'vengador');
+    localStorage.setItem('app_has_entered', 'true');
     currentActivity = 9;
+
+    // Unlock all 10 live sessions in preview mode
+    for (let d = 1; d <= 10; d++) {
+      localStorage.setItem(`live_session_${d}_completed`, 'true');
+    }
   }
 
   const urlToken = urlParams.get('token');
@@ -248,8 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // 1b. Load progress from Supabase
-  if (token) {
+  // 1b. Load progress from Supabase (only for real users)
+  if (token && token !== 'preview_admin_token') {
     fetch('https://chnpzcpczjtdsbfmjhei.supabase.co/rest/v1/rpc/get_progress_by_token', {
       method: 'POST',
       headers: {
@@ -275,8 +279,9 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(err => console.error('Error fetching progress:', err));
   }
 
-  // 2. Render initial journey progress
+  // 2. Render initial journey & live cards
   renderJourney();
+  updateLiveCardsUI();
   
   // 3. Track saboteur from test
   const saboteur = localStorage.getItem('saboteur_result');
@@ -292,25 +297,28 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('saboteur-name').textContent = sabMap[saboteur].name;
     }
 
-    // If they have completed the test, their progress should be at least 3
-    const localProgress = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
-    if (localProgress < 3) {
-      localStorage.setItem(STORAGE_KEY, '3');
-      currentActivity = 3;
-      renderJourney();
-      saveProgress(3);
+    if (!isVerMode) {
+      const localProgress = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
+      if (localProgress < 3) {
+        localStorage.setItem(STORAGE_KEY, '3');
+        currentActivity = 3;
+        renderJourney();
+        saveProgress(3);
+      }
     }
   }
 
-  // 4. Auto-open Activity 1 on first entry to guide the user
-  const hasEntered = localStorage.getItem('app_has_entered');
-  if (!hasEntered) {
-    localStorage.setItem('app_has_entered', 'true');
-    currentActivity = 1;
-    localStorage.setItem(STORAGE_KEY, '1');
-    renderJourney();
-    showJourney();
-    openActivity(1);
+  // 4. Auto-open Activity 1 on first entry (only for real users)
+  if (!isVerMode) {
+    const hasEntered = localStorage.getItem('app_has_entered');
+    if (!hasEntered) {
+      localStorage.setItem('app_has_entered', 'true');
+      currentActivity = 1;
+      localStorage.setItem(STORAGE_KEY, '1');
+      renderJourney();
+      showJourney();
+      openActivity(1);
+    }
   }
 });
 
