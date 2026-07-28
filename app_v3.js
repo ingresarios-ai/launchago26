@@ -348,7 +348,29 @@ function calculatePoints(activityLevel) {
 
 function updatePointsDisplay() {
   const pts = calculatePoints(currentActivity);
-  const completedCount = Math.min(currentActivity - 1, 9);
+  
+  // Genoma 0 completed count
+  const g0Completed = Math.min(currentActivity - 1, 9);
+  
+  // Phase 2 completed count
+  let livesCompleted = 0;
+  for (let d = 1; d <= 10; d++) {
+    if (localStorage.getItem(`live_session_${d}_completed`) === 'true') {
+      livesCompleted++;
+    }
+  }
+
+  const totalCompleted = g0Completed + livesCompleted;
+
+  // Rank Calculation
+  let rank = { title: 'Operador Reactivo', badge: '🔴', color: '#ef4444' };
+  if (pts >= 401) {
+    rank = { title: 'Trader Inquebrantable', badge: '🏆', color: '#eab308' };
+  } else if (pts >= 251) {
+    rank = { title: 'Operador PEDEM', badge: '🟢', color: '#22c55e' };
+  } else if (pts >= 101) {
+    rank = { title: 'Operador Consciente', badge: '🟡', color: '#f59e0b' };
+  }
 
   // Topbar Points Badge
   const elTopbarPoints = document.getElementById('topbar-points-text');
@@ -365,7 +387,18 @@ function updatePointsDisplay() {
   // Dashboard Completed Val
   const elDashCompleted = document.getElementById('dashboard-completed-val');
   if (elDashCompleted) {
-    elDashCompleted.textContent = completedCount;
+    elDashCompleted.textContent = totalCompleted;
+  }
+
+  // Dashboard Rank UI
+  const elRankTitle = document.getElementById('dashboard-rank-title');
+  if (elRankTitle) {
+    elRankTitle.textContent = rank.title;
+    elRankTitle.style.color = rank.color;
+  }
+  const elRankIcon = document.getElementById('dashboard-rank-icon');
+  if (elRankIcon) {
+    elRankIcon.textContent = rank.badge;
   }
 
   // Journey Points Text
@@ -1078,9 +1111,12 @@ const liveSessionsData = {
     missionDesc: "Publica en tus redes o en la comunidad el peor trade que tu Saboteador hizo por ti y qué le faltó al plan con el hashtag #JuegoMental.",
     renderMission: () => `
       <textarea class="text-input" id="live3-worst-trade" rows="3" placeholder="Ej: Entré por FOMO en Bitcoin sin stop loss y mi Saboteador Eufórico me hizo perder $500... #JuegoMental"></textarea>
+      <button id="copy-viral-btn" class="btn-secondary" style="width: 100%; margin-top: 10px; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="copyViralPost()">
+        <span>📋</span> COPIAR POST VIRAL (#JuegoMental)
+      </button>
       <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Misión Viral Publicada (#JuegoMental)</span>
+        <span>Misión Viral Publicada en Redes / Comunidad</span>
       </label>
     `
   },
@@ -1092,18 +1128,17 @@ const liveSessionsData = {
     resourceName: "Guía de Parámetros: Algoritmo Geny Trend (PDF)",
     resourceLink: "#",
     missionTitle: "Misión Día 4: Tu Primer Paper Trade con Plan",
-    missionDesc: "Haz 1 Paper Trade (simulado) definiendo tu escenario de entrada, invalidación y riesgo exacto.",
+    missionDesc: "Haz 1 Paper Trade (simulado) definiendo tu activo, señal de Geny y nivel de Stop Loss.",
     renderMission: () => `
-      <div class="checklist">
-        <label class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>Definí el escenario y la tendencia con Geny</span>
-        </label>
-        <label class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>Puse Stop Loss de invalidación ANTES de entrar</span>
-        </label>
+      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
+        <input class="text-input" id="live4-asset" type="text" placeholder="Activo (Ej: BTC/USD, Nasdaq, Gold)">
+        <input class="text-input" id="live4-signal" type="text" placeholder="Señal de IA (Ej: Geny Trend Alcista 15M)">
+        <input class="text-input" id="live4-stop" type="text" placeholder="Nivel de Stop Loss de Invalidación (Ej: $64,200)">
       </div>
+      <label class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Paper Trade registrado con gestión de riesgo previa</span>
+      </label>
     `
   },
   5: {
@@ -1114,7 +1149,7 @@ const liveSessionsData = {
     resourceName: "Plantilla Oficial: Bitácora PEDEM (Excel / PDF)",
     resourceLink: "#",
     missionTitle: "Misión Día 5: Registro en la Bitácora PEDEM",
-    missionDesc: "Documenta tu Paper Trade del Día 4 en la Plantilla de Bitácora PEDEM registrando las emociones de tu Saboteador.",
+    missionDesc: "Documenta tu Paper Trade del Día 4 en la Bitácora PEDEM registrando las emociones de tu Saboteador.",
     renderMission: () => `
       <textarea class="text-input" id="live5-logbook-reflection" rows="3" placeholder="Ej: Documenté mi trade en la bitácora. Mi Saboteador sintió impaciencia antes del gatillo..."></textarea>
       <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
@@ -1136,11 +1171,15 @@ const liveSessionsData = {
       <div class="checklist">
         <label class="check-item" onclick="toggleCheck(this)">
           <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>Completé la Rúbrica de Evaluación Semanal</span>
+          <span>1. Definí mi riesgo ANTES de entrar a cada trade</span>
         </label>
         <label class="check-item" onclick="toggleCheck(this)">
           <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>Reservé mi Asiento para la Masterclass en Vivo</span>
+          <span>2. Respeté mi Regla #1 Anti-Saboteador esta semana</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>3. Reservé mi Asiento VIP para la Masterclass del Domingo</span>
         </label>
       </div>
     `
@@ -1218,6 +1257,56 @@ const liveSessionsData = {
   }
 };
 
+function copyViralPost() {
+  const textInput = document.getElementById('live3-worst-trade');
+  if (textInput && textInput.value) {
+    navigator.clipboard.writeText(textInput.value).then(() => {
+      const btn = document.getElementById('copy-viral-btn');
+      if (btn) btn.innerHTML = '<span>✅</span> ¡COPIADO AL PORTAPAPELES!';
+      showMissionToast('📋 Texto copiado. ¡Ahora publícalo con el hashtag #JuegoMental!');
+    });
+  } else {
+    showMissionToast('⚠️ Escribe el texto de tu trade antes de copiar');
+  }
+}
+
+function showMissionToast(msg) {
+  let toast = document.getElementById('app-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'app-toast';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #18181b;
+      border: 1px solid rgba(34, 197, 94, 0.6);
+      color: #ffffff;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    `;
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML = msg;
+  toast.style.transform = 'translateY(0)';
+  toast.style.opacity = '1';
+
+  setTimeout(() => {
+    toast.style.transform = 'translateY(100px)';
+    toast.style.opacity = '0';
+  }, 3500);
+}
+
 function openLiveSession(dayNum) {
   const data = liveSessionsData[dayNum];
   if (!data) return;
@@ -1282,6 +1371,18 @@ function openLiveSession(dayNum) {
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 
+  // Restore saved input values if available
+  const savedData = localStorage.getItem(`live_session_${dayNum}_data`);
+  if (savedData) {
+    try {
+      const parsed = JSON.parse(savedData);
+      Object.keys(parsed).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = parsed[id];
+      });
+    } catch(e) {}
+  }
+
   // Fill saboteur box if Day 1
   if (dayNum === 1) {
     const sab = localStorage.getItem('saboteur_result');
@@ -1298,14 +1399,36 @@ function openLiveSession(dayNum) {
 }
 
 function completeLiveSession(dayNum) {
+  // Capture input data for persistence
+  const formData = {};
+  const inputIds = [
+    'live2-rule-input', 'live3-worst-trade', 'live4-asset', 'live4-signal', 'live4-stop',
+    'live5-logbook-reflection', 'live8-question-input', 'live9-evolution-input'
+  ];
+  inputIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value) formData[id] = el.value;
+  });
+  
+  if (Object.keys(formData).length > 0) {
+    localStorage.setItem(`live_session_${dayNum}_data`, JSON.stringify(formData));
+    if (formData['live2-rule-input']) {
+      localStorage.setItem('live_rule', formData['live2-rule-input']);
+    }
+  }
+
   localStorage.setItem(`live_session_${dayNum}_completed`, 'true');
   
   closeActivity();
   updateLiveCardsUI();
   updatePointsDisplay();
   
+  const rewardsMap = { 1: 30, 2: 30, 3: 30, 4: 30, 5: 30, 6: 30, 7: 35, 8: 30, 9: 30, 10: 100 };
+  const earnedPts = rewardsMap[dayNum] || 30;
+  showMissionToast(`🎉 ¡Misión del Día ${dayNum} completada! +${earnedPts} PC asignados a tu cuenta.`);
+
   const token = localStorage.getItem('auth_token');
-  if (token) {
+  if (token && token !== 'preview_admin_token') {
     fetch('https://chnpzcpczjtdsbfmjhei.supabase.co/rest/v1/rpc/save_progress', {
       method: 'POST',
       headers: {
