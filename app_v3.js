@@ -1439,20 +1439,22 @@ function openLiveSession(dayNum) {
   const isCompleted = localStorage.getItem(`live_session_${dayNum}_completed`) === 'true';
 
   let html = `
-    <div style="margin-bottom: 12px; display:inline-block; padding: 4px 12px; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 20px; color: #4ade80; font-weight: 700; font-size: 0.8rem;">
-      📅 ${data.dayDate} • 7:00 PM (Colombia)
-    </div>
-    <h2 class="activity-title" style="margin-top: 4px; font-size:1.4rem;">${data.title}</h2>
-
-    <!-- PASO 1: EN VIVO / REPLAY -->
-    <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 18px; border-radius: 14px; margin-bottom: 16px;">
-      <h3 style="font-size: 1rem; color: var(--text-main); margin: 0 0 8px 0; display:flex; align-items:center; gap:8px;">
-        <span>🔴</span> Paso 1: Transmisión en Vivo
+    <!-- PASO 1: TRANSMISIÓN EN VIVO BROADCAST -->
+    <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, var(--surface) 100%); border: 1px solid rgba(239, 68, 68, 0.3); padding: 20px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(239, 68, 68, 0.1);">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+        <span style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; font-weight:800; color:#ef4444; background:rgba(239, 68, 68, 0.15); padding:4px 10px; border-radius:100px;">
+          <span class="pulse-dot-red"></span> SALA OFICIAL DE TRANSMISIÓN
+        </span>
+        <span style="font-size:0.78rem; color:var(--text-muted);">${data.dayDate} • 7:00 PM CO</span>
+      </div>
+      <h3 style="font-size: 1.1rem; font-weight:800; color: var(--text-white); margin: 0 0 6px 0;">
+        🔴 ${data.title}
       </h3>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px;">Accede a la sala oficial de Zoom / YouTube o mira el Replay grabado.</p>
-      <a href="${data.liveUrl}" target="_blank" class="btn-primary" style="display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; width:100%;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-        INGRESAR AL LIVE EN VIVO
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px; line-height:1.4;">Accede a la sala interactiva en vivo o mira el replay grabado para resolver tus dudas en directo.</p>
+      
+      <a href="${data.liveUrl}" target="_blank" class="btn-live-hero" style="text-decoration:none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        ENTRAR A LA SALA DE TRANSMISIÓN EN VIVO
       </a>
     </div>
 

@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   
-  <link rel="stylesheet" href="app_v2.css?v=20260728_v13" />
+  <link rel="stylesheet" href="app_v2.css?v=20260728_v14" />
   
   <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -184,9 +184,40 @@
         </div>
       </section>
 
-      <!-- Agenda -->
-      <section class="dashboard-lives">
-        <h2 class="lives-title">Entrenamiento en Vivo</h2>
+      <!-- ESCENARIO DE ENTRENAMIENTO EN VIVO (BROADCAST STAGE) -->
+      <section class="dashboard-lives-stage" class="dashboard-lives">
+        <div class="lives-stage-banner">
+          <div class="stage-top-tag">
+            <span class="pulse-dot-red"></span>
+            <span>FASE CUMBRE • TRANSMISIÓN EN DIRECTO</span>
+          </div>
+          <h2 class="stage-title">🔴 FASE 2: ENTRENAMIENTO EN VIVO</h2>
+          <p class="stage-subtitle">10 Transmisiones Interactivas en Vivo con Juan Diego Gómez & Equipo (3 al 14 de Agosto • 7:00 PM CO). Asiste cada noche para ganar +300 Puntos de Control y subir al Rango de Dominio.</p>
+        </div>
+
+        <!-- TARJETA DESTACADA: CLASE EN VIVO DÍA 1 -->
+        <div class="live-featured-card" onclick="openLiveSession(1)">
+          <div class="featured-badge">
+            <span>🔥 PRÓXIMA CLASE EN VIVO • DÍA 1</span>
+          </div>
+          <div class="featured-content">
+            <h3 class="featured-title">🔴 Día 1: La Anatomía del Saboteador</h3>
+            <p class="featured-desc">Descubre el patrón invisible que sabotea tus operaciones financieras. Incluye el Test del Saboteador en vivo.</p>
+            <div class="featured-meta">
+              <span class="meta-item">🗓️ Lunes 3 de Agosto</span>
+              <span class="meta-item">⏰ 7:00 PM (Colombia / Perú / México)</span>
+              <span class="meta-item reward">⚡ +30 Puntos de Control</span>
+            </div>
+          </div>
+          <div class="featured-cta">
+            <button class="btn-live-hero">
+              <span>🔴 ENTRAR A LA SALA DE TRANSMISIÓN EN VIVO</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <h3 class="lives-grid-title">📅 CALENDARIO DE CLASES EN VIVO (DÍAS 1 AL 10)</h3>
         <div class="lives-list">
           
           <div class="live-card" data-live="1" onclick="openLiveSession(1)" style="cursor:pointer;">
@@ -501,6 +532,6 @@
     </div>
   </div>
 
-  <script src="app_v3.js?v=20260728_v13"></script>
+  <script src="app_v3.js?v=20260728_v14"></script>
 </body>
 </html>
