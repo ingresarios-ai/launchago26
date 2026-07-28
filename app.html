@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   
-  <link rel="stylesheet" href="app_v2.css?v=20260728_v12" />
+  <link rel="stylesheet" href="app_v2.css?v=20260728_v13" />
   
   <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -72,6 +72,25 @@
     <!-- VISTA 1: DASHBOARD -->
     <div id="view-dashboard" class="view-section">
       
+      <!-- NAVEGADOR DE FASES DE ENTRENAMIENTO -->
+      <div class="phase-stepper">
+        <div class="phase-step active" id="phase-step-1" onclick="showJourney()">
+          <div class="phase-step-num">1</div>
+          <div class="phase-step-info">
+            <span class="phase-step-title">Fase 1: Preparación</span>
+            <span class="phase-step-sub" id="phase-1-sub">Genoma 0 • Misiones 1-9 🟢</span>
+          </div>
+        </div>
+        <div class="phase-step-line"></div>
+        <div class="phase-step" id="phase-step-2" onclick="const el = document.querySelector('.dashboard-lives'); if (el) el.scrollIntoView({behavior:'smooth'});">
+          <div class="phase-step-num">2</div>
+          <div class="phase-step-info">
+            <span class="phase-step-title">Fase 2: En Vivo</span>
+            <span class="phase-step-sub">3 al 14 de Agosto 🔴</span>
+          </div>
+        </div>
+      </div>
+
       <!-- HERO DE ACCIÓN PRINCIPAL: TU PRÓXIMO PASO -->
       <section class="next-step-card" id="next-step-hero">
         <div class="next-step-header">
@@ -482,6 +501,6 @@
     </div>
   </div>
 
-  <script src="app_v3.js?v=20260728_v12"></script>
+  <script src="app_v3.js?v=20260728_v13"></script>
 </body>
 </html>

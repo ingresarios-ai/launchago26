@@ -457,18 +457,25 @@ function updateNextStepHero() {
   const heroText = document.getElementById('next-step-progress-text');
   const topbarStep = document.getElementById('topbar-step-badge');
   const statusTag = document.getElementById('next-step-status-tag');
+  const phase1Sub = document.getElementById('phase-1-sub');
 
   if (!heroTitle) return;
+
+  const g0Done = Math.min(currentActivity - 1, 9);
+  const g0Pct = Math.round((g0Done / 9) * 100);
+  if (phase1Sub) {
+    phase1Sub.textContent = `Genoma 0 • ${g0Done}/9 Completadas (${g0Pct}%) 🟢`;
+  }
 
   if (currentActivity <= MAX_ACTIVITIES) {
     const act = activitiesData[currentActivity];
     if (act) {
       if (heroBadge) heroBadge.textContent = `FASE 1: PREPARACIÓN • MISIÓN ${currentActivity} DE 19`;
       heroTitle.textContent = `${currentActivity}. ${act.title}`;
-      heroDesc.textContent = `Completa la Misión ${currentActivity} de Genoma Cero para acondicionar tu mente y sumar tus ${act.reward}.`;
+      heroDesc.textContent = `Completa la Misión ${currentActivity} para acondicionar tu mente y sumar tus ${act.reward}.`;
       if (heroBtn) heroBtn.innerHTML = `<span>ABRIR MISIÓN ${currentActivity} AHORA</span> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
       if (topbarStep) topbarStep.textContent = `🎯 Misión ${currentActivity}/19`;
-      if (statusTag) statusTag.textContent = 'EN PROGRESO 🟢';
+      if (statusTag) statusTag.textContent = 'DISPONIBLE AHORA 🟢';
     }
   } else {
     // All Genoma 0 missions done, check next incomplete live session
@@ -483,7 +490,7 @@ function updateNextStepHero() {
     if (liveData) {
       if (heroBadge) heroBadge.textContent = `FASE 2: EVENTO EN VIVO • DÍA ${nextLive} DE 10`;
       heroTitle.textContent = liveData.title;
-      heroDesc.textContent = `Asiste a la sesión en vivo o mira el replay y completa la Misión del Día ${nextLive} para ganar tus ${liveData.reward}.`;
+      heroDesc.textContent = `Asiste a la sesión en vivo (${liveData.dayDate}) o mira el replay para ganar tus ${liveData.reward}.`;
       if (heroBtn) heroBtn.innerHTML = `<span>VER MISIÓN DEL DÍA ${nextLive}</span> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
       if (topbarStep) topbarStep.textContent = `🎯 Día Live ${nextLive}/10`;
       if (statusTag) statusTag.textContent = 'EVENTO EN VIVO 🔴';
@@ -491,13 +498,13 @@ function updateNextStepHero() {
   }
 
   // Calculate total completed out of 19
-  let completedCount = Math.min(currentActivity - 1, 9);
+  let completedCount = g0Done;
   for (let d = 1; d <= 10; d++) {
     if (localStorage.getItem(`live_session_${d}_completed`) === 'true') completedCount++;
   }
   const pct = Math.round((completedCount / 19) * 100);
   if (heroFill) heroFill.style.width = `${pct}%`;
-  if (heroText) heroText.textContent = `Progreso total: ${pct}% (${completedCount} de 19 misiones completadas)`;
+  if (heroText) heroText.textContent = `Progreso total del entrenamiento: ${pct}% (${completedCount} de 19 misiones completadas)`;
 }
 
 function continueNextStep() {
@@ -1739,14 +1746,32 @@ function updateLiveCardsUI() {
     if (!day) return;
     const isDone = localStorage.getItem(`live_session_${day}_completed`) === 'true';
     const icon = card.querySelector('.live-icon');
+    const info = card.querySelector('.live-info');
+    const data = liveSessionsData[day];
+
+    let badgeEl = card.querySelector('.live-status-chip');
+    if (!badgeEl && info) {
+      badgeEl = document.createElement('div');
+      badgeEl.className = 'live-status-chip';
+      info.appendChild(badgeEl);
+    }
+
     if (isDone) {
       card.style.border = '1px solid rgba(34, 197, 94, 0.4)';
       card.style.background = 'rgba(34, 197, 94, 0.08)';
       if (icon) icon.innerHTML = '<span style="color:#4ade80; font-size:1.2rem;">✅</span>';
+      if (badgeEl) badgeEl.innerHTML = '<span class="live-badge-upcoming" style="background:rgba(34,197,94,0.15); border-color:rgba(34,197,94,0.3); color:#4ade80;">✅ COMPLETADO</span>';
     } else {
       card.style.border = '1px solid var(--border-subtle)';
       card.style.background = 'var(--surface)';
       if (icon) icon.innerHTML = '<span style="font-size:1.2rem;">🗓️</span>';
+      if (badgeEl) {
+        if (day === 1) {
+          badgeEl.innerHTML = '<span class="live-badge-upcoming">⚡ PRÓXIMO EN ACTIVARSE (3 AGO • 7:00 PM)</span>';
+        } else {
+          badgeEl.innerHTML = `<span class="live-badge-locked">🔒 Se activa el ${data ? data.dayDate : ''}</span>`;
+        }
+      }
     }
   });
 }
