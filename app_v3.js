@@ -229,7 +229,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (isVerMode) {
     localStorage.setItem('auth_token', 'preview_admin_token');
     localStorage.setItem(STORAGE_KEY, '9');
-    localStorage.setItem('saboteur_result', 'vengador');
     localStorage.setItem('app_has_entered', 'true');
     currentActivity = 9;
 
@@ -789,8 +788,20 @@ let itAnswers = [];
 const itTotalQ = 8;
 
 function startInlineTest() {
-  document.getElementById('test-intro-section').style.display = 'none';
-  document.getElementById('test-question-section').style.display = 'block';
+  itCurrentQ = 0;
+  itBranch = '';
+  itQuestions = [];
+  itScores = { vengador: 0, euforico: 0, impaciente: 0, paralizado: 0 };
+  itAnswers = [];
+
+  const elIntro = document.getElementById('test-intro-section');
+  if (elIntro) elIntro.style.display = 'none';
+
+  const elResult = document.getElementById('test-result-section');
+  if (elResult) elResult.style.display = 'none';
+
+  const elQSection = document.getElementById('test-question-section');
+  if (elQSection) elQSection.style.display = 'block';
   
   // Hide the "Completar Actividad" button during test
   const footer = document.querySelector('.activity-footer');
@@ -1028,31 +1039,27 @@ function showInlineResult() {
 function retakeTest() {
   if (!confirm('¿Estás seguro de que quieres repetir el test? Tus respuestas actuales se borrarán.')) return;
   
+  localStorage.removeItem('saboteur_result');
+  localStorage.removeItem('saboteur_scores');
+  localStorage.removeItem('genoma_user_branch');
+  localStorage.removeItem('user_branch');
+
   const token = localStorage.getItem('auth_token') || '';
-  if (!token) return;
-  
-  fetch(SUPABASE_URL_TEST + '/rest/v1/rpc/reset_lead_test', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'apikey': SUPABASE_ANON_KEY_TEST,
-      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY_TEST
-    },
-    body: JSON.stringify({ p_token: token })
-  })
-  .then(() => {
-    localStorage.removeItem('saboteur_result');
-    localStorage.removeItem('saboteur_scores');
-    localStorage.removeItem('genoma_user_branch');
-    localStorage.removeItem('user_branch');
-    
-    // Reload page to start test inline
-    location.reload();
-  })
-  .catch(err => {
-    console.error('Error resetting test:', err);
-    alert('Hubo un error al reiniciar el test.');
-  });
+  if (token && token !== 'preview_admin_token') {
+    fetch(SUPABASE_URL_TEST + '/rest/v1/rpc/reset_lead_test', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY_TEST,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY_TEST
+      },
+      body: JSON.stringify({ p_token: token })
+    }).catch(err => console.error('Error resetting test:', err));
+  }
+
+  // Open Activity 2 and start test inline
+  openActivity(2);
+  startInlineTest();
 }
 
 // ========================================
