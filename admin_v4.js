@@ -320,16 +320,50 @@ async function loadData() {
     // 4. Fetch tests via secure admin RPC function
     allTests = await dbFetchAll('/rest/v1/rpc/admin_get_tests', authParams);
 
-    // 5. Fetch lead magnets via RPC (with direct REST fallback)
+    // 5. Populate lead magnets from allLeads (where landing or lead_magnet specifies a lead magnet) + RPC/REST fallback
+    let fetchedLm = [];
     try {
-      allLeadMagnets = await dbFetchAll('/rest/v1/rpc/admin_get_leads_magnets', authParams);
+      fetchedLm = await dbFetchAll('/rest/v1/rpc/admin_get_leads_magnets', authParams);
     } catch (err) {
       try {
-        allLeadMagnets = await dbFetch('/rest/v1/leads_magnets?select=*&order=created_at.desc', { method: 'GET' });
+        fetchedLm = await dbFetch('/rest/v1/leads_magnets?select=*&order=created_at.desc', { method: 'GET' });
       } catch (e) {
-        allLeadMagnets = [];
+        fetchedLm = [];
       }
     }
+
+    // Extract Lead Magnet registrations from allLeads as well
+    const lmFromLeads = allLeads.filter(l => {
+      const landingLower = (l.landing || '').toLowerCase();
+      const lmLower = (l.lead_magnet || '').toLowerCase();
+      return landingLower.includes('guía') || landingLower.includes('guia') || landingLower.includes('magnet') || landingLower.includes('estafas') || lmLower.includes('guia') || lmLower.includes('estafas');
+    }).map(l => ({
+      name: l.name,
+      email: l.email,
+      phone: l.phone,
+      landing: l.landing,
+      lead_magnet: l.lead_magnet || l.landing,
+      utm_source: l.utm_source,
+      utm_medium: l.utm_medium,
+      utm_campaign: l.utm_campaign,
+      utm_content: l.utm_content,
+      utm_term: l.utm_term,
+      created_at: l.created_at,
+      is_workshop_registered: true
+    }));
+
+    // Combine fetchedLm + lmFromLeads avoiding email duplicates
+    const combinedLmMap = new Map();
+    (fetchedLm || []).forEach(lm => {
+      if (lm.email) combinedLmMap.set(lm.email.toLowerCase().trim(), lm);
+    });
+    lmFromLeads.forEach(lm => {
+      if (lm.email && !combinedLmMap.has(lm.email.toLowerCase().trim())) {
+        combinedLmMap.set(lm.email.toLowerCase().trim(), lm);
+      }
+    });
+
+    allLeadMagnets = Array.from(combinedLmMap.values());
 
     // Cross-reference Lead Magnets with Workshop Leads by email
     const workshopEmailMap = new Map();

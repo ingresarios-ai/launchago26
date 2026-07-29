@@ -237,8 +237,8 @@ document.getElementById('lm-form').addEventListener('submit', function (e) {
     utm_term: utm_term || null
   };
 
-  // 1. POST to Supabase — leads_magnets table (SEPARATE from taller leads)
-  var supabasePromise = fetch(SUPABASE_URL + '/rest/v1/leads_magnets', {
+  // 1. POST to Supabase — leads table
+  var supabasePromise = fetch(SUPABASE_URL + '/rest/v1/leads', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -248,7 +248,7 @@ document.getElementById('lm-form').addEventListener('submit', function (e) {
     },
     body: JSON.stringify(leadData)
   }).catch(function (err) {
-    console.warn('Supabase leads_magnets error:', err);
+    console.warn('Supabase leads error:', err);
   });
 
   // 2. POST to Lead Magnet webhook (GHL — separate automation)
