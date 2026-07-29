@@ -403,13 +403,12 @@
     let iti = null;
     let isRegistrationStep = false;
 
-    // Check if user is already authenticated or in preview mode
+    // Only redirect if url contains explicit token parameter
     (function checkExistingAuth() {
       const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get('token') || localStorage.getItem('auth_token');
-      const isPreview = urlParams.has('ver') || urlParams.has('preview') || localStorage.getItem('is_ver_preview_mode') === 'true';
-
-      if (isPreview || (token && token !== '')) {
+      const urlToken = urlParams.get('token');
+      if (urlToken && urlToken !== '') {
+        localStorage.setItem('auth_token', urlToken);
         window.location.href = '/app';
       }
     })();
