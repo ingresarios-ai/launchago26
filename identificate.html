@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Identifica tu Entrenamiento | GENOMA</title>
+  
+  <!-- Strict Anti-Cache Directives -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  
+  <!-- intl-tel-input CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css" />
+
+  <style>
+    :root {
+      --bg-dark: #0a0e13;
+      --bg-card: rgba(17, 24, 32, 0.85);
+      --border-subtle: #1e2a38;
+      --green-primary: #22c55e;
+      --green-glow: #4ade80;
+      --green-accent: #15803d;
+      --text-white: #f8fafc;
+      --text-gray: #94a3b8;
+      --text-muted: #64748b;
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background glows */
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-orb--1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.25) 0%, transparent 70%);
+      top: -10%;
+      left: -10%;
+    }
+
+    .bg-orb--2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+      bottom: -10%;
+      right: -10%;
+    }
+
+    .id-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .id-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(34, 197, 94, 0.05);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      text-align: center;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .id-logo {
+      height: 32px;
+      width: auto;
+      margin: 0 auto 24px auto;
+      display: block;
+    }
+
+    .id-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--green-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .id-title {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 900;
+      line-height: 1.2;
+      color: var(--text-white);
+      margin-bottom: 10px;
+    }
+
+    .id-subtitle {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text-gray);
+      margin-bottom: 28px;
+    }
+
+    .id-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-white);
+      letter-spacing: 0.04em;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #111827;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--green-primary);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* Additional fields container for smooth expansion */
+    .extra-fields {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeInDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .extra-fields.active {
+      display: flex;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* intl-tel-input overrides */
+    .iti {
+      width: 100%;
+    }
+    .iti__country-container {
+      padding: 0;
+    }
+    .iti__selected-country-primary {
+      background-color: transparent !important;
+      padding: 0 10px;
+    }
+    .iti__selected-dial-code {
+      color: #ffffff;
+      font-size: 0.9rem;
+    }
+    .iti__dropdown-content {
+      background-color: #111827 !important;
+      border: 1px solid var(--border-subtle) !important;
+      border-radius: var(--radius-sm);
+      color: #ffffff !important;
+    }
+    .iti__country {
+      padding: 8px 12px !important;
+      color: #cbd5e1 !important;
+    }
+    .iti__country:hover, .iti__country--highlight {
+      background-color: #1e293b !important;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-accent) 100%);
+      color: var(--text-white);
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.35);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(135deg, var(--green-glow) 0%, var(--green-primary) 100%);
+      box-shadow: 0 6px 30px rgba(34, 197, 94, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .status-msg {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 14px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .status-msg.success {
+      display: flex;
+      color: #4ade80;
+    }
+
+    .status-msg.error {
+      display: flex;
+      color: #f87171;
+    }
+
+    .status-msg.info {
+      display: flex;
+      color: #60a5fa;
+    }
+
+    .id-footer {
+      margin-top: 24px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .id-footer a {
+      color: var(--green-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .id-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orb bg-orb--1"></div>
+  <div class="bg-orb bg-orb--2"></div>
+
+  <div class="id-container">
+    <div class="id-card">
+      <img src="logo-genoma.webp" alt="Genoma Logo" class="id-logo" />
+
+      <div class="id-badge">
+        <span>⚡ ACCESO AL ENTRENAMIENTO</span>
+      </div>
+
+      <h1 class="id-title" id="card-title">Identifica tu Cuenta</h1>
+      <p class="id-subtitle" id="card-desc">
+        Ingresa el correo electrónico con el que te registraste al taller para sincronizar tus actividades, guardar tus Puntos de Control y continuar tu reacondicionamiento.
+      </p>
+
+      <form class="id-form" id="identificate-form" onsubmit="handleFormSubmit(event)">
+        
+        <!-- STEP 1: EMAIL -->
+        <div class="form-group">
+          <label class="form-label" for="email-input">Correo Electrónico</label>
+          <input 
+            type="email" 
+            id="email-input" 
+            class="form-input" 
+            placeholder="tu.correo@ejemplo.com" 
+            required 
+            autocomplete="email"
+          />
+        </div>
+
+        <!-- STEP 2: EXTRA FIELDS (Expanded if email is not found in database) -->
+        <div class="extra-fields" id="extra-fields">
+          <div class="form-group">
+            <label class="form-label" for="name-input">Nombre Completo</label>
+            <input 
+              type="text" 
+              id="name-input" 
+              class="form-input" 
+              placeholder="Tu Nombre y Apellido" 
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="phone-input">Teléfono / WhatsApp</label>
+            <input 
+              type="tel" 
+              id="phone-input" 
+              class="form-input" 
+              placeholder="Número de WhatsApp"
+              autocomplete="tel"
+            />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btn-submit">
+          <span id="btn-text">CONTINUAR →</span>
+          <div class="spinner" id="btn-spinner" style="display:none;"></div>
+        </button>
+
+        <div class="status-msg" id="status-msg"></div>
+      </form>
+
+      <div class="id-footer">
+        ¿Primera vez aquí? <a href="/">Conoce el Taller de 14 Días</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- intl-tel-input JS -->
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+
+  <script>
+    const SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
+
+    let iti = null;
+    let isRegistrationStep = false;
+
+    // Check if user is already authenticated or in preview mode
+    (function checkExistingAuth() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token') || localStorage.getItem('auth_token');
+      const isPreview = urlParams.has('ver') || urlParams.has('preview') || localStorage.getItem('is_ver_preview_mode') === 'true';
+
+      if (isPreview || (token && token !== '')) {
+        window.location.href = '/app';
+      }
+    })();
+
+    // Initialize phone input with country selector
+    document.addEventListener('DOMContentLoaded', () => {
+      const phoneInput = document.getElementById('phone-input');
+      if (phoneInput) {
+        iti = window.intlTelInput(phoneInput, {
+          initialCountry: "co",
+          preferredCountries: ["co", "mx", "pe", "cl", "ec", "us", "es", "ar"],
+          separateDialCode: true,
+          utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js"
+        });
+      }
+    });
+
+    function setStatus(msg, type) {
+      const el = document.getElementById('status-msg');
+      el.className = 'status-msg ' + (type || 'info');
+      el.innerHTML = msg;
+    }
+
+    function setLoading(loading) {
+      const btn = document.getElementById('btn-submit');
+      const text = document.getElementById('btn-text');
+      const spinner = document.getElementById('btn-spinner');
+
+      btn.disabled = loading;
+      if (loading) {
+        text.style.display = 'none';
+        spinner.style.display = 'block';
+      } else {
+        text.style.display = 'inline';
+        spinner.style.display = 'none';
+      }
+    }
+
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+      const emailInput = document.getElementById('email-input');
+      const email = emailInput.value.trim().toLowerCase();
+
+      if (!email || !email.includes('@')) {
+        setStatus('⚠️ Por favor ingresa un correo electrónico válido', 'error');
+        return;
+      }
+
+      setLoading(true);
+      setStatus('', '');
+
+      try {
+        if (!isRegistrationStep) {
+          // STEP 1: Check if lead exists by email in Supabase
+          const rpcRes = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_token_by_email`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            },
+            body: JSON.stringify({ p_email: email })
+          });
+
+          const data = await rpcRes.json();
+          let token = '';
+
+          if (Array.isArray(data) && data.length > 0) {
+            token = data[0].get_token_by_email || data[0].auth_token || '';
+          } else if (data) {
+            token = data.get_token_by_email || data.auth_token || (typeof data === 'string' ? data : '');
+          }
+
+          if (token && token !== '') {
+            // LEAD FOUND! Authenticate & redirect
+            localStorage.setItem('auth_token', token);
+            localStorage.setItem('app_has_entered', 'true');
+            setStatus('✨ ¡Cuenta encontrada! Entrando a tu entrenamiento...', 'success');
+
+            setTimeout(() => {
+              window.location.href = '/app';
+            }, 600);
+            return;
+          }
+
+          // LEAD NOT FOUND -> Expand registration fields
+          isRegistrationStep = true;
+          setLoading(false);
+
+          document.getElementById('card-title').textContent = 'Completa tu Registro';
+          document.getElementById('card-desc').textContent = 'No encontramos una cuenta con este correo. Completa tus datos para registrarte gratis y desbloquear tu entrenamiento de inmediato.';
+          
+          document.getElementById('extra-fields').classList.add('active');
+          document.getElementById('name-input').required = true;
+          document.getElementById('phone-input').required = true;
+          
+          document.getElementById('btn-text').textContent = 'REGISTRARME Y COMENZAR →';
+          setStatus('ℹ️ Ingresa tu nombre y teléfono para crear tu acceso gratis.', 'info');
+          
+          // Focus name input
+          setTimeout(() => document.getElementById('name-input').focus(), 150);
+
+        } else {
+          // STEP 2: Register new lead
+          const name = document.getElementById('name-input').value.trim();
+          const rawPhone = document.getElementById('phone-input').value.trim();
+          const phone = iti ? (iti.getNumber() || rawPhone) : rawPhone;
+
+          if (!name) {
+            setStatus('⚠️ Por favor ingresa tu nombre completo', 'error');
+            setLoading(false);
+            return;
+          }
+
+          if (!phone) {
+            setStatus('⚠️ Por favor ingresa tu teléfono o WhatsApp', 'error');
+            setLoading(false);
+            return;
+          }
+
+          const urlParams = new URLSearchParams(window.location.search);
+          const leadData = {
+            name: name,
+            email: email,
+            phone: phone,
+            landing: 'app_identificate',
+            utm_source: urlParams.get('utm_source') || null,
+            utm_medium: urlParams.get('utm_medium') || null,
+            utm_campaign: urlParams.get('utm_campaign') || null,
+            utm_content: urlParams.get('utm_content') || null,
+            utm_term: urlParams.get('utm_term') || null
+          };
+
+          // POST to Supabase leads table
+          const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            },
+            body: JSON.stringify(leadData)
+          });
+
+          // Fetch generated token
+          const tokenRes = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_token_by_email`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            },
+            body: JSON.stringify({ p_email: email })
+          });
+
+          const tokenData = await tokenRes.json();
+          let newToken = '';
+
+          if (Array.isArray(tokenData) && tokenData.length > 0) {
+            newToken = tokenData[0].get_token_by_email || tokenData[0].auth_token || '';
+          } else if (tokenData) {
+            newToken = tokenData.get_token_by_email || tokenData.auth_token || (typeof tokenData === 'string' ? tokenData : '');
+          }
+
+          if (!newToken) {
+            // Fallback token if RPC is slow
+            newToken = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+          }
+
+          localStorage.setItem('auth_token', newToken);
+          localStorage.setItem('app_has_entered', 'true');
+          setStatus('🎉 ¡Registro completado! Ingresando a tu panel...', 'success');
+
+          setTimeout(() => {
+            window.location.href = '/app';
+          }, 800);
+        }
+      } catch (err) {
+        console.error('Error during identification:', err);
+        setStatus('⚠️ Ocurrió un error. Inténtalo de nuevo.', 'error');
+        setLoading(false);
+      }
+    }
+  </script>
+</body>
+</html>

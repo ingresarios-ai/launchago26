@@ -266,8 +266,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const token = localStorage.getItem('auth_token') || '';
   if (!token) {
-    // No active session/token, redirect immediately to optin landing page
-    window.location.href = '/';
+    // No active session/token, redirect seamlessly to /identificate
+    window.location.href = '/identificate';
     return;
   }
 
