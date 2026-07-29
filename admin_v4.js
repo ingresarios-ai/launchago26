@@ -112,6 +112,16 @@ function setupEventListeners() {
     });
   });
 
+  // WhatsApp Router Listeners
+  const btnRefreshWa = document.getElementById('btn-refresh-wa-data');
+  if (btnRefreshWa) btnRefreshWa.addEventListener('click', loadWhatsAppGroupsData);
+
+  const formAddWa = document.getElementById('wa-add-group-form');
+  if (formAddWa) formAddWa.addEventListener('submit', handleAddWaGroup);
+
+  const btnSaveWaClicks = document.getElementById('btn-save-wa-clicks');
+  if (btnSaveWaClicks) btnSaveWaClicks.addEventListener('click', handleSaveWaClicks);
+
   // Leads Filters
   document.getElementById('lead-search').addEventListener('input', handleFilterChange);
   document.getElementById('filter-landing').addEventListener('change', handleFilterChange);
@@ -378,6 +388,7 @@ async function loadData() {
     buildPreactivitiesTab();
     buildLeadMagnetsTab();
     buildSettingsTab();
+    loadWhatsAppGroupsData();
 
   } catch (err) {
     console.error('Load data error:', err);
@@ -1785,5 +1796,217 @@ function exportLeadMagnetsCSV() {
 
   triggerCSVDownload('lead_magnets_descargas.csv', headers, rows);
 }
+
+// ========================================
+// WHATSAPP GROUPS ROUTER ADMIN MANAGEMENT
+// ========================================
+let currentWaState = null;
+
+async function loadWhatsAppGroupsData() {
+  const DEFAULT_CONFIG = {
+    active_index: 0,
+    groups: [
+      { url: "https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh", clicks: 600, max: 1000 },
+      { url: "https://chat.whatsapp.com/JJmVwbqi0CJ2Qgtm9F6NLK", clicks: 0, max: 1000 },
+      { url: "https://chat.whatsapp.com/CafuqaTjVsWKqmb4u9ghCn", clicks: 0, max: 1000 },
+      { url: "https://chat.whatsapp.com/Cu4MehXGT627zIckeELbOo", clicks: 0, max: 1000 }
+    ]
+  };
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/system_settings?key=eq.whatsapp_router_state`, {
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      }
+    });
+    const rows = await res.json();
+    if (Array.isArray(rows) && rows.length > 0 && rows[0].value) {
+      currentWaState = typeof rows[0].value === 'string' ? JSON.parse(rows[0].value) : rows[0].value;
+    } else {
+      currentWaState = DEFAULT_CONFIG;
+    }
+  } catch (err) {
+    console.error('Error fetching WhatsApp state:', err);
+    if (!currentWaState) currentWaState = DEFAULT_CONFIG;
+  }
+
+  renderWhatsAppProgress();
+}
+
+function renderWhatsAppProgress() {
+  if (!currentWaState || !currentWaState.groups) return;
+
+  const activeIdx = currentWaState.active_index || 0;
+  const groups = currentWaState.groups;
+
+  // Update active badge on main dashboard
+  const activeBadge = document.getElementById('wa-dash-active-badge');
+  if (activeBadge) {
+    activeBadge.textContent = `🟢 Grupo ${activeIdx + 1} Activo`;
+  }
+
+  // Helper function to build progress HTML
+  const buildProgressHtml = (isCompact = false) => {
+    return groups.map((g, i) => {
+      const isCurrentActive = i === activeIdx;
+      const clicks = g.clicks || 0;
+      const max = g.max || 1000;
+      const pct = Math.min(100, Math.round((clicks / max) * 100));
+
+      let statusBadge = '<span class="badge badge--success" style="font-size:0.75rem;">🟢 ACTIVO</span>';
+      let barColor = 'linear-gradient(90deg, #25d366, #10b981)';
+
+      if (clicks >= max) {
+        statusBadge = '<span class="badge badge--danger" style="font-size:0.75rem;">🔴 LLENO</span>';
+        barColor = 'linear-gradient(90deg, #ef4444, #dc2626)';
+      } else if (i > activeIdx) {
+        statusBadge = '<span class="badge badge--warning" style="font-size:0.75rem;">⏳ EN COLA</span>';
+        barColor = 'linear-gradient(90deg, #3b82f6, #6366f1)';
+      }
+
+      return `
+        <div style="background: rgba(15,23,42,0.6); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px 16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px; flex-wrap:wrap; gap:6px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <strong style="font-size:0.95rem; color:#f8fafc;">Grupo #${i + 1}</strong>
+              ${statusBadge}
+            </div>
+            <div style="font-size:0.85rem; font-weight:700; color:${isCurrentActive ? '#25d366' : '#94a3b8'};">
+              ${clicks.toLocaleString()} / ${max.toLocaleString()} clics (${pct}%)
+            </div>
+          </div>
+          
+          <!-- Progress bar track -->
+          <div style="width:100%; height:10px; background:rgba(255,255,255,0.08); border-radius:6px; overflow:hidden; margin-bottom:8px;">
+            <div style="width:${pct}%; height:100%; background:${barColor}; transition: width 0.5s ease;"></div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; color:var(--text-muted);">
+            <span style="font-family:monospace; color:#93c5fd; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:280px;">${escapeHtml(g.url)}</span>
+            <a href="${g.url}" target="_blank" style="color:#60a5fa; text-decoration:none;">Abrir Grupo ↗</a>
+          </div>
+        </div>
+      `;
+    }).join('');
+  };
+
+  // Render on main Dashboard widget
+  const dashList = document.getElementById('wa-dash-progress-list');
+  if (dashList) {
+    dashList.innerHTML = buildProgressHtml(true);
+  }
+
+  // Render on dedicated tab
+  const tabList = document.getElementById('wa-tab-progress-list');
+  if (tabList) {
+    tabList.innerHTML = buildProgressHtml(false);
+  }
+
+  // Populate Select dropdown on dedicated tab for manual adjustments
+  const waSelectGroup = document.getElementById('wa-select-group');
+  if (waSelectGroup) {
+    waSelectGroup.innerHTML = groups.map((g, i) => `
+      <option value="${i}">Grupo #${i + 1} (${g.clicks}/${g.max} clics) — ${g.url.substring(0, 30)}...</option>
+    `).join('');
+    
+    // Set initial value for input
+    if (groups[activeIdx]) {
+      document.getElementById('wa-edit-clicks').value = groups[activeIdx].clicks || 600;
+    }
+    
+    waSelectGroup.onchange = (e) => {
+      const idx = parseInt(e.target.value, 10);
+      if (groups[idx]) {
+        document.getElementById('wa-edit-clicks').value = groups[idx].clicks || 0;
+      }
+    };
+  }
+}
+
+async function handleAddWaGroup(e) {
+  e.preventDefault();
+  if (!currentWaState) return;
+
+  const urlInput = document.getElementById('wa-new-url');
+  const maxInput = document.getElementById('wa-new-max');
+
+  const newUrl = (urlInput.value || '').trim();
+  const maxClicks = parseInt(maxInput.value || '1000', 10);
+
+  if (!newUrl.startsWith('https://chat.whatsapp.com/')) {
+    alert('Por favor ingresa un enlace válido de WhatsApp que comience con https://chat.whatsapp.com/');
+    return;
+  }
+
+  currentWaState.groups.push({
+    url: newUrl,
+    clicks: 0,
+    max: maxClicks
+  });
+
+  await saveWaStateToSupabase();
+  urlInput.value = '';
+  alert('¡Nuevo grupo añadido con éxito a la cola!');
+}
+
+async function handleSaveWaClicks(e) {
+  e.preventDefault();
+  if (!currentWaState) return;
+
+  const selectGroup = document.getElementById('wa-select-group');
+  const editClicks = document.getElementById('wa-edit-clicks');
+
+  const idx = parseInt(selectGroup.value, 10);
+  const newClicks = parseInt(editClicks.value, 10);
+
+  if (isNaN(idx) || isNaN(newClicks)) return;
+
+  if (currentWaState.groups[idx]) {
+    currentWaState.groups[idx].clicks = newClicks;
+    
+    // Recalculate active_index
+    let activeIdx = 0;
+    while (activeIdx < currentWaState.groups.length && currentWaState.groups[activeIdx].clicks >= currentWaState.groups[activeIdx].max) {
+      activeIdx++;
+    }
+    if (activeIdx >= currentWaState.groups.length) {
+      activeIdx = currentWaState.groups.length - 1;
+    }
+    currentWaState.active_index = activeIdx;
+
+    await saveWaStateToSupabase();
+    alert(`¡Clics del Grupo #${idx + 1} actualizados a ${newClicks}!`);
+  }
+}
+
+async function saveWaStateToSupabase() {
+  if (!currentWaState) return;
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/system_settings?key=eq.whatsapp_router_state`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      },
+      body: JSON.stringify({
+        value: JSON.stringify(currentWaState),
+        updated_at: new Date().toISOString()
+      })
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
+    renderWhatsAppProgress();
+  } catch (err) {
+    console.error('Error saving WhatsApp state:', err);
+    alert('Error guardando en Supabase.');
+  }
+}
+
 
 
