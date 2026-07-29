@@ -403,12 +403,20 @@
     let iti = null;
     let isRegistrationStep = false;
 
-    // Only redirect if url contains explicit token parameter
+    // Automatic redirect to /app if user is already logged in
     (function checkExistingAuth() {
       const urlParams = new URLSearchParams(window.location.search);
       const urlToken = urlParams.get('token');
       if (urlToken && urlToken !== '') {
         localStorage.setItem('auth_token', urlToken);
+        window.location.href = '/app';
+        return;
+      }
+
+      const existingToken = localStorage.getItem('auth_token');
+      const isPreview = urlParams.has('ver') || urlParams.has('preview') || localStorage.getItem('is_ver_preview_mode') === 'true';
+
+      if (!urlParams.has('change') && !urlParams.has('logout') && (existingToken || isPreview)) {
         window.location.href = '/app';
       }
     })();

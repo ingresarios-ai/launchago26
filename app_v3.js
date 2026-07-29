@@ -1870,7 +1870,7 @@ function logoutUser() {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('is_ver_preview_mode');
     localStorage.removeItem('app_has_entered');
-    window.location.href = '/identificate';
+    window.location.href = '/identificate?logout=true';
   }
 }
 
