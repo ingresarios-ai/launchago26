@@ -1535,22 +1535,10 @@ function openLiveSession(dayNum) {
       </a>
     </div>
 
-    <!-- PASO 2: RECURSO / PLANTILLA -->
+    <!-- PASO 2: MISIÓN PRÁCTICA DEL DÍA -->
     <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 18px; border-radius: 14px; margin-bottom: 16px;">
       <h3 style="font-size: 1rem; color: var(--text-main); margin: 0 0 8px 0; display:flex; align-items:center; gap:8px;">
-        <span>📄</span> Paso 2: Recurso del Día
-      </h3>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px;">${data.resourceName}</p>
-      <a href="${data.resourceLink}" target="_blank" class="btn-secondary" style="display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; width:100%;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        DESCARGAR MATERIAL DEL DÍA
-      </a>
-    </div>
-
-    <!-- PASO 3: MISIÓN PRÁCTICA DEL DÍA -->
-    <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 18px; border-radius: 14px; margin-bottom: 16px;">
-      <h3 style="font-size: 1rem; color: var(--text-main); margin: 0 0 8px 0; display:flex; align-items:center; gap:8px;">
-        <span>⚡</span> Paso 3: ${data.missionTitle}
+        <span>⚡</span> Paso 2: ${data.missionTitle}
       </h3>
       <p class="activity-desc" style="margin-bottom: 14px;">${data.missionDesc}</p>
       ${data.renderMission()}
