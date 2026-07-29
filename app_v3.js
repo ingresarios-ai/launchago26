@@ -5,6 +5,17 @@
 const STORAGE_KEY = 'genoma_current_activity';
 const MAX_ACTIVITIES = 9;
 
+// Security Sanitization Helper
+function escapeHTML(str) {
+  if (!str || typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // Current state (starts at 1 if not set)
 let currentActivity = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
 
