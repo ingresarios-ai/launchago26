@@ -1,16 +1,21 @@
 ---
 name: efficient-agent-workflow
-description: Enforces direct, low-overhead code execution. Prevents launching browser subagents for simple code/UI edits and forbids opening browser DevTools or reading source code inside browser tabs.
+description: Enforces professional implementation quality, robust first-time code correctness, and smart contextual browser verification without unnecessary overhead.
 ---
 
-# Efficient Agent Workflow Skill
+# Efficient & High-Quality Agent Workflow Skill
 
 ## Primary Directives
 
-1. **Direct Execution First**:
-   - For routine UI modifications, adding buttons, fixing links, or CSS tweaks, edit the workspace code directly and report completion immediately.
-   - Do NOT delegate basic code modifications or verification to autonomous browser subagents.
+1. **Professional & Robust First-Time Implementation**:
+   - Write clean, robust, production-ready code on the first pass.
+   - Always double-check element IDs, class names, function signatures, and state mutations using local inspection tools (`view_file`, `grep_search`) before applying edits.
 
-2. **No In-Browser Code Inspection**:
-   - Never open `view-source:` or inspect `.js`/`.html` files inside browser tabs when local codebase tools (`view_file`, `grep_search`) exist.
-   - If visual capture is required, take a single screenshot and return immediately.
+2. **Smart & Contextual Browser Verification**:
+   - **Use Browser Verification When**:
+     - Explicitly asked by the user.
+     - Testing complex multi-step UI flows, visual layout alignments, or diagnosing real runtime errors.
+   - **Execution Standard**:
+     - Keep browser actions fast, targeted, and low-overhead (e.g., taking quick screenshots or checking logs).
+     - Never inspect source files inside browser tabs when local workspace tools are available.
+
