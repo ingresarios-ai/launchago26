@@ -1865,4 +1865,13 @@ document.addEventListener('DOMContentLoaded', () => {
   updateNextStepHero();
 });
 
+function logoutUser() {
+  if (confirm('¿Estás seguro de que deseas cerrar sesión? Tu avance queda guardado en la nube.')) {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('is_ver_preview_mode');
+    localStorage.removeItem('app_has_entered');
+    window.location.href = '/identificate';
+  }
+}
+
 
