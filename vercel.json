@@ -6,6 +6,8 @@
     { "source": "/resultado", "destination": "/test.html" },
     { "source": "/app", "destination": "/app.html" },
     { "source": "/identificate", "destination": "/identificate.html" },
+    { "source": "/whatsapp", "destination": "/whatsapp.html" },
+    { "source": "/wa", "destination": "/whatsapp.html" },
     { "source": "/encuesta", "destination": "/encuesta.html" },
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/preactividad1", "destination": "/preactividad1.html" },

@@ -19,7 +19,7 @@ En este Día 1 del entrenamiento en vivo "El Juego Mental del Dinero", revelarem
 https://taller.ingresarios.net/app
 
 📲 Únete al grupo de WhatsApp VIP para notificaciones:
-https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh
+https://taller.ingresarios.net/whatsapp
 
 ⏰ Hora: 7:00 PM (Colombia / Perú / México)
 #JuegoMental #Ingresarios #Trading #Inversiones #MenteFinanciera
@@ -42,7 +42,7 @@ En esta sesión en vivo, Juan Villegas abre su cuenta real y su bitácora en pan
 https://taller.ingresarios.net/app
 
 📲 Únete al grupo VIP de WhatsApp:
-https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh
+https://taller.ingresarios.net/whatsapp
 
 ⏰ Hora: 7:00 PM (Colombia / Perú / México)
 #JuegoMental #TradingEnVivo #CuentaReal #Ingresarios
@@ -65,7 +65,7 @@ Hoy entrenamos la primera letra del método PEDEM: la P de Plan. Aprenderás a c
 https://taller.ingresarios.net/app
 
 📲 Únete al grupo VIP de WhatsApp:
-https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh
+https://taller.ingresarios.net/whatsapp
 
 ⏰ Hora: 7:00 PM (Colombia / Perú / México)
 #JuegoMental #PlanDeTrading #PEDEM #Ingresarios
@@ -88,7 +88,7 @@ En este en vivo realizaremos la demostración oficial del algoritmo Geny Trend s
 https://taller.ingresarios.net/app
 
 📲 Únete al grupo VIP de WhatsApp:
-https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh
+https://taller.ingresarios.net/whatsapp
 
 ⏰ Hora: 7:00 PM (Colombia / Perú / México)
 #JuegoMental #InteligenciaArtificial #TradingAlgoritmico #GENY
@@ -111,7 +111,7 @@ En la sesión de hoy aprenderás a documentar en 5 minutos por trade para leer t
 https://taller.ingresarios.net/app
 
 📲 Únete al grupo VIP de WhatsApp:
-https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh
+https://taller.ingresarios.net/whatsapp
 
 ⏰ Hora: 7:00 PM (Colombia / Perú / México)
 #JuegoMental #BitacoraDeTrading #PEDEM #Ingresarios
@@ -134,7 +134,7 @@ Haremos la demo en vivo del algoritmo francotirador "Reditum Sniper", diseñado 
 https://taller.ingresarios.net/app
 
 📲 Únete al grupo VIP de WhatsApp:
-https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh
+https://taller.ingresarios.net/whatsapp
 
 ⏰ Hora: 7:00 PM (Colombia / Perú / México)
 #JuegoMental #ReditumSniper #EstrategiaTrading #Ingresarios
@@ -157,7 +157,7 @@ Juan Villegas demuestra sobre su cuenta real de los últimos 6 días cómo el pr
 https://taller.ingresarios.net/app
 
 📲 Únete al grupo VIP de WhatsApp:
-https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh
+https://taller.ingresarios.net/whatsapp
 
 ⏰ Hora: 7:00 PM (Colombia / Perú / México)
 #JuegoMental #Masterclass #Ingresarios #Metodo30 #Trading

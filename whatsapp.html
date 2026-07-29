@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirigiendo a WhatsApp... | INGRESARIOS</title>
+  
+  <!-- Anti-Cache Directives -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <style>
+    :root {
+      --bg-dark: #0a0e13;
+      --card-bg: rgba(17, 24, 32, 0.85);
+      --border-color: #1e2a38;
+      --wa-green: #25d366;
+      --wa-glow: rgba(37, 211, 102, 0.25);
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .wa-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 40px 28px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px var(--wa-glow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .wa-icon-wrapper {
+      width: 72px;
+      height: 72px;
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px auto;
+      color: var(--wa-green);
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
+    }
+
+    .wa-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .wa-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 20px;
+      background: #25d366;
+      color: #000000;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      transition: all 0.25s ease;
+    }
+
+    .btn-wa:hover {
+      background: #20bd5a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(0,0,0,0.2);
+      border-top-color: #000000;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .admin-panel {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      background: #111827;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    .admin-panel pre {
+      background: #000000;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      color: #4ade80;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wa-card">
+    <div class="wa-icon-wrapper">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </div>
+
+    <h1 class="wa-title">Abriendo WhatsApp...</h1>
+    <p class="wa-subtitle">Te estamos uniendo automáticamente al grupo oficial de entrenamiento.</p>
+
+    <a id="manual-btn" href="https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh" target="_blank" class="btn-wa">
+      <div class="spinner"></div>
+      ENTRAR AL GRUPO DE WHATSAPP
+    </a>
+
+    <!-- ADMIN PANEL FOR INSPECTING COUNTS -->
+    <div id="admin-panel" class="admin-panel">
+      <h4 style="color:#ffffff; margin-bottom:6px;">📊 Estado del Router de WhatsApp</h4>
+      <div id="admin-info">Cargando estado...</div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
+
+    // Default Fallback Config
+    const DEFAULT_CONFIG = {
+      active_index: 0,
+      groups: [
+        { url: "https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh", clicks: 600, max: 1000 },
+        { url: "https://chat.whatsapp.com/JJmVwbqi0CJ2Qgtm9F6NLK", clicks: 0, max: 1000 },
+        { url: "https://chat.whatsapp.com/CafuqaTjVsWKqmb4u9ghCn", clicks: 0, max: 1000 },
+        { url: "https://chat.whatsapp.com/Cu4MehXGT627zIckeELbOo", clicks: 0, max: 1000 }
+      ]
+    };
+
+    let targetUrl = DEFAULT_CONFIG.groups[0].url;
+    let hasRedirected = false;
+
+    // Check if ?admin=true parameter is present
+    const urlParams = new URLSearchParams(window.location.search);
+    const isAdmin = urlParams.has('admin');
+
+    if (isAdmin) {
+      document.getElementById('admin-panel').style.display = 'block';
+    }
+
+    function executeRedirect(url) {
+      if (hasRedirected && !isAdmin) return;
+      hasRedirected = true;
+
+      document.getElementById('manual-btn').href = url;
+
+      if (!isAdmin) {
+        window.location.replace(url);
+      }
+    }
+
+    async function routeAndRedirect() {
+      // 500ms safety timeout: If network is slow, redirect to current default target
+      const timeoutTimer = setTimeout(() => {
+        if (!hasRedirected && !isAdmin) {
+          executeRedirect(targetUrl);
+        }
+      }, 550);
+
+      try {
+        // Fetch current state from Supabase
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/system_settings?key=eq.whatsapp_router_state`, {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        });
+
+        const rows = await res.json();
+        let state = DEFAULT_CONFIG;
+
+        if (Array.isArray(rows) && rows.length > 0 && rows[0].value) {
+          try {
+            state = typeof rows[0].value === 'string' ? JSON.parse(rows[0].value) : rows[0].value;
+          } catch (e) {
+            console.error('Error parsing state:', e);
+          }
+        }
+
+        // Determine active group based on click counts
+        let index = state.active_index || 0;
+        let groups = state.groups || DEFAULT_CONFIG.groups;
+
+        // Auto-advance if current group reached max
+        while (index < groups.length && groups[index].clicks >= groups[index].max) {
+          index++;
+        }
+
+        if (index >= groups.length) {
+          // If all groups are full, stay on the last group
+          index = groups.length - 1;
+        }
+
+        state.active_index = index;
+        groups[index].clicks = (groups[index].clicks || 0) + 1;
+        state.groups = groups;
+
+        targetUrl = groups[index].url;
+
+        if (isAdmin) {
+          document.getElementById('admin-info').innerHTML = `
+            <p><strong>Grupo Activo Actual:</strong> #${index + 1}</p>
+            <p><strong>URL Redirección:</strong> <a href="${targetUrl}" target="_blank" style="color:#60a5fa">${targetUrl}</a></p>
+            <p><strong>Clics en Grupo Actual:</strong> ${groups[index].clicks} / ${groups[index].max}</p>
+            <pre>${JSON.stringify(state, null, 2)}</pre>
+          `;
+        }
+
+        // Save updated click count back to Supabase asynchronously
+        fetch(`${SUPABASE_URL}/rest/v1/system_settings?key=eq.whatsapp_router_state`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({
+            value: JSON.stringify(state),
+            updated_at: new Date().toISOString()
+          })
+        }).catch(err => console.error('Error patching counts:', err));
+
+        clearTimeout(timeoutTimer);
+        executeRedirect(targetUrl);
+
+      } catch (err) {
+        console.error('Routing error:', err);
+        clearTimeout(timeoutTimer);
+        executeRedirect(targetUrl);
+      }
+    }
+
+    // Execute routing on load
+    routeAndRedirect();
+  </script>
+</body>
+</html>

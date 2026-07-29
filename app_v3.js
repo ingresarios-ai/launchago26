@@ -197,7 +197,7 @@ const activitiesData = {
     reward: "+20 pts",
     render: () => `
       <p class="activity-desc">Toda la comunicación oficial, recursos exclusivos y el enlace de acceso al evento en vivo se enviarán por nuestro grupo VIP de WhatsApp. Únete ahora para asegurar tu lugar.</p>
-      <a href="https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh" target="_blank" class="btn-secondary" style="display:block; text-align:center; text-decoration:none; margin-bottom: 16px;">
+      <a href="https://taller.ingresarios.net/whatsapp" target="_blank" class="btn-secondary" style="display:block; text-align:center; text-decoration:none; margin-bottom: 16px;">
         Unirme al Grupo de WhatsApp
       </a>
       <label class="check-item" onclick="toggleCheck(this)">
@@ -1356,7 +1356,7 @@ const liveSessionsData = {
     dayDate: "10 de Agosto",
     title: "8. Panel de Casos Reales — Historias Sin Saboteador",
     reward: "+30 PC",
-    liveUrl: "https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh",
+    liveUrl: "https://taller.ingresarios.net/whatsapp",
     resourceName: "Casos de Estudio: De Reactivo a Inquebrantable (PDF)",
     resourceLink: "#",
     missionTitle: "Misión Día 8: Escribe tu Duda u Objeción Personal",
@@ -1373,7 +1373,7 @@ const liveSessionsData = {
     dayDate: "11 de Agosto",
     title: "9. La Nómina del Saboteador — El Costo de No Decidir",
     reward: "+30 PC",
-    liveUrl: "https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh",
+    liveUrl: "https://taller.ingresarios.net/whatsapp",
     resourceName: "Calculadora de Costo de Inacción (PDF)",
     resourceLink: "#",
     missionTitle: "Misión Día 9: Autoevaluación de Evolución Mental",
@@ -1390,7 +1390,7 @@ const liveSessionsData = {
     dayDate: "12 de Agosto",
     title: "10. La Gran Final — Premiación y Cierre",
     reward: "+100 PC Bonus",
-    liveUrl: "https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh",
+    liveUrl: "https://taller.ingresarios.net/whatsapp",
     resourceName: "Certificado del Juego Mental del Dinero (PDF)",
     resourceLink: "#",
     missionTitle: "Misión Día 10: Racha Perfecta y Premiación",
