@@ -19,6 +19,106 @@ function escapeHTML(str) {
 // Current state (starts at 1 if not set)
 let currentActivity = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
 
+// ========================================
+// VITRINA DE INSIGNIAS DE DOMINIO (10 TOTALES)
+// ========================================
+const insigniasData = {
+  1: { id: 1, icon: "👤", name: "Test Saboteador", dayLabel: "Pre-actividad 1", desc: "Identificación del patrón mental" },
+  2: { id: 2, icon: "🧪", name: "ADN Financiero", dayLabel: "Pre-actividad 2", desc: "Diagnóstico con Inteligencia Artificial" },
+  3: { id: 3, icon: "📱", name: "Tribu VIP", dayLabel: "Pre-actividad 3", desc: "Conexión a notificaciones oficiales" },
+  4: { id: 4, icon: "🏛️", name: "Domador Saboteador", dayLabel: "Día 1 Live", desc: "Anatomía del Saboteador (3 AGO)" },
+  5: { id: 5, icon: "🎯", name: "Cuenta Abierta 1%", dayLabel: "Día 2 Live", desc: "Regla de Oro del 1% (4 AGO)" },
+  6: { id: 6, icon: "📋", name: "Plan Inquebrantable", dayLabel: "Día 3 Live", desc: "Sistema de Reglas (5 AGO)" },
+  7: { id: 7, icon: "🤖", name: "Trading IA GENY", dayLabel: "Día 4 Live", desc: "Inteligencia Algorítmica (6 AGO)" },
+  8: { id: 8, icon: "🏹", name: "Reditum Sniper", dayLabel: "Día 5 Live", desc: "Estrategia Sniper (7 AGO)" },
+  9: { id: 9, icon: "💎", name: "Historias Reales", dayLabel: "Día 6 Live", desc: "Panel de Casos Reales (10 AGO)" },
+  10: { id: 10, icon: "🏆", name: "Método 3.0 Final", dayLabel: "Día 7 Live", desc: "Masterclass de Cierre (11 AGO)" }
+};
+
+function getUnlockedInsignias() {
+  let list = [];
+  try {
+    const stored = localStorage.getItem('unlocked_insignias');
+    if (stored) list = JSON.parse(stored);
+  } catch (e) {
+    list = [];
+  }
+
+  // Auto-sync pre-activities if already completed locally
+  const currentAct = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
+  if (currentAct >= 2 && !list.includes(1)) list.push(1);
+  if (currentAct >= 4 && !list.includes(2)) list.push(2);
+  if (currentAct >= 6 && !list.includes(3)) list.push(3);
+
+  return list;
+}
+
+function renderVitrinaInsignias() {
+  const grid = document.getElementById('insignias-grid');
+  const counter = document.getElementById('vitrina-counter');
+  const progressFill = document.getElementById('vitrina-progress-fill');
+  if (!grid) return;
+
+  const unlockedList = getUnlockedInsignias();
+  const unlockedCount = unlockedList.length;
+
+  if (counter) counter.innerHTML = `<span>${unlockedCount} / 10 Insignias</span>`;
+  if (progressFill) progressFill.style.width = `${unlockedCount * 10}%`;
+
+  let html = '';
+  for (let i = 1; i <= 10; i++) {
+    const item = insigniasData[i];
+    const isUnlocked = unlockedList.includes(i);
+
+    html += `
+      <div class="insignia-card ${isUnlocked ? 'insignia-card--unlocked' : 'insignia-card--locked'}" onclick="handleInsigniaClick(${i})">
+        <div class="insignia-icon-wrapper">
+          <span>${item.icon}</span>
+          ${!isUnlocked ? '<span class="insignia-lock-icon">🔒</span>' : ''}
+        </div>
+        <div class="insignia-name">${escapeHTML(item.name)}</div>
+        <div class="insignia-status-text">${isUnlocked ? 'Desbloqueada ✅' : escapeHTML(item.dayLabel)}</div>
+      </div>
+    `;
+  }
+  grid.innerHTML = html;
+}
+
+function handleInsigniaClick(id) {
+  const item = insigniasData[id];
+  if (!item) return;
+  const unlocked = getUnlockedInsignias().includes(id);
+
+  if (unlocked) {
+    alert(`🛡️ Insignia #${id}: ${item.name}\n\n✅ ¡Insignia Desbloqueada! Felicitaciones por completar esta etapa.`);
+  } else {
+    alert(`🔒 Insignia #${id}: ${item.name} (${item.dayLabel})\n\n${item.desc}\n\n💡 Esta insignia se desbloquea al asistir a la transmisión en vivo.`);
+  }
+}
+
+function claimInsignia(id) {
+  let list = getUnlockedInsignias();
+  if (!list.includes(id)) {
+    list.push(id);
+    localStorage.setItem('unlocked_insignias', JSON.stringify(list));
+  }
+
+  // Trigger confetti if engine is available
+  if (typeof confetti === 'function') {
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+  }
+
+  renderVitrinaInsignias();
+  
+  // Refresh live session modal if open
+  const openDay = window.__currentOpenLiveDay;
+  if (openDay) openLiveSession(openDay);
+}
+
 function switchDashboardTab(tabName) {
   const btn1 = document.getElementById('tab-btn-phase1');
   const btn2 = document.getElementById('tab-btn-phase2');
@@ -476,6 +576,8 @@ function renderJourney() {
   // Sync gamification & hero display
   updatePointsDisplay();
   updateNextStepHero();
+  // Render Vitrina de Insignias
+  renderVitrinaInsignias();
 }
 
 function updateNextStepHero() {
@@ -1515,6 +1617,11 @@ function openLiveSession(dayNum) {
 
   const isCompleted = localStorage.getItem(`live_session_${dayNum}_completed`) === 'true';
 
+  window.__currentOpenLiveDay = dayNum;
+  const insigniaId = dayNum + 3;
+  const itemInsignia = insigniasData[insigniaId] || { icon: '🛡️', name: 'Insignia de Dominio' };
+  const hasInsignia = getUnlockedInsignias().includes(insigniaId);
+
   let html = `
     <!-- PASO 1: TRANSMISIÓN EN VIVO BROADCAST -->
     <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, var(--surface) 100%); border: 1px solid rgba(239, 68, 68, 0.3); padding: 20px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(239, 68, 68, 0.1);">
@@ -1535,11 +1642,27 @@ function openLiveSession(dayNum) {
       </a>
     </div>
 
-    <!-- PASO 2: MISIÓN PRÁCTICA DEL DÍA -->
+    <!-- PASO 2: RECLAMAR INSIGNIA DE DOMINIO Y MISIÓN PRÁCTICA DEL DÍA -->
     <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 18px; border-radius: 14px; margin-bottom: 16px;">
-      <h3 style="font-size: 1rem; color: var(--text-main); margin: 0 0 8px 0; display:flex; align-items:center; gap:8px;">
-        <span>⚡</span> Paso 2: ${data.missionTitle}
+      <h3 style="font-size: 1rem; color: var(--text-main); margin: 0 0 12px 0; display:flex; align-items:center; gap:8px;">
+        <span>🛡️</span> Paso 2: Reclamar Insignia de Dominio & ${data.missionTitle}
       </h3>
+
+      <!-- BOX DE RECLAMO DE INSIGNIA -->
+      <div style="background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(16, 185, 129, 0.08) 100%); border: 1px solid rgba(255, 215, 0, 0.35); padding: 14px 16px; border-radius: 12px; margin-bottom: 16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:1.8rem; background:rgba(255,215,0,0.15); border:1px solid rgba(255,215,0,0.4); border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center;">${itemInsignia.icon}</span>
+          <div>
+            <strong style="font-size:0.9rem; color:#f8fafc; display:block;">Insignia #${insigniaId}: ${escapeHTML(itemInsignia.name)}</strong>
+            <span style="font-size:0.75rem; color:var(--yellow);">+30 PC • Añadir a tu Vitrina</span>
+          </div>
+        </div>
+        ${hasInsignia
+          ? `<span class="badge badge--success" style="padding:6px 12px; font-weight:700;">✅ Insignia Desbloqueada</span>`
+          : `<button class="btn-secondary" style="font-size:0.82rem; padding:8px 14px; background:linear-gradient(90deg, #eab308, #22c55e); color:#000; font-weight:800; border:none;" onclick="claimInsignia(${insigniaId})"> Reclamar e Insertar Insignia</button>`
+        }
+      </div>
+
       <p class="activity-desc" style="margin-bottom: 14px;">${data.missionDesc}</p>
       ${data.renderMission()}
     </div>

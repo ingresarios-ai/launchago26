@@ -2068,3 +2068,217 @@ body {
   }
 }
 
+/* ========================================
+   VITRINA DE INSIGNIAS DE DOMINIO (FASE 2)
+   ======================================== */
+.vitrina-container {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 28px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 215, 0, 0.15);
+}
+
+.vitrina-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.vitrina-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vitrina-icon {
+  font-size: 1.8rem;
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vitrina-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #f8fafc;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.vitrina-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.vitrina-counter-badge {
+  background: rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  color: var(--yellow);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 6px 14px;
+  border-radius: 30px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+.vitrina-progress-bar-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+
+.vitrina-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #eab308, #ffd700, #22c55e);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+/* INSIGNIAS GRID (10 INSIGNIAS) */
+.insignias-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.insignia-card {
+  position: relative;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 16px 10px;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* LOCKED STATE (TEASER) */
+.insignia-card--locked {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(255, 255, 255, 0.08);
+  opacity: 0.75;
+}
+
+.insignia-card--locked:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 215, 0, 0.4);
+  opacity: 1;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5), 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+/* UNLOCKED STATE (ACTIVE GOLDEN) */
+.insignia-card--unlocked {
+  background: linear-gradient(145deg, rgba(255, 215, 0, 0.18), rgba(16, 185, 129, 0.12));
+  border: 1.5px solid rgba(255, 215, 0, 0.7);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.35);
+  animation: insigniaPulse 3s infinite ease-in-out;
+}
+
+@keyframes insigniaPulse {
+  0%, 100% { box-shadow: 0 8px 25px rgba(0,0,0,0.5), 0 0 15px rgba(255, 215, 0, 0.25); }
+  50% { box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 25px rgba(255, 215, 0, 0.45); }
+}
+
+.insignia-icon-wrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 10px auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.insignia-card--unlocked .insignia-icon-wrapper {
+  background: rgba(255, 215, 0, 0.25);
+  border-color: rgba(255, 215, 0, 0.9);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.insignia-lock-icon {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  font-size: 0.8rem;
+  background: #0f172a;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.insignia-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1.25;
+  margin-bottom: 4px;
+}
+
+.insignia-card--locked .insignia-name {
+  color: #94a3b8;
+}
+
+.insignia-status-text {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--yellow);
+}
+
+.insignia-card--locked .insignia-status-text {
+  color: #64748b;
+}
+
+@media (max-width: 1024px) {
+  .insignias-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .insignias-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .insignia-card {
+    padding: 12px 6px;
+  }
+  .insignia-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    font-size: 1.3rem;
+  }
+  .insignia-name {
+    font-size: 0.72rem;
+  }
+}
+
+
