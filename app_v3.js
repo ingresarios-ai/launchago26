@@ -23,16 +23,16 @@ let currentActivity = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
 // VITRINA DE INSIGNIAS DE DOMINIO (10 TOTALES)
 // ========================================
 const insigniasData = {
-  1: { id: 1, icon: "🏛️", name: "Domador Saboteador", dayLabel: "Día 1 Live", desc: "Anatomía del Saboteador (3 AGO)" },
-  2: { id: 2, icon: "🎯", name: "Cuenta Abierta 1%", dayLabel: "Día 2 Live", desc: "Regla de Oro del 1% (4 AGO)" },
-  3: { id: 3, icon: "📋", name: "Plan Inquebrantable", dayLabel: "Día 3 Live", desc: "El Plan del Saboteador (5 AGO)" },
-  4: { id: 4, icon: "🤖", name: "Trading IA GENY", dayLabel: "Día 4 Live", desc: "Inteligencia Algorítmica (6 AGO)" },
-  5: { id: 5, icon: "📓", name: "Bitácora Saboteador", dayLabel: "Día 5 Live", desc: "Bitácora y Registro (7 AGO)" },
-  6: { id: 6, icon: "🏹", name: "Reditum Sniper", dayLabel: "Día 6 Live", desc: "Estrategia Sniper (8 AGO)" },
-  7: { id: 7, icon: "🧠", name: "Masterclass Mente", dayLabel: "Día 7 Live", desc: "Mente · Sistema · Entorno (9 AGO)" },
-  8: { id: 8, icon: "💎", name: "Casos Reales", dayLabel: "Día 8 Live", desc: "Panel de Casos Reales (10 AGO)" },
-  9: { id: 9, icon: "💼", name: "Nómina Saboteador", dayLabel: "Día 9 Live", desc: "El Costo de No Decidir (11 AGO)" },
-  10: { id: 10, icon: "🏆", name: "Gran Final 3.0", dayLabel: "Día 10 Live", desc: "Premiación y Cierre (12 AGO)" }
+  1: { id: 1, icon: "🏛️", date: "3 AGO", name: "1. Domador Saboteador", pc: "+30 PC", desc: "Anatomía del Saboteador (3 AGO)" },
+  2: { id: 2, icon: "🎯", date: "4 AGO", name: "2. Cuenta Abierta 1%", pc: "+30 PC", desc: "Regla de Oro del 1% (4 AGO)" },
+  3: { id: 3, icon: "📋", date: "5 AGO", name: "3. Plan Inquebrantable", pc: "+30 PC", desc: "El Plan del Saboteador (5 AGO)" },
+  4: { id: 4, icon: "🤖", date: "6 AGO", name: "4. Trading IA GENY", pc: "+30 PC", desc: "Inteligencia Algorítmica (6 AGO)" },
+  5: { id: 5, icon: "📓", date: "7 AGO", name: "5. Bitácora Saboteador", pc: "+30 PC", desc: "Bitácora y Registro (7 AGO)" },
+  6: { id: 6, icon: "🏹", date: "8 AGO", name: "6. Reditum Sniper", pc: "+30 PC", desc: "Estrategia Sniper (8 AGO)" },
+  7: { id: 7, icon: "🧠", date: "9 AGO", name: "7. Masterclass Mente", pc: "+35 PC", desc: "Mente · Sistema · Entorno (9 AGO)" },
+  8: { id: 8, icon: "💎", date: "10 AGO", name: "8. Casos Reales", pc: "+30 PC", desc: "Panel de Casos Reales (10 AGO)" },
+  9: { id: 9, icon: "💼", date: "11 AGO", name: "9. Nómina Saboteador", pc: "+30 PC", desc: "El Costo de No Decidir (11 AGO)" },
+  10: { id: 10, icon: "🏆", date: "12 AGO", name: "10. Gran Final 3.0", pc: "+100 PC Bonus", desc: "Premiación y Cierre (12 AGO)" }
 };
 
 function getUnlockedInsignias() {
@@ -71,12 +71,12 @@ function renderVitrinaInsignias() {
     const isUnlocked = unlockedList.includes(i);
 
     const cardStyle = isUnlocked
-      ? "background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.25), rgba(15, 23, 42, 0.95)); border: 1.5px solid #38bdf8; box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 25px rgba(56, 189, 248, 0.45); border-radius: 16px; padding: 18px 10px 14px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 155px; box-sizing: border-box; width: 100%; overflow: hidden;"
-      : "background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9)); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: inset 0 2px 6px rgba(0,0,0,0.5); opacity: 0.85; border-radius: 16px; padding: 18px 10px 14px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 155px; box-sizing: border-box; width: 100%; overflow: hidden;";
+      ? "background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.25), rgba(15, 23, 42, 0.95)); border: 1.5px solid #38bdf8; box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 25px rgba(56, 189, 248, 0.45); border-radius: 16px; padding: 16px 10px 14px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 165px; box-sizing: border-box; width: 100%; overflow: hidden; position: relative;"
+      : "background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9)); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: inset 0 2px 6px rgba(0,0,0,0.5); opacity: 0.88; border-radius: 16px; padding: 16px 10px 14px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 165px; box-sizing: border-box; width: 100%; overflow: hidden; position: relative;";
 
     const circleStyle = isUnlocked
-      ? "width: 58px; height: 58px; margin: 0 auto 10px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 30%, #7dd3fc 0%, #0284c7 60%, #0c4a6e 100%); border: 2.5px solid #38bdf8; box-shadow: 0 0 22px rgba(56, 189, 248, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.8); position: relative;"
-      : "width: 58px; height: 58px; margin: 0 auto 10px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 30%, #334155, #0f172a); border: 2px solid rgba(255, 255, 255, 0.14); filter: grayscale(0.85) contrast(0.9); opacity: 0.7; position: relative;";
+      ? "width: 54px; height: 54px; margin: 4px auto 8px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 30%, #7dd3fc 0%, #0284c7 60%, #0c4a6e 100%); border: 2.5px solid #38bdf8; box-shadow: 0 0 22px rgba(56, 189, 248, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.8); position: relative;"
+      : "width: 54px; height: 54px; margin: 4px auto 8px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 30%, #334155, #0f172a); border: 2px solid rgba(255, 255, 255, 0.14); filter: grayscale(0.85) contrast(0.9); opacity: 0.7; position: relative;";
 
     const statusStyle = isUnlocked
       ? "font-size: 0.68rem; font-weight: 700; color: #7dd3fc; background: rgba(56, 189, 248, 0.18); border: 1px solid rgba(56, 189, 248, 0.4); padding: 4px 10px; border-radius: 12px; display: inline-block; white-space: nowrap;"
@@ -84,12 +84,16 @@ function renderVitrinaInsignias() {
 
     html += `
       <div class="insignia-card ${isUnlocked ? 'insignia-card--unlocked' : 'insignia-card--locked'}" style="${cardStyle}" onclick="handleInsigniaClick(${i})">
+        <div style="display:flex; justify-content:space-between; align-items:center; width:100%; font-size:0.68rem; font-weight:800; color:#38bdf8; margin-bottom:4px;">
+          <span style="background:rgba(56,189,248,0.12); padding:2px 6px; border-radius:6px; border:1px solid rgba(56,189,248,0.3);">${item.date}</span>
+          <span style="color:#22c55e;">${item.pc}</span>
+        </div>
         <div class="insignia-icon-wrapper" style="${circleStyle}">
-          <span style="font-size:1.75rem;">${item.icon}</span>
+          <span style="font-size:1.65rem;">${item.icon}</span>
           ${!isUnlocked ? '<span class="insignia-lock-icon" style="position:absolute; top:-4px; right:-4px; font-size:0.75rem; background:#0f172a; border:1px solid rgba(56,189,248,0.6); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 6px rgba(0,0,0,0.7);">🔒</span>' : ''}
         </div>
-        <div class="insignia-name" style="font-family:\'Outfit\', sans-serif; font-size:clamp(0.74rem, 1.2vw, 0.84rem); font-weight:800; color:${isUnlocked ? '#ffffff' : '#94a3b8'}; margin-bottom:6px; line-height:1.25; word-break:break-word; overflow-wrap:break-word;">${escapeHTML(item.name)}</div>
-        <div class="insignia-status-text" style="${statusStyle}">${isUnlocked ? 'Desbloqueada ✅' : escapeHTML(item.dayLabel)}</div>
+        <div class="insignia-name" style="font-family:\'Outfit\', sans-serif; font-size:clamp(0.74rem, 1.2vw, 0.84rem); font-weight:800; color:${isUnlocked ? '#ffffff' : '#94a3b8'}; margin-bottom:6px; line-height:1.2; word-break:break-word; overflow-wrap:break-word;">${escapeHTML(item.name)}</div>
+        <div class="insignia-status-text" style="${statusStyle}">${isUnlocked ? 'Desbloqueada ✅' : 'Entrar a Sala 🔴'}</div>
       </div>
     `;
   }
@@ -97,15 +101,7 @@ function renderVitrinaInsignias() {
 }
 
 function handleInsigniaClick(id) {
-  const item = insigniasData[id];
-  if (!item) return;
-  const unlocked = getUnlockedInsignias().includes(id);
-
-  if (unlocked) {
-    alert(`🛡️ Insignia #${id}: ${item.name}\n\n✅ ¡Insignia Desbloqueada! Felicitaciones por completar esta etapa.`);
-  } else {
-    alert(`🔒 Insignia #${id}: ${item.name} (${item.dayLabel})\n\n${item.desc}\n\n💡 Esta insignia se desbloquea al asistir a la transmisión en vivo.`);
-  }
+  openLiveSession(id);
 }
 
 function claimInsignia(id) {
