@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>LIVE DÍA 1 — EL SABOTEADOR | Guión de Producción</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #1e293b;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-tag {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #0284c7;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .main-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin: 0 0 4px 0;
+    }
+
+    .meta-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .divider {
+      height: 2px;
+      background: #0284c7;
+      margin-bottom: 20px;
+      border: none;
+    }
+
+    /* SECCIÓN CAJITA DE RETENCIÓN */
+    .retention-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 5px solid #0284c7;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+
+    .retention-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0369a1;
+      margin: 0 0 10px 0;
+    }
+
+    .retention-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .retention-box li {
+      margin-bottom: 8px;
+      color: #1e293b;
+    }
+
+    .retention-box li:last-child {
+      margin-bottom: 0;
+    }
+
+    h2.section-heading {
+      font-size: 17px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 28px;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    /* TABLAS DE MAPA DE LIVE E INTERACCIONES */
+    table.custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      font-size: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    table.custom-table th {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 800;
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    table.custom-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    table.custom-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    /* BLOQUE DE TIEMPO (BARRA OSCURA SOBRE SECCIONES) */
+    .time-bar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 28px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .time-bar span.time {
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    /* CAJITAS DE INTERACCIÓN (ENCUESTAS / CHAT STORMS) */
+    .interaction-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-left: 5px solid #10b981;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      color: #064e3b;
+    }
+
+    .interaction-box.yellow {
+      background: #fffbeb;
+      border-color: #fde68a;
+      border-left-color: #f59e0b;
+      color: #78350f;
+    }
+
+    .interaction-title {
+      font-weight: 800;
+      font-size: 13px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .interaction-box ul {
+      margin: 6px 0 0 0;
+      padding-left: 18px;
+    }
+
+    /* CAJITAS DE DIÁLOGO DE JUAN VILLEGAS */
+    .dialogue-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #64748b;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1e293b;
+    }
+
+    .dialogue-box p {
+      margin: 0 0 10px 0;
+    }
+
+    .dialogue-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .screen-note {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* NOTAS DE TONO Y APÉNDICE */
+    .tone-notes {
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-left: 5px solid #f97316;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-top: 24px;
+    }
+
+    .tone-notes h3 {
+      margin: 0 0 10px 0;
+      color: #9a3412;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .tone-notes ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .tone-notes li {
+      margin-bottom: 6px;
+      color: #431407;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENCABEZADO PRINCIPAL -->
+  <div class="header-tag">EL JUEGO MENTAL DEL DINERO · GUIÓN DE PRODUCCIÓN</div>
+  <h1 class="main-title">LIVE DÍA 1 — EL SABOTEADOR</h1>
+  <div class="meta-subtitle">45 minutos · YouTube Live · guión completo con interacción permanente</div>
+  <hr class="divider" />
+
+  <!-- SECCIÓN: EL SISTEMA DE RETENCIÓN -->
+  <div class="retention-box">
+    <div class="retention-title">El sistema de retención (léelo antes del guión)</div>
+    <p style="margin: 0 0 10px 0;">En YouTube la gente no se va porque el contenido sea malo — se va porque pasaron 4 minutos sin que nadie le pidiera nada o porque los enviaron fuera de la plataforma a mitad del live. Este guión está construido sobre 6 reglas:</p>
+    <ul>
+      <li><strong>Regla de los 3 minutos:</strong> ninguna sección pasa de 3 minutos sin una acción del espectador (encuesta de YouTube, chat storm, votación, quiz de chat). Hay 12 momentos de interacción en 45 minutos.</li>
+      <li><strong>Open loops declarados:</strong> en el minuto 4 Juan anuncia 3 cosas que va a revelar más adelante y CUÁNDO ("en el minuto 42 les muestro el saldo exacto de mi cuenta"). El cerebro odia los loops abiertos — se queda a cerrarlos.</li>
+      <li><strong>Puntos de Control en juego:</strong> la asistencia completa paga 25 PC y el quiz relámpago del minuto 36 paga hasta 20 PC extra. Irse temprano cuesta puntos — y el leaderboard es público.</li>
+      <li><strong>Nombre propio:</strong> Juan lee nombres del chat y de las encuestas en voz alta mínimo 8 veces por live. Ser visto es la droga de los eventos en vivo.</li>
+      <li><strong>El chat nunca duerme:</strong> un CM publica la pregunta activa en el chat cada vez que Juan la lanza, y "siembra" respuestas si el chat arranca frío.</li>
+      <li><strong>Votar es quedarse:</strong> las encuestas de YouTube se lanzan ANTES de explicar el tema, no después. El que vota ya invirtió — se queda a ver el resultado.</li>
+    </ul>
+  </div>
+
+  <!-- MAPA DEL LIVE -->
+  <h2 class="section-heading">Mapa del live</h2>
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th style="width: 22%;">Bloque</th>
+        <th style="width: 18%;">Minutos</th>
+        <th style="width: 30%;">Contenido</th>
+        <th style="width: 30%;">Interacción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>B0 · Pre-show</strong></td>
+        <td>-10:00 → 0:00</td>
+        <td>Sala abierta, música, countdown</td>
+        <td>Encuesta 1 (YouTube) abierta + chat de ciudades</td>
+      </tr>
+      <tr>
+        <td><strong>B1 · La Campana</strong></td>
+        <td>0:00 → 3:30</td>
+        <td>Hook: -$47,300</td>
+        <td>Chat: "PRESENTE" + Primera Campana (+10 PC)</td>
+      </tr>
+      <tr>
+        <td><strong>B2 · El contrato</strong></td>
+        <td>3:30 → 7:00</td>
+        <td>Promesa + 3 open loops + reglas</td>
+        <td>Comentario resultado Encuesta 1</td>
+      </tr>
+      <tr>
+        <td><strong>B3 · Dos traders</strong></td>
+        <td>7:00 → 13:00</td>
+        <td>Historia Carlos vs. Andrés — la tesis</td>
+        <td>Chat storm: "¿cuál eres tú?"</td>
+      </tr>
+      <tr>
+        <td><strong>B4 · La ciencia</strong></td>
+        <td>13:00 → 19:00</td>
+        <td>Por qué existe el Saboteador (aversión a la pérdida, dopamina, secuestro emocional)</td>
+        <td>Explicación Kahneman / Dopamina / Secuestro emocional</td>
+      </tr>
+      <tr>
+        <td><strong>B5 · Los 4 arquetipos</strong></td>
+        <td>19:00 → 28:00</td>
+        <td>Vengador, Eufórico, Impaciente, Paralizado</td>
+        <td>ENCUESTA 2 (YouTube) + chat de frases</td>
+      </tr>
+      <tr>
+        <td><strong>B6 · Cómo se le gana</strong></td>
+        <td>28:00 → 33:00</td>
+        <td>Fuerza de voluntad vs. sistema. Adelanto PEDEM</td>
+        <td>Chat: "SISTEMA" + mini-compromiso</td>
+      </tr>
+      <tr>
+        <td><strong>B7 · El juego</strong></td>
+        <td>33:00 → 38:00</td>
+        <td>Lanzamiento de la gamificación + QUIZ EN CHAT</td>
+        <td>Pregunta relámpago en chat (hasta 20 PC)</td>
+      </tr>
+      <tr>
+        <td><strong>B8 · El entrenamiento</strong></td>
+        <td>38:00 → 42:00</td>
+        <td>Test del Saboteador: demo en vivo de la card</td>
+        <td>Screen Share de la App en pantalla</td>
+      </tr>
+      <tr>
+        <td><strong>B9 · El cliffhanger</strong></td>
+        <td>42:00 → 45:00</td>
+        <td>La cuenta real de mañana + cierre</td>
+        <td>ENCUESTA 3 (YouTube) + Chat final: "NOS VEMOS" + Link a la App</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EL GUIÓN MINUTO A MINUTO -->
+  <h2 class="section-heading">El guión, minuto a minuto</h2>
+
+  <!-- BLOQUE B0 -->
+  <div class="time-bar">
+    <span>B0 · PRE-SHOW — la sala se calienta sola</span>
+    <span class="time">-10:00 → 0:00</span>
+  </div>
+  <span class="screen-note">EN PANTALLA: Countdown gigante + música + banner: "Encuesta abierta en el chat de YouTube: ¿cuánto llevas operando? + QR del link de referidos"</span>
+  
+  <div class="interaction-box">
+    <div class="interaction-title">⚡ ENCUESTA 1 (YOUTUBE LIVE — ABIERTA DESDE EL MINUTO -10)</div>
+    <strong>“¿Cuánto llevas intentando ganarle al mercado?”</strong>
+    <ul>
+      <li>A) Todavía no empiezo — vengo a aprender antes de quemarme</li>
+      <li>B) Menos de 1 año</li>
+      <li>C) 1 a 3 años</li>
+      <li>D) Más de 3 años (y sé exactamente por qué estoy aquí)</li>
+    </ul>
+  </div>
+
+  <p><strong>CM en el chat:</strong> “Escribe tu CIUDAD + cuánto llevas operando. Juan lee las mejores al empezar.” El CM saluda por nombre a cada persona que escribe. Si el chat está frío, dos cuentas del equipo siembran respuestas.</p>
+
+  <!-- BLOQUE B1 -->
+  <div class="time-bar">
+    <span>B1 · LA CAMPANA — el hook</span>
+    <span class="time">0:00 → 3:30</span>
+  </div>
+  <span class="screen-note">EN PANTALLA: Corte a negro. Un número gigante aparece: -$47,300. Nada más.</span>
+
+  <div class="dialogue-box">
+    <p><em>(Sin “hola, bienvenidos”. Directo, mirando a cámara)</em></p>
+    <p>“Ese número es real.</p>
+    <p>Es lo que me costó un solo empleado que trabajó para mí durante años.<br>
+    Sin sueldo. Sin contrato. Sin que yo supiera que existía.</p>
+    <p>Operaba mi cuenta cuando yo estaba cansado. Cuando venía de perder.<br>
+    Cuando venía de ganar — sobre todo cuando venía de ganar.</p>
+    <p>Y lo más incómodo de admitir: yo sabía análisis técnico. Llevaba décadas en mercados institucionales. Terminales Bloomberg, mesas de dinero, todo.<br>
+    Porque el problema nunca fue el conocimiento. Era quién lo ejecutaba.</p>
+    <p>Esta noche le vas a poner nombre al tuyo. Y te advierto una cosa:<br>
+    el test que vas a hacer al final no perdona. Te vas a reconocer.”</p>
+    <p><em>(Pausa de 2 segundos. Cambia el tono: ahora sí, energía de bienvenida)</em></p>
+    <p>“Bienvenidos al Juego Mental del Dinero. Soy <strong>Juan Villegas</strong> y esto no es un curso — es un juego que se juega para ganar.<br>
+    Los que llegaron en los primeros 5 minutos ya tienen 35 Puntos de Control.<br>
+    La Primera Campana ya pagó.”</p>
+  </div>
+
+  <div class="interaction-box">
+    <div class="interaction-title">⚡ CHAT STORM #1 (MINUTO 2:45)</div>
+    <strong>Juan:</strong> “Escriban PRESENTE en el chat si están en vivo, con la ciudad. Quiero ver de dónde nos acompañan.”<br>
+    <em>Juan lee 4–5 ciudades y nombres en voz alta.</em> “Medellín, Bogotá, CDMX, Miami... esto ya parece una mesa de dinero latinoamericana.”
+  </div>
+
+  <!-- BLOQUE B2 -->
+  <div class="time-bar">
+    <span>B2 · EL CONTRATO — promesa y open loops</span>
+    <span class="time">3:30 → 7:00</span>
+  </div>
+  <span class="screen-note">EN PANTALLA: Slide: “LOS PRÓXIMOS 45 MINUTOS” con 3 bullets que se revelan uno a uno</span>
+
+  <div class="dialogue-box">
+    <p>“Este es el contrato de esta noche. En los próximos 45 minutos:</p>
+    <p><strong>Uno</strong> — vas a entender POR QUÉ pierdes dinero sabiendo lo que sabes. Y no es la respuesta que te han vendido. No necesitas otro indicador.</p>
+    <p><strong>Dos</strong> — vas a conocer los 4 saboteadores que operan cuentas ajenas. Uno de ellos es el tuyo. Vamos a votar en vivo cuál es el más común de esta comunidad — mi apuesta: gana el Vengador. Ya veremos.</p>
+    <p><strong>Tres</strong> — al final te doy el test que le pone nombre y apellido al tuyo.</p>
+    <p>Y en el minuto 42 voy a hacer algo que no hace ningún educador de este mercado: les voy a decir exactamente qué van a ver mañana cuando abra mi cuenta real en pantalla. Con el saldo. Sin editar.</p>
+    <p>El que se va a mitad de camino se pierde las tres cosas. Quedamos claros.”</p>
+  </div>
+
+  <div class="interaction-box yellow">
+    <div class="interaction-title">⚡ COMENTARIO ENCUESTA 1 (MINUTO 5:30)</div>
+    <strong>Juan comenta el resultado de la Encuesta #1 de YouTube en vivo:</strong> “Miren eso: la mayoría en B y C. Guarden ese dato — en 10 minutos van a entender exactamente por qué. No es lo que creen.”
+  </div>
+
+  <!-- BLOQUE B3 -->
+  <div class="time-bar">
+    <span>B3 · DOS TRADERS — la historia que instala la tesis</span>
+    <span class="time">7:00 → 13:00</span>
+  </div>
+  <span class="screen-note">EN PANTALLA: Slide dividida en dos: “CARLOS” y “ANDRÉS” — dos siluetas idénticas</span>
+
+  <div class="dialogue-box">
+    <p>“Les voy a contar de dos personas que conocí en mis años de mesa.<br>
+    Los voy a llamar Carlos y Andrés. Los dos ingenieros. Los dos brillantes.<br>
+    Los dos aprendieron EXACTAMENTE la misma estrategia, el mismo año, del mismo mentor. Mismo capital inicial.</p>
+    <p>Cinco años después, Andrés vive de sus inversiones.<br>
+    Carlos vendió su moto para pagar la tarjeta.</p>
+    <p>Y aquí está lo que nadie quiere escuchar: si comparas sus análisis de mercado — sus gráficos, sus zonas, sus tesis — los de Carlos eran MEJORES. Más completos. Más elegantes. Carlos sabía más.</p>
+    <p>La diferencia estaba en un solo lugar: el minuto exacto entre ver el setup y ejecutar la orden. En ese minuto, Andrés seguía un proceso. Y a Carlos... lo agarraba el otro.</p>
+    <p>El otro. El que entra a recuperar lo perdido. El que dobla la posición porque “esta vez es seguro”. El que no ejecuta el stop porque “ya casi rebota”. Carlos no perdió contra el mercado.<br>
+    Perdió contra alguien que vivía en su propia cabeza y operaba gratis.</p>
+    <p>A ese “otro” lo vamos a llamar por su nombre: el Saboteador.<br>
+    Y la tesis de estos 10 días es una sola frase — anótenla:</p>
+    <p style="font-size: 14px; font-weight: 800; color: #0f172a; text-align: center; margin: 12px 0;">TU CUENTA NO REFLEJA LO QUE SABES DE MERCADOS.<br>REFLEJA LO QUE NO SABES DE TI.</p>
+  </div>
+
+  <div class="interaction-box">
+    <div class="interaction-title">⚡ CHAT STORM #2 (MINUTO 12:00)</div>
+    <strong>Juan:</strong> “Sean honestos conmigo que aquí nadie juzga: ¿ustedes son más Carlos o más Andrés? Escriban CARLOS o ANDRÉS en el chat. Una palabra.”<br>
+    <em>Juan lee respuestas por nombre:</em> “Fernando dice Carlos... María dice Carlos con tres signos de admiración... tranquilos: yo fui Carlos por más años de los que me gusta admitir. Por eso existe este juego.”
+  </div>
+
+  <!-- BLOQUE B4 -->
+  <div class="time-bar">
+    <span>B4 · LA CIENCIA — por qué existe tu Saboteador</span>
+    <span class="time">13:00 → 19:00</span>
+  </div>
+  <span class="screen-note">EN PANTALLA: Slide: “TU CEREBRO NO FUE DISEÑADO PARA ESTO” — luego 3 mecanismos, uno a uno</span>
+
+  <div class="dialogue-box">
+    <p>“Ahora la parte que ningún vendedor de indicadores te cuenta.<br>
+    El Saboteador no es un defecto tuyo. Es tu cerebro funcionando EXACTAMENTE como fue diseñado — pero para otro mundo.</p>
+    <p><strong>Mecanismo uno: la aversión a la pérdida.</strong> Hay décadas de investigación en economía del comportamiento detrás de esto — le dieron un Nobel a Kahneman en parte por demostrarlo: perder duele aproximadamente el doble de lo que ganar alegra. El mismo monto. El doble de dolor.</p>
+    <p>¿Qué hace un cerebro que siente el doble de dolor por una pérdida? Lo que sea necesario para no sentirla. Mover el stop. Promediar a la baja. “Esperar a que rebote”. No es indisciplina — es anestesia.</p>
+    <p><strong>Mecanismo dos: la dopamina.</strong> El cerebro no libera dopamina cuando GANAS — la libera cuando ANTICIPAS ganar. Es el mismo circuito de la máquina tragamonedas: recompensa variable e impredecible. Por eso hay gente que “opera por operar”: no busca dinero, busca la descarga de apretar el botón. El mercado es el casino perfecto — abierto 24 horas y disfrazado de trabajo serio.</p>
+    <p><strong>Mecanismo tres: el secuestro emocional.</strong> Cuando tu cuenta está en rojo vivo, la parte emocional de tu cerebro toma el control y la parte que planifica — la que estudió análisis técnico durante meses — literalmente pierde el mando. Todo lo que aprendiste queda encerrado fuera de la sala donde se toma la decisión.</p>
+    <p>Por eso estudiar más no te estaba funcionando: estabas entrenando a un piloto al que le quitan el mando justo cuando empieza la turbulencia.”</p>
+  </div>
+
+  <!-- BLOQUE B5 -->
+  <div class="time-bar">
+    <span>B5 · LOS 4 ARQUETIPOS — el corazón del live</span>
+    <span class="time">19:00 → 28:00</span>
+  </div>
+  <span class="screen-note">EN PANTALLA: 4 cards estilo videojuego que se revelan una a una: EL VENGADOR / EL EUFÓRICO / EL IMPACIENTE / EL PARALIZADO</span>
+
+  <div class="dialogue-box">
+    <p>“Después de miles de bitácoras de estudiantes, los patrones se repiten tanto que les pusimos nombre. Cuatro saboteadores. Prestenles respeto, que llevan años cobrando sin nómina.</p>
+    <p><strong>EL VENGADOR.</strong> Aparece después de una pérdida. Su frase: “el mercado me debe esta”. Dobla el tamaño, ignora el plan, opera el mismo activo que lo golpeó — porque esto ya es personal. Es la aversión a la pérdida en su forma más pura: prefiere arriesgar el mes entero antes que cerrar el día en rojo. Firma característica: una pérdida pequeña convertida en la pérdida del mes en menos de dos horas.</p>
+    <p><strong>EL EUFÓRICO.</strong> Aparece después de tres ganadoras seguidas. Su frase: “ya le agarré el truco a esto”. Sube el tamaño, abandona la gestión de riesgo — total, “está regalado”. Es la dopamina hablando: la racha se siente como habilidad. Firma característica: devuelve en dos días lo que construyó en tres semanas. Levanten la mano los que devolvieron una cuenta entera después de su mejor mes... exacto. Ese.</p>
+    <p><strong>EL IMPACIENTE.</strong> No soporta estar fuera del mercado. Su frase: “se me está yendo el movimiento”. Entra sin señal, persigue velas, opera en 5 mercados a la vez. Es el circuito de anticipación buscando su descarga: el botón ES la recompensa. Firma característica: veinte trades mediocres que se comen las comisiones y los tres trades buenos.</p>
+    <p><strong>EL PARALIZADO.</strong> El más silencioso y el más caro. Ve el setup perfecto — el que estudió durante meses — y no ejecuta. Su frase: “mejor espero confirmación”. Y cuando entra, cierra las ganadoras al primer respiro porque el miedo a devolver duele más que la ambición. Firma característica: gana poquito cuando acierta, pierde completo cuando falla. Matemática invertida. Cuenta que sangra lento.”</p>
+  </div>
+
+  <div class="interaction-box">
+    <div class="interaction-title">⚡ ENCUESTA 2 (YOUTUBE LIVE — MINUTO 24:00)</div>
+    <strong>“Momento de la verdad. ¿Cuál de los 4 operó tu cuenta la última vez que rompiste tu plan?”</strong>
+    <ul>
+      <li>A) EL VENGADOR — entré a recuperar</li>
+      <li>B) EL EUFÓRICO — me sentí invencible</li>
+      <li>C) EL IMPACIENTE — no aguanté estar fuera</li>
+      <li>D) EL PARALIZADO — no ejecuté / cerré temprano</li>
+    </ul>
+    <p style="margin: 8px 0 0 0;"><strong>Juan revela su apuesta del minuto 5 y comenta el resultado real:</strong> “¡Aposté por el Vengador y ganó el Impaciente! Esta comunidad no aguanta estar quieta...” — el dato se convierte en contenido del live y del reel de mañana.</p>
+  </div>
+
+  <div class="interaction-box yellow">
+    <div class="interaction-title">⚡ CHAT STORM #3 (MINUTO 27:00)</div>
+    “Escriban en el chat la frase EXACTA que su saboteador les dice. La más brutal la leo al aire.” <em>(Este chat es una mina de copy para los ads — el CM guarda las mejores.)</em>
+  </div>
+
+  <!-- BLOQUE B6 -->
+  <div class="time-bar">
+    <span>B6 · CÓMO SE LE GANA — la puerta a PEDEM</span>
+    <span class="time">28:00 → 33:00</span>
+  </div>
+  <span class="screen-note">EN PANTALLA: Slide: “LA FUERZA DE VOLUNTAD NO ES UN PLAN” → luego: cabina de avión</span>
+
+  <div class="dialogue-box">
+    <p>“Ahora la pregunta que importa: ¿cómo se le gana a alguien que vive en tu cabeza y conoce todas tus contraseñas?</p>
+    <p>Te digo primero cómo NO se le gana: con fuerza de voluntad.<br>
+    “Mañana sí voy a respetar el stop.” ¿Cuántas veces lo has dicho?<br>
+    La fuerza de voluntad es un recurso que se agota exactamente cuando más lo necesitas: al final de una mala racha, cansado, en rojo.<br>
+    Confiar tu dinero a tu estado de ánimo es el plan del Saboteador.</p>
+    <p>Ahora piensa en un piloto de avión. Veinte mil horas de vuelo.<br>
+    ¿Sabes qué hace antes de despegar? Saca una lista de chequeo y la lee. En voz alta. Punto por punto. ¿Por qué, si se la sabe de memoria? Porque la aviación entendió hace décadas lo que el trading amateur no ha entendido: en ambientes de presión, el ser humano no falla por ignorancia — falla por estado emocional.<br>
+    La lista no está ahí para informar al piloto. Está ahí para protegerlo de sí mismo.</p>
+    <p>Eso es un sistema: una estructura EXTERNA a tu estado de ánimo que decide por adelantado lo que tu mejor versión ya decidió.</p>
+    <p>El nuestro se llama <strong>PEDEM: Planear, Ejecutar, Documentar, Evaluar, Mejorar</strong>. Cinco letras que funcionan como la cabina del piloto.<br>
+    No eliminan al Saboteador — eso no se puede. Le quitan el teclado.</p>
+    <p>Y los próximos cinco días vamos a entrenar las cinco letras, una por una, sobre mi cuenta real. No teoría: proceso ejecutándose con dinero de verdad delante de ustedes.”</p>
+  </div>
+
+  <div class="interaction-box">
+    <div class="interaction-title">⚡ CHAT DE COMPROMISO (MINUTO 32:00)</div>
+    <strong>Juan:</strong> “Escriban SISTEMA en el chat si entendieron por qué su problema nunca fue el análisis. Quiero ver el chat lleno antes de mostrarles cómo se gana este juego.”
+  </div>
+
+  <!-- BLOQUE B7 -->
+  <div class="time-bar">
+    <span>B7 · EL JUEGO — gamificación + QUIZ EN CHAT</span>
+    <span class="time">33:00 → 38:00</span>
+  </div>
+  <span class="screen-note">EN PANTALLA: Slides del sistema: Puntos de Control → 5 estados mentales → premios (beca $1,497 al #1) → Círculos → hitos colectivos</span>
+
+  <div class="dialogue-box">
+    <p>“Les dije que esto no era un curso. Ahora lo pruebo.</p>
+    <p>Durante 10 días todo lo que hagan paga Puntos de Control:<br>
+    llegar al live paga. Llegar temprano paga más. Entrenar paga.<br>
+    Apoyar a tu círculo paga. Invitar a alguien que entrena paga doble.</p>
+    <p>Los puntos te suben por 5 estados mentales: todos empiezan hoy en REACTIVO — donde manda el Saboteador — y el objetivo es llegar a INQUEBRANTABLE. Cada estado desbloquea material que no se consigue de otra forma.</p>
+    <p>Y ahora lo importante — los premios. El número uno del leaderboard se lleva una beca COMPLETA del Método INGRESARIOS 3.0. Completa.<br>
+    Del dos al diez, licencias de los algoritmos que van a conocer jueves y sábado. Y el mejor Círculo de Entrenamiento se sienta conmigo a analizar sus bitácoras en vivo.</p>
+    <p>Ah — y cuando lleguemos a 5,000 registrados, el pool de becas sube de una a tres. Así que invitar a tu amigo el que “ya casi le agarra el truco”... es literalmente aumentar tus premios.</p>
+    <p>¿Listos para los primeros puntos grandes de la noche? Pregunta relámpago en el chat.<br>
+    ¿Quién me dice primero cuál es la causa científica por la que nos cuesta cerrar en pérdida? ¿Perder duele el doble o lo mismo?”</p>
+  </div>
+
+  <div class="interaction-box yellow">
+    <div class="interaction-title">⚡ RESULTADO QUIZ EN CHAT (MINUTO 36:00)</div>
+    <em>Juan lee al primer ganador en el chat:</em> “¡Carlos Mendoza respondió primero: 'EL DOBLE'! El CM anota a Carlos para sus +20 Puntos de Control.”
+  </div>
+
+  <!-- BLOQUE B8 -->
+  <div class="time-bar">
+    <span>B8 · EL ENTRENAMIENTO — demo del Test del Saboteador en vivo</span>
+    <span class="time">38:00 → 42:00</span>
+  </div>
+  <span class="screen-note">EN PANTALLA: Demo en vivo: Juan abre el test en la GENOMA App en pantalla (Screen Share), responde 2 preguntas de ejemplo, muestra la card de resultado "MI SABOTEADOR ES EL VENGADOR" y cómo se activa la Insignia #1.</span>
+
+  <div class="dialogue-box">
+    <p>“Miren mi pantalla. Su primer entrenamiento oficial. El test que les prometí al inicio.</p>
+    <p>Ocho preguntas. Dos minutos. Sin respuestas buenas ni malas — el test no mide lo que sabes, mide cómo reaccionas. Al final te dice cuál de los cuatro está operando tu cuenta y te da su antídoto específico para esta semana.</p>
+    <p>Miren cómo se ve el mío... — sí, yo también tengo. El mío es el Vengador. Treinta años de mercados y todavía, cuando pierdo, algo adentro me susurra “recupéralo YA”. La diferencia es que ya no tiene el teclado.</p>
+    <p>Al terminar les genera esta card y les activa la Insignia #1: Domador Saboteador en la App. Publíquenla en la comunidad — son 30 Puntos de Control. Y si la comparten en sus stories con #JuegoMental y nos etiquetan, son 15 más. Mañana voy a leer al aire los resultados más comentados.”</p>
+  </div>
+
+  <!-- BLOQUE B9 -->
+  <div class="time-bar">
+    <span>B9 · EL CLIFFHANGER & TAREA NOCTURNA — la cuenta real y cierre</span>
+    <span class="time">42:00 → 45:00</span>
+  </div>
+
+  <div class="interaction-box">
+    <div class="interaction-title">⚡ ENCUESTA 3 (YOUTUBE LIVE — MINUTO 42:00)</div>
+    <strong>“¿Cuándo vas a hacer el test en la App?”</strong>
+    <ul>
+      <li>A) ¡AHORA MISMO! al terminar el live</li>
+      <li>B) Esta noche antes de dormir</li>
+      <li>C) Mañana temprano</li>
+    </ul>
+    <p style="margin: 8px 0 0 0;"><strong>Juan:</strong> “80% dijo AHORA MISMO. Quedó grabado, ¿eh? El leaderboard de mañana no miente.” <em>(El compromiso público multiplica la ejecución — y la ejecución del día 1 predice la conversión del día 7.)</em></p>
+  </div>
+
+  <span class="screen-note">EN PANTALLA: Slide final: captura BORROSA de una plataforma de trading — el saldo pixelado. Texto: "MAÑANA 7:00 P.M. CO"</span>
+
+  <div class="dialogue-box">
+    <p>“Última cosa y los dejo ir — el loop del minuto 4 que les debo.</p>
+    <p>Esto que ven borroso es mi cuenta. Real. La que opero.<br>
+    Mañana a las 7 en punto la van a ver SIN pixelar: el saldo exacto, la bitácora completa, y algo que me cuesta más mostrar que el saldo: los trades donde MI saboteador intentó firmar. Señalados uno a uno, con lo que hice para quitarle el teclado.</p>
+    <p>Ningún educador de este mercado en Latinoamérica hace eso.<br>
+    Los que llegan en los primeros 5 minutos ven el saldo primero — la Primera Campana paga 10 puntos, ya saben.</p>
+    <p>Su tarea de esta noche: entren a <strong>taller.ingresarios.net/app</strong>, respondan su test, obtengan su card y su Insignia #1. 45 puntos posibles esta noche. El link está en el chat AHORA. Y les pido una cosa: háganlo hoy. No mañana. Su saboteador vota por mañana — esa es exactamente la primera batalla del juego.</p>
+    <p>Escriban NOS VEMOS en el chat si mañana están aquí a las 7.</p>
+    <p>...Miren ese chat. Esto va a estar bueno.<br>
+    Soy <strong>Juan Villegas</strong>. Esto es El Juego Mental del Dinero.<br>
+    Y desde hoy, tu saboteador sabe que lo estás mirando. Buenas noches.”</p>
+  </div>
+
+  <p style="font-size: 11px; color: #64748b; text-align: center; margin-top: 14px;"><em>(Corte a pantalla final: QR del test + hashtag #JuegoMental + "MAÑANA: LA CUENTA ESPEJO · 7:00 P.M. CO")</em></p>
+
+  <!-- APÉNDICE TÉCNICO Y NOTAS DE TONO -->
+  <h2 class="section-heading">Apéndice de producción</h2>
+
+  <div class="retention-box" style="background: #faf5ff; border-color: #e9d5ff; border-left-color: #a855f7;">
+    <div class="retention-title" style="color: #7e22ce;">Checklist técnico YouTube (antes del live)</div>
+    <ul>
+      <li>Las 3 encuestas de YouTube precargadas/listas en borrador en YouTube Studio (nombradas E1, E2, E3).</li>
+      <li>Co-host / CM #1 asignado para lanzar encuestas y fijar links (Juan NUNCA opera YouTube Studio mientras habla).</li>
+      <li>CM #1 = chat (pregunta activa, sembrado, guardar frases de saboteador). CM #2 = leaderboard y registro de ganadores de preguntas relámpago.</li>
+      <li>Escena de OBS/StreamYard con las 4 cards de arquetipos + captura borrosa de la cuenta lista para B9 + Screen Share de la App para B8.</li>
+      <li>Grabación en nube activada — el replay solo vive 24 horas.</li>
+      <li>Plan B: si las encuestas de YouTube fallan, todas las votaciones migran al chat con letra (A/B/C/D) — el CM cuenta a mano las primeras 50.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Los 12 momentos de interacción (resumen para el co-host)</h2>
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th style="width: 15%;">Min</th>
+        <th style="width: 35%;">Tipo</th>
+        <th style="width: 50%;">Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>-10:00</strong></td>
+        <td>Encuesta 1 (YouTube)</td>
+        <td>¿Cuánto llevas operando? (queda abierta)</td>
+      </tr>
+      <tr>
+        <td><strong>-10:00</strong></td>
+        <td>Chat</td>
+        <td>Ciudad + tiempo operando (CM saluda por nombre)</td>
+      </tr>
+      <tr>
+        <td><strong>2:45</strong></td>
+        <td>Chat storm #1</td>
+        <td>"PRESENTE + ciudad" — Juan lee 4–5 nombres</td>
+      </tr>
+      <tr>
+        <td><strong>5:30</strong></td>
+        <td>Comentario en vivo</td>
+        <td>Juan analiza resultado Encuesta 1</td>
+      </tr>
+      <tr>
+        <td><strong>12:00</strong></td>
+        <td>Chat storm #2</td>
+        <td>"¿CARLOS o ANDRÉS?" — Juan lee por nombre</td>
+      </tr>
+      <tr>
+        <td><strong>24:00</strong></td>
+        <td>Encuesta 2 (YouTube)</td>
+        <td>Encuesta 2: ¿cuál saboteador te operó? — revela apuesta</td>
+      </tr>
+      <tr>
+        <td><strong>27:00</strong></td>
+        <td>Chat storm #3</td>
+        <td>La frase exacta de tu saboteador (mina de copy)</td>
+      </tr>
+      <tr>
+        <td><strong>32:00</strong></td>
+        <td>Chat storm</td>
+        <td>"SISTEMA" si entendiste la tesis</td>
+      </tr>
+      <tr>
+        <td><strong>36:00</strong></td>
+        <td>Pregunta Relámpago Chat</td>
+        <td>¿Perder duele el doble o lo mismo? (Juan premia al #1)</td>
+      </tr>
+      <tr>
+        <td><strong>38:00</strong></td>
+        <td>Screen Share Demo</td>
+        <td>Demo en vivo en pantalla de la GENOMA App</td>
+      </tr>
+      <tr>
+        <td><strong>42:00</strong></td>
+        <td>Encuesta 3 (YouTube)</td>
+        <td>¿Cuándo haces el test? (compromiso público)</td>
+      </tr>
+      <tr>
+        <td><strong>44:00</strong></td>
+        <td>Chat storm #4</td>
+        <td>"NOS VEMOS" — cierre en alto</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- NOTAS DE TONO -->
+  <div class="tone-notes">
+    <h3>🎙️ Notas de tono para Juan Villegas</h3>
+    <ul>
+      <li><strong>El Saboteador SIEMPRE se nombra con respeto, casi con cariño</strong> — nunca con burla. El público se está reconociendo; si te burlas del arquetipo, te burlas de ellos.</li>
+      <li><strong>Confesión propia obligatoria:</strong> Juan admite su Vengador en B8. La autoridad aquí se construye con vulnerabilidad + evidencia, no con perfección.</li>
+      <li><strong>La ciencia se cuenta como historia, no como cátedra:</strong> "le dieron un Nobel por demostrar esto" &gt; "según Kahneman y Tversky (1979)".</li>
+      <li><strong>Cero venta directa en el Día 1.</strong> El producto no se menciona — solo la beca como premio. La primera mención comercial del Método 3.0 es el día 6 (seeding) y la oferta completa el día 7.</li>
+    </ul>
+  </div>
+
+</body>
+</html>
