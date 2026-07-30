@@ -332,17 +332,34 @@ async function loadData() {
       }
     }
 
-    // Extract Lead Magnet registrations from allLeads as well
+    // Extract Lead Magnet registrations from allLeads checking landing, lead_magnet, source, and UTM parameters
     const lmFromLeads = allLeads.filter(l => {
-      const landingLower = (l.landing || '').toLowerCase();
-      const lmLower = (l.lead_magnet || '').toLowerCase();
-      return landingLower.includes('guía') || landingLower.includes('guia') || landingLower.includes('magnet') || landingLower.includes('estafas') || lmLower.includes('guia') || lmLower.includes('estafas');
+      const text = [
+        l.landing,
+        l.lead_magnet,
+        l.source,
+        l.utm_source,
+        l.utm_medium,
+        l.utm_campaign,
+        l.utm_content,
+        l.utm_term
+      ].filter(Boolean).join(' ').toLowerCase();
+
+      return text.includes('guia') || 
+             text.includes('guía') || 
+             text.includes('magnet') || 
+             text.includes('estafa') || 
+             text.includes('inversionista') ||
+             text.includes('ebook') ||
+             text.includes('pdf') ||
+             text.includes('descarga') ||
+             text.includes('ruta');
     }).map(l => ({
       name: l.name,
       email: l.email,
       phone: l.phone,
-      landing: l.landing,
-      lead_magnet: l.lead_magnet || l.landing,
+      landing: l.landing || 'Lead Magnet',
+      lead_magnet: l.lead_magnet || l.landing || 'Guía',
       utm_source: l.utm_source,
       utm_medium: l.utm_medium,
       utm_campaign: l.utm_campaign,
@@ -1645,19 +1662,19 @@ function buildLeadMagnetsTab() {
   const convRate = total > 0 ? ((convertedCount / total) * 100).toFixed(1) : '0';
 
   // Breakdown by PDF guide
-  const rutaLeads = allLeadMagnets.filter(lm => {
-    const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
-    return type.includes('ruta') || type.includes('inversionista');
-  });
-  const rutaTotal = rutaLeads.length;
-  const rutaConv = rutaLeads.filter(lm => lm.is_workshop_registered).length;
-
   const antiLeads = allLeadMagnets.filter(lm => {
     const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
     return type.includes('estafa') || type.includes('anti');
   });
   const antiTotal = antiLeads.length;
   const antiConv = antiLeads.filter(lm => lm.is_workshop_registered).length;
+
+  const rutaLeads = allLeadMagnets.filter(lm => {
+    const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
+    return !type.includes('estafa') && !type.includes('anti');
+  });
+  const rutaTotal = rutaLeads.length;
+  const rutaConv = rutaLeads.filter(lm => lm.is_workshop_registered).length;
 
   // Set KPIs
   const elTotal = document.getElementById('kpi-lm-total');
