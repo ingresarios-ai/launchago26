@@ -23,16 +23,16 @@ let currentActivity = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
 // VITRINA DE INSIGNIAS DE DOMINIO (10 TOTALES)
 // ========================================
 const insigniasData = {
-  1: { id: 1, icon: "👤", name: "Test Saboteador", dayLabel: "Pre-actividad 1", desc: "Identificación del patrón mental" },
-  2: { id: 2, icon: "🧪", name: "ADN Financiero", dayLabel: "Pre-actividad 2", desc: "Diagnóstico con Inteligencia Artificial" },
-  3: { id: 3, icon: "📱", name: "Tribu VIP", dayLabel: "Pre-actividad 3", desc: "Conexión a notificaciones oficiales" },
-  4: { id: 4, icon: "🏛️", name: "Domador Saboteador", dayLabel: "Día 1 Live", desc: "Anatomía del Saboteador (3 AGO)" },
-  5: { id: 5, icon: "🎯", name: "Cuenta Abierta 1%", dayLabel: "Día 2 Live", desc: "Regla de Oro del 1% (4 AGO)" },
-  6: { id: 6, icon: "📋", name: "Plan Inquebrantable", dayLabel: "Día 3 Live", desc: "Sistema de Reglas (5 AGO)" },
-  7: { id: 7, icon: "🤖", name: "Trading IA GENY", dayLabel: "Día 4 Live", desc: "Inteligencia Algorítmica (6 AGO)" },
-  8: { id: 8, icon: "🏹", name: "Reditum Sniper", dayLabel: "Día 5 Live", desc: "Estrategia Sniper (7 AGO)" },
-  9: { id: 9, icon: "💎", name: "Historias Reales", dayLabel: "Día 6 Live", desc: "Panel de Casos Reales (10 AGO)" },
-  10: { id: 10, icon: "🏆", name: "Método 3.0 Final", dayLabel: "Día 7 Live", desc: "Masterclass de Cierre (11 AGO)" }
+  1: { id: 1, icon: "🏛️", name: "Domador Saboteador", dayLabel: "Día 1 Live", desc: "Anatomía del Saboteador (3 AGO)" },
+  2: { id: 2, icon: "🎯", name: "Cuenta Abierta 1%", dayLabel: "Día 2 Live", desc: "Regla de Oro del 1% (4 AGO)" },
+  3: { id: 3, icon: "📋", name: "Plan Inquebrantable", dayLabel: "Día 3 Live", desc: "El Plan del Saboteador (5 AGO)" },
+  4: { id: 4, icon: "🤖", name: "Trading IA GENY", dayLabel: "Día 4 Live", desc: "Inteligencia Algorítmica (6 AGO)" },
+  5: { id: 5, icon: "📓", name: "Bitácora Saboteador", dayLabel: "Día 5 Live", desc: "Bitácora y Registro (7 AGO)" },
+  6: { id: 6, icon: "🏹", name: "Reditum Sniper", dayLabel: "Día 6 Live", desc: "Estrategia Sniper (8 AGO)" },
+  7: { id: 7, icon: "🧠", name: "Masterclass Mente", dayLabel: "Día 7 Live", desc: "Mente · Sistema · Entorno (9 AGO)" },
+  8: { id: 8, icon: "💎", name: "Casos Reales", dayLabel: "Día 8 Live", desc: "Panel de Casos Reales (10 AGO)" },
+  9: { id: 9, icon: "💼", name: "Nómina Saboteador", dayLabel: "Día 9 Live", desc: "El Costo de No Decidir (11 AGO)" },
+  10: { id: 10, icon: "🏆", name: "Gran Final 3.0", dayLabel: "Día 10 Live", desc: "Premiación y Cierre (12 AGO)" }
 };
 
 function getUnlockedInsignias() {
@@ -43,13 +43,6 @@ function getUnlockedInsignias() {
   } catch (e) {
     list = [];
   }
-
-  // Auto-sync pre-activities if already completed locally
-  const currentAct = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
-  if (currentAct >= 2 && !list.includes(1)) list.push(1);
-  if (currentAct >= 4 && !list.includes(2)) list.push(2);
-  if (currentAct >= 6 && !list.includes(3)) list.push(3);
-
   return list;
 }
 
@@ -1637,7 +1630,7 @@ function openLiveSession(dayNum) {
   const isCompleted = localStorage.getItem(`live_session_${dayNum}_completed`) === 'true';
 
   window.__currentOpenLiveDay = dayNum;
-  const insigniaId = dayNum + 3;
+  const insigniaId = dayNum;
   const itemInsignia = insigniasData[insigniaId] || { icon: '🛡️', name: 'Insignia de Dominio' };
   const hasInsignia = getUnlockedInsignias().includes(insigniaId);
 
