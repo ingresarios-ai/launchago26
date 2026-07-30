@@ -2069,19 +2069,21 @@ body {
 }
 
 /* ========================================
-   VITRINA DE INSIGNIAS DE DOMINIO (ULTRA LUXURY 3D ALBUM)
+   VITRINA DE INSIGNIAS DE DOMINIO (CYBER-TECH AI MATRIX SHOWCASE)
    ======================================== */
 .vitrina-container {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.85) 100%);
-  border: 1px solid rgba(234, 179, 8, 0.35);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(11, 17, 32, 0.98) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: 20px;
-  padding: 26px 22px;
-  margin-bottom: 28px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 215, 0, 0.25);
+  padding: 30px 32px;
+  margin-bottom: 32px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(56, 189, 248, 0.25);
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .vitrina-container::before {
@@ -2091,16 +2093,27 @@ body {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #eab308, #22c55e, #eab308, transparent);
+  background: linear-gradient(90deg, transparent, #38bdf8, #22c55e, #eab308, transparent);
+}
+
+.vitrina-container::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .vitrina-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 14px;
 }
 
 .vitrina-title-group {
@@ -2111,25 +2124,25 @@ body {
 
 .vitrina-icon {
   font-size: 2rem;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.25), rgba(0, 0, 0, 0.4));
-  border: 1.5px solid rgba(255, 215, 0, 0.5);
+  background: radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.25), rgba(15, 23, 42, 0.8));
+  border: 1.5px solid rgba(56, 189, 248, 0.5);
   border-radius: 14px;
   padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
 }
 
 .vitrina-title {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
   font-weight: 900;
   color: #ffffff;
   margin: 0;
   letter-spacing: 0.8px;
   text-transform: uppercase;
-  background: linear-gradient(90deg, #ffffff, #fef08a);
+  background: linear-gradient(90deg, #ffffff 30%, #38bdf8 70%, #fef08a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -2138,49 +2151,53 @@ body {
   font-size: 0.84rem;
   color: #94a3b8;
   margin-top: 3px;
+  line-height: 1.35;
 }
 
 .vitrina-counter-badge {
-  background: linear-gradient(135deg, rgba(234, 179, 8, 0.2) 0%, rgba(34, 197, 94, 0.15) 100%);
-  border: 1px solid rgba(234, 179, 8, 0.5);
-  color: #fef08a;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.18) 0%, rgba(34, 197, 94, 0.15) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  color: #7dd3fc;
   font-family: 'Outfit', sans-serif;
   font-weight: 800;
   font-size: 0.88rem;
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 30px;
-  box-shadow: 0 0 20px rgba(234, 179, 8, 0.25);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
   letter-spacing: 0.5px;
 }
 
 .vitrina-progress-bar-track {
   width: 100%;
   height: 10px;
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(15, 23, 42, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   overflow: hidden;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
+  box-sizing: border-box;
 }
 
 .vitrina-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #ca8a04, #eab308, #22c55e);
+  background: linear-gradient(90deg, #0284c7, #38bdf8, #22c55e);
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 14px rgba(234, 179, 8, 0.7);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.7);
 }
 
-/* 3D BADGE ALBUM GRID */
+/* CYBER-TECH BADGE ALBUM GRID */
 .insignias-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .insignia-card {
   position: relative;
   border-radius: 16px;
-  padding: 18px 10px 14px;
+  padding: 20px 12px 16px;
   text-align: center;
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
@@ -2189,65 +2206,68 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 150px;
+  min-height: 160px;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
 }
 
-/* LOCKED STATE (PHYSICAL METALLIC EMBOSSED LOCK) */
+/* LOCKED STATE (CYBER STEALTH SHIELD) */
 .insignia-card--locked {
-  background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.85));
+  background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .insignia-card--locked:hover {
   transform: translateY(-5px) scale(1.02);
-  border-color: rgba(234, 179, 8, 0.45);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(234, 179, 8, 0.2);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 22px rgba(56, 189, 248, 0.25);
 }
 
 .insignia-card--locked .insignia-icon-wrapper {
   background: radial-gradient(circle at 30% 30%, #334155, #0f172a);
-  border: 2px solid rgba(255, 255, 255, 0.12);
+  border: 2px solid rgba(255, 255, 255, 0.14);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
-  filter: grayscale(0.8) contrast(0.9);
-  opacity: 0.65;
+  filter: grayscale(0.85) contrast(0.9);
+  opacity: 0.7;
 }
 
-/* UNLOCKED STATE (3D GLOWING GOLDEN EMBLEMS) */
+/* UNLOCKED STATE (CYBER HOLOGRAPHIC NEON EMBLEMS) */
 .insignia-card--unlocked {
-  background: radial-gradient(circle at 50% 0%, rgba(234, 179, 8, 0.22), rgba(15, 23, 42, 0.9));
-  border: 1.5px solid rgba(255, 215, 0, 0.75);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 22px rgba(234, 179, 8, 0.35);
-  animation: badgeGlowPulse 3.5s infinite ease-in-out;
+  background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.22), rgba(15, 23, 42, 0.95));
+  border: 1.5px solid rgba(56, 189, 248, 0.8);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 22px rgba(56, 189, 248, 0.4);
+  animation: cyberPulse 3.5s infinite ease-in-out;
 }
 
-@keyframes badgeGlowPulse {
-  0%, 100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(234, 179, 8, 0.3); }
-  50% { box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 30px rgba(234, 179, 8, 0.55); }
+@keyframes cyberPulse {
+  0%, 100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.35); }
+  50% { box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 32px rgba(56, 189, 248, 0.6); }
 }
 
 .insignia-card--unlocked:hover {
   transform: translateY(-6px) scale(1.04);
-  border-color: #ffd700;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 215, 0, 0.6);
+  border-color: #38bdf8;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 38px rgba(56, 189, 248, 0.7);
 }
 
 .insignia-card--unlocked .insignia-icon-wrapper {
-  background: radial-gradient(circle at 30% 30%, #fef08a 0%, #eab308 60%, #854d0e 100%);
-  border: 2.5px solid #ffe600;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.7);
+  background: radial-gradient(circle at 30% 30%, #7dd3fc 0%, #0284c7 60%, #0c4a6e 100%);
+  border: 2.5px solid #38bdf8;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.8);
 }
 
 .insignia-icon-wrapper {
   position: relative;
-  width: 58px;
-  height: 58px;
+  width: 60px;
+  height: 60px;
   margin: 0 auto 10px auto;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
+  font-size: 1.85rem;
   transition: all 0.35s ease;
 }
 
@@ -2257,23 +2277,26 @@ body {
   right: -4px;
   font-size: 0.75rem;
   background: #0f172a;
-  border: 1px solid rgba(234, 179, 8, 0.5);
+  border: 1px solid rgba(56, 189, 248, 0.6);
   border-radius: 50%;
   width: 22px;
   height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
 }
 
 .insignia-name {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.82rem;
+  font-size: clamp(0.75rem, 1.2vw, 0.85rem);
   font-weight: 800;
   color: #ffffff;
   line-height: 1.25;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .insignia-card--locked .insignia-name {
@@ -2283,12 +2306,13 @@ body {
 .insignia-status-text {
   font-size: 0.68rem;
   font-weight: 700;
-  color: #fef08a;
-  background: rgba(234, 179, 8, 0.15);
-  padding: 3px 8px;
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, 0.15);
+  padding: 4px 10px;
   border-radius: 12px;
-  border: 1px solid rgba(234, 179, 8, 0.3);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   display: inline-block;
+  white-space: nowrap;
 }
 
 .insignia-card--locked .insignia-status-text {
@@ -2297,36 +2321,69 @@ body {
   border-color: rgba(255, 255, 255, 0.08);
 }
 
+/* RESPONSIVE LAYOUT MATRIX FOR TABLETS & PHONES */
 @media (max-width: 1024px) {
+  .vitrina-container {
+    padding: 24px 20px;
+  }
   .insignias-grid {
     grid-template-columns: repeat(5, 1fr);
     gap: 12px;
   }
+  .insignia-card {
+    min-height: 150px;
+    padding: 16px 8px 12px;
+  }
 }
 
 @media (max-width: 768px) {
+  .vitrina-container {
+    padding: 20px 16px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+  }
   .insignias-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
   .insignia-card {
-    padding: 12px 6px 10px;
-    min-height: 135px;
+    padding: 14px 6px 12px;
+    min-height: 140px;
   }
   .insignia-icon-wrapper {
     width: 48px;
     height: 48px;
-    font-size: 1.4rem;
-  }
-  .insignia-name {
-    font-size: 0.74rem;
+    font-size: 1.45rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 440px) {
+  .vitrina-container {
+    padding: 16px 12px;
+  }
+  .vitrina-header {
+    gap: 8px;
+  }
+  .vitrina-icon {
+    font-size: 1.5rem;
+    padding: 6px;
+  }
+  .vitrina-counter-badge {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+  }
   .insignias-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+  }
+  .insignia-card {
+    padding: 12px 6px 10px;
+    min-height: 130px;
+  }
+  .insignia-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    font-size: 1.3rem;
   }
 }
 
