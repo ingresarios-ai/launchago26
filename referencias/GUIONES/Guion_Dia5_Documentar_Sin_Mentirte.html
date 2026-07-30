@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>LIVE DÍA 5 — D: DOCUMENTAR SIN MENTIRTE</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #1e293b;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-tag {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #0284c7;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .main-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin: 0 0 4px 0;
+    }
+
+    .meta-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .divider {
+      height: 2px;
+      background: #0284c7;
+      margin-bottom: 20px;
+      border: none;
+    }
+
+    .retention-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 5px solid #0284c7;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+
+    .retention-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0369a1;
+      margin: 0 0 10px 0;
+    }
+
+    .retention-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .retention-box li {
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    h2.section-heading {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    table.custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 11.5px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    table.custom-table th {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 800;
+      text-align: left;
+      padding: 9px 11px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    table.custom-table td {
+      padding: 8px 11px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    table.custom-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .time-bar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .time-bar span.time {
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    .interaction-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-left: 5px solid #10b981;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      color: #064e3b;
+    }
+
+    .interaction-box.yellow {
+      background: #fffbeb;
+      border-color: #fde68a;
+      border-left-color: #f59e0b;
+      color: #78350f;
+    }
+
+    .interaction-title {
+      font-weight: 800;
+      font-size: 12.5px;
+      margin-bottom: 6px;
+    }
+
+    .interaction-box ul {
+      margin: 6px 0 0 0;
+      padding-left: 18px;
+    }
+
+    .dialogue-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #64748b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #1e293b;
+    }
+
+    .dialogue-box p {
+      margin: 0 0 8px 0;
+    }
+
+    .dialogue-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .screen-note {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .tone-notes {
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-left: 5px solid #f97316;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 20px;
+    }
+
+    .tone-notes h3 {
+      margin: 0 0 8px 0;
+      color: #9a3412;
+      font-size: 13.5px;
+      font-weight: 800;
+    }
+
+    .tone-notes ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .tone-notes li {
+      margin-bottom: 5px;
+      color: #431407;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-tag">EL JUEGO MENTAL DEL DINERO  ·  GUIÓN DE PRODUCCIÓN</div>
+  <h1 class="main-title">LIVE DÍA 5 — D: DOCUMENTAR SIN MENTIRTE</h1>
+  <div class="meta-subtitle">45 minutos · YouTube Live · la bitácora como detector de saboteadores + CHECKPOINT con premios</div>
+  <hr class="divider" />
+
+<h2 class="section-heading">Objetivo del día</h2>
+<p style="margin: 6px 0;">Instalar la letra “aburrida” como la más rentable del sistema, y re-encender la competencia con el Checkpoint de mitad de juego (premios en vivo). La bitácora se vende como identidad — “los que viven de esto la llevan” — y como detector del Saboteador en 20 trades. Es viernes: el live cierra sembrando el fin de semana (día 6 + reserva de la Masterclass).</p>
+<table class="custom-table">
+<thead><tr>
+<th>Bloque</th>
+<th>Minutos</th>
+<th>Contenido</th>
+<th>Interacción</th>
+</tr></thead><tbody>
+<tr>
+<td>B0 · Pre-show</td>
+<td>-10:00 → 0:00</td>
+<td>Countdown + teaser del checkpoint</td>
+<td>Encuesta 1: ¿llevas bitácora?</td>
+</tr>
+<tr>
+<td>B1 · La prueba de fuego</td>
+<td>0:00 → 5:00</td>
+<td>Hook: "pídele la bitácora"</td>
+<td>Chat: "PRESENTE" + Primera Campana</td>
+</tr>
+<tr>
+<td>B2 · Mi página de ayer</td>
+<td>5:00 → 11:00</td>
+<td>Qué pasó con el plan del día 3 — la bitácora lo cuenta</td>
+<td>Encuesta 2: ¿qué creen que pasó?</td>
+</tr>
+<tr>
+<td>B3 · Los 6 campos en acción</td>
+<td>11:00 → 18:00</td>
+<td>Documentar en 5 minutos: demo con el trade de ayer</td>
+<td>Chat: ¿qué campo te cuesta más?</td>
+</tr>
+<tr>
+<td>B4 · El detector</td>
+<td>18:00 → 26:00</td>
+<td>Cómo 20 trades documentados desenmascaran a tu saboteador</td>
+<td>Encuesta 3: ¿cuándo pierdes más?</td>
+</tr>
+<tr>
+<td>B5 · CHECKPOINT</td>
+<td>26:00 → 33:00</td>
+<td>Leaderboard en vivo + premios + mejor Círculo + hitos</td>
+<td>El momento social del juego</td>
+</tr>
+<tr>
+<td>B6 · Quiz relámpago</td>
+<td>33:00 → 37:00</td>
+<td>3 preguntas</td>
+<td>Hasta 20 PC</td>
+</tr>
+<tr>
+<td>B7 · Entrenamiento</td>
+<td>37:00 → 41:00</td>
+<td>Documentar el paper trade de ayer (con campo saboteador)</td>
+<td>Encuesta 4: compromiso</td>
+</tr>
+<tr>
+<td>B8 · Cliffhanger</td>
+<td>41:00 → 45:00</td>
+<td>Mañana: el ciclo se cierra + el francotirador</td>
+<td>Chat final: "NOS VEMOS"</td>
+</tr>
+</tbody></table>
+<h2 class="section-heading">El guión, minuto a minuto</h2>
+<table class="custom-table">
+<thead><tr>
+<th>-10:00 → 0:00
+B0 · PRE-SHOW</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Countdown + banner: “HOY: CHECKPOINT — premios en vivo a los top 10 y al mejor Círculo”</span>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 1 (ABIERTA DESDE EL MINUTO -10)
+“¿Llevas bitácora de tus operaciones?”
+A) Sí, completa y al día
+B) Empecé una... tres veces 😅
+C) La llevo “mental”
+D) ¿Bitácora?</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>0:00 → 5:00
+B1 · LA PRUEBA DE FUEGO — pídele la bitácora</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: “¿CÓMO SABER SI ALGUIEN VIVE DE ESTO?” en negro sobre abismo</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Tono confidencial, como quien comparte un secreto de gremio)
+“Les voy a regalar la prueba de fuego definitiva para este mercado.
+Sirve para evaluar a cualquier “gurú”, a cualquier mentor,
+a cualquiera que les quiera vender algo — incluido yo.
+ 
+No le pidan sus resultados. Los resultados se inventan en Photoshop
+en diez minutos. Pídanle SU BITÁCORA. El registro completo,
+con fechas, de sus últimos cincuenta trades. Ganados y perdidos.
+ 
+El 95% no la tiene. No porque la escondan — porque NO EXISTE.
+Nunca documentaron nada. Operan de memoria y facturan de ilusión.
+ 
+Y aquí está el punto que importa: esa misma prueba aplícatela a ti.
+¿Tienes tu bitácora? La encuesta dice que la mayoría no.
+Hoy eso cambia — y les voy a mostrar por qué esta letra aburrida
+es la más rentable de las cinco. Ah, y hoy hay premios. CHECKPOINT
+en el minuto 26. Primera Campana pagada. PRESENTE y ciudad.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>5:00 → 11:00
+B2 · MI PÁGINA DE AYER — el plan del día 3 rinde cuentas</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: La página del plan del día 3 + la entrada de bitácora de lo que realmente pasó</span>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 2 (MINUTO 5:30) — ANTES DE REVELAR
+“El miércoles escribí mi plan en vivo. ¿Qué creen que pasó ayer?”
+A) Se dio el escenario A y ejecutó
+B) Se dio el B y no operó
+C) Ejecutó y perdió
+D) El saboteador intentó algo...
+El voto ancla la atención en la revelación — sea cual sea el resultado real, hay historia.</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>“Esta es la gracia de escribir el plan en público: hoy me toca
+rendir cuentas delante de cinco mil testigos.
+(Muestra la bitácora real de ayer. El guión cubre los 3 resultados posibles:)
+[SI EJECUTÓ Y GANÓ]: “...y noten qué parte NO les voy a celebrar:
+el resultado. Miren el campo dos: ejecución idéntica al plan.
+ESO es lo que se celebra. La plata es la propina del proceso.”
+[SI EJECUTÓ Y PERDIÓ]: “...pérdida hasta la invalidación, exactamente
+lo que decidí arriesgar el miércoles en frío. ¿Duele? Claro.
+¿Cambia algo? Nada. Costo operativo. Y ahora viene lo más valioso:
+documentarla SIN maquillarla.”
+[SI NO HUBO TRADE]: “...escenario B: no operar. ¿Saben cuánta gente
+pierde plata un jueves cualquiera por no tener escrito el permiso
+de NO operar? El no-trade también se documenta — miren.”
+ 
+“El punto de este bloque es uno solo: entre el plan del miércoles
+y la bitácora del jueves está TODO el sistema. Planear mira
+adelante. Documentar mira atrás. Y el que no mira atrás
+repite — con intereses.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>11:00 → 18:00
+B3 · LOS 6 CAMPOS EN ACCIÓN — documentar en 5 minutos</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Cronómetro visible: Juan documenta un trade completo contra reloj</span>
+<table class="custom-table">
+<thead><tr>
+<th>“La objeción número uno contra la bitácora: “no tengo tiempo”.
+Vamos a destruirla con un cronómetro. Cinco minutos, seis campos,
+trade documentado. Tiempo real. Va.
+(Documenta contra reloj, narrando cada campo. Termina en ~4 minutos)
+“Cuatro minutos y pico. Menos de lo que dura el video de gatitos
+que viste esperando este live. “No tengo tiempo” nunca fue
+el problema — el problema es que documentar duele cuando
+el campo cinco dice la verdad.
+ 
+Por eso este día se llama DOCUMENTAR SIN MENTIRTE. La bitácora
+que maquilla es peor que no tener: es un saboteador con secretaria.
+Regla de oro: se documenta TODO — el trade bueno, el malo,
+el no-trade, y la negociación que tu saboteador intentó.
+Especialmente esa.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ CHAT (MINUTO 17:00)
+Juan: “¿Cuál de los 6 campos les cuesta más llenar con honestidad? Escriban el número. Apuesto a que gana el 5...”
+Lee respuestas y comenta: “El 5, obvio. El estado emocional. Nadie quiere escribir “entré por aburrimiento”. Pero esa línea vale más que el resultado.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>18:00 → 26:00
+B4 · EL DETECTOR — 20 trades desenmascaran al Saboteador</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Una bitácora de ejemplo con patrones resaltados: horas, días, secuencias</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Y ahora la razón por la que la bitácora es la mejor inversión
+de su carrera: con veinte trades documentados, tu saboteador
+queda desenmascarado. Con nombre, hora y modus operandi.
+ 
+Historia real de un estudiante — con su permiso, le decimos Marco.
+Marco llevaba dos años perdiendo “por mala suerte”. Documentó
+un mes completo con el campo cinco incluido. ¿Saben qué apareció?
+Todas sus pérdidas grandes eran los VIERNES. ¿Por qué? Porque
+el viernes cerraba la semana, y si iba en rojo, su Vengador entraba
+a “arreglar la semana” antes del fin de semana. Dos años de
+“mala suerte” eran UNA fila de la bitácora repetida ochenta veces.
+¿La solución? Una cláusula: los viernes después de mediodía,
+plataforma cerrada. Su curva de capital cambió en un mes.
+ 
+Eso no lo encuentra ningún indicador, ningún curso, ningún gurú.
+Lo encuentra un Excel honesto. Tu bitácora es el único analista
+que trabaja gratis y no te miente — si tú no le mientes primero.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 3 (MINUTO 24:30)
+“Sin bitácora, adivinen: ¿CUÁNDO creen que pierden más?”
+A) Lunes (entro ansioso al mercado)
+B) Viernes (cierro la semana a lo Marco)
+C) Después de una racha ganadora
+D) Ni idea — y ese es exactamente el problema
+Juan: “Los que votaron D acaban de dar la respuesta más profesional de la noche: saber que no sabes es el primer campo de la bitácora.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>26:00 → 33:00
+B5 · CHECKPOINT — mitad de juego, premios en vivo</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: EL LEADERBOARD completo, con música. Top 10 individual + top 3 Círculos + termómetro de hitos colectivos</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Cambio total de energía: esto es una ceremonia deportiva)
+“¡CHECKPOINT DE MITAD DE JUEGO! Cinco días, [X] entrenamientos
+publicados, [X] cards compartidas. Vamos a la tabla.
+(Revela el top 10 uno por uno, del 10 al 1, con comentario personal por cada nombre (el CM prepara un dato de cada uno: su arquetipo, su mejor publicación))
+“Los primeros diez de hoy se llevan premio sorpresa: [premio].
+Y OJO — esto es mitad de juego. La beca completa se define
+el miércoles. He visto remontadas de trescientos puntos
+en tres días. La tabla está VIVA.
+ 
+El Círculo de la semana: [NOMBRE DEL CÍRCULO] — promedio de
+[X] puntos. Sesión grupal conmigo, agenda por privado.
+ 
+E hitos colectivos: vamos [X] registrados. A [Y] de desbloquear
+[hito]. ¿Se acuerdan qué pasa en 5,000? El pool de becas se
+TRIPLICA. Cada amigo que traen esta noche juega para todos.
+Sus links están en el chat. Fin del checkpoint — sigamos jugando.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>33:00 → 37:00
+B6 · QUIZ RELÁMPAGO — hasta 20 PC</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ QUIZ (3 PREGUNTAS, 30 SEGUNDOS CADA UNA)
+Q1: “¿La prueba de fuego para saber si alguien vive de esto?” A) Sus resultados · B) Su bitácora ✓ · C) Su auto · D) Sus seguidores
+Q2: “¿Qué desenmascaró la bitácora de Marco?” A) Un mal indicador · B) Que perdía los viernes por su Vengador ✓ · C) Comisiones altas · D) Mala estrategia
+Q3: “Una bitácora maquillada es...” A) Mejor que nada · B) Un saboteador con secretaria ✓ · C) Normal · D) Cuestión de estilo</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>37:00 → 41:00
+B7 · EL ENTRENAMIENTO — tu primera entrada de bitácora</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: La plantilla de bitácora PEDEM con los 6 campos + casilla saboteador</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Entrenamiento: documenten el paper trade de ayer — o su no-trade,
+que vale exactamente igual — con los seis campos completos.
+El campo cinco es OBLIGATORIO y se llena sin maquillaje:
+qué sintieron y qué negociación intentó su saboteador.
+ 
+Plantilla en el chat y en la comunidad. Cinco minutos, ya vieron
+el cronómetro. 30 puntos. Y un bonus: las tres bitácoras más
+honestas de esta noche — no las más bonitas, las más HONESTAS —
+las comento yo mañana al aire.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 4 — COMPROMISO (MINUTO 40:30)
+“¿Tu primera entrada de bitácora queda esta noche?”
+A) Sí, con los 6 campos · B) Sí, aunque el campo 5 me dé pena · C) Mañana temprano</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>41:00 → 45:00
+B8 · EL CLIFFHANGER — el francotirador</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: mira telescópica sobre un gráfico + “MAÑANA: EL CICLO SE CIERRA · 8:00 P.M.”</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Mañana es sábado y no descansamos — mañana el ciclo se CIERRA.
+Las dos letras finales: evaluar sin castigarte y mejorar sin ansiedad.
+El giro completo del sistema, funcionando delante de ustedes.
+ 
+Y les presento a la segunda máquina del arsenal. Si Geny es
+el copiloto que lee el clima... esta otra es el francotirador:
+encuentra las zonas exactas donde el dinero institucional
+deja huellas. Se llama Reditum Sniper y mañana dispara en vivo.
+ 
+Además mañana les cuento algo importante sobre el domingo.
+Solo digo eso. Los que han estado desde el día 1 ya sospechan.
+ 
+Tarea: bitácora de 6 campos, sin mentirse. Escriban NOS VEMOS.
+Buen viernes — y cuidado con los Vengadores de fin de semana.”</th>
+</tr></thead><tbody>
+</tbody></table>
+</body></html>

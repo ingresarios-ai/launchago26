@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>LIVE DÍA 6 — E+M: EVALUAR SIN CASTIGARTE</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #1e293b;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-tag {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #0284c7;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .main-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin: 0 0 4px 0;
+    }
+
+    .meta-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .divider {
+      height: 2px;
+      background: #0284c7;
+      margin-bottom: 20px;
+      border: none;
+    }
+
+    .retention-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 5px solid #0284c7;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+
+    .retention-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0369a1;
+      margin: 0 0 10px 0;
+    }
+
+    .retention-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .retention-box li {
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    h2.section-heading {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    table.custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 11.5px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    table.custom-table th {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 800;
+      text-align: left;
+      padding: 9px 11px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    table.custom-table td {
+      padding: 8px 11px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    table.custom-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .time-bar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .time-bar span.time {
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    .interaction-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-left: 5px solid #10b981;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      color: #064e3b;
+    }
+
+    .interaction-box.yellow {
+      background: #fffbeb;
+      border-color: #fde68a;
+      border-left-color: #f59e0b;
+      color: #78350f;
+    }
+
+    .interaction-title {
+      font-weight: 800;
+      font-size: 12.5px;
+      margin-bottom: 6px;
+    }
+
+    .interaction-box ul {
+      margin: 6px 0 0 0;
+      padding-left: 18px;
+    }
+
+    .dialogue-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #64748b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #1e293b;
+    }
+
+    .dialogue-box p {
+      margin: 0 0 8px 0;
+    }
+
+    .dialogue-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .screen-note {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .tone-notes {
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-left: 5px solid #f97316;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 20px;
+    }
+
+    .tone-notes h3 {
+      margin: 0 0 8px 0;
+      color: #9a3412;
+      font-size: 13.5px;
+      font-weight: 800;
+    }
+
+    .tone-notes ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .tone-notes li {
+      margin-bottom: 5px;
+      color: #431407;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-tag">EL JUEGO MENTAL DEL DINERO  ·  GUIÓN DE PRODUCCIÓN</div>
+  <h1 class="main-title">LIVE DÍA 6 — E+M: EVALUAR SIN CASTIGARTE</h1>
+  <div class="meta-subtitle">45 minutos · YouTube Live · el ciclo se cierra + demo Reditum Sniper + seeding de la Masterclass</div>
+  <hr class="divider" />
+
+<h2 class="section-heading">Objetivo del día</h2>
+<p style="margin: 6px 0;">Triple misión: cerrar el ciclo PEDEM (evaluar con datos, mejorar de a una cosa), demostrar Reditum Sniper, y ejecutar el seeding más importante del lanzamiento — sembrar la Masterclass de mañana como evento único con reserva de asiento. La verdad incómoda del día prepara el pitch: la mente entrenada sin sistema y sin entorno se derrumba en la primera racha perdedora.</p>
+<table class="custom-table">
+<thead><tr>
+<th>Bloque</th>
+<th>Minutos</th>
+<th>Contenido</th>
+<th>Interacción</th>
+</tr></thead><tbody>
+<tr>
+<td>B0 · Pre-show</td>
+<td>-10:00 → 0:00</td>
+<td>Countdown + las 3 bitácoras más honestas</td>
+<td>Encuesta 1: ¿qué haces tras una mala semana?</td>
+</tr>
+<tr>
+<td>B1 · La mejor peor semana</td>
+<td>0:00 → 5:00</td>
+<td>Hook: mi peor semana evaluada como la mejor</td>
+<td>Chat: "PRESENTE" + Primera Campana</td>
+</tr>
+<tr>
+<td>B2 · Bitácoras honestas</td>
+<td>5:00 → 9:00</td>
+<td>Juan comenta las 3 más honestas + contrato del día</td>
+<td>Reconocimiento por nombre</td>
+</tr>
+<tr>
+<td>B3 · E de Evaluar</td>
+<td>9:00 → 17:00</td>
+<td>La rúbrica de 3 preguntas. Decisión ≠ resultado</td>
+<td>Encuesta 2: la matriz decisión/resultado</td>
+</tr>
+<tr>
+<td>B4 · M de Mejorar</td>
+<td>17:00 → 23:00</td>
+<td>Una mejora por semana. El interés compuesto del proceso</td>
+<td>Chat: tu única mejora</td>
+</tr>
+<tr>
+<td>B5 · DEMO REDITUM SNIPER</td>
+<td>23:00 → 33:00</td>
+<td>El francotirador: zonas institucionales multi-timeframe</td>
+<td>Encuesta 3: ¿dónde está la zona?</td>
+</tr>
+<tr>
+<td>B6 · Quiz relámpago</td>
+<td>33:00 → 36:00</td>
+<td>3 preguntas</td>
+<td>Hasta 20 PC</td>
+</tr>
+<tr>
+<td>B7 · SEEDING + entrenamiento</td>
+<td>36:00 → 43:00</td>
+<td>La verdad del día 11 + reserva de la Masterclass</td>
+<td>Encuesta 4: reserva (+10 PC)</td>
+</tr>
+<tr>
+<td>B8 · Cliffhanger</td>
+<td>43:00 → 45:00</td>
+<td>Mañana no es una clase más</td>
+<td>Chat final: "NOS VEMOS + 15 ANTES"</td>
+</tr>
+</tbody></table>
+<h2 class="section-heading">El guión, minuto a minuto</h2>
+<table class="custom-table">
+<thead><tr>
+<th>-10:00 → 0:00
+B0 · PRE-SHOW</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Countdown + carrusel de las 3 bitácoras más honestas de anoche (anonimizadas hasta que Juan las nombre)</span>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 1 (ABIERTA DESDE EL MINUTO -10)
+“Termina una semana mala de mercado. ¿Tú qué haces?”
+A) Reviso mis trades con datos fríos
+B) Me castigo mentalmente todo el fin de semana
+C) Dejo de operar una temporada
+D) Borro la app y juro que nunca más 😅</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>0:00 → 5:00
+B1 · LA MEJOR PEOR SEMANA</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Dos números lado a lado: el P&L rojo de una semana vs. una nota de proceso: 9/10</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Miren estos dos números. Son de la MISMA semana mía, hace unos meses.
+El de la izquierda es el resultado: rojo. Una de mis peores semanas
+del año en plata. El de la derecha es mi evaluación de proceso
+de esa misma semana: nueve sobre diez. Una de las MEJORES.
+ 
+¿Cómo puede una semana ser la peor y la mejor a la vez?
+Muy simple: seguí mi plan en cada trade, respeté cada invalidación,
+documenté todo — y el mercado, que no me debe nada, pagó en contra.
+Eso pasa. Se llama varianza y es el precio de admisión.
+ 
+El amateur evalúa la semana con UN número: el P&L. Y ese número,
+en muestras cortas, MIENTE. Hoy — último día de entrenamiento
+del sistema — aprenden a evaluar como profesional y a mejorar
+sin flagelarse. Y les presento al francotirador. Y les cuento
+LO del domingo. Día cargado. PRESENTE y ciudad, ya saben.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>5:00 → 9:00
+B2 · LAS BITÁCORAS HONESTAS</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Las 3 bitácoras seleccionadas, una por una</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Juan comenta las 3 bitácoras más honestas de anoche. Por cada una: lee el campo 5 al aire, celebra la honestidad específica, señala UNA cosa a mejorar. Nombra a los autores y pide aplauso en el chat)
+“...esto que hizo [NOMBRE] — escribir “entré por no sentirme fuera
+del grupo que estaba ganando” — eso vale más que veinte cursos.
+A esa honestidad no le puedes vender humo. Aplauso en el chat.
+ 
+Contrato de hoy: la rúbrica de evaluación de tres preguntas,
+el método de mejora de UNA cosa, y en el minuto 23 el Sniper
+dispara en vivo. No se muevan de aquí.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>9:00 → 17:00
+B3 · E DE EVALUAR — la rúbrica y la matriz</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: La matriz 2x2: decisión buena/mala × resultado bueno/malo</span>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 2 (MINUTO 10:00) — LA MATRIZ ANTES DE EXPLICARLA
+“Trade con plan perfecto, ejecución perfecta... que terminó en pérdida. ¿Qué fue?”
+A) Un mal trade — perdió
+B) Un buen trade — el proceso fue correcto
+C) Depende de cuánto perdió
+D) Mala suerte
+El resultado de la encuesta revela cuánto queda de mentalidad amateur — Juan lo comenta en vivo.</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>“La respuesta es B, y el que votó B ya piensa como profesional.
+Miren esta matriz — es el mapa mental de la evaluación:
+ 
+Decisión BUENA + resultado BUENO: ganancia merecida. Celebra el proceso.
+Decisión BUENA + resultado MALO: costo operativo. NADA que corregir.
+Decisión MALA + resultado MALO: pérdida con lección. Corrige la decisión.
+Y la casilla más peligrosa del trading: decisión MALA + resultado
+BUENO. El premio envenenado. Ganaste rompiendo tu plan — y tu
+cerebro acaba de aprender que romper el plan paga. Esa casilla
+ha quebrado más cuentas que todas las crisis juntas.
+ 
+De ahí sale mi rúbrica semanal. Tres preguntas, cada domingo:
+UNO: ¿Seguí mi plan? — trade por trade, sí o no. Binario, sin poesía.
+DOS: ¿Mi plan era bueno? — ¿los escenarios eran razonables
+con la información de ESE momento? No con la de ahora: la de ese momento.
+TRES: ¿Qué patrón se repite? — la pregunta detective. Aquí aparecen
+los viernes de Marco y los lunes ansiosos.
+ 
+Noten qué NO hay en la rúbrica: “¿cuánto gané?”. El P&L se registra,
+no se evalúa. Se evalúan decisiones — porque solo las decisiones
+se pueden repetir.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>17:00 → 23:00
+B4 · M DE MEJORAR — una sola cosa</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: “UNA MEJORA POR SEMANA = 52 MEJORAS AL AÑO. ¿CUÁNTOS TRADERS CONOCES CON 52 MEJORAS?”</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Y la última letra, la M — donde el ciclo se vuelve una espiral.
+ 
+El error clásico post-evaluación: encontrar siete problemas
+y atacar los siete el lunes. ¿Resultado? Cero mejoras y una
+sensación de fracaso el viernes. La ansiedad de mejorar todo
+es otra forma de sabotaje — es el Impaciente disfrazado de alumno
+aplicado.
+ 
+La regla profesional: UNA mejora por semana. Una sola. La que
+la pregunta tres te escupió en la cara. ¿Se repite “moví el stop”?
+Esa semana, tu única misión de mejora es una cláusula nueva
+y verificable: “stop intocable — verificado en bitácora”.
+Nada más. Lo demás sigue igual.
+ 
+Suena lento. Hagan la cuenta: una mejora real por semana son
+cincuenta y dos al año. Cincuenta y dos mejoras COMPUESTAS —
+porque cada una mejora las siguientes. Ese es el interés compuesto
+del que nadie habla: el del proceso. La cuenta crece después;
+primero crece el operador.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ CHAT STORM (MINUTO 22:00)
+Juan: “Con lo que ya saben de su saboteador y de su semana: escriban SU única mejora para la próxima semana. Una sola. La leo y les digo si es verificable o es poesía.”
+Lee 4–5 y corrige en vivo: ““Ser más disciplinado” — poesía. “Cerrar la plataforma tras 2 pérdidas” — verificable. ¿Ven la diferencia?”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>23:00 → 33:00
+B5 · DEMO REDITUM SNIPER — el francotirador</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Gráfico real con Reditum Sniper activo en varios marcos temporales</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Y ahora el francotirador. Si Geny les dice CUÁNDO el mercado
+tiene energía direccional... Reditum Sniper les dice DÓNDE
+están las zonas que importan.
+ 
+¿Qué es una “zona que importa”? Piensen en el mercado como
+una subasta — porque ES una subasta. Hay precios donde se negocia
+muchísimo volumen: ahí el mercado encontró acuerdo. Y hay precios
+donde casi nadie negoció: ahí no hay acuerdo, y el precio los
+atraviesa rápido. El dinero institucional — los que mueven
+billones — deja huellas en esa estructura. No pueden evitarlo:
+son demasiado grandes para esconderse.
+ 
+Sniper lee esa estructura en VARIOS marcos temporales a la vez
+y marca las zonas de alta probabilidad donde vale la pena
+tener un plan preparado. No predice — LOCALIZA. La diferencia
+entre disparar a todo lo que se mueve y esperar en la zona
+donde el blanco va a pasar.
+(DEMO 7 minutos: 1) el mercado de hoy — Sniper marca las zonas actuales; 2) rebobinar: “miren esta zona de la semana pasada — y miren cómo reaccionó el precio al llegar”; 3) el combo: “Geny dice si hay energía, Sniper dice dónde esperar. El plan une las dos respuestas — ese es el sistema completo”)</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 3 (MINUTO 30:00) — EL JUEGO DEL FRANCOTIRADOR
+“Antes de que Sniper lo revele: ¿dónde creen que está la zona clave de este gráfico?”
+A) En el máximo reciente · B) En el mínimo reciente · C) En medio del rango · D) Donde nadie está mirando
+Juan revela la lectura de Sniper y comenta la diferencia con el voto — mismo formato ganador del día 4.</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>33:00 → 36:00
+B6 · QUIZ RELÁMPAGO — hasta 20 PC</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ QUIZ (3 PREGUNTAS, 30 SEGUNDOS CADA UNA)
+Q1: “La casilla más peligrosa de la matriz es...” A) Perder con buen plan · B) Ganar rompiendo el plan ✓ · C) Perder con mal plan · D) No operar
+Q2: “¿Cuántas mejoras se atacan por semana?” A) Todas · B) Tres · C) Una ✓ · D) Depende
+Q3: “Sniper no predice —...” A) Adivina · B) Localiza ✓ · C) Copia · D) Promedia</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>36:00 → 43:00
+B7 · EL SEEDING — la verdad del día 11 + la reserva</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: “¿Y EL DÍA 11?” — luego la invitación a la Masterclass con contador de reservas</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Baja la energía. Tono honesto, casi serio. Este es el momento más importante del pre-pitch)
+“Antes de cerrar, necesito tener una conversación honesta con ustedes.
+ 
+En seis días construimos algo real: saben quién es su saboteador,
+tienen un contrato, un detector, una rúbrica. El ciclo completo.
+Estoy genuinamente orgulloso de esta comunidad.
+ 
+Pero llevo treinta años en esto y les debo la verdad completa:
+he visto este momento muchas veces. El entusiasmo del día 6.
+Y sé qué pasa el día 11, cuando esto termina y cada uno vuelve
+a operar solo: la primera racha perdedora llega — SIEMPRE llega —
+y sin testigos, sin acompañamiento y sin entorno... la mente
+entrenada se derrumba. No por débil. Por HUMANA. La fuerza
+de voluntad se agota; el entorno no.
+ 
+Por eso mañana no hay entrenamiento normal. Mañana es LA
+MASTERCLASS: Mente, Sistema, Entorno. Dos horas. Voy a mostrar
+el sistema completo girando sobre mi cuenta de estos seis días,
+y voy a responder la pregunta del día 11: cómo se sostiene esto
+un año entero. Una sola vez. No se repite este año.
+ 
+Entrenamiento de hoy, dos partes: la rúbrica de tres preguntas
+sobre SU semana — publicada, 30 puntos. Y reservar su asiento
+para mañana — el botón está en el chat, son 10 puntos y me permite
+preparar la sala. Mañana quiero conocer hasta el último nombre.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 4 — LA RESERVA (MINUTO 42:00)
+“¿Reservado para mañana?”
+A) Reservado y con alarma puesta ✓
+B) Reservando ahora mismo
+C) No puedo mañana 😢 (¿replay?)
+Respuesta guionada a la C: “El replay de la Masterclass vive solo 24 horas — y hay cosas que solo pasan en vivo. Muevan lo que tengan que mover.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>43:00 → 45:00
+B8 · EL CLIFFHANGER — mañana no es una clase</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide final: “MAÑANA 8:00 P.M. — MENTE · SISTEMA · ENTORNO. Lleguen 15 minutos antes.”</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Resumen de la semana, en una línea por día: conocieron al rival,
+vieron el espejo, firmaron el contrato, conocieron al copiloto,
+encendieron el detector, y hoy cerraron el ciclo.
+ 
+Mañana es otra cosa. Mañana les muestro el juego completo —
+y una oportunidad que solo va a existir durante 84 horas.
+Los que llegan 15 minutos antes van a entender por qué
+se los pedí. Es todo lo que digo.
+ 
+Escriban NOS VEMOS A LAS 7:45. Los quiero puntuales.
+Descansen — mañana empieza la segunda mitad del juego.”</th>
+</tr></thead><tbody>
+</tbody></table>
+</body></html>

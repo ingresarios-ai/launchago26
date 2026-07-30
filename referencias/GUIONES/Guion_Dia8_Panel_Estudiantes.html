@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>LIVE DÍA 8 — LOS QUE VENCIERON A SU SABOTEADOR</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #1e293b;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-tag {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #0284c7;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .main-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin: 0 0 4px 0;
+    }
+
+    .meta-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .divider {
+      height: 2px;
+      background: #0284c7;
+      margin-bottom: 20px;
+      border: none;
+    }
+
+    .retention-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 5px solid #0284c7;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+
+    .retention-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0369a1;
+      margin: 0 0 10px 0;
+    }
+
+    .retention-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .retention-box li {
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    h2.section-heading {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    table.custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 11.5px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    table.custom-table th {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 800;
+      text-align: left;
+      padding: 9px 11px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    table.custom-table td {
+      padding: 8px 11px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    table.custom-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .time-bar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .time-bar span.time {
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    .interaction-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-left: 5px solid #10b981;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      color: #064e3b;
+    }
+
+    .interaction-box.yellow {
+      background: #fffbeb;
+      border-color: #fde68a;
+      border-left-color: #f59e0b;
+      color: #78350f;
+    }
+
+    .interaction-title {
+      font-weight: 800;
+      font-size: 12.5px;
+      margin-bottom: 6px;
+    }
+
+    .interaction-box ul {
+      margin: 6px 0 0 0;
+      padding-left: 18px;
+    }
+
+    .dialogue-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #64748b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #1e293b;
+    }
+
+    .dialogue-box p {
+      margin: 0 0 8px 0;
+    }
+
+    .dialogue-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .screen-note {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .tone-notes {
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-left: 5px solid #f97316;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 20px;
+    }
+
+    .tone-notes h3 {
+      margin: 0 0 8px 0;
+      color: #9a3412;
+      font-size: 13.5px;
+      font-weight: 800;
+    }
+
+    .tone-notes ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .tone-notes li {
+      margin-bottom: 5px;
+      color: #431407;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-tag">EL JUEGO MENTAL DEL DINERO  ·  GUIÓN DE PRODUCCIÓN</div>
+  <h1 class="main-title">LIVE DÍA 8 — LOS QUE VENCIERON A SU SABOTEADOR</h1>
+  <div class="meta-subtitle">60 minutos · YouTube Live · panel de estudiantes + extensión de bonos en vivo</div>
+  <hr class="divider" />
+
+<h2 class="section-heading">Objetivo del día</h2>
+<div class="time-bar"><span>Prueba social masiva: las objeciones las derriban pares, no el vendedor. Tres estudiantes con bitácoras reales en pantalla. Mecánica de urgencia clave: los bonos fast-action murieron oficialmente a las 8:00 p.m. (inicio del live) — pero Juan anuncia en vivo una extensión SOLO para los presentes, hasta las 11:59 de esta noche. Estar en vivo tiene premio; el replay no lo tiene.</span></div>
+<p style="margin: 6px 0;">Preproducción crítica: los 3 panelistas ensayados el día anterior (30 min): sus historias en arco de 5 minutos, sus bitácoras de antes/después listas para compartir pantalla, y avisados de las preguntas guionadas. Autenticidad ensayada no es contradicción — es respeto por el tiempo de la audiencia.</p>
+<p style="margin: 6px 0;">Casting del panel: un ex-Vengador (historia de pérdidas dolorosas), un ex-Impaciente o ex-Paralizado (relatable masivo), y un Reinventor sin tiempo (profesional/empresario — habla directo al avatar 2 que paga sin dudar). Idealmente 2 hombres y 1 mujer, edades distintas.</p>
+<p style="margin: 6px 0;">Regla del panel: Juan pregunta y se calla. Los panelistas hablan el 70% del live. Cada historia debe incluir: el antes específico (números si se puede), el momento de la decisión (qué casi los frena), y el después medible (proceso, no promesas de rentabilidad).</p>
+<table class="custom-table">
+<thead><tr>
+<th>Bloque</th>
+<th>Minutos</th>
+<th>Contenido</th>
+<th>Interacción</th>
+</tr></thead><tbody>
+<tr>
+<td>B0 · Pre-show</td>
+<td>-10:00 → 0:00</td>
+<td>Countdown + contador de cupos restantes</td>
+<td>Encuesta 1: ¿qué te frena?</td>
+</tr>
+<tr>
+<td>B1 · Apertura + extensión</td>
+<td>0:00 → 6:00</td>
+<td>Bienvenida a los nuevos + LA EXTENSIÓN de bonos</td>
+<td>Chat: "PRESENTE"</td>
+</tr>
+<tr>
+<td>B2 · Panelista 1</td>
+<td>6:00 → 18:00</td>
+<td>El ex-Vengador: la historia de pérdidas</td>
+<td>Chat + pregunta guionada</td>
+</tr>
+<tr>
+<td>B3 · Panelista 2</td>
+<td>18:00 → 30:00</td>
+<td>El ex-Impaciente: el relatable</td>
+<td>Encuesta 2: ¿te ves reflejado?</td>
+</tr>
+<tr>
+<td>B4 · Panelista 3</td>
+<td>30:00 → 40:00</td>
+<td>El Reinventor: “no tenía tiempo”</td>
+<td>Chat de profesionales</td>
+</tr>
+<tr>
+<td>B5 · Q&A al panel</td>
+<td>40:00 → 50:00</td>
+<td>El chat pregunta, ellos responden</td>
+<td>Preguntas en vivo</td>
+</tr>
+<tr>
+<td>B6 · Tour + cierre</td>
+<td>50:00 → 60:00</td>
+<td>Tour del área de miembros + recordatorio extensión 11:59</td>
+<td>Encuesta 3 + chat final</td>
+</tr>
+</tbody></table>
+<h2 class="section-heading">El guión, minuto a minuto</h2>
+<table class="custom-table">
+<thead><tr>
+<th>-10:00 → 0:00
+B0 · PRE-SHOW</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Countdown + contador real: “Cupos del Método 3.0: [X]/150 ocupados” + fotos de los 3 panelistas en silueta</span>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 1 (ABIERTA DESDE -10)
+“Si aún no entraste al Método... ¿qué es lo que realmente te frena?”
+A) El dinero — no lo tengo disponible
+B) El tiempo — no sé si puedo cumplirle
+C) La duda — ¿y si a mí no me funciona?
+D) Nada — ya estoy adentro 🎉
+Esta encuesta define qué historia se enfatiza: el panel tiene una respuesta viva para A, B y C.</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>0:00 → 6:00
+B1 · APERTURA — la extensión que premia estar en vivo</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: “LOS BONOS MURIERON A LAS 8:00 P.M.” — que se rompe en pantalla → “EXTENSIÓN SOLO PARA LOS PRESENTES: HOY 11:59 P.M.”</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Primero lo primero: bienvenidos los [X] nuevos miembros del
+Método 3.0. Anoche y hoy no paró de sonar la campana. Los veo
+el lunes en la primera sala.
+ 
+Segundo — y presten atención porque esto es SOLO para los que
+están aquí en vivo: los bonos de acción rápida murieron hace
+exactamente... — miren el reloj — cero minutos. A las 8:00 p.m.,
+como estaba anunciado. PERO. Los que están en esta sala ahora
+mismo se ganaron algo: extensión hasta las 11:59 de ESTA noche.
+Solo ustedes. El replay no tiene extensión. Estar en vivo paga —
+siempre lo dije.
+ 
+Y tercero: hoy yo casi no hablo. Hoy hablan tres personas que
+hace un año — algunos hace menos — estaban EXACTAMENTE donde
+ustedes están: mismo saboteador, mismas dudas, misma encuesta
+que acaban de responder. No les traje testimonios de foto y
+frasecita. Les traje gente real, con bitácoras reales, que va
+a abrir sus números delante de ustedes. Empecemos.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>6:00 → 18:00
+B2 · PANELISTA 1 — el ex-Vengador</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: El panelista en cámara + su bitácora de ANTES (roja, caótica) lista para compartir</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Preguntas guionadas de Juan — el arco completo en 12 minutos:)
+“[NOMBRE], gracias por dar la cara. Empecemos por lo incómodo:
+cuéntales cómo se veía tu peor época. Con números si te atreves.”
+(P1 cuenta el ANTES: la pérdida específica, el ciclo de venganza, el punto más bajo. Juan deja silencio — no rescata)
+“¿Y qué fue lo que casi te impide entrar al Método? Porque tú
+me lo dijiste después: estuviste a nada de no hacerlo.”
+(P1 cuenta la objeción real (típicamente: “ya había gastado en cursos que no sirvieron”) y qué lo hizo cruzar)
+“Muéstrales tu bitácora de hoy. No los resultados — el PROCESO.”
+(P1 comparte pantalla: bitácora actual, la regla anti-Vengador que lo cambió, su racha de semanas siguiendo el plan)
+“Última: si pudieras hablarle al [NOMBRE] de hace un año,
+la noche antes de decidir... ¿qué le dirías?”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ CHAT (MINUTO 16:00)
+CM: “Escriban 🔥 si la historia de [NOMBRE] les sonó familiar. Pregunta para él: escríbanla con P1: adelante.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>18:00 → 30:00
+B3 · PANELISTA 2 — el relatable</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Mismo formato: cámara + bitácora antes/después</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Mismo arco de preguntas, con un matiz: este panelista es el “espejo masivo” — el que más se parece al registrante promedio. Juan lo subraya:)
+“Lo que me gusta de tu historia, [NOMBRE], es que no es de película.
+No perdiste una fortuna — perdiste TIEMPO. Años dando vueltas.
+Cuéntales eso, porque aquí hay miles en ese mismo punto.”
+(P2: el estancamiento, los cursos coleccionados, el patrón Impaciente/Paralizado, y el cambio: “lo que me faltaba no era otro curso — era no estar solo”. La frase de las dos salas diarias como ancla de su rutina)</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 2 (MINUTO 27:00)
+“¿En cuál de las historias del panel te has visto reflejado hasta ahora?”
+A) En la del Vengador — las pérdidas dolorosas
+B) En la del estancamiento — años sin avanzar
+C) En las dos 😔
+D) Todavía en ninguna
+Juan: “Los C... para ustedes existe todo esto. En serio.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>30:00 → 40:00
+B4 · PANELISTA 3 — el Reinventor sin tiempo</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Mismo formato. Este habla al avatar profesional/empresario</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Arco enfocado en la objeción de tiempo y en la seriedad del sistema:)
+“[NOMBRE], tú tienes [empresa/profesión exigente]. La objeción
+número uno de la gente como tú es “no tengo tiempo para esto”.
+Cuéntales tu rutina real con el Método — horas por semana, sin adornos.”
+(P3: la rutina concreta (ej: sala de la mañana 3 veces/semana + rúbrica del domingo = X horas), el enfoque de proceso que le habló a su mentalidad de empresario, y el punto clave: “yo no compré un curso — contraté una estructura, como en mi negocio”)
+“¿Y valió la pena la inversión de $1,497, viéndolo como empresario?”
+(P3 responde en lenguaje de ROI de tiempo y estructura — sin prometer cifras de rentabilidad)</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>40:00 → 50:00
+B5 · Q&A AL PANEL — el chat pregunta</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Los 3 panelistas en grilla + las preguntas del chat destacadas</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Juan modera: elige preguntas del chat y las asigna al panelista más pertinente. Regla: las preguntas incómodas se toman PRIMERO (“¿cuánto has ganado?” → respuesta guionada del panel: “te muestro mi proceso y mi consistencia; cifras no prometo ni comparto — eso fue lo primero que aprendí aquí: el que te promete cifras te está vendiendo humo”). El CM tiene 5 preguntas de reserva por si el chat afloja)
+“Pregunta de [NOMBRE] en el chat: “¿qué pasa si entro y me da
+vergüenza mostrar mi bitácora en las salas?” — [Panelista 2],
+esa es tuya...”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>50:00 → 60:00
+B6 · EL TOUR + CIERRE — así se ve por dentro</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Compartir pantalla: tour REAL del área de miembros, 5 minutos + contador de cupos y reloj de la extensión</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Antes de cerrar, lo que muchos pidieron anoche: el tour.
+Esto es exactamente lo que ven los que entran hoy.
+(Tour de 5 min: los módulos → dónde viven los algoritmos y cómo se instalan → el calendario real de las 2 salas diarias → el canal del coaching y una auditoría de bitácora real (anonimizada) → los Círculos)
+“Eso es. Sin humo: lo que vieron es lo que hay — y lo que hay
+es lo que a estas tres personas les cambió el proceso.
+ 
+Recordatorio final y me despido: la extensión de los bonos
+muere HOY a las 11:59 p.m. — sesión 1:1 de setup y auditoría
+del día 30. Eso no vuelve. La puerta del Método cierra el
+miércoles 11:59. Cupos: quedan [X] de 150.
+ 
+Mañana: Q&A sin filtro. Yo, ustedes, y TODAS las preguntas —
+incluida la matemática que nadie hace: cuánto cobra un saboteador
+al año. Traigan calculadora. 8:00 p.m.
+ 
+Gracias [P1], [P2], [P3] — esta comunidad les debe una.
+Escriban GRACIAS en el chat para ellos. Nos vemos mañana.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 3 — CIERRE (MINUTO 58:00)
+“Después de escuchar al panel, ¿dónde estás?”
+A) Ya adentro 🎉
+B) Decidido — entro esta noche con los bonos
+C) Me queda UNA pregunta (mañana la respondo)
+D) No es mi momento
+El CM etiqueta a los B en WhatsApp de soporte antes de las 11:59. Los C definen el guión de mañana.</th>
+</tr></thead><tbody>
+</tbody></table>
+</body></html>

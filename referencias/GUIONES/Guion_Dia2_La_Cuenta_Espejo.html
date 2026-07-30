@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>LIVE DÍA 2 — LA CUENTA ESPEJO</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #1e293b;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-tag {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #0284c7;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .main-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin: 0 0 4px 0;
+    }
+
+    .meta-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .divider {
+      height: 2px;
+      background: #0284c7;
+      margin-bottom: 20px;
+      border: none;
+    }
+
+    .retention-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 5px solid #0284c7;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+
+    .retention-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0369a1;
+      margin: 0 0 10px 0;
+    }
+
+    .retention-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .retention-box li {
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    h2.section-heading {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    table.custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 11.5px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    table.custom-table th {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 800;
+      text-align: left;
+      padding: 9px 11px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    table.custom-table td {
+      padding: 8px 11px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    table.custom-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .time-bar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .time-bar span.time {
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    .interaction-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-left: 5px solid #10b981;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      color: #064e3b;
+    }
+
+    .interaction-box.yellow {
+      background: #fffbeb;
+      border-color: #fde68a;
+      border-left-color: #f59e0b;
+      color: #78350f;
+    }
+
+    .interaction-title {
+      font-weight: 800;
+      font-size: 12.5px;
+      margin-bottom: 6px;
+    }
+
+    .interaction-box ul {
+      margin: 6px 0 0 0;
+      padding-left: 18px;
+    }
+
+    .dialogue-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #64748b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #1e293b;
+    }
+
+    .dialogue-box p {
+      margin: 0 0 8px 0;
+    }
+
+    .dialogue-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .screen-note {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .tone-notes {
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-left: 5px solid #f97316;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 20px;
+    }
+
+    .tone-notes h3 {
+      margin: 0 0 8px 0;
+      color: #9a3412;
+      font-size: 13.5px;
+      font-weight: 800;
+    }
+
+    .tone-notes ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .tone-notes li {
+      margin-bottom: 5px;
+      color: #431407;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-tag">EL JUEGO MENTAL DEL DINERO  ·  GUIÓN DE PRODUCCIÓN</div>
+  <h1 class="main-title">LIVE DÍA 2 — LA CUENTA ESPEJO</h1>
+  <div class="meta-subtitle">45 minutos · YouTube Live · la bitácora real se abre en pantalla</div>
+  <hr class="divider" />
+
+<h2 class="section-heading">Objetivo del día</h2>
+<p style="margin: 6px 0;">Credibilidad irreversible. Hoy se paga el open loop más grande del día 1: la cuenta real, sin pixelar. La tesis del lanzamiento se demuestra con evidencia: tu cuenta es el espejo de tu mente. Al salir, cada participante debe pensar: “este tipo me mostró lo que TODOS esconden — a este sí le creo”.</p>
+<table class="custom-table">
+<thead><tr>
+<th>Bloque</th>
+<th>Minutos</th>
+<th>Contenido</th>
+<th>Interacción</th>
+</tr></thead><tbody>
+<tr>
+<td>B0 · Pre-show</td>
+<td>-10:00 → 0:00</td>
+<td>Countdown + resultados del Test en pantalla</td>
+<td>Encuesta 1: ¿cuál saboteador te salió?</td>
+</tr>
+<tr>
+<td>B1 · La revelación</td>
+<td>0:00 → 4:00</td>
+<td>El saldo, sin pixelar. Pago del open loop</td>
+<td>Chat: "PRESENTE" + Primera Campana</td>
+</tr>
+<tr>
+<td>B2 · Su saboteador</td>
+<td>4:00 → 8:00</td>
+<td>Lectura de cards del test + contrato del día</td>
+<td>Juan lee 5 resultados por nombre</td>
+</tr>
+<tr>
+<td>B3 · Tour de la bitácora</td>
+<td>8:00 → 15:00</td>
+<td>Los 6 campos de una entrada profesional</td>
+<td>Encuesta 2: ¿qué registro ANTES de entrar?</td>
+</tr>
+<tr>
+<td>B4 · Tres trades</td>
+<td>15:00 → 26:00</td>
+<td>Ganador bien ejecutado · perdedor bien ejecutado · el día que casi firma el Saboteador</td>
+<td>Encuesta 3: ¿cuál fue el MEJOR trade?</td>
+</tr>
+<tr>
+<td>B5 · La tesis</td>
+<td>26:00 → 31:00</td>
+<td>Proceso > resultado. La varianza y la mentira del trade ganador</td>
+<td>Chat storm: "¿ganaste con un trade malo?"</td>
+</tr>
+<tr>
+<td>B6 · Quiz relámpago</td>
+<td>31:00 → 35:00</td>
+<td>3 preguntas (día 1 + hoy)</td>
+<td>Hasta 20 PC</td>
+</tr>
+<tr>
+<td>B7 · Entrenamiento</td>
+<td>35:00 → 41:00</td>
+<td>Meta de proceso + Regla #1 anti-saboteador</td>
+<td>Encuesta 4: compromiso</td>
+</tr>
+<tr>
+<td>B8 · Cliffhanger</td>
+<td>41:00 → 45:00</td>
+<td>Mañana: la primera letra. El documento de 1 página</td>
+<td>Chat final: "NOS VEMOS"</td>
+</tr>
+</tbody></table>
+<h2 class="section-heading">El guión, minuto a minuto</h2>
+<table class="custom-table">
+<thead><tr>
+<th>-10:00 → 0:00
+B0 · PRE-SHOW</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Countdown + gráfica en vivo de los resultados del Test del Saboteador de la comunidad (se actualiza sola)</span>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 1 (ABIERTA DESDE EL MINUTO -10)
+“¿Cuál saboteador te salió en el test?”
+A) EL VENGADOR · B) EL EUFÓRICO · C) EL IMPACIENTE · D) EL PARALIZADO · E) No lo he hecho 😳
+CM en el chat: “Los que votaron E todavía alcanzan: [link]. Juan lee los resultados más brutales en 10 minutos.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>0:00 → 4:00
+B1 · LA REVELACIÓN — el saldo sin pixelar</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: La misma captura borrosa del cierre de ayer... que se desenfoca en vivo hasta mostrar el saldo real</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Sin saludo. La pantalla comparte la plataforma real desde el segundo 1)
+“Ayer les prometí algo que ningún educador de este mercado hace.
+No vine a hablarles de eso. Vine a hacerlo.
+ 
+Esta es mi cuenta. Este es el saldo. Hoy. En vivo.
+No es una demo. No es una cuenta fondeada de mentiras.
+Es la cuenta donde está mi dinero, y va a estar abierta
+los próximos nueve días — con lo que gane y con lo que pierda.
+ 
+¿Por qué hago esto? Por una razón muy simple:
+este mercado está lleno de gente vendiendo resultados que no existen.
+Y la única vacuna contra eso es la evidencia.
+No les pido que me crean. Les pido que MIREN.
+ 
+Primera Campana pagada — los puntuales ya tienen sus 35 puntos.
+Escriban PRESENTE con su ciudad. Hoy hay mucho que ver.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>4:00 → 8:00
+B2 · SU SABOTEADOR — la comunidad se reconoce</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Gráfica de resultados de la Encuesta 1 + cards destacadas del test publicadas anoche</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Antes de entrar a la cuenta, miren esto. Anoche más de [X] personas
+hicieron el test. Y el saboteador dominante de esta comunidad es...
+(Revela la gráfica. Comenta el ganador con humor y respeto)
+...el [ARQUETIPO]. Interesante. Eso me dice exactamente qué
+entrenamiento necesita este grupo — lo van a notar en los próximos días.
+ 
+Leí sus cards anoche. Algunas me dolieron de familiares:
+(Lee 4–5 resultados con nombre: “Andrea, Vengadora, escribió: mi saboteador me hizo perder en una tarde lo de tres meses...”)
+ 
+El contrato de hoy: les voy a mostrar TRES trades de esta cuenta,
+documentados. Uno ganador. Uno perdedor. Y uno donde el que casi
+opera no era yo. Al final vamos a votar cuál fue el mejor de los tres —
+y les adelanto: el 90% va a votar mal. En el minuto 38, la Regla #1
+que me protege desde hace años. No se muevan.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>8:00 → 15:00
+B3 · TOUR DE LA BITÁCORA — cómo documenta un profesional</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: La bitácora real: una entrada completa ampliada, campo por campo</span>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 2 (MINUTO 9:00) — SE LANZA ANTES DE MOSTRAR LOS CAMPOS
+“¿Qué crees que registro ANTES de entrar a un trade?”
+A) El precio de entrada y ya
+B) Entrada y stop
+C) Entrada, stop, tamaño y razón
+D) Todo eso + cómo me siento
+Twist: la respuesta es D — y el campo emocional es el que detecta al saboteador. Quien votó A–C acaba de descubrir su brecha.</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>“Una entrada de mi bitácora tiene seis campos. Escúchenlos bien
+porque esta semana ustedes van a llenar los suyos:
+ 
+Uno: el PLAN — escenario, entrada, invalidación, riesgo. ANTES de entrar.
+Dos: la EJECUCIÓN — qué hice realmente versus qué decía el plan.
+Tres: el RESULTADO — números fríos, sin adjetivos.
+Cuatro: el CONTEXTO — qué estaba pasando en el mercado y en mi día.
+Cinco: el ESTADO — qué sentí antes, durante y después. Sí, se escribe.
+Seis: la LECCIÓN — una línea. Qué repito, qué no repito.
+ 
+El campo cinco es el que nadie llena. Y es exactamente donde
+tu saboteador deja huellas digitales. “Entré porque llevaba dos días
+sin operar” — eso, escrito veinte veces, tiene nombre: Impaciente.
+La bitácora no es contabilidad. Es un detector de saboteadores.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>15:00 → 26:00
+B4 · TRES TRADES — la evidencia</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Trade 1 (ganador), Trade 2 (perdedor), Trade 3 (el del Saboteador) — bitácora real en pantalla</span>
+<table class="custom-table">
+<thead><tr>
+<th>“TRADE UNO. [Activo], hace [X] semanas. Plan escrito la noche anterior:
+escenario, entrada, invalidación clara, riesgo definido. Se dio el
+escenario, ejecuté, el mercado pagó. ¿Ven algo heroico aquí? No.
+Aburrido como una lista de chequeo. Así se ve ganar bien.
+ 
+TRADE DOS. Pérdida completa hasta la invalidación. Miren el campo
+cinco: “tranquilo — el plan contemplaba este escenario”. Perdí
+exactamente lo que decidí arriesgar CUANDO estaba lúcido, tres días
+antes. El mercado no me quitó nada: yo le pagué el precio de entrada
+a una probabilidad. Guarden esta frase: una pérdida planeada
+no es un fracaso — es un costo operativo.
+ 
+TRADE TRES. Este me cuesta mostrarlo. [Fecha]: venía de dos pérdidas
+seguidas. Miren lo que escribí en el campo cinco esa mañana:
+“ganas de recuperar rápido”. Mi Vengador, despierto y con hambre.
+¿Ven este número? Estuve a un clic de triplicar el tamaño de la posición.
+A UN CLIC. ¿Qué me detuvo? No mi disciplina. No mi experiencia.
+Esta línea del plan: riesgo máximo diario alcanzado = plataforma cerrada.
+Una regla escrita por el Juan lúcido del domingo le ganó el pulso
+al Vengador del miércoles. ESO es un sistema.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 3 (MINUTO 24:00) — LA VOTACIÓN CON TWIST
+“¿Cuál de los tres fue el MEJOR trade?”
+A) El ganador — obvio
+B) El perdedor que siguió el plan
+C) El que no se tomó (el del Saboteador)
+Juan: “Los que votaron B y C ya están entendiendo el juego. El mejor trade de mi año fue uno que NO tomé. Si eso te suena raro todavía, quédate — mañana empieza a tener todo el sentido.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>26:00 → 31:00
+B5 · LA TESIS — proceso sobre resultado</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: “UN TRADE NO TE DICE NADA. CIEN TRADES TE LO DICEN TODO.”</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Aquí va la idea más antinatural de todo el trading — y la más importante:
+el resultado de UN trade no dice absolutamente nada sobre tu calidad
+como operador. Puedes hacer todo mal y ganar. Todo bien y perder.
+En muestras cortas, el azar grita y el proceso susurra.
+ 
+Por eso el casino siempre gana: no porque gane cada mano —
+pierde manos todo el día — sino porque su proceso tiene ventaja
+y lo repite un millón de veces sin emocionarse.
+ 
+Tu saboteador vive de leer resultados: ganó → soy un genio,
+perdió → soy un desastre / el mercado está manipulado.
+El operador profesional lee procesos: ¿seguí mi plan? Sí o no.
+Lo demás es varianza.
+ 
+Y esa es la meta REAL de estos 10 días. No prometerte que vas a ganar
+la próxima semana — el que te prometa eso, huye. Es cambiarte
+el marcador: de contar plata diaria a contar decisiones bien tomadas.
+La plata llega como consecuencia. Siempre llega después.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ CHAT STORM (MINUTO 30:00)
+Juan: “Confiesen: ¿alguna vez GANARON con un trade horrible — sin plan, pura suerte? Escríbanlo. Ese trade ganador fue el más caro de sus vidas: les enseñó que se puede sin proceso.”
+Juan lee 3–4 y remata: “El peor regalo del mercado es pagarte un error. Apunten esa.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>31:00 → 35:00
+B6 · QUIZ RELÁMPAGO — hasta 20 PC</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ QUIZ (3 PREGUNTAS, 30 SEGUNDOS CADA UNA)
+Q1: “¿Cuál es el campo de la bitácora donde el saboteador deja huellas?” A) El plan · B) El resultado · C) El estado emocional ✓ · D) La lección
+Q2: “Una pérdida que siguió el plan es...” A) Un fracaso · B) Un costo operativo ✓ · C) Mala suerte · D) Señal de salir del mercado
+Q3: “¿Qué le ganó el pulso al Vengador de Juan en el trade 3?” A) Su experiencia · B) Su disciplina · C) Una regla escrita con anticipación ✓ · D) Un consejo
+Juan celebra a los primeros en acertar por nombre. El CM registra para el leaderboard.</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>35:00 → 41:00
+B7 · EL ENTRENAMIENTO — meta de proceso + Regla #1</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Plantilla del entrenamiento: “MI META DE PROCESO” + “MI REGLA #1” + ejemplos por arquetipo</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Su entrenamiento de hoy tiene dos partes y toma diez minutos.
+ 
+Parte uno: tu META DE PROCESO para estos 10 días. No “ganar $2,000” —
+eso no depende de ti y tu saboteador lo sabe. Algo como: “asistir
+a los 10 lives y completar los 10 entrenamientos”. Eso SÍ depende de ti.
+ 
+Parte dos: tu REGLA #1 ANTI-SABOTEADOR. Una sola regla, escrita,
+diseñada contra TU arquetipo del test. Les doy las cuatro de fábrica:
+ 
+Vengador: “Después de 2 pérdidas seguidas, cierro la plataforma hasta mañana.”
+Eufórico: “Después de 3 ganadoras, el tamaño de mi posición NO sube.”
+Impaciente: “Si no está en mi plan escrito de anoche, no existe.”
+Paralizado: “Si el plan dice entrada, ejecuto en los primeros 2 minutos.”
+ 
+Publiquen las dos cosas en la comunidad — 30 Puntos de Control.
+Y háganlo esta noche: la regla que se escribe mañana no protege hoy.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 4 — COMPROMISO (MINUTO 40:00)
+“¿Tu Regla #1 va a estar publicada esta noche?”
+A) Sí, apenas termine el live · B) Antes de dormir · C) Mañana (mi saboteador votó por mí 😅)
+Juan: “Miren la C... por lo menos ya lo reconocen. Es el primer paso.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>41:00 → 45:00
+B8 · EL CLIFFHANGER — el documento de una página</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide final: una hoja de papel en blanco con un signo de interrogación + “MAÑANA 8:00 P.M.”</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Última cosa. Mañana empezamos a entrenar el sistema, letra por letra.
+La primera letra es la P — y viene con esto:
+ 
+Les voy a mostrar el documento de UNA página que separa
+a los que duran décadas en este negocio de los que desaparecen
+en 18 meses. Una página. La escribo en vivo, delante de ustedes,
+sobre el mercado de mañana.
+ 
+Y ojo: mañana también lanzo la misión que puede hacerte famoso
+en esta comunidad. Más no digo.
+ 
+Escriban NOS VEMOS si mañana están a las 8 en punto.
+Su tarea de hoy: meta de proceso + Regla #1. 30 puntos.
+La cuenta queda abierta. El espejo también. Buenas noches.”</th>
+</tr></thead><tbody>
+</tbody></table>
+</body></html>

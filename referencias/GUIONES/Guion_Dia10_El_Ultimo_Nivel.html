@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>LIVE DÍA 10 — EL ÚLTIMO NIVEL</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #1e293b;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-tag {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #0284c7;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .main-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin: 0 0 4px 0;
+    }
+
+    .meta-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .divider {
+      height: 2px;
+      background: #0284c7;
+      margin-bottom: 20px;
+      border: none;
+    }
+
+    .retention-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 5px solid #0284c7;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+
+    .retention-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0369a1;
+      margin: 0 0 10px 0;
+    }
+
+    .retention-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .retention-box li {
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    h2.section-heading {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    table.custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 11.5px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    table.custom-table th {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 800;
+      text-align: left;
+      padding: 9px 11px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    table.custom-table td {
+      padding: 8px 11px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    table.custom-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .time-bar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .time-bar span.time {
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    .interaction-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-left: 5px solid #10b981;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      color: #064e3b;
+    }
+
+    .interaction-box.yellow {
+      background: #fffbeb;
+      border-color: #fde68a;
+      border-left-color: #f59e0b;
+      color: #78350f;
+    }
+
+    .interaction-title {
+      font-weight: 800;
+      font-size: 12.5px;
+      margin-bottom: 6px;
+    }
+
+    .interaction-box ul {
+      margin: 6px 0 0 0;
+      padding-left: 18px;
+    }
+
+    .dialogue-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #64748b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #1e293b;
+    }
+
+    .dialogue-box p {
+      margin: 0 0 8px 0;
+    }
+
+    .dialogue-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .screen-note {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .tone-notes {
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-left: 5px solid #f97316;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 20px;
+    }
+
+    .tone-notes h3 {
+      margin: 0 0 8px 0;
+      color: #9a3412;
+      font-size: 13.5px;
+      font-weight: 800;
+    }
+
+    .tone-notes ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .tone-notes li {
+      margin-bottom: 5px;
+      color: #431407;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-tag">EL JUEGO MENTAL DEL DINERO  ·  GUIÓN DE PRODUCCIÓN</div>
+  <h1 class="main-title">LIVE DÍA 10 — EL ÚLTIMO NIVEL</h1>
+  <div class="meta-subtitle">60 minutos · YouTube Live · ceremonia de premiación + campana de cierre 11:59 p.m.</div>
+  <hr class="divider" />
+
+<h2 class="section-heading">Objetivo del día</h2>
+<p style="margin: 6px 0;">El pico de asistencia del juego: la premiación obliga a estar en vivo, y el live de la premiación es donde ocurren las últimas ventas. Estructura emocional: celebración (subir) → nostalgia del viaje (conectar) → oferta final de 5 minutos sin rodeos (convertir) → cierre épico (sellar la marca para el próximo lanzamiento). La página de ventas cae a las 12:00 en punto — de verdad.</p>
+<p style="margin: 6px 0;">Regla de oro del cierre: la ceremonia es GENUINA — los premios se entregan con la misma producción que una final deportiva. Un cierre celebratorio vende más que un cierre suplicante, y deja la marca lista para la Temporada 2.</p>
+<p style="margin: 6px 0;">Producción: música de ceremonia, plantillas gráficas por ganador (foto + PC + arquetipo), becas con “sobre cerrado” (el nombre se revela en vivo), y el contador de cupos + reloj de cierre SIEMPRE visibles en un rincón desde el minuto 30.</p>
+<div class="time-bar"><span>Post-live (23:00–23:59): el equipo completo en WhatsApp de soporte. Último email a las 9:00 p.m., último push a las 11:00 p.m. A las 12:00, la página muestra “CERRADO — lista de espera” sin excepciones: la credibilidad del próximo lanzamiento se compra esta noche.</span></div>
+<table class="custom-table">
+<thead><tr>
+<th>Bloque</th>
+<th>Minutos</th>
+<th>Contenido</th>
+<th>Interacción</th>
+</tr></thead><tbody>
+<tr>
+<td>B0 · Pre-show</td>
+<td>-15:00 → 0:00</td>
+<td>Montaje de los 10 días + expectativa de premiación</td>
+<td>Encuesta 1: ¿tu estado mental final?</td>
+</tr>
+<tr>
+<td>B1 · Apertura épica</td>
+<td>0:00 → 6:00</td>
+<td>El viaje en números + qué pasa hoy</td>
+<td>Chat: "ÚLTIMA CAMPANA"</td>
+</tr>
+<tr>
+<td>B2 · Los momentos</td>
+<td>6:00 → 14:00</td>
+<td>El recap emocional: mejores momentos del juego</td>
+<td>Chat: tu momento favorito</td>
+</tr>
+<tr>
+<td>B3 · PREMIACIÓN</td>
+<td>14:00 → 34:00</td>
+<td>La ceremonia completa: top 10, Círculo, referidor, BECAS</td>
+<td>El evento social del lanzamiento</td>
+</tr>
+<tr>
+<td>B4 · El espejo final</td>
+<td>34:00 → 42:00</td>
+<td>REACTIVO → hoy: la transformación medida + Encuesta comparada</td>
+<td>Encuesta 2: antes vs. ahora</td>
+</tr>
+<tr>
+<td>B5 · La última oferta</td>
+<td>42:00 → 50:00</td>
+<td>5 minutos sin rodeos + cuenta regresiva real</td>
+<td>Compras en vivo</td>
+</tr>
+<tr>
+<td>B6 · La campana</td>
+<td>50:00 → 60:00</td>
+<td>Q&A relámpago final + el discurso de cierre + campana</td>
+<td>Chat final: "GRACIAS"</td>
+</tr>
+</tbody></table>
+<h2 class="section-heading">El guión, minuto a minuto</h2>
+<table class="custom-table">
+<thead><tr>
+<th>-15:00 → 0:00
+B0 · PRE-SHOW — la final</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Montaje: los mejores momentos de los 10 días (clips, cards, frases del chat, el muro #JuegoMental) + “HOY: PREMIACIÓN EN VIVO”</span>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 1 (ABIERTA DESDE -15)
+“Día 10. Con la mano en el corazón: ¿en qué estado mental terminas el juego?”
+A) REACTIVO todavía — pero ya lo veo venir
+B) CONSCIENTE — sé exactamente cuál es mi patrón
+C) ENFOCADO — tengo contrato, regla y bitácora andando
+D) EN FLOW — esta semana operé/planeé mejor que en años
+El resultado se compara EN VIVO con la encuesta del día 1 en el bloque B4 — preparar la gráfica comparativa.</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>0:00 → 6:00
+B1 · APERTURA ÉPICA — el juego en números</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Los números del juego cayendo uno a uno: registrados, entrenamientos publicados, cards compartidas, países</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Energía de final de mundial desde el segundo 1)
+“Hace diez días esto era una idea loca: hacerle un juego mental
+al dinero. Miren lo que construyeron USTEDES:
+[X] mil personas registradas. [X] entrenamientos publicados.
+[X] cards de saboteadores compartidas. [X] países conectados
+a la misma hora, diez noches seguidas. Y una comunidad donde
+la gente publica sus PEORES trades con orgullo — eso no existía
+en el trading en español hasta esta semana.
+ 
+Hoy es la final. El programa de esta noche: primero, los momentos
+que no se me van a olvidar. Después — lo que todos están esperando —
+la PREMIACIÓN: el top 10, el mejor Círculo, el mejor referidor...
+y las becas. Los sobres están cerrados, ni el equipo sabe.
+Y al final, a las 11:59, sueno la campana de cierre — y este
+juego pasa a la historia.
+ 
+Escriban ÚLTIMA CAMPANA si llegaron hasta aquí. Racha perfecta
+se consolida esta noche: +100 puntos a los 10 de 10. Empezamos.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>6:00 → 14:00
+B2 · LOS MOMENTOS — el recap emocional</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Los 5 momentos del juego, con capturas reales: la mejor card del test, el mejor "trade del saboteador", la frase más brutal del chat, el momento Geny, la bitácora más honesta</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Recap curado: 5 momentos, 90 segundos cada uno, con nombre y apellido de sus protagonistas. Esto es nostalgia estratégica: revivir el viaje sube el valor percibido de TODO — incluido el Método)
+“Momento uno: la noche del test, cuando [NOMBRE] publicó su card
+de Vengadora con la frase “por fin sé cómo se llama lo que me
+pasa” — y 400 personas comentaron “yo también”...
+(...continúa con los 5. El último momento SIEMPRE es del día 7: “y el domingo, cuando [primer comprador] escribió en el chat: ya estoy adentro, nos vemos el lunes en la sala”)</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ CHAT STORM (MINUTO 13:00)
+Juan: “Antes de premiar: escriban SU momento favorito del juego. El que se les quedó. Leo tres mientras preparan los sobres...”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>14:00 → 34:00
+B3 · LA PREMIACIÓN — la ceremonia</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Ceremonia completa con gráficas por ganador. Los sobres de las becas al final</span>
+<table class="custom-table">
+<thead><tr>
+<th>(ORDEN DE LA CEREMONIA (de menor a mayor, como toda buena premiación):)
+“¡LA PREMIACIÓN! Reglas: cada ganador que esté en vivo pasa
+al micrófono 30 segundos. Los que no están... ya saben la regla
+del juego: estar en vivo paga. Sus premios pasan al siguiente
+en la tabla. — Es broma... ¿o no? Averigüémoslo.
+ 
+[1. RACHA PERFECTA — minuto 15] Los 10 de 10: [X] personas.
+Sus +100 puntos ya están acreditados y el certificado va por
+correo. El sorteo de la sesión 1:1 entre ellos... — se sortea
+EN VIVO — ...¡[NOMBRE]! Treinta segundos al micrófono.
+ 
+[2. TOP 10 — minuto 17] Del décimo al cuarto puesto, uno a uno,
+con su gráfica: nombre, puntos, arquetipo, y su mejor momento
+del juego. Tres meses de algoritmos cada uno.
+ 
+[3. PODIO — minuto 23] Tercero y segundo: seis meses de Geny
+y Sniper. Micrófono para cada uno.
+ 
+[4. EL MEJOR CÍRCULO — minuto 26] El Círculo [NOMBRE]: promedio
+de [X] puntos entre cinco personas — CINCO. Eso es un entorno
+funcionando, señores. Su sesión grupal de bitácoras conmigo
+queda agendada.
+ 
+[5. EL MEJOR REFERIDOR — minuto 28] [NOMBRE] trajo [X] personas
+que ENTRENARON — no solo se registraron. Beca completa. Sobre uno,
+abierto en vivo.
+ 
+[6. LA BECA DEL CAMPEÓN — minuto 30] Y el número UNO del
+leaderboard... [pausa larga, sobre en mano] ...con [X] Puntos
+de Control, arquetipo [X], racha perfecta y [dato personal]:
+¡¡[NOMBRE]!! ¡BECA COMPLETA DEL MÉTODO INGRESARIOS 3.0!
+(Micrófono al campeón, 60 segundos. Si llegó el hito colectivo de 5,000: las DOS becas adicionales se sortean aquí — el clímax absoluto del juego)
+“...y con eso, el leaderboard pasa a la historia. Aplausos
+en el chat para TODOS los que jugaron. Esto fue hermoso.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>34:00 → 42:00
+B4 · EL ESPEJO FINAL — la transformación medida</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Gráfica comparada: la encuesta del Día 1 vs. la Encuesta 1 de hoy, lado a lado</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Bajemos las revoluciones un minuto, porque quiero mostrarles
+el premio de verdad — el que se llevan TODOS.
+ 
+Esta gráfica de la izquierda es la encuesta del día uno:
+la mayoría de ustedes perdiendo “más de lo que quería admitir”,
+sin plan escrito, sin bitácora, sin saber por qué.
+Y esta de la derecha es la de hace 40 minutos: miren cuánta
+gente en CONSCIENTE, en ENFOCADO... hay gente en FLOW.
+En DIEZ DÍAS. Sin que yo les vendiera un solo indicador mágico —
+solo con nombre, sistema y testigos.
+ 
+Eso los cambió a ustedes. Y ahora imaginen la de la derecha
+después de UN AÑO de salas diarias, coaching y bitácora auditada.
+Esa gráfica existe — la veo cada año en los estudiantes del Método.
+No es magia: es entorno multiplicado por tiempo.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 2 (MINUTO 40:00)
+“Última encuesta del juego: ¿qué fue lo más valioso de estos 10 días?”
+A) Ponerle nombre a mi saboteador
+B) El sistema — plan, bitácora, rúbrica
+C) Ver una cuenta real sin maquillaje
+D) La comunidad — no estar solo en esto
+Juan: “Miren la D... y eso que solo fueron 10 días. Ahora sí: hablemos por última vez de la puerta que se cierra en dos horas.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>42:00 → 50:00
+B5 · LA ÚLTIMA OFERTA — cinco minutos, sin rodeos</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: El stack completo + precio + reloj de cuenta regresiva REAL hacia las 11:59 + cupos restantes</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Sin preámbulos ni disculpas. Directo, sereno, definitivo)
+“La última vez que lo digo, en cinco minutos y sin adornos.
+ 
+El Método INGRESARIOS 3.0: la formación completa de PEDEM,
+Geny Trend y Reditum Sniper doce meses, un año de coaching
+con tu bitácora auditada, dos salas en vivo al día durante
+un año, mi bitácora abierta y la comunidad con tu Círculo
+permanente. Trece mil quinientos dólares de valor real.
+Esta noche: $1,497, o tres cuotas de $597.
+ 
+Quedan [X] cupos de los 150. El reloj que ven en pantalla
+es real: a las 11:59 la página muestra CERRADO y no hay
+“es que no alcancé”. El año pasado tres personas me escribieron
+a las 12:07. Siguen esperando el próximo lanzamiento.
+ 
+A quién SÍ es esta puerta: al que jugó estos 10 días y sintió
+la diferencia de operar con sistema y testigos. Al que ya hizo
+la cuenta de la nómina de su saboteador. Al que no quiere
+llegar al próximo enero con la misma gráfica.
+ 
+A quién NO: al que busca señales mágicas para hacerse rico
+el martes — les dije nueve veces que eso no existe y no me
+canso: no existe. Y al que pagaría con plata que necesita
+para vivir. A esos dos: no entren. En serio.
+ 
+Los demás: el link está en el chat. Dos horas.
+Nos vemos el lunes a las 9 en la sala — o el año que viene
+en el próximo juego. Las dos opciones son respetables.
+Solo una cambia tu década.”
+(CM celebra compras en vivo por nombre durante todo el bloque)</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>50:00 → 60:00
+B6 · LA CAMPANA — el cierre del juego</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Q&A relámpago → luego pantalla final: el logo del juego + “TEMPORADA 1 · 2026” + la campana</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Q&A relámpago 6–7 minutos: solo preguntas de cierre (cuotas, acceso, cuándo empieza). Respuestas de 30 segundos. Luego, el discurso final:)
+“Y llegamos. Último discurso del juego — es corto.
+ 
+Hace diez días les dije que el que quiebra sus cuentas no era
+el mercado, y algunos no me creyeron. Hoy su saboteador tiene
+nombre, cara, frase favorita y modus operandi. Ya no puede
+operar en la oscuridad — y eso, se queden o se vayan, ya lo
+ganaron para siempre. Nadie les puede devolver la venda.
+ 
+Gracias por jugar en serio. Gracias por las bitácoras honestas,
+por los trades confesados, por las 10 noches puntuales.
+Este fue el Juego Mental del Dinero, Temporada Uno.
+Y sí — dije Temporada UNO.
+ 
+A los del Método: lunes, 9 a.m., primera sala. Lleguen con
+su bitácora. A todos los demás: el contenido sigue, la comunidad
+sigue, y yo sigo aquí — con la cuenta abierta, como siempre.
+ 
+Escriban GRACIAS en el chat — no para mí: para ustedes,
+para su Círculo, para el que confesó su peor trade y les ahorró
+repetirlo.
+(Deja correr el chat 20 segundos en silencio, leyéndolo)
+“...se cierra el juego. Suena la campana.
+Tu saboteador ya sabe que lo estás mirando.
+Que no se te olvide a ti. Buenas noches.”
+(CAMPANA. Corte a pantalla final con el reloj corriendo hacia las 11:59 y el link. FIN DEL JUEGO.)</th>
+</tr></thead><tbody>
+</tbody></table>
+</body></html>

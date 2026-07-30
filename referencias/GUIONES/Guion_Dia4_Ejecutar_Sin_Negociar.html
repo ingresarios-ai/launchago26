@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>LIVE DÍA 4 — E: EJECUTAR SIN NEGOCIAR</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #1e293b;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-tag {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #0284c7;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .main-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin: 0 0 4px 0;
+    }
+
+    .meta-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .divider {
+      height: 2px;
+      background: #0284c7;
+      margin-bottom: 20px;
+      border: none;
+    }
+
+    .retention-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 5px solid #0284c7;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+
+    .retention-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0369a1;
+      margin: 0 0 10px 0;
+    }
+
+    .retention-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .retention-box li {
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    h2.section-heading {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    table.custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 11.5px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    table.custom-table th {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 800;
+      text-align: left;
+      padding: 9px 11px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    table.custom-table td {
+      padding: 8px 11px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    table.custom-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .time-bar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .time-bar span.time {
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    .interaction-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-left: 5px solid #10b981;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      color: #064e3b;
+    }
+
+    .interaction-box.yellow {
+      background: #fffbeb;
+      border-color: #fde68a;
+      border-left-color: #f59e0b;
+      color: #78350f;
+    }
+
+    .interaction-title {
+      font-weight: 800;
+      font-size: 12.5px;
+      margin-bottom: 6px;
+    }
+
+    .interaction-box ul {
+      margin: 6px 0 0 0;
+      padding-left: 18px;
+    }
+
+    .dialogue-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #64748b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #1e293b;
+    }
+
+    .dialogue-box p {
+      margin: 0 0 8px 0;
+    }
+
+    .dialogue-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .screen-note {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .tone-notes {
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-left: 5px solid #f97316;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 20px;
+    }
+
+    .tone-notes h3 {
+      margin: 0 0 8px 0;
+      color: #9a3412;
+      font-size: 13.5px;
+      font-weight: 800;
+    }
+
+    .tone-notes ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .tone-notes li {
+      margin-bottom: 5px;
+      color: #431407;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-tag">EL JUEGO MENTAL DEL DINERO  ·  GUIÓN DE PRODUCCIÓN</div>
+  <h1 class="main-title">LIVE DÍA 4 — E: EJECUTAR SIN NEGOCIAR</h1>
+  <div class="meta-subtitle">45 minutos · YouTube Live · demo en vivo de Geny Trend + reacción al UGC viral</div>
+  <hr class="divider" />
+
+<h2 class="section-heading">Objetivo del día</h2>
+<p style="margin: 6px 0;">Primer contacto con el producto: la demo de Geny Trend se vive como contenido, no como venta. La apertura reacciona al UGC de la misión viral (la gente vuelve para ver si su trade sale al aire). Tesis del día: el mejor plan muere en el clic — la ejecución es donde el Saboteador negocia, y el algoritmo es la parte de tu mente que no siente.</p>
+<table class="custom-table">
+<thead><tr>
+<th>Bloque</th>
+<th>Minutos</th>
+<th>Contenido</th>
+<th>Interacción</th>
+</tr></thead><tbody>
+<tr>
+<td>B0 · Pre-show</td>
+<td>-10:00 → 0:00</td>
+<td>Countdown + muro de #JuegoMental</td>
+<td>Encuesta 1: ¿qué pasa cuando ejecutas?</td>
+</tr>
+<tr>
+<td>B1 · Los confesados</td>
+<td>0:00 → 8:00</td>
+<td>Reacción a los mejores "Trades del Saboteador"</td>
+<td>Chat + votación de la mejor historia</td>
+</tr>
+<tr>
+<td>B2 · El contrato</td>
+<td>8:00 → 11:00</td>
+<td>Promesa + open loops (min 20: Geny en vivo)</td>
+<td>Resultado encuesta 1</td>
+</tr>
+<tr>
+<td>B3 · La brecha</td>
+<td>11:00 → 19:00</td>
+<td>Plan vs. clic: las 3 negociaciones del Saboteador</td>
+<td>Encuesta 2: ¿cuál negocias tú?</td>
+</tr>
+<tr>
+<td>B4 · DEMO GENY TREND</td>
+<td>19:00 → 30:00</td>
+<td>El copiloto sin ego lee el mercado en vivo</td>
+<td>Encuesta 3: ¿tendencia o rango? → Geny responde</td>
+</tr>
+<tr>
+<td>B5 · Humano + máquina</td>
+<td>30:00 → 34:00</td>
+<td>El algoritmo no reemplaza tu criterio: reemplaza tu emoción</td>
+<td>Chat: "COPILOTO"</td>
+</tr>
+<tr>
+<td>B6 · Quiz relámpago</td>
+<td>34:00 → 38:00</td>
+<td>3 preguntas</td>
+<td>Hasta 20 PC</td>
+</tr>
+<tr>
+<td>B7 · Entrenamiento</td>
+<td>38:00 → 42:00</td>
+<td>Paper trade con plantilla completa</td>
+<td>Encuesta 4: compromiso</td>
+</tr>
+<tr>
+<td>B8 · Cliffhanger</td>
+<td>42:00 → 45:00</td>
+<td>Mañana: la letra que nadie quiere + checkpoint con premios</td>
+<td>Chat final: "NOS VEMOS"</td>
+</tr>
+</tbody></table>
+<h2 class="section-heading">El guión, minuto a minuto</h2>
+<table class="custom-table">
+<thead><tr>
+<th>-10:00 → 0:00
+B0 · PRE-SHOW</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Muro en vivo de publicaciones #JuegoMental rotando + countdown</span>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 1 (ABIERTA DESDE EL MINUTO -10)
+“Llega el momento de ejecutar tu plan. ¿Qué pasa realmente?”
+A) Ejecuto tal cual — soy una máquina
+B) Dudo, entro tarde y peor
+C) Cambio el plan “en caliente”
+D) A veces... no entro
+CM en el chat: “Hoy Juan lee los Trades del Saboteador al aire. Si publicaste, quédate — puede salir el tuyo.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>0:00 → 8:00
+B1 · LOS CONFESADOS — el UGC al aire</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Las 4–5 mejores publicaciones de "El trade de mi Saboteador", una por una</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Energía alta desde el segundo 1)
+“Anoche esta comunidad hizo algo que el 99% de los traders no hace
+en toda su carrera: confesar. Leí más de [X] trades del saboteador
+y les juro que dormí orgulloso. Vamos a ver los mejores.
+(Lee 4–5 al aire. Formato por cada uno: lee la historia (30 seg) → diagnóstico del arquetipo (“esto es un Vengador de libro, miren la firma...”) → la cláusula que lo habría bloqueado (30 seg). Nombra al autor y pide aplauso en el chat)
+“...y el premio de la comunidad — la historia más votada — es para
+[NOMBRE]. Puntos dobles. Su historia le va a ahorrar plata a más
+de uno de los que están aquí. Eso vale más que un trade ganador.
+ 
+Primera Campana pagada. Y ahora — hoy es el día que les prometí:
+van a conocer a Geny. Pero primero necesito mostrarles POR QUÉ
+existe. Porque sin el problema, la solución parece un juguete.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>8:00 → 11:00
+B2 · EL CONTRATO DEL DÍA</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Resultado de la Encuesta 1: la brecha de ejecución en números</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Miren la encuesta: casi nadie votó A. La mayoría duda, cambia
+o no entra. Eso tiene nombre: la brecha de ejecución. El espacio
+entre la página que escribiste anoche y el clic de hoy.
+En esa brecha vive tu saboteador — y ahí es donde cobra.
+ 
+Contrato de hoy: primero, las tres negociaciones exactas con las
+que el saboteador destruye planes perfectos. Después, en el minuto 20,
+el copiloto: Geny Trend leyendo el mercado real, en vivo, delante
+de ustedes. Y les advierto: van a querer preguntarle cosas.
+Habrá momento para eso.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>11:00 → 19:00
+B3 · LA BRECHA — las 3 negociaciones del Saboteador</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: “TU SABOTEADOR NO ROMPE EL PLAN. LO NEGOCIA.” + las 3 negociaciones</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Aquí está la parte fina. Tu saboteador casi nunca rompe el plan
+de frente — eso sería muy obvio. Lo NEGOCIA. Con tu propia voz.
+Con argumentos que suenan razonables. Tres negociaciones clásicas:
+ 
+NEGOCIACIÓN UNO: “el stop está muy cerca, dale un poco más de aire”.
+Suena a prudencia. Es el Vengador moviendo la invalidación para
+no realizar la pérdida. El aire que le das al trade se lo quitas
+a tu cuenta. Un stop que se mueve una vez, se mueve infinitas veces.
+ 
+NEGOCIACIÓN DOS: “entra ya, no esperes la confirmación — se va sin ti”.
+Suena a decisión. Es el Impaciente adelantando la entrada del plan.
+Entrar 15 minutos antes de tu señal no es ser rápido: es operar
+OTRO trade, uno que nadie planeó, con la estadística de nadie.
+ 
+NEGOCIACIÓN TRES: “esta está clarísima, métele el doble”.
+Suena a convicción. Es el Eufórico tocando el tamaño de la posición.
+El tamaño es la única variable que convierte un error normal
+en una catástrofe. Por eso se decide en frío o no se decide.
+ 
+¿Notan el patrón? Las tres negociaciones atacan números que ya
+estaban decididos: la invalidación, la entrada, el tamaño.
+El saboteador no discute ideas — discute NÚMEROS en caliente.
+La ejecución profesional es una sola frase: los números de anoche
+no se negocian hoy.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 2 (MINUTO 17:30)
+“¿Cuál de las 3 negociaciones te ha costado más dinero?”
+A) Mover el stop “para darle aire”
+B) Adelantar la entrada por miedo a perderme el movimiento
+C) Agrandar el tamaño porque “estaba clarísima”
+D) Las tres, en la misma semana 💀
+Juan comenta el resultado y conecta: “¿Y si les dijera que hay una forma de que esos números no dependan de su fuerza de voluntad? Es exactamente ahora. Que pase el copiloto.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>19:00 → 30:00
+B4 · DEMO GENY TREND — el copiloto sin ego</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Gráfico real con Geny Trend activo. La demo es un diálogo con el mercado, no un tutorial de software</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Les presento a Geny. Geny Trend es un algoritmo que construimos
+para responder LA pregunta que más planes destruye: ¿en qué está
+el mercado AHORA — tendencia o no?
+ 
+¿Cómo lo hace? Se los explico sin doctorado: agrupa el comportamiento
+reciente del precio en familias — matemática de clasificación pura,
+la misma que usan los bancos para segmentar clientes — y le mide
+la energía al movimiento con la volatilidad real del activo.
+Cuando las dos cosas coinciden, Geny marca tendencia. Cuando no,
+te dice algo que ningún indicador de curso barato te dice: NADA.
+Y “nada” es información carísima: significa no operes esto.
+ 
+Lo importante no es la matemática. Es esto: Geny ve EXACTAMENTE
+el mismo gráfico a las 9 de la mañana que a las 3 de la tarde.
+Después de tres pérdidas, ve lo mismo. Después de cinco ganadoras,
+ve lo mismo. ¿Ustedes pueden decir eso de sí mismos? Yo tampoco.
+(DEMO en vivo, 8 minutos: 1) el mercado de HOY — qué dice Geny ahora mismo; 2) rebobinar a 2–3 momentos históricos: “aquí todos veían tendencia — Geny decía rango. Miren qué pasó”; 3) conectar con el plan del día 3: “¿recuerdan mi escenario A de anoche? Miren lo que Geny opina de ese contexto”)</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 3 (MINUTO 27:00) — EL MOMENTO ESTRELLA DE LA DEMO
+“Ustedes primero: este gráfico, AHORA — ¿tendencia o rango?”
+A) Tendencia alcista · B) Tendencia bajista · C) Rango · D) Ni idea (respuesta honesta)
+Secuencia: la comunidad vota → Juan muestra qué dice Geny → comenta la diferencia: “el 60% de ustedes vio tendencia donde el algoritmo ve ruido. Esa diferencia, repetida cien veces al año, ES la diferencia entre sus cuentas y las cuentas consistentes.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>30:00 → 34:00
+B5 · HUMANO + MÁQUINA</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: “EL ALGORITMO NO REEMPLAZA TU CRITERIO. REEMPLAZA TU EMOCIÓN.”</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Aclaremos algo antes de que el chat explote: Geny no es una máquina
+de señales mágicas. El que les venda “compra cuando la flecha,
+hazte rico” — huyan. Geny es un COPILOTO: tú sigues siendo el piloto,
+tuya es la página del plan, tuyo el criterio.
+ 
+Lo que Geny hace es quitarle al saboteador su arma favorita:
+la ambigüedad. Cuando el gráfico es ambiguo, tu emoción decide —
+y ya vimos quién gana ahí. Cuando hay una lectura objetiva
+del contexto, la negociación se acaba antes de empezar.
+ 
+El piloto decide el destino. El instrumento le dice si hay
+tormenta. Nadie vuela por instrumentos... pero nadie serio
+vuela sin ellos.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ CHAT (MINUTO 33:30)
+Juan: “Escriban COPILOTO si entendieron la diferencia entre un indicador mágico y un instrumento de contexto. Quiero ver ese chat.”
+Nota de tono: si preguntan “¿cómo consigo Geny?” — respuesta guionada: “Geny viene con el Método, y de eso hablamos el domingo. Hoy es día de entrenamiento, no de tienda.” Sembrar sin vender.</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>34:00 → 38:00
+B6 · QUIZ RELÁMPAGO — hasta 20 PC</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ QUIZ (3 PREGUNTAS, 30 SEGUNDOS CADA UNA)
+Q1: “¿Qué atacan las 3 negociaciones del Saboteador?” A) Tus ideas · B) Números ya decididos ✓ · C) Tu autoestima · D) El activo
+Q2: “¿Qué dice Geny cuando no hay tendencia clara?” A) Compra · B) Vende · C) Nada — y eso es información ✓ · D) Repite la última señal
+Q3: “Un stop que se mueve una vez...” A) Se mueve infinitas veces ✓ · B) Está bien si hay razones · C) Es gestión activa · D) Depende del mercado</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>38:00 → 42:00
+B7 · EL ENTRENAMIENTO — tu primer trade con contrato</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: La plantilla completa del paper trade: 5 componentes + casilla “negociación que intentó mi saboteador”</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Entrenamiento de hoy: su primer trade con contrato completo.
+EN SIMULADO — escúchenme: en simulado. El objetivo de esta semana
+no es ganar plata, es ganar PROCESO. La plata es la nota del examen,
+y todavía estamos en clase.
+ 
+Plantilla de cinco componentes, la del día 3: contexto, invalidación,
+riesgo, entrada condicional, gestión. Lo ejecutan mañana si su
+escenario se cumple — o documentan el no-trade, que vale igual.
+Y le agregué una casilla nueva: “qué negociación intentó mi
+saboteador”. Porque va a intentar. Quiero que lo atrapen EN VIVO.
+30 puntos. Publicado en la comunidad.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 4 — COMPROMISO (MINUTO 41:30)
+“¿Tu paper trade con contrato queda publicado antes de mañana?”
+A) Esta noche mismo · B) Mañana temprano con el mercado abierto · C) Mi saboteador dice que el viernes 😅</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>42:00 → 45:00
+B8 · EL CLIFFHANGER — la letra que nadie quiere</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: una “D” gigante + “MAÑANA: CHECKPOINT — PREMIOS EN VIVO”</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Ya tienen el contrato y el copiloto. Mañana viene la letra
+que NADIE quiere hacer y que TODOS los que viven de esto hacen
+religiosamente. La letra aburrida. La letra que me hizo rico
+en proceso antes que en plata.
+ 
+Y mañana también es CHECKPOINT de mitad de juego: leaderboard
+en vivo, premios sorpresa a los top 10 y al mejor Círculo.
+Si están peleando posición, mañana se define media tabla.
+ 
+Tarea: paper trade con contrato + atrapar a su saboteador
+negociando. Escriban NOS VEMOS. El copiloto y yo los esperamos.”</th>
+</tr></thead><tbody>
+</tbody></table>
+</body></html>

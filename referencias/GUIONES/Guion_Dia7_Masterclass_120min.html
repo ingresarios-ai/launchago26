@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>DÍA 7 — LA MASTERCLASS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #1e293b;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-tag {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #0284c7;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .main-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin: 0 0 4px 0;
+    }
+
+    .meta-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .divider {
+      height: 2px;
+      background: #0284c7;
+      margin-bottom: 20px;
+      border: none;
+    }
+
+    .retention-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 5px solid #0284c7;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+
+    .retention-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0369a1;
+      margin: 0 0 10px 0;
+    }
+
+    .retention-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .retention-box li {
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    h2.section-heading {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    table.custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 11.5px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    table.custom-table th {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 800;
+      text-align: left;
+      padding: 9px 11px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    table.custom-table td {
+      padding: 8px 11px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    table.custom-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .time-bar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .time-bar span.time {
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    .interaction-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-left: 5px solid #10b981;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      color: #064e3b;
+    }
+
+    .interaction-box.yellow {
+      background: #fffbeb;
+      border-color: #fde68a;
+      border-left-color: #f59e0b;
+      color: #78350f;
+    }
+
+    .interaction-title {
+      font-weight: 800;
+      font-size: 12.5px;
+      margin-bottom: 6px;
+    }
+
+    .interaction-box ul {
+      margin: 6px 0 0 0;
+      padding-left: 18px;
+    }
+
+    .dialogue-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #64748b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #1e293b;
+    }
+
+    .dialogue-box p {
+      margin: 0 0 8px 0;
+    }
+
+    .dialogue-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .screen-note {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .tone-notes {
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-left: 5px solid #f97316;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 20px;
+    }
+
+    .tone-notes h3 {
+      margin: 0 0 8px 0;
+      color: #9a3412;
+      font-size: 13.5px;
+      font-weight: 800;
+    }
+
+    .tone-notes ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .tone-notes li {
+      margin-bottom: 5px;
+      color: #431407;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-tag">EL JUEGO MENTAL DEL DINERO  ·  GUIÓN DE PRODUCCIÓN</div>
+  <h1 class="main-title">DÍA 7 — LA MASTERCLASS</h1>
+  <div class="meta-subtitle">MENTE · SISTEMA · ENTORNO — 120 minutos · YouTube Live · apertura de carrito</div>
+  <hr class="divider" />
+
+<h2 class="section-heading">Objetivo y reglas del evento</h2>
+<p style="margin: 6px 0;">El evento de conversión. Estructura VSL en vivo: dos horas que terminan con el carrito abierto y las primeras compras entrando en pantalla. Todo lo sembrado en 6 días se cosecha aquí. El carrito abre en el minuto ~85 y la ventana total es de 84 horas (cierra miércoles 11:59 p.m.).</p>
+<p style="margin: 6px 0;">La regla del evento: los primeros 55 minutos son la mejor clase del reto — la gente debe sentir que la masterclass YA valió aunque no compre. La oferta se gana con generosidad previa.</p>
+<p style="margin: 6px 0;">Retención especial: se anuncia al inicio que en el minuto 110 se sortea una sesión 1:1 con Juan SOLO entre los presentes en vivo. Nadie se va antes del sorteo — que ocurre después del pitch y el Q&A de objeciones.</p>
+<p style="margin: 6px 0;">Prohibido: pedir disculpas por vender ("perdón por la parte comercial..."). La oferta se presenta con el mismo orgullo que el contenido: es la respuesta a la pregunta del día 11.</p>
+<p style="margin: 6px 0;">Equipo: CM #1 chat, CM #2 leaderboard/compras en vivo, soporte de ventas en WhatsApp desde el minuto 85, co-host en encuestas. Página de checkout probada DOS veces antes del evento.</p>
+<table class="custom-table">
+<thead><tr>
+<th>Bloque</th>
+<th>Minutos</th>
+<th>Contenido</th>
+<th>Interacción</th>
+</tr></thead><tbody>
+<tr>
+<td>M0 · Pre-show</td>
+<td>-15:00 → 0:00</td>
+<td>Sala llena, música, expectativa máxima</td>
+<td>Encuesta 1 + chat de llegada</td>
+</tr>
+<tr>
+<td>M1 · La promesa</td>
+<td>0:00 → 8:00</td>
+<td>Apertura + contrato de las 2 horas + anuncio del sorteo (min 110)</td>
+<td>Chat: "COMPLETO"</td>
+</tr>
+<tr>
+<td>M2 · La historia</td>
+<td>8:00 → 25:00</td>
+<td>La historia completa de Juan: Bloomberg, el derrumbe, los -$47,300</td>
+<td>Encuesta 2 + chat empático</td>
+</tr>
+<tr>
+<td>M3 · La epifanía</td>
+<td>25:00 → 40:00</td>
+<td>El descubrimiento: proceso > voluntad. Nace PEDEM</td>
+<td>Chat storm</td>
+</tr>
+<tr>
+<td>M4 · La prueba</td>
+<td>40:00 → 55:00</td>
+<td>El sistema completo girando: recap de los 6 días sobre la cuenta real</td>
+<td>Encuesta 3: ¿qué letra te falta más?</td>
+</tr>
+<tr>
+<td>M5 · El puente</td>
+<td>55:00 → 65:00</td>
+<td>La verdad del día 11 + qué necesita sostenerse un año</td>
+<td>Encuesta 4: ¿qué te ha faltado?</td>
+</tr>
+<tr>
+<td>M6 · La solución</td>
+<td>65:00 → 85:00</td>
+<td>Método INGRESARIOS 3.0 componente por componente</td>
+<td>Chat: preguntas al buzón</td>
+</tr>
+<tr>
+<td>M7 · LA OFERTA</td>
+<td>85:00 → 98:00</td>
+<td>Stack + precio + bonos fast-action + garantía + cupos. CARRITO ABRE</td>
+<td>Compras celebradas en vivo</td>
+</tr>
+<tr>
+<td>M8 · Objeciones</td>
+<td>98:00 → 110:00</td>
+<td>Las 3 grandes respondidas de frente</td>
+<td>Chat de preguntas</td>
+</tr>
+<tr>
+<td>M9 · Sorteo + cierre</td>
+<td>110:00 → 120:00</td>
+<td>Sorteo 1:1 + última llamada + próximos pasos</td>
+<td>Chat final</td>
+</tr>
+</tbody></table>
+<h2 class="section-heading">El guión, minuto a minuto</h2>
+<table class="custom-table">
+<thead><tr>
+<th>-15:00 → 0:00
+M0 · PRE-SHOW — la sala se llena</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Countdown grande + montaje de los mejores momentos de los 6 días (cards, frases del chat, el muro #JuegoMental)</span>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 1 (ABIERTA DESDE -15)
+“¿Desde qué día estás en el juego?”
+A) Desde el día 1 — racha completa 🔥
+B) Me sumé a mitad de semana
+C) Llegué hace poco y me puse al día
+D) Hoy es mi primer live 👀
+CM: “Los D son bienvenidos — hoy se entiende todo. Los A van por su racha perfecta: hoy paga doble estar aquí.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>0:00 → 8:00
+M1 · LA PROMESA — el contrato de las dos horas</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: “MENTE · SISTEMA · ENTORNO” — las tres palabras solas</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Entra con energía contenida — no eufórica: solemne. Hoy es distinto y debe sentirse)
+“Hace seis días les hice una promesa: que iban a VER, no creer.
+Vieron mi cuenta. Vieron mi bitácora. Vieron a mi saboteador
+intentar firmar y quedarse sin tinta. Promesa cumplida.
+ 
+Hoy es diferente. Hoy no vengo a entrenar una letra.
+Vengo a responder la única pregunta que de verdad importa,
+la que algunos ya me escribieron por privado:
+“Juan... ¿y qué pasa cuando esto se acabe?”
+ 
+El contrato de estas dos horas: primero les voy a contar la historia
+que nunca cuento completa — cómo un tipo con terminal Bloomberg
+y treinta años de mercados terminó perdiendo $47,300 contra
+alguien que vivía en su propia cabeza. Después, el sistema completo
+girando — las cinco letras juntas sobre mi cuenta real de esta semana.
+Y al final voy a abrir una puerta que solo se abre una vez al año.
+El que entra, entra. El que no, sigue siendo bienvenido en esta
+comunidad — eso no cambia.
+ 
+Dos cosas más. Uno: en el minuto 110 sorteo una sesión mano a mano
+conmigo — una hora, tu bitácora y yo — SOLO entre los que estén
+en vivo en ese momento. Dos: apaguen el celular... o mejor,
+tomen nota EN el celular, pero silencien el resto del mundo.
+Estas dos horas pueden ser las que separen su año.
+Escriban COMPLETO si están conmigo hasta el final.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>8:00 → 25:00
+M2 · LA HISTORIA — el derrumbe completo</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Fotos reales de la época: la mesa de dinero, la terminal, Medellín. Al final: el número -$47,300</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Storytelling puro. Sin slides de bullets: fotos y voz. 15 minutos de historia con arco completo)
+“Para entender lo que les voy a mostrar hoy, tienen que entender
+de dónde viene. Y eso significa contarles la parte que no está
+en mi biografía de Instagram.
+ 
+[LA CIMA] Yo venía del mundo institucional. Décadas de mercados.
+Terminales Bloomberg, mesas de dinero, análisis que movían montos
+que no caben en la cabeza. Yo ERA el experto. El que enseñaba.
+El que tenía todas las respuestas técnicas...
+ 
+[EL GOLPE] ...hasta que empecé a operar MI plata, solo, sin la
+estructura de un banco alrededor. Y descubrí algo aterrador:
+todo lo que sabía funcionaba en el análisis... y se evaporaba
+en la ejecución. La primera pérdida grande la “recuperé” doblando.
+La segunda también. La tercera no se dejó.
+(Aquí va la historia específica del peor período: la secuencia de decisiones, la noche concreta en que calculó el total: -$47,300. Detalles sensoriales: dónde estaba, qué pensó, a quién no se lo contó)
+ 
+[LA VERGÜENZA] ¿Saben qué fue lo peor? No fue la plata.
+Fue la disonancia: “yo SÉ hacer esto. ¿Por qué no puedo?”
+Estuve a una firma de cerrar la cuenta para siempre y quedarme
+con el cuento cómodo: “el trading retail no funciona”.
+ 
+[EL ESPEJO] Y una noche, revisando mis operaciones — porque
+del mundo institucional me quedó UNA costumbre: registrarlo todo —
+vi el patrón. Todas mis catástrofes tenían la misma estructura:
+pérdida → dolor → doblar → catástrofe. No era el mercado.
+Era un patrón MÍO, repetido con precisión de reloj suizo.
+Esa noche conocí a mi Vengador. No le puse ese nombre entonces...
+pero le vi la cara.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 2 (MINUTO 23:00)
+“¿Has tenido tu propia versión de esa noche — el momento de ver el patrón?”
+A) Sí, y me cambió
+B) Sí, pero lo dejé pasar
+C) Creo que la estoy teniendo esta semana
+D) Todavía no — y prefiero no necesitarla
+Juan lee la C en voz alta: “Miren cuántos en C. Eso es exactamente para lo que existe este juego — que la noche del patrón les llegue con testigos y con mapa, no solos y con deuda.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>25:00 → 40:00
+M3 · LA EPIFANÍA — el proceso vence a la voluntad</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: “NO NECESITABA MÁS CONOCIMIENTO. NECESITABA UN SISTEMA QUE FUNCIONARA SIN MI MEJOR VERSIÓN.”</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Lo primero que intenté fue lo que intentan todos: prometerme
+disciplina. “Nunca más doblo una pérdida.” Duré tres semanas.
+Porque la fuerza de voluntad es un músculo que se agota justo
+cuando el mercado más aprieta.
+ 
+Y entonces me hice LA pregunta — la que cambió todo:
+¿cómo hacía yo en el banco para no cometer estas locuras?
+La respuesta me dio vergüenza de tan obvia: en el banco
+yo no PODÍA cometerlas. Había límites de riesgo escritos.
+Comités. Procesos. Alguien mirando. El sistema institucional
+no confía en la disciplina de nadie — por eso funciona.
+El banco asume que TODOS tenemos un saboteador. Y construye
+la estructura para que no importe.
+ 
+Eso fue la epifanía: yo no necesitaba más conocimiento.
+Necesitaba traerme la ESTRUCTURA del mundo institucional
+a mi escritorio de operador independiente. Reglas escritas
+en frío. Registro obligatorio. Revisión sistemática. Límites
+que no se negocian en caliente.
+ 
+Así nació PEDEM. No en un retiro espiritual — en una hoja de
+cálculo, un domingo, con la rabia de haber perdido lo que perdí.
+Planear. Ejecutar. Documentar. Evaluar. Mejorar. El ciclo
+institucional, en tamaño personal. Y desde entonces, todo lo que
+gané — y llevo años ganando de forma consistente — no salió
+de un indicador mágico. Salió de un sistema que funciona
+incluso en mis peores días. ESPECIALMENTE en mis peores días.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ CHAT STORM (MINUTO 38:00)
+Juan: “Escriban en el chat: ¿qué límite tendría que ser INNEGOCIABLE en su operación? El que su saboteador más odiaría. Quiero leer estos.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>40:00 → 55:00
+M4 · LA PRUEBA — el sistema girando sobre 6 días reales</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: La cuenta real + la bitácora de la semana: cada día del reto mapeado a su letra</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Ahora — ustedes no tienen que imaginarse el sistema. Lo VIVIERON.
+Miren su propia semana, porque esto que hicimos juntos ES el sistema:
+ 
+Lunes conocieron al rival — porque ningún sistema funciona
+si no sabes de quién te protege. Martes vieron el espejo:
+mi cuenta, mi bitácora, la evidencia. Miércoles firmaron
+el contrato: la P — el plan que decide en frío. Jueves conocieron
+al copiloto: la E — ejecutar sin negociar, con Geny quitándole
+la ambigüedad al saboteador. Viernes encendieron el detector:
+la D — la bitácora que no miente. Y ayer cerraron el ciclo:
+evaluar sin castigarse, mejorar de a una cosa.
+(Sobre la cuenta real: recorre la semana completa — los trades de estos 6 días, el plan del miércoles y su resultado, la evaluación de la semana en vivo con la rúbrica de 3 preguntas. El ciclo COMPLETO demostrado con dinero real en 10 minutos)
+“¿Ven lo que acaba de pasar? Acabo de evaluar mi semana delante
+de cinco mil personas usando exactamente lo mismo que ustedes
+aprendieron. No hay versión secreta para ricos. ESTE es el sistema.
+La única pregunta que queda es la del millón...”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 3 (MINUTO 53:00)
+“Siendo honesto contigo: ¿qué letra se te va a caer primero operando solo?”
+A) P — no voy a escribir el plan todos los días
+B) E — voy a negociar en caliente
+C) D — la bitácora se me muere en 2 semanas
+D) E/M — nunca voy a sentarme el domingo a evaluar
+Esta encuesta ES el puente al pitch: cada respuesta admite que solo no se puede. Juan: “Miren la pantalla: acaban de escribir, ustedes mismos, la razón de lo que viene ahora.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>55:00 → 65:00
+M5 · EL PUENTE — la verdad del día 11</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Slide: “EL CONOCIMIENTO SIN ENTORNO SE EVAPORA EN DOS SEMANAS.”</span>
+<table class="custom-table">
+<thead><tr>
+<th>(El momento más honesto del lanzamiento. Sin música, sin efectos. Juan habla como mentor, no como vendedor)
+“Déjenme decirles lo que pasa el día 11. No lo que quiero que pase —
+lo que he VISTO pasar, miles de veces, con gente brillante.
+ 
+La semana uno solos: perfecta. Plan escrito, bitácora al día.
+La semana dos: el plan se escribe “mentalmente” un par de días.
+La semana tres llega la primera racha perdedora — siempre llega,
+es matemática — y sin testigos, sin nadie a quién rendirle cuentas,
+el saboteador susurra: “este sistema no funciona, volvamos
+a lo de antes”. Y la semana cuatro... la bitácora tiene telarañas.
+ 
+No es debilidad. Es la condición humana. ¿Saben por qué los
+traders institucionales son consistentes? ¿Creen que es porque
+son mejores personas que ustedes? Es porque NUNCA OPERAN SOLOS.
+Tienen una mesa. Una estructura. Testigos. Un jefe de riesgo
+que les cierra la posición. La consistencia institucional
+no vive en las personas — vive en el ENTORNO.
+ 
+Esa es la tercera palabra de esta noche. Mente: la entrenamos
+esta semana. Sistema: lo tienen completo. Entorno: eso...
+eso no se puede enseñar en un reto gratuito. Eso se construye.
+Y construirlo es exactamente lo que hice durante los últimos años
+para mis estudiantes. Déjenme mostrarles cómo se ve.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>⚡ ENCUESTA 4 (MINUTO 63:00)
+“En tus intentos anteriores con el trading, ¿qué te faltó de verdad?”
+A) Conocimiento — no sabía suficiente
+B) Herramientas — operaba a ciegas
+C) Constancia — empecé bien y me apagué
+D) Alguien al lado — lo hice todo solo
+C y D suelen arrasar. Juan: “C y D son la misma respuesta con distinta ropa: nadie es constante solo. NADIE. Yo tampoco lo fui.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>65:00 → 85:00
+M6 · LA SOLUCIÓN — Método INGRESARIOS 3.0, pieza por pieza</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Presentación del Método: cada componente con demo visual del área de miembros real</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Les presento el Método INGRESARIOS 3.0. La versión completa
+de lo que probaron esta semana — mente, sistema y entorno,
+juntos, durante UN AÑO ENTERO. Pieza por pieza:
+ 
+PIEZA UNO: la formación completa. Las cinco letras de PEDEM
+en profundidad — no la versión de reto: la de operador. Módulo
+por módulo, con las plantillas, las rúbricas y los protocolos
+exactos que me vieron usar toda la semana. Se estudia a su ritmo;
+se ejecuta acompañado.
+(Muestra el área de miembros real: módulos, plantillas)
+ 
+PIEZA DOS: los algoritmos. Geny Trend y Reditum Sniper — el copiloto
+y el francotirador que conocieron jueves y sábado — doce meses
+completos, en sus gráficos, desde el día uno. La parte de su mente
+que no siente, trabajando en cada plan que escriban.
+ 
+PIEZA TRES — y esta es la que me enorgullece: DOS SALAS EN VIVO
+AL DÍA. Todos los días de mercado. Una en la mañana, una en la
+tarde. Se conectan y operan ACOMPAÑADOS: el plan se comenta antes,
+la ejecución tiene testigos, el saboteador no encuentra un solo
+rincón oscuro. ¿Recuerdan por qué pierde el saboteador cuando
+hay testigos? Esto son testigos profesionales, dos veces al día,
+doscientos cincuenta días al año.
+ 
+PIEZA CUATRO: un año de coaching. Seguimiento real de su proceso:
+su bitácora revisada, su rúbrica auditada, su mejora semanal
+asignada. El jefe de riesgo que el operador independiente no tiene.
+ 
+PIEZA CINCO: mi bitácora abierta, para siempre mientras estén
+dentro. Lo de esta semana no fue un show de lanzamiento —
+es como trabajo. Van a seguir viendo cada trade mío, con mi
+campo cinco incluido.
+ 
+Y PIEZA SEIS: la comunidad Elite con Círculos permanentes.
+El entorno donde operar con sistema no es la excepción rara —
+es lo NORMAL. Donde el que rompe su plan lo confiesa y el que
+cumple 52 mejoras al año es el estándar, no el héroe.”</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>85:00 → 98:00
+M7 · LA OFERTA — el carrito abre</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: El stack completo sumándose en pantalla → el precio → el botón. El link cae al chat en el minuto 90</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Hablemos de números — con la misma transparencia de toda la semana.
+ 
+La formación completa, sola, vale $2,997. Los dos algoritmos
+por doce meses, $1,164. El año de coaching, $3,600. Las dos salas
+diarias por un año — hagan la cuenta de qué vale operar acompañado
+quinientas veces — $4,800. Mi bitácora en acceso continuo, $997.
+La comunidad, incluida. Total real: $13,558.
+ 
+No cuesta eso. Esta semana, para esta comunidad, el Método
+INGRESARIOS 3.0 completo son $1,497. O tres cuotas de $597.
+Menos de lo que el saboteador promedio cobra en UN mes malo —
+ustedes vieron mi factura de $47,300.
+ 
+Condiciones, claras y sin letra pequeña:
+CUPOS: ciento cincuenta. No es táctica — las salas en vivo
+y el coaching tienen capacidad real; más gente degrada el servicio
+de los que ya están. Cuando se llena, se llena.
+TIEMPO: la puerta cierra el miércoles a las 11:59 de la noche,
+ochenta y cuatro horas desde ahora. Después no hay “una semanita más”.
+BONOS DE ACCIÓN RÁPIDA — solo hasta mañana 8:00 p.m.:
+la sesión uno-a-uno de setup completo, y la auditoría de su
+bitácora al día 30 con diagnóstico de saboteador incluido.
+GARANTÍA: catorce días, condicionada a ejecución. Completen
+el módulo uno, asistan a cinco salas — y si aun así no es para
+ustedes, devuelvo todo. Protejo su decisión, no a los turistas.
+ 
+El link está cayendo al chat AHORA. Los que ya lo tenían decidido
+desde el jueves — y sé quiénes son — su momento es este.”
+(CM #2 celebra las primeras compras EN VIVO por nombre: “¡Bienvenido Andrés R.! ¡Bienvenida Carolina!” — la prueba social en tiempo real es el acelerador más potente del carrito)</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>98:00 → 110:00
+M8 · OBJECIONES — las tres grandes, de frente</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Q&A con las preguntas del chat. Las 3 respuestas guionadas se dan aunque nadie las pregunte</span>
+<table class="custom-table">
+<thead><tr>
+<th>“Respondo lo que están pensando — llevo años escuchándolo:
+ 
+“YA COMPRÉ CURSOS Y NO FUNCIONARON.” Correcto — y esta semana
+entendieron por qué: eran cursos. Información. Esto es un AÑO
+de ejecución acompañada. La diferencia entre comprar un libro
+de gimnasia y tener gimnasio, rutina y entrenador 250 días.
+El día 11 de los cursos es la soledad; aquí el día 11 es una sala
+en vivo a las 9 de la mañana.
+ 
+“NO TENGO TIEMPO.” Las dos salas diarias existen por eso: eligen
+la que cabe en su vida — mañana o tarde. Cuarenta y cinco minutos
+operando acompañado rinden más que cuatro horas solos peleando
+con el saboteador. Esto AHORRA tiempo: el tiempo que hoy queman
+en dudar, revisar diez veces y arrepentirse.
+ 
+“¿Y SI NO FUNCIONA PARA MÍ?” Para eso está la garantía condicionada:
+ejecuten el módulo uno, vengan a cinco salas. Si con eso no ven
+la diferencia, devuelvo cada peso. La única forma de que esto
+no funcione es no ejecutarlo — y contra eso también construí:
+se llama coaching.
+(Sigue con preguntas reales del chat 8–10 minutos. Regla: cada respuesta termina reafirmando una pieza del Método, sin forzar)</th>
+</tr></thead><tbody>
+</tbody></table>
+<table class="custom-table">
+<thead><tr>
+<th>110:00 → 120:00
+M9 · EL SORTEO Y EL CIERRE</th>
+</tr></thead><tbody>
+</tbody></table>
+<span class="screen-note">EN PANTALLA: Ruleta con los nombres de los presentes → luego pantalla final: link + deadline + “MAÑANA: LOS QUE VENCIERON A SU SABOTEADOR”</span>
+<table class="custom-table">
+<thead><tr>
+<th>(Sorteo en vivo de la sesión 1:1 entre los presentes. Celebración. Luego, el cierre)
+“Última cosa antes de soltarlos, y la digo con el corazón:
+ 
+Hace seis días, un test les puso nombre a su saboteador.
+Esta semana le vieron la cara todos los días. Y esta noche
+cada uno decide — no si comprar un programa — sino cuál
+de las dos versiones va a operar su cuenta el resto del año:
+la que vuelve sola al día 11... o la que entra a un entorno
+donde el saboteador no tiene dónde esconderse.
+ 
+Yo ya tomé esa decisión hace años y me cambió la vida entera.
+Los ciento cincuenta que la tomen esta semana: los veo adentro
+el lunes, en la primera sala, a las 9 en punto.
+ 
+Para TODOS — compren o no —: el juego sigue. Mañana vienen
+tres personas que hace un año estaban sentadas donde ustedes
+están ahora. Uno era un Vengador de manual — peor que yo.
+Vengan a escucharlos. 8:00 p.m.
+ 
+Bonos de acción rápida: mañana 8:00 p.m. Puerta: miércoles 11:59.
+El link vive en el chat y en sus correos. Buenas noches —
+y bienvenidos los primeros [X] del Método 3.0.”</th>
+</tr></thead><tbody>
+</tbody></table>
+</body></html>
