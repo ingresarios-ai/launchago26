@@ -365,8 +365,7 @@ async function loadData() {
       utm_campaign: l.utm_campaign,
       utm_content: l.utm_content,
       utm_term: l.utm_term,
-      created_at: l.created_at,
-      is_workshop_registered: true
+      created_at: l.created_at
     }));
 
     // Combine fetchedLm + lmFromLeads avoiding email duplicates
@@ -382,17 +381,33 @@ async function loadData() {
 
     allLeadMagnets = Array.from(combinedLmMap.values());
 
-    // Cross-reference Lead Magnets with Workshop Leads by email
+    // Cross-reference: A lead magnet downloader is ONLY registered in workshop if they signed up on a main workshop landing
+    const workshopEmailSet = new Set();
     const workshopEmailMap = new Map();
+
     allLeads.forEach(l => {
-      if (l.email) workshopEmailMap.set(l.email.toLowerCase().trim(), l);
+      if (!l.email) return;
+      const emailLower = l.email.toLowerCase().trim();
+      const landingLower = (l.landing || '').toLowerCase();
+      const lmLower = (l.lead_magnet || '').toLowerCase();
+      
+      const isLeadMagnetLanding = landingLower.includes('guía') || 
+                                 landingLower.includes('guia') || 
+                                 landingLower.includes('magnet') || 
+                                 landingLower.includes('estafa') || 
+                                 lmLower.includes('guia') || 
+                                 lmLower.includes('estafa');
+
+      if (!isLeadMagnetLanding) {
+        workshopEmailSet.add(emailLower);
+        workshopEmailMap.set(emailLower, l);
+      }
     });
 
     allLeadMagnets.forEach(lm => {
       const lmEmail = (lm.email || '').toLowerCase().trim();
-      const parentWorkshopLead = workshopEmailMap.get(lmEmail);
-      lm.is_workshop_registered = !!parentWorkshopLead;
-      lm.workshop_lead = parentWorkshopLead || null;
+      lm.is_workshop_registered = workshopEmailSet.has(lmEmail);
+      lm.workshop_lead = workshopEmailMap.get(lmEmail) || null;
     });
 
     // Also link Lead Magnet data to taller lead objects in memory
@@ -1661,7 +1676,14 @@ function buildLeadMagnetsTab() {
   const convertedCount = allLeadMagnets.filter(lm => lm.is_workshop_registered).length;
   const convRate = total > 0 ? ((convertedCount / total) * 100).toFixed(1) : '0';
 
-  // Breakdown by PDF guide
+  // Breakdown by PDF guide / Lead Magnet
+  const rutaLeads = allLeadMagnets.filter(lm => {
+    const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
+    return type.includes('ruta') || type.includes('inversionista') || (type.includes('guia') && !type.includes('anti') && !type.includes('estafa'));
+  });
+  const rutaTotal = rutaLeads.length;
+  const rutaConv = rutaLeads.filter(lm => lm.is_workshop_registered).length;
+
   const antiLeads = allLeadMagnets.filter(lm => {
     const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
     return type.includes('estafa') || type.includes('anti');
@@ -1669,12 +1691,12 @@ function buildLeadMagnetsTab() {
   const antiTotal = antiLeads.length;
   const antiConv = antiLeads.filter(lm => lm.is_workshop_registered).length;
 
-  const rutaLeads = allLeadMagnets.filter(lm => {
+  const varLeads = allLeadMagnets.filter(lm => {
     const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
-    return !type.includes('estafa') && !type.includes('anti');
+    return type.includes('cuanto') || type.includes('club') || type.includes('falta') || type.includes('vsl') || type.includes('variacion');
   });
-  const rutaTotal = rutaLeads.length;
-  const rutaConv = rutaLeads.filter(lm => lm.is_workshop_registered).length;
+  const varTotal = varLeads.length;
+  const varConv = varLeads.filter(lm => lm.is_workshop_registered).length;
 
   // Set KPIs
   const elTotal = document.getElementById('kpi-lm-total');
@@ -1684,6 +1706,8 @@ function buildLeadMagnetsTab() {
   const elRutaConv = document.getElementById('kpi-lm-ruta-conv');
   const elAnti = document.getElementById('kpi-lm-antiestafas');
   const elAntiConv = document.getElementById('kpi-lm-antiestafas-conv');
+  const elVar = document.getElementById('kpi-lm-variaciones');
+  const elVarConv = document.getElementById('kpi-lm-variaciones-conv');
 
   if (elTotal) elTotal.textContent = total;
   if (elConv) elConv.textContent = convertedCount;
@@ -1692,6 +1716,8 @@ function buildLeadMagnetsTab() {
   if (elRutaConv) elRutaConv.textContent = `${rutaConv} en taller`;
   if (elAnti) elAnti.textContent = antiTotal;
   if (elAntiConv) elAntiConv.textContent = `${antiConv} en taller`;
+  if (elVar) elVar.textContent = varTotal;
+  if (elVarConv) elVarConv.textContent = `${varConv} en taller`;
 
   // Populate source options dropdown
   const sources = new Set(allLeadMagnets.map(lm => lm.utm_source || 'directo'));
@@ -1725,10 +1751,14 @@ function handleLmFilterChange() {
     // Lead Magnet Type filter
     if (lmType === 'ruta') {
       const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
-      if (!type.includes('ruta') && !type.includes('inversionista')) return false;
+      if (!type.includes('ruta') && !type.includes('inversionista') && !type.includes('guia')) return false;
+      if (type.includes('anti') || type.includes('estafa')) return false;
     } else if (lmType === 'antiestafas') {
       const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
       if (!type.includes('estafa') && !type.includes('anti')) return false;
+    } else if (lmType === 'variaciones') {
+      const type = (lm.lead_magnet || lm.landing || '').toLowerCase();
+      if (!type.includes('cuanto') && !type.includes('club') && !type.includes('falta') && !type.includes('vsl') && !type.includes('variacion')) return false;
     }
 
     // Taller status filter
