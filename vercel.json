@@ -1,5 +1,22 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/ig",
+      "destination": "/?utm_source=instagram&utm_medium=dm_auto&utm_campaign=taller_ia_carrusel",
+      "permanent": false
+    },
+    {
+      "source": "/carrusel",
+      "destination": "/?utm_source=instagram&utm_medium=dm_auto&utm_campaign=taller_ia_carrusel",
+      "permanent": false
+    },
+    {
+      "source": "/dm",
+      "destination": "/?utm_source=instagram&utm_medium=dm_auto&utm_campaign=taller_ia_carrusel",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     { "source": "/v2", "destination": "/v2.html" },
     { "source": "/test", "destination": "/test.html" },
