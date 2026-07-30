@@ -1888,7 +1888,6 @@ async function loadWhatsAppGroupsData() {
     active_index: 0,
     groups: [
       { url: "https://chat.whatsapp.com/GbpP0U6z328EGqfii1dgrh", clicks: 600, max: 1000 },
-      { url: "https://chat.whatsapp.com/JJmVwbqi0CJ2Qgtm9F6NLK", clicks: 0, max: 1000 },
       { url: "https://chat.whatsapp.com/CafuqaTjVsWKqmb4u9ghCn", clicks: 0, max: 1000 },
       { url: "https://chat.whatsapp.com/Cu4MehXGT627zIckeELbOo", clicks: 0, max: 1000 }
     ]
