@@ -36,6 +36,11 @@ const insigniasData = {
 };
 
 function getUnlockedInsignias() {
+  const isVerPreview = window.location.search.includes('ver=true') || window.location.search.includes('ver=1');
+  if (isVerPreview) {
+    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  }
+
   let list = [];
   try {
     const stored = localStorage.getItem('unlocked_insignias');
