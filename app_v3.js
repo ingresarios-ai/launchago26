@@ -65,19 +65,37 @@ function renderVitrinaInsignias() {
   if (counter) counter.innerHTML = `<span>${unlockedCount} / 10 Insignias</span>`;
   if (progressFill) progressFill.style.width = `${unlockedCount * 10}%`;
 
+  // Force grid layout directly to prevent browser cache or layout collapse
+  grid.style.display = 'grid';
+  grid.style.gridTemplateColumns = window.innerWidth <= 480 ? 'repeat(2, 1fr)' : window.innerWidth <= 768 ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)';
+  grid.style.gap = '14px';
+  grid.style.width = '100%';
+
   let html = '';
   for (let i = 1; i <= 10; i++) {
     const item = insigniasData[i];
     const isUnlocked = unlockedList.includes(i);
 
+    const cardStyle = isUnlocked
+      ? "background: radial-gradient(circle at 50% 0%, rgba(234, 179, 8, 0.25), rgba(15, 23, 42, 0.95)); border: 1.5px solid #ffd700; box-shadow: 0 10px 25px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.35); border-radius: 16px; padding: 16px 10px 14px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 145px; box-sizing: border-box;"
+      : "background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.85)); border: 1px solid rgba(255, 255, 255, 0.1); opacity: 0.85; border-radius: 16px; padding: 16px 10px 14px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 145px; box-sizing: border-box;";
+
+    const circleStyle = isUnlocked
+      ? "width: 56px; height: 56px; margin: 0 auto 8px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 30%, #fef08a 0%, #eab308 60%, #854d0e 100%); border: 2.5px solid #ffe600; box-shadow: 0 0 18px rgba(255, 215, 0, 0.6); position: relative;"
+      : "width: 56px; height: 56px; margin: 0 auto 8px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 30%, #334155, #0f172a); border: 2px solid rgba(255, 255, 255, 0.15); filter: grayscale(0.8); opacity: 0.7; position: relative;";
+
+    const statusStyle = isUnlocked
+      ? "font-size: 0.68rem; font-weight: 700; color: #fef08a; background: rgba(234, 179, 8, 0.2); border: 1px solid rgba(234, 179, 8, 0.4); padding: 3px 8px; border-radius: 12px; display: inline-block;"
+      : "font-size: 0.68rem; font-weight: 700; color: #64748b; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); padding: 3px 8px; border-radius: 12px; display: inline-block;";
+
     html += `
-      <div class="insignia-card ${isUnlocked ? 'insignia-card--unlocked' : 'insignia-card--locked'}" onclick="handleInsigniaClick(${i})">
-        <div class="insignia-icon-wrapper">
-          <span>${item.icon}</span>
-          ${!isUnlocked ? '<span class="insignia-lock-icon">🔒</span>' : ''}
+      <div class="insignia-card ${isUnlocked ? 'insignia-card--unlocked' : 'insignia-card--locked'}" style="${cardStyle}" onclick="handleInsigniaClick(${i})">
+        <div class="insignia-icon-wrapper" style="${circleStyle}">
+          <span style="font-size:1.7rem;">${item.icon}</span>
+          ${!isUnlocked ? '<span class="insignia-lock-icon" style="position:absolute; top:-4px; right:-4px; font-size:0.75rem; background:#0f172a; border:1px solid rgba(234,179,8,0.5); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center;">🔒</span>' : ''}
         </div>
-        <div class="insignia-name">${escapeHTML(item.name)}</div>
-        <div class="insignia-status-text">${isUnlocked ? 'Desbloqueada ✅' : escapeHTML(item.dayLabel)}</div>
+        <div class="insignia-name" style="font-family:\'Outfit\', sans-serif; font-size:0.82rem; font-weight:800; color:#ffffff; margin-bottom:4px; line-height:1.2;">${escapeHTML(item.name)}</div>
+        <div class="insignia-status-text" style="${statusStyle}">${isUnlocked ? 'Desbloqueada ✅' : escapeHTML(item.dayLabel)}</div>
       </div>
     `;
   }
