@@ -296,7 +296,7 @@ tallerBtn.addEventListener('click', function () {
       token = data.get_token_by_email || data.auth_token || (typeof data === 'string' ? data : '');
     }
 
-    // Fire GHL webhook + magic link in background
+    // Fire magic link updates if we have a token (these need the token)
     if (token) {
       var magicLink = 'https://taller.ingresarios.net/app?token=' + token;
       var magicLinkEncuesta = 'https://taller.ingresarios.net/encuesta?t=' + token;
@@ -324,26 +324,28 @@ tallerBtn.addEventListener('click', function () {
         body: JSON.stringify({ magic_link_encuesta: magicLinkEncuesta })
       }).catch(function () {});
 
-      // GHL main taller webhook
-      var ghlData = Object.assign({}, leadData, {
-        source: 'leadmagnet_ruta_inversionista',
-        auth_token: token,
-        magic_link: magicLink,
-        'contact.el__magic_link_encuesta': magicLinkEncuesta
-      });
-
-      fetch(GHL_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(ghlData),
-        keepalive: true
-      }).catch(function () {});
-
       // Store token for taller TY page
       localStorage.setItem('auth_token', token);
       localStorage.setItem('user_email', email);
       sessionStorage.removeItem('lead_pixel_fired');
     }
+
+    // ALWAYS fire GHL webhook — enrich with magic links if token available
+    var ghlData = Object.assign({}, leadData, {
+      source: 'leadmagnet_ruta_inversionista'
+    });
+    if (token) {
+      ghlData.auth_token = token;
+      ghlData.magic_link = 'https://taller.ingresarios.net/app?token=' + token;
+      ghlData['contact.el__magic_link_encuesta'] = 'https://taller.ingresarios.net/encuesta?t=' + token;
+    }
+
+    fetch(GHL_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(ghlData),
+      keepalive: true
+    }).catch(function () {});
 
     // Update progress
     progressFill.style.width = '100%';

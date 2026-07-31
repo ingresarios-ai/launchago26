@@ -301,7 +301,7 @@ function handleFormSubmit(e) {
       token = data.get_token_by_email || data.auth_token || (typeof data === 'string' ? data : '');
     }
 
-    // Fire magic link PATCH + GHL update in background (no wait)
+    // Fire magic link PATCH if we have a token (these need the token)
     if (token) {
       var magicLink = 'https://taller.ingresarios.net/app?token=' + token;
       var magicLinkEncuesta = 'https://taller.ingresarios.net/encuesta?t=' + token;
@@ -326,17 +326,24 @@ function handleFormSubmit(e) {
         },
         body: JSON.stringify({ magic_link_encuesta: magicLinkEncuesta })
       }).catch(function () {});
-
-      // Update GHL with token + magic links
-      // Use fetch with keepalive (survives page navigation AND supports CORS preflight)
-      var webhookPayload = JSON.stringify(Object.assign({}, ghlData, { auth_token: token, magic_link: magicLink, 'contact.el__magic_link_encuesta': magicLinkEncuesta }));
-      fetch(GHL_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: webhookPayload,
-        keepalive: true
-      }).catch(function () {});
     }
+
+    // ALWAYS fire GHL webhook — enrich with magic links if token available
+    var webhookExtra = {};
+    if (token) {
+      webhookExtra = {
+        auth_token: token,
+        magic_link: 'https://taller.ingresarios.net/app?token=' + token,
+        'contact.el__magic_link_encuesta': 'https://taller.ingresarios.net/encuesta?t=' + token
+      };
+    }
+    var webhookPayload = JSON.stringify(Object.assign({}, ghlData, webhookExtra));
+    fetch(GHL_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: webhookPayload,
+      keepalive: true
+    }).catch(function () {});
 
     // Show success and redirect — small delay ensures keepalive fetch initiates
     btn.innerHTML = '✓ ¡INSCRIPCIÓN REALIZADA!';
