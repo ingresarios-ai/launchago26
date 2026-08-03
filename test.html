@@ -126,6 +126,41 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         </button>
       </div>
+
+      <!-- Social Share Panel -->
+      <div id="share-panel" style="display:none; background: rgba(17, 24, 39, 0.95); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; margin-top: 16px; text-align: left;">
+        <h4 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+          <span>📲 Compartir mi resultado</span>
+          <button onclick="closeSharePanel()" style="background:none; border:none; color: var(--text-muted); font-size: 1.2rem; cursor:pointer;">✕</button>
+        </h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px;">
+          Comparte tu Saboteador Financiero en tus redes sociales y reta a tus amigos a descubrir el suyo.
+        </p>
+        
+        <!-- Copy Link Box -->
+        <div style="display:flex; gap: 8px; margin-bottom: 16px;">
+          <input type="text" id="share-url-input" readonly style="flex:1; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px; color: var(--text-white); font-size: 0.85rem;" />
+          <button onclick="copyShareUrl()" id="btn-copy-url" style="background: var(--green); color: #000; font-weight: 800; font-size: 0.85rem; border:none; border-radius: 8px; padding: 0 16px; cursor:pointer;">
+            📋 Copiar
+          </button>
+        </div>
+
+        <!-- Social Network Buttons -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+          <a id="share-wa" href="#" target="_blank" rel="noopener" class="test-btn" style="background:#25D366; color:#000; font-size:0.85rem; padding: 12px; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;">
+            <span>🟢 WhatsApp</span>
+          </a>
+          <a id="share-fb" href="#" target="_blank" rel="noopener" class="test-btn" style="background:#1877F2; color:#fff; font-size:0.85rem; padding: 12px; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;">
+            <span>🔵 Facebook</span>
+          </a>
+          <a id="share-x" href="#" target="_blank" rel="noopener" class="test-btn" style="background:#000000; border:1px solid #333; color:#fff; font-size:0.85rem; padding: 12px; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;">
+            <span>𝕏 Twitter / X</span>
+          </a>
+          <a id="share-tg" href="#" target="_blank" rel="noopener" class="test-btn" style="background:#0088cc; color:#fff; font-size:0.85rem; padding: 12px; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;">
+            <span>✈️ Telegram</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 

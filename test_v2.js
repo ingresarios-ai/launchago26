@@ -547,21 +547,65 @@ function goToThankYou() {
 // ========================================
 
 function shareResult() {
-  var dominant = document.getElementById('result-card').getAttribute('data-type');
-  var sab = saboteurs[dominant];
-  var shareText = 'Mi Saboteador es ' + sab.name + ' ' + sab.emoji + ' — ¿Cuál es el tuyo? Descúbrelo en 2 minutos:';
-  var shareUrl = 'https://taller.ingresarios.net/test';
+  var dominant = document.getElementById('result-card').getAttribute('data-type') || 'vengador';
+  var sab = saboteurs[dominant] || { name: 'Saboteador Financiero', emoji: '🧠' };
+  
+  var shareText = 'Mi Saboteador Financiero es ' + sab.name + ' ' + sab.emoji + ' — ¿Cuál es el tuyo? Descúbrelo en 2 minutos:';
+  var shareUrl = 'https://taller.ingresarios.net/test?sab=' + encodeURIComponent(dominant);
 
-  if (navigator.share) {
+  // Set URL input value
+  var inputEl = document.getElementById('share-url-input');
+  if (inputEl) inputEl.value = shareUrl;
+
+  // Set Social Links
+  var encodedText = encodeURIComponent(shareText + ' ' + shareUrl);
+  var encodedUrl = encodeURIComponent(shareUrl);
+  
+  var waEl = document.getElementById('share-wa');
+  if (waEl) waEl.href = 'https://api.whatsapp.com/send?text=' + encodedText;
+
+  var fbEl = document.getElementById('share-fb');
+  if (fbEl) fbEl.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodedUrl;
+
+  var xEl = document.getElementById('share-x');
+  if (xEl) xEl.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodedUrl;
+
+  var tgEl = document.getElementById('share-tg');
+  if (tgEl) tgEl.href = 'https://t.me/share/url?url=' + encodedUrl + '&text=' + encodeURIComponent(shareText);
+
+  // Try Native Share API on mobile
+  if (navigator.share && /Android|iPhone|iPad/i.test(navigator.userAgent)) {
     navigator.share({ title: 'Test del Saboteador', text: shareText, url: shareUrl }).catch(function () {});
-  } else {
-    navigator.clipboard.writeText(shareText + ' ' + shareUrl).then(function () {
-      var btn = document.getElementById('btn-share');
-      var orig = btn.innerHTML;
-      btn.innerHTML = '✓ ¡COPIADO!';
-      setTimeout(function () { btn.innerHTML = orig; }, 2000);
-    });
   }
+
+  // Toggle Panel
+  var panel = document.getElementById('share-panel');
+  if (panel) {
+    var isHidden = panel.style.display === 'none' || !panel.style.display;
+    panel.style.display = isHidden ? 'block' : 'none';
+    if (isHidden) {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+}
+
+function copyShareUrl() {
+  var inputEl = document.getElementById('share-url-input');
+  if (!inputEl) return;
+  inputEl.select();
+  navigator.clipboard.writeText(inputEl.value).then(function() {
+    var btn = document.getElementById('btn-copy-url');
+    if (btn) {
+      var orig = btn.innerHTML;
+      btn.innerHTML = '✓ ¡Copiado!';
+      setTimeout(function() { btn.innerHTML = orig; }, 2000);
+    }
+  });
+}
+
+function closeSharePanel() {
+  var panel = document.getElementById('share-panel');
+  if (panel) panel.style.display = 'none';
 }
 
 // ========================================
