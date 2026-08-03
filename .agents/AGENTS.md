@@ -20,8 +20,8 @@
 
 ## Rule 4: Mandatory LATAM Time Zones in Broadcast & Email Copies
 - **ALWAYS include the full LATAM time zone list in every marketing message draft**:
-  - 🇲🇽 México (CDMX): 7:00 PM
-  - 🇨🇴 Colombia / Perú / Ecuador: 8:00 PM
-  - 🇺🇸 Miami / 🇻🇪 Venezuela / 🇩🇴 Rep. Dominicana: 9:00 PM
-  - 🇦🇷 Argentina / Chile / Uruguay: 10:00 PM
+  - 🇲🇽 México (CDMX): 6:00 PM
+  - 🇨🇴 Colombia / Perú / Ecuador: 7:00 PM
+  - 🇺🇸 Miami / 🇻🇪 Venezuela / 🇩🇴 Rep. Dominicana: 8:00 PM
+  - 🇦🇷 Argentina / Chile / Uruguay: 9:00 PM
 
