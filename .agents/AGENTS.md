@@ -18,3 +18,10 @@
   - Database persistence (`survey_responses`) and GoHighLevel webhooks (`sendToGHL`) MUST always run inside isolated `try/catch` blocks.
   - The UI MUST ALWAYS transition seamlessly to `showThankYou()` (the Thank You screen) without ever raising blocking error `alert()` dialogs or interrupting the user journey on network or API edge cases.
 
+## Rule 4: Mandatory LATAM Time Zones in Broadcast & Email Copies
+- **ALWAYS include the full LATAM time zone list in every marketing message draft**:
+  - 🇲🇽 México (CDMX): 7:00 PM
+  - 🇨🇴 Colombia / Perú / Ecuador: 8:00 PM
+  - 🇺🇸 Miami / 🇻🇪 Venezuela / 🇩🇴 Rep. Dominicana: 9:00 PM
+  - 🇦🇷 Argentina / Chile / Uruguay: 10:00 PM
+
