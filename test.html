@@ -44,6 +44,61 @@
     <div class="test-intro">
       <div class="test-intro__icon">🧠</div>
       <h1 class="test-intro__title">Test del <span class="text-green">Saboteador</span></h1>
+
+      <!-- Referral Invitation Banner (Shown if ?sab=... or ?ref=...) -->
+      <div id="ref-invite-banner" style="display:none; background: linear-gradient(135deg, rgba(245,158,11,0.18) 0%, rgba(37,211,102,0.18) 100%); border: 1px solid rgba(245,158,11,0.4); border-radius: 16px; padding: 18px 20px; margin-bottom: 20px; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <span style="font-size: 1.8rem;" id="ref-sab-emoji">🥊</span>
+          <div>
+            <div style="font-weight:900; color:#f59e0b; font-size:1.05rem; font-family:'Outfit', sans-serif;" id="ref-invite-title">
+              ¡Un amigo te ha invitado a descubrir tu Saboteador!
+            </div>
+            <div style="font-size:0.9rem; color:#25d366; font-weight:800;" id="ref-sab-name">
+              "Mi saboteador financero es EL VENGADOR 🥊"
+            </div>
+          </div>
+        </div>
+        <p style="font-size: 0.9rem; color: #f8fafc; line-height: 1.55; opacity: 0.95; margin-bottom: 14px;" id="ref-invite-text">
+          Te invito a descubrir cuál es el tuyo en solo 2 minutos y participar en el Gran Sorteo de una <strong>Beca Completa, un Computador o una Cuenta Fondeada</strong>.
+        </p>
+        <button type="button" class="test-btn" onclick="openReferralRegistration()" style="width:100%; background:#25d366; color:#000; font-weight:900; font-size:0.95rem; padding:14px;">
+          REGISTRARME Y DESCUBRIR MI SABOTEADOR (GRATIS) 🚀
+        </button>
+      </div>
+
+      <!-- Referral Registration Form Card -->
+      <div id="ref-reg-card" style="display:none; background: rgba(17, 24, 39, 0.95); border: 1px solid var(--green); border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: left; animation: fadeIn 0.3s ease;">
+        <h3 style="font-family:'Outfit', sans-serif; font-size: 1.15rem; font-weight: 800; color: #25d366; margin-bottom: 6px;">
+          📝 Regístrate para guardar tu resultado y participar
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+          Ingresa tus datos para asegurar tus boletos del sorteo acumulado y descubrir tu Saboteador.
+        </p>
+        
+        <form id="ref-reg-form" onsubmit="handleReferralRegister(event)">
+          <input type="hidden" id="ref-landing-hidden" name="landing" value="Lead referido" />
+          
+          <div style="margin-bottom: 12px;">
+            <label style="display:block; font-size:0.85rem; font-weight:700; color:#fff; margin-bottom:4px;">Tu Nombre Completo <span style="color:#ef4444;">*</span></label>
+            <input type="text" id="ref-name" required placeholder="Ej: Juan Pérez" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #1e2a38; border-radius:8px; padding:10px 12px; color:#fff; font-size:0.9rem;" />
+          </div>
+          
+          <div style="margin-bottom: 12px;">
+            <label style="display:block; font-size:0.85rem; font-weight:700; color:#fff; margin-bottom:4px;">Tu Correo Electrónico <span style="color:#ef4444;">*</span></label>
+            <input type="email" id="ref-email" required placeholder="ejemplo@correo.com" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #1e2a38; border-radius:8px; padding:10px 12px; color:#fff; font-size:0.9rem;" />
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <label style="display:block; font-size:0.85rem; font-weight:700; color:#fff; margin-bottom:4px;">Tu WhatsApp / Teléfono <span style="color:#ef4444;">*</span></label>
+            <input type="tel" id="ref-phone" required placeholder="Tu número de WhatsApp" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid #1e2a38; border-radius:8px; padding:10px 12px; color:#fff; font-size:0.9rem;" />
+          </div>
+
+          <button type="submit" id="btn-ref-submit" class="test-btn" style="width:100%; background:#25d366; color:#000; font-weight:900; padding:14px;">
+            REGISTRARME Y EMPEZAR TEST ➔
+          </button>
+        </form>
+      </div>
+
       <div class="test-raffle-banner" id="test-raffle-banner" style="background: linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(37,211,102,0.12) 100%); border: 1px solid rgba(245,158,11,0.3); border-radius: 14px; padding: 14px 16px; margin-bottom: 20px; font-size: 0.85rem; line-height: 1.5; text-align: left; display: flex; align-items: flex-start; gap: 10px;">
         <span style="font-size: 1.4rem;">🎁</span>
         <div>

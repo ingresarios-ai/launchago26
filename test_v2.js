@@ -924,7 +924,129 @@ document.addEventListener('DOMContentLoaded', function () {
       bannerEl.style.borderColor = 'rgba(37,211,102,0.4)';
     }
   }
+
+  // Check if lead was invited by a friend
+  checkReferralParams();
 });
+
+var refPhoneIti = null;
+
+function checkReferralParams() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var sabKey = (urlParams.get('sab') || '').toLowerCase();
+  var isRef = urlParams.get('ref') || sabKey;
+
+  if (isRef) {
+    var banner = document.getElementById('ref-invite-banner');
+    var emojiEl = document.getElementById('ref-sab-emoji');
+    var nameEl = document.getElementById('ref-sab-name');
+
+    if (banner) banner.style.display = 'block';
+
+    if (sabKey && saboteurs[sabKey]) {
+      var sabInfo = saboteurs[sabKey];
+      if (emojiEl) emojiEl.textContent = sabInfo.emoji;
+      if (nameEl) nameEl.textContent = '"Mi saboteador financiero es ' + sabInfo.name + ' ' + sabInfo.emoji + '"';
+    }
+
+    var phoneInput = document.getElementById('ref-phone');
+    if (phoneInput && window.intlTelInput) {
+      refPhoneIti = window.intlTelInput(phoneInput, {
+        initialCountry: 'co',
+        preferredCountries: ['co', 'mx', 'pe', 'ar', 'cl', 'us'],
+        utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js'
+      });
+    }
+  }
+}
+
+function openReferralRegistration() {
+  var card = document.getElementById('ref-reg-card');
+  if (card) {
+    card.style.display = 'block';
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+async function handleReferralRegister(e) {
+  e.preventDefault();
+  var btn = document.getElementById('btn-ref-submit');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '⚡ Registrando...';
+  }
+
+  var name = (document.getElementById('ref-name').value || '').trim();
+  var email = (document.getElementById('ref-email').value || '').trim().toLowerCase();
+  var phone = refPhoneIti ? refPhoneIti.getNumber() : (document.getElementById('ref-phone').value || '').trim();
+  var landingVal = document.getElementById('ref-landing-hidden') ? document.getElementById('ref-landing-hidden').value : 'Lead referido';
+
+  try {
+    var createRes = await fetch(SUPABASE_URL + '/rest/v1/leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        phone: phone,
+        landing: landingVal
+      })
+    });
+
+    var newToken = '';
+    if (createRes.ok) {
+      var resData = await createRes.json();
+      newToken = Array.isArray(resData) ? (resData[0].auth_token || '') : (resData.auth_token || '');
+    } else {
+      var tRes = await fetch(SUPABASE_URL + '/rest/v1/rpc/get_token_by_email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+        },
+        body: JSON.stringify({ p_email: email })
+      });
+      var tData = await tRes.json();
+      if (Array.isArray(tData) && tData.length > 0) {
+        newToken = tData[0].get_token_by_email || tData[0].auth_token || (typeof tData[0] === 'string' ? tData[0] : '');
+      }
+    }
+
+    var GHL_REG_HOOK = 'https://services.leadconnectorhq.com/hooks/jTugwykceKyJlATOSvkb/webhook-trigger/deaadf50-9f15-4372-a5b4-5ec030b01fea';
+    fetch(GHL_REG_HOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        phone: phone,
+        landing: landingVal,
+        event: 'referred_lead_registration'
+      })
+    }).catch(function() {});
+
+    if (newToken) {
+      token = newToken;
+      localStorage.setItem('auth_token', newToken);
+      localStorage.setItem('user_email', email);
+    }
+
+    var card = document.getElementById('ref-reg-card');
+    if (card) card.style.display = 'none';
+
+    startTest();
+
+  } catch (err) {
+    console.error('Referral registration error:', err);
+    startTest();
+  }
+}
 
 function trackVisit(pageName) {
   try {
