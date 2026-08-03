@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirigiendo al Live Día 10... | INGRESARIOS</title>
+  <script>
+    var DESTINATION_URL = "https://www.youtube.com/@Ingresarios/live";
+    var PAGE_NAME = "dia10";
+
+    var SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
+    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
+
+    try {
+      var sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
+      var urlParams = new URLSearchParams(window.location.search);
+      var utm_source = urlParams.get('utm_source') || 'sms';
+      var utm_medium = urlParams.get('utm_medium') || 'sms_blast';
+      var utm_campaign = urlParams.get('utm_campaign') || 'live10_reminder';
+
+      var payload = JSON.stringify({
+        page: PAGE_NAME,
+        utm_source: utm_source,
+        utm_medium: utm_medium,
+        utm_campaign: utm_campaign,
+        session_id: sessionId
+      });
+
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(SUPABASE_URL + '/rest/v1/analytics_pageviews?apikey=' + SUPABASE_ANON_KEY, payload);
+      } else {
+        fetch(SUPABASE_URL + '/rest/v1/analytics_pageviews', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+          },
+          body: payload
+        }).catch(function() {});
+      }
+    } catch(e) {}
+
+    window.location.replace(DESTINATION_URL);
+  </script>
+</head>
+<body style="background:#0a0e13; color:#fff; font-family:sans-serif; text-align:center; padding-top:100px;">
+  <h2>Redirigiendo a la transmisión en vivo del Día 10... 🚀</h2>
+  <p>Si no eres redirigido automáticamente, <a href="https://www.youtube.com/@Ingresarios/live" style="color:#25d366;">haz clic aquí para entrar al Live</a>.</p>
+</body>
+</html>

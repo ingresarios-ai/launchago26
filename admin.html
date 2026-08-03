@@ -168,6 +168,38 @@
             </div>
           </div>
 
+          <!-- LIVE TRANSMISSION LINKS MONITOR WIDGET -->
+          <div class="analytics-card" style="margin-bottom: 24px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; flex-wrap:wrap; gap:10px;">
+              <div style="display:flex; align-items:center; gap: 10px;">
+                <span style="font-size:1.5rem;">📲</span>
+                <div>
+                  <div class="card-title" style="margin:0;">Monitor de Clics SMS en Enlaces Cortos (/dia1 a /dia10)</div>
+                  <p style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">Conteo en tiempo real de clics desde mensajes SMS</p>
+                </div>
+              </div>
+              <a href="https://taller.ingresarios.net/dia1" target="_blank" class="btn btn--sm btn--outline" style="text-decoration:none;">Probar /dia1 ↗</a>
+            </div>
+
+            <div id="live-links-click-list" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px;">
+              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:14px; text-align:center;">
+                <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">Día 1 (/dia1)</div>
+                <div style="font-size:1.6rem; font-weight:900; color:var(--primary-green);" id="click-count-dia1">0</div>
+                <div style="font-size:0.75rem; color:var(--text-muted);">clics registrados</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:14px; text-align:center;">
+                <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">Día 2 (/dia2)</div>
+                <div style="font-size:1.6rem; font-weight:900; color:var(--primary-green);" id="click-count-dia2">0</div>
+                <div style="font-size:0.75rem; color:var(--text-muted);">clics registrados</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:14px; text-align:center;">
+                <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">Día 3 (/dia3)</div>
+                <div style="font-size:1.6rem; font-weight:900; color:var(--primary-green);" id="click-count-dia3">0</div>
+                <div style="font-size:0.75rem; color:var(--text-muted);">clics registrados</div>
+              </div>
+            </div>
+          </div>
+
           <!-- CHARTS ROW -->
           <div class="analytics-layout" style="margin-bottom: 24px;">
             <div class="analytics-card flex-1">

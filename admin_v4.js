@@ -498,6 +498,18 @@ function buildAnalytics() {
   if (elLmTotal) elLmTotal.textContent = lmCount;
   if (elLmSub) elLmSub.textContent = `${lmConvCount} inscritos (${lmConvRate}%)`;
 
+  // Live Links SMS Click Monitor KPI
+  const clicksDia1 = allVisits.filter(v => v.page === 'dia1').length;
+  const clicksDia2 = allVisits.filter(v => v.page === 'dia2').length;
+  const clicksDia3 = allVisits.filter(v => v.page === 'dia3').length;
+
+  const elDia1 = document.getElementById('click-count-dia1');
+  const elDia2 = document.getElementById('click-count-dia2');
+  const elDia3 = document.getElementById('click-count-dia3');
+  if (elDia1) elDia1.textContent = clicksDia1;
+  if (elDia2) elDia2.textContent = clicksDia2;
+  if (elDia3) elDia3.textContent = clicksDia3;
+
   // UTM Source table aggregation
   const utmSources = {};
   
