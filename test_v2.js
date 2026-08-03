@@ -859,6 +859,22 @@ function verifyMagicLink() {
 verifyMagicLink();
 trackVisit('test');
 
+document.addEventListener('DOMContentLoaded', function () {
+  var t = token || localStorage.getItem('auth_token');
+  var email = localStorage.getItem('user_email');
+  if (t || email) {
+    var titleEl = document.getElementById('raffle-title');
+    var textEl = document.getElementById('raffle-text');
+    var bannerEl = document.getElementById('test-raffle-banner');
+    if (titleEl) titleEl.textContent = '🟢 Sesión Activa: Estás participando en el Gran Sorteo Final';
+    if (textEl) textEl.innerHTML = 'Al realizar el Test del Saboteador (Día 1) sumas <strong>+30 Puntos Genoma</strong> y aseguras tus entradas activas para la rifa de una <strong>Beca Completa, un Computador o una Cuenta Fondeada</strong>.';
+    if (bannerEl) {
+      bannerEl.style.background = 'linear-gradient(135deg, rgba(37,211,102,0.12) 0%, rgba(16,185,129,0.12) 100%)';
+      bannerEl.style.borderColor = 'rgba(37,211,102,0.4)';
+    }
+  }
+});
+
 function trackVisit(pageName) {
   try {
     var sessionKey = 'tracked_visit_' + pageName;

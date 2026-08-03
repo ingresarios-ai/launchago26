@@ -12,3 +12,9 @@
   - Keep browser interactions fast, direct, and zero-overhead (taking quick visual screenshots or checking specific console errors when justified).
   - Do NOT run redundant loops or inspect source files inside browser tabs when local codebase inspection tools (`view_file`, `grep_search`) are available.
 
+## Rule 3: Strict Survey Submission Immunity (CRITICAL)
+- **NEVER revert or alter the fail-safe survey submission logic in `encuesta.js`**:
+  - Both `handleAuthenticatedSubmit` and `handleAnonymousSubmit` in `encuesta.js` MUST remain non-blocking and fail-safe.
+  - Database persistence (`survey_responses`) and GoHighLevel webhooks (`sendToGHL`) MUST always run inside isolated `try/catch` blocks.
+  - The UI MUST ALWAYS transition seamlessly to `showThankYou()` (the Thank You screen) without ever raising blocking error `alert()` dialogs or interrupting the user journey on network or API edge cases.
+

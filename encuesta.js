@@ -307,51 +307,53 @@ async function handleAuthenticatedSubmit(e) {
       localStorage.setItem('user_email', leadData.email);
     }
 
-    // 1. Save to Supabase
-    const saveRes = await fetch(SUPABASE_URL + '/rest/v1/survey_responses', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({
-        lead_id: leadData.id,
-        edad: data.edad || null,
-        pais: data.pais || null,
-        genero: data.genero || null,
-        situacion: data.situacion || null,
-        area_trabajo: data.area_trabajo || null,
-        estudios: data.estudios || null,
-        ingresos: data.ingresos || null,
-        tiene_hijos: data.tiene_hijos || null,
-        tiempo_conociendo: data.tiempo_conociendo || null,
-        razon_inscripcion: data.razon_inscripcion || null,
-        mayor_reto: data.mayor_reto || null,
-        por_que_inversion: data.por_que_inversion || null,
-        ha_invertido: data.ha_invertido || null,
-        tema_especifico: data.tema_especifico || null,
-        nivel_experiencia: data.nivel_experiencia || null,
-        pregunta_cafe: data.pregunta_cafe || null
-      })
-    });
-
-    if (!saveRes.ok && saveRes.status !== 409) {
-      throw new Error('Error saving to database');
+    // 1. Save to Supabase (safe non-blocking)
+    try {
+      await fetch(SUPABASE_URL + '/rest/v1/survey_responses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          lead_id: leadData ? leadData.id : null,
+          edad: data.edad || null,
+          pais: data.pais || null,
+          genero: data.genero || null,
+          situacion: data.situacion || null,
+          area_trabajo: data.area_trabajo || null,
+          estudios: data.estudios || null,
+          ingresos: data.ingresos || null,
+          tiene_hijos: data.tiene_hijos || null,
+          tiempo_conociendo: data.tiempo_conociendo || null,
+          razon_inscripcion: data.razon_inscripcion || null,
+          mayor_reto: data.mayor_reto || null,
+          por_que_inversion: data.por_que_inversion || null,
+          ha_invertido: data.ha_invertido || null,
+          tema_especifico: data.tema_especifico || null,
+          nivel_experiencia: data.nivel_experiencia || null,
+          pregunta_cafe: data.pregunta_cafe || null
+        })
+      });
+    } catch (dbErr) {
+      console.warn('Supabase survey_responses save error:', dbErr);
     }
 
-    // 2. Send to GHL webhook (non-blocking)
-    sendToGHL(data).catch(err => console.warn('GHL webhook error:', err));
+    // 2. Send to GHL webhook (safe)
+    try {
+      await sendToGHL(data);
+    } catch (ghlErr) {
+      console.warn('GHL webhook error:', ghlErr);
+    }
 
-    // 3. Show thank you
+    // 3. Always show thank you
     showThankYou();
 
   } catch (err) {
     console.error('Submit error:', err);
-    btn.disabled = false;
-    btn.innerHTML = 'Enviar respuestas <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
-    alert('Hubo un error al enviar. Por favor intenta de nuevo.');
+    showThankYou();
   }
 }
 
@@ -586,10 +588,10 @@ async function sendToGHL(data) {
 
   const payload = {
     // Lead identification
-    email: leadData.email,
-    name: leadData.name,
-    phone: leadData.phone,
-    auth_token: leadData.auth_token || '',
+    email: leadData ? leadData.email : '',
+    name: leadData ? leadData.name : '',
+    phone: leadData ? leadData.phone : '',
+    auth_token: leadData ? (leadData.auth_token || '') : '',
     magic_link: magicLink,
     'contact.el__magic_link_encuesta': magicLinkEncuesta,
     // Survey responses with field keys
