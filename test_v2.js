@@ -918,7 +918,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var textEl = document.getElementById('raffle-text');
     var bannerEl = document.getElementById('test-raffle-banner');
     if (titleEl) titleEl.textContent = '🟢 Sesión Activa: Estás participando en el Gran Sorteo Final';
-    if (textEl) textEl.innerHTML = 'Al realizar el Test del Saboteador (Día 1) sumas <strong>+30 Puntos Genoma</strong> y aseguras tus entradas activas para la rifa de una <strong>Beca Completa, un Computador o una Cuenta Fondeada</strong>.';
+    if (textEl) textEl.innerHTML = 'Al realizar el Test del Saboteador (Día 1) sumas <strong>+30 Puntos Genoma</strong> y aseguras tus entradas activas para la rifa de una <strong>Beca Método Ingresarios + Algoritmos + IA + Computador</strong>.';
     if (bannerEl) {
       bannerEl.style.background = 'linear-gradient(135deg, rgba(37,211,102,0.12) 0%, rgba(16,185,129,0.12) 100%)';
       bannerEl.style.borderColor = 'rgba(37,211,102,0.4)';

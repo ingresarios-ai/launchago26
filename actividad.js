@@ -238,11 +238,11 @@ function updateRaffleBanner() {
   if (isLoggedIn) {
     banner.classList.add('raffle-banner--logged');
     title.textContent = '🔥 ¡Ya estás participando oficialmente en el Gran Sorteo!';
-    desc.innerHTML = `Hola <strong>${leadData ? (leadData.name || 'participante') : ''}</strong>. Al enviar tu respuesta ganas <strong>+30 Puntos Genoma</strong> y aumentas tus oportunidades en el sorteo de la <strong>Beca Completa, Computador y Cuenta Fondeada</strong>. ¡Sigue conectado a los en vivos a las 8:00 PM (CO) para multiplicar tus puntos! 🚀`;
+    desc.innerHTML = `Hola <strong>${leadData ? (leadData.name || 'participante') : ''}</strong>. Al enviar tu respuesta ganas <strong>+30 Puntos Genoma</strong> y aumentas tus oportunidades en el sorteo de la <strong>Beca Método Ingresarios + Algoritmos + IA + Computador</strong>. ¡Sigue conectado a los en vivos a las 8:00 PM (CO) para multiplicar tus puntos! 🚀`;
   } else {
     banner.classList.remove('raffle-banner--logged');
     title.textContent = '🔥 ¡Gana tus primeros +30 puntos para el Gran Sorteo!';
-    desc.innerHTML = `Responde libremente la actividad. Al finalizar, ingresa tu correo para guardar tu respuesta, asegurar tu boleto para la <strong>Beca Completa, Computador o Cuenta Fondeada</strong> y multiplicar tus puntos en los en vivos. 🚀`;
+    desc.innerHTML = `Responde libremente la actividad. Al finalizar, ingresa tu correo para guardar tu respuesta, asegurar tu boleto para la <strong>Beca Método Ingresarios + Algoritmos + IA + Computador</strong> y multiplicar tus puntos en los en vivos. 🚀`;
   }
 }
 
