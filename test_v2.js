@@ -466,6 +466,13 @@ function showResult(skipPushState) {
 
 
 
+  // Trigger Confetti Celebration 🎉
+  if (typeof confetti === 'function') {
+    try {
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+    } catch (e) {}
+  }
+
   // Save to Supabase
   saveResult(dominant);
 }
