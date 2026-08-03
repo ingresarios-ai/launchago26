@@ -940,13 +940,17 @@ function checkReferralParams() {
     var banner = document.getElementById('ref-invite-banner');
     var emojiEl = document.getElementById('ref-sab-emoji');
     var nameEl = document.getElementById('ref-sab-name');
+    var descEl = document.getElementById('ref-sab-desc');
+    var insightEl = document.getElementById('ref-sab-insight');
 
     if (banner) banner.style.display = 'block';
 
     if (sabKey && saboteurs[sabKey]) {
       var sabInfo = saboteurs[sabKey];
       if (emojiEl) emojiEl.textContent = sabInfo.emoji;
-      if (nameEl) nameEl.textContent = '"Mi saboteador financiero es ' + sabInfo.name + ' ' + sabInfo.emoji + '"';
+      if (nameEl) nameEl.textContent = sabInfo.name;
+      if (descEl) descEl.textContent = sabInfo.desc;
+      if (insightEl) insightEl.textContent = '"' + sabInfo.insight + '"';
     }
 
     var phoneInput = document.getElementById('ref-phone');

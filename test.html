@@ -45,25 +45,42 @@
       <div class="test-intro__icon">🧠</div>
       <h1 class="test-intro__title">Test del <span class="text-green">Saboteador</span></h1>
 
-      <!-- Referral Invitation Banner (Shown if ?sab=... or ?ref=...) -->
-      <div id="ref-invite-banner" style="display:none; background: linear-gradient(135deg, rgba(245,158,11,0.18) 0%, rgba(37,211,102,0.18) 100%); border: 1px solid rgba(245,158,11,0.4); border-radius: 16px; padding: 18px 20px; margin-bottom: 20px; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-          <span style="font-size: 1.8rem;" id="ref-sab-emoji">🥊</span>
-          <div>
-            <div style="font-weight:900; color:#f59e0b; font-size:1.05rem; font-family:'Outfit', sans-serif;" id="ref-invite-title">
-              ¡Un amigo te ha invitado a descubrir tu Saboteador!
-            </div>
-            <div style="font-size:0.9rem; color:#25d366; font-weight:800;" id="ref-sab-name">
-              "Mi saboteador financero es EL VENGADOR 🥊"
+      <!-- Shared Result & Referral Invitation Banner -->
+      <div id="ref-invite-banner" style="display:none; background: rgba(17, 24, 32, 0.95); border: 1px solid var(--border-color); border-radius: 20px; padding: 24px 20px; margin-bottom: 24px; text-align: left; box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
+        <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px; display:flex; align-items:center; gap:6px;">
+          <span>🧠</span> RESULTADO COMPARTIDO POR UN AMIGO
+        </div>
+        
+        <!-- Shared Saboteur Result Card -->
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 18px; margin-bottom: 20px;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+            <span style="font-size: 2.2rem;" id="ref-sab-emoji">⚡</span>
+            <div>
+              <div style="font-size: 0.8rem; color: #f59e0b; font-weight: 800; text-transform: uppercase;">Saboteador Dominante</div>
+              <h3 style="font-family:'Outfit', sans-serif; font-size: 1.35rem; font-weight: 900; color: #fff;" id="ref-sab-name">EL IMPACIENTE</h3>
             </div>
           </div>
+          <p style="font-size: 0.9rem; color: #e2e8f0; line-height: 1.55; margin-bottom: 10px;" id="ref-sab-desc">
+            Necesitas acción constante. Actúas antes de tiempo, decides sin confirmación y confundes movimiento con progreso. Tu bolsillo paga el costo de tu ansiedad.
+          </p>
+          <div style="font-size: 0.85rem; color: #94a3b8; background: rgba(255,255,255,0.03); border-left: 3px solid #f59e0b; padding: 8px 12px; border-radius: 0 8px 8px 0; font-style: italic;" id="ref-sab-insight">
+            "Tu Saboteador te hace creer que si no estás actuando, estás perdiendo..."
+          </div>
         </div>
-        <p style="font-size: 0.9rem; color: #f8fafc; line-height: 1.55; opacity: 0.95; margin-bottom: 14px;" id="ref-invite-text">
-          Te invito a descubrir cuál es el tuyo en solo 2 minutos y participar en el Gran Sorteo de una <strong>Beca Completa, un Computador o una Cuenta Fondeada</strong>.
-        </p>
-        <button type="button" class="test-btn" onclick="openReferralRegistration()" style="width:100%; background:#25d366; color:#000; font-weight:900; font-size:0.95rem; padding:14px;">
-          REGISTRARME Y DESCUBRIR MI SABOTEADOR (GRATIS) 🚀
-        </button>
+
+        <!-- Invitation CTA Box Below -->
+        <div style="background: linear-gradient(135deg, rgba(37,211,102,0.15) 0%, rgba(245,158,11,0.15) 100%); border: 1px solid rgba(37,211,102,0.4); border-radius: 14px; padding: 18px; text-align: center;">
+          <div style="font-size: 1.5rem; margin-bottom: 6px;">🔥 🎁</div>
+          <h4 style="font-family:'Outfit', sans-serif; font-size: 1.15rem; font-weight: 900; color: #25d366; margin-bottom: 8px; line-height: 1.3;">
+            Y tú... ¿Sabes cuál es el Saboteador Financiero que controla tus decisiones?
+          </h4>
+          <p style="font-size: 0.88rem; color: #f8fafc; line-height: 1.5; opacity: 0.95; margin-bottom: 14px;">
+            Descubre tu patrón mental en solo 2 minutos, acumula <strong>+30 Puntos Genoma</strong> y regístrate para participar en el Gran Sorteo de una <strong>Beca Completa, un Computador o una Cuenta Fondeada</strong>.
+          </p>
+          <button type="button" class="test-btn" onclick="openReferralRegistration()" style="width:100%; background:#25d366; color:#000; font-weight:900; font-size:0.95rem; padding:14px; box-shadow: 0 4px 20px rgba(37,211,102,0.3);">
+            REGISTRARME Y DESCUBRIR MI SABOTEADOR (GRATIS) 🚀
+          </button>
+        </div>
       </div>
 
       <!-- Referral Registration Form Card -->
