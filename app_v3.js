@@ -35,6 +35,198 @@ const insigniasData = {
   10: { id: 10, icon: "🏆", date: "12 AGO", name: "10. Gran Final 3.0", pc: "+100 PC Bonus", desc: "Premiación y Cierre (12 AGO)" }
 };
 
+const liveSessionsData = {
+  1: {
+    dayDate: "3 de Agosto",
+    title: "1. La Anatomía del Saboteador",
+    reward: "+30 PC",
+    liveUrl: "https://www.youtube.com/watch?v=nmKG-urzbn4&list=PLZ3Gjdurk6HM&index=1",
+    resourceName: "Guía: Anatomía de los 4 Saboteadores Financieros (PDF)",
+    resourceLink: "#",
+    missionTitle: "Misión del Día 1: Identifica tu Saboteador",
+    missionDesc: "Realiza o repite el Test del Saboteador (8 preguntas) para descubrir o actualizar tu arquetipo mental dominante.",
+    renderMission: () => `
+      <div id="live1-saboteur-container"></div>
+      <label class="check-item" onclick="toggleCheck(this)" style="margin-top:14px;">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Confirmar asistencia en vivo + Resultado de mi Saboteador</span>
+      </label>
+    `
+  },
+  2: {
+    dayDate: "4 de Agosto",
+    title: "2. Cuenta Abierta: El Espejo de la Mente",
+    reward: "+30 PC",
+    liveUrl: "https://www.youtube.com/watch?v=R2SAj0u3ESk&list=PLZ3Gjdurk6HM&index=2",
+    resourceName: "Plantilla: Definición de Meta de Proceso (PDF)",
+    resourceLink: "#",
+    missionTitle: "Misión del Día 2: Regla #1 Anti-Saboteador",
+    missionDesc: "Define tu meta de proceso para los 10 días y redacta la Regla #1 que impedirá que tu Saboteador tome el control.",
+    renderMission: () => `
+      <textarea class="text-input" id="live2-rule-input" rows="3" placeholder="Ej: Mi meta es seguir el riesgo al 100%. Regla #1: Si pierdo 2 trades seguidos, apago la pantalla por hoy."></textarea>
+      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Regla #1 Anti-Saboteador Registrada</span>
+      </label>
+    `
+  },
+  3: {
+    dayDate: "5 de Agosto",
+    title: "3. El Plan que Tu Saboteador No Puede Renegociar",
+    reward: "+30 PC (+15 extra por compartir)",
+    liveUrl: "https://www.youtube.com/watch?v=pv8l421vF5Y&list=PLZ3Gjdurk6HM&index=3",
+    resourceName: "Plantilla: Plan de Trading Anti-Saboteador (PDF)",
+    resourceLink: "#",
+    missionTitle: "Misión Viral Día 3: El Trade de Mi Saboteador",
+    missionDesc: "Publica en tus redes o en la comunidad el peor trade que tu Saboteador hizo por ti y qué le faltó al plan con el hashtag #JuegoMental.",
+    renderMission: () => `
+      <textarea class="text-input" id="live3-worst-trade" rows="3" placeholder="Ej: Entré por FOMO en Bitcoin sin stop loss y mi Saboteador Eufórico me hizo perder $500... #JuegoMental"></textarea>
+      <button id="copy-viral-btn" class="btn-secondary" style="width: 100%; margin-top: 10px; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="copyViralPost()">
+        <span>📋</span> COPIAR POST VIRAL (#JuegoMental)
+      </button>
+      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Misión Viral Publicada en Redes / Comunidad</span>
+      </label>
+    `
+  },
+  4: {
+    dayDate: "6 de Agosto",
+    title: "4. Ejecución con Inteligencia Artificial (Conoce a GENY)",
+    reward: "+30 PC",
+    liveUrl: "https://www.youtube.com/watch?v=XIHwkZRyFnw&list=PLZ3Gjdurk6HM&index=4",
+    resourceName: "Guía de Parámetros: Algoritmo Geny Trend (PDF)",
+    resourceLink: "#",
+    missionTitle: "Misión Día 4: Tu Primer Paper Trade con Plan",
+    missionDesc: "Haz 1 Paper Trade (simulado) definiendo tu activo, señal de Geny y nivel de Stop Loss.",
+    renderMission: () => `
+      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
+        <input class="text-input" id="live4-asset" type="text" placeholder="Activo (Ej: BTC/USD, Nasdaq, Gold)">
+        <input class="text-input" id="live4-signal" type="text" placeholder="Señal de IA (Ej: Geny Trend Alcista 15M)">
+        <input class="text-input" id="live4-stop" type="text" placeholder="Nivel de Stop Loss de Invalidación (Ej: $64,200)">
+      </div>
+      <label class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Paper Trade registrado con gestión de riesgo previa</span>
+      </label>
+    `
+  },
+  5: {
+    dayDate: "7 de Agosto",
+    title: "5. La Bitácora del Saboteador",
+    reward: "+30 PC",
+    liveUrl: "https://www.youtube.com/watch?v=0_aVXrWNPPQ&list=PLZ3Gjdurk6HM&index=5",
+    resourceName: "Plantilla Oficial: Bitácora PEDEM (Excel / PDF)",
+    resourceLink: "#",
+    missionTitle: "Misión Día 5: Registro en la Bitácora PEDEM",
+    missionDesc: "Documenta tu Paper Trade del Día 4 en la Bitácora PEDEM registrando las emociones de tu Saboteador.",
+    renderMission: () => `
+      <textarea class="text-input" id="live5-logbook-reflection" rows="3" placeholder="Ej: Documenté mi trade en la bitácora. Mi Saboteador sintió impaciencia antes del gatillo..."></textarea>
+      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Trade Registrado en la Bitácora PEDEM</span>
+      </label>
+    `
+  },
+  6: {
+    dayDate: "8 de Agosto",
+    title: "6. Evaluación y Métrica: Reditum Sniper",
+    reward: "+30 PC (+10 por reservar)",
+    liveUrl: "https://www.youtube.com/watch?v=L27tAmupgiY&list=PLZ3Gjdurk6HM&index=6",
+    resourceName: "Rúbrica de Evaluación Semanal PEDEM (PDF)",
+    resourceLink: "#",
+    missionTitle: "Misión Día 6: Rúbrica PEDEM + Asiento Masterclass",
+    missionDesc: "Responde la rúbrica de evaluación semanal (3 preguntas) y asegura tu cupo para la Masterclass de mañana.",
+    renderMission: () => `
+      <div class="checklist">
+        <label class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>1. Definí mi riesgo ANTES de entrar a cada trade</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>2. Respeté mi Regla #1 Anti-Saboteador esta semana</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>3. Reservé mi Asiento VIP para la Masterclass del Domingo</span>
+        </label>
+      </div>
+    `
+  },
+  7: {
+    dayDate: "9 de Agosto",
+    title: "7. MASTERCLASS: Mente · Sistema · Entorno",
+    reward: "+35 PC",
+    liveUrl: "https://www.youtube.com/watch?v=sMooQHrbPB4&list=PLZ3Gjdurk6HM&index=7",
+    resourceName: "Roadmap: Método INGRESARIOS 3.0 (PDF)",
+    resourceLink: "#",
+    missionTitle: "Misión Día 7: Asistencia a la Masterclass",
+    missionDesc: "Asiste a la Masterclass de apertura oficial del Método INGRESARIOS 3.0 y toma tu decisión de transformación.",
+    renderMission: () => `
+      <label class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Asistí a la Masterclass + Decisión de Transformación Tomada</span>
+      </label>
+    `
+  },
+  8: {
+    dayDate: "10 de Agosto",
+    title: "8. Panel de Casos Reales — Historias Sin Saboteador",
+    reward: "+30 PC",
+    liveUrl: "https://taller.ingresarios.net/whatsapp",
+    resourceName: "Casos de Estudio: De Reactivo a Inquebrantable (PDF)",
+    resourceLink: "#",
+    missionTitle: "Misión Día 8: Escribe tu Duda u Objeción Personal",
+    missionDesc: "Escribe la pregunta o inquietud que te está frenando para que Juan la responda en vivo mañana.",
+    renderMission: () => `
+      <textarea class="text-input" id="live8-question-input" rows="3" placeholder="Escribe tu pregunta o duda personal..."></textarea>
+      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Pregunta Enviada para el Q&A</span>
+      </label>
+    `
+  },
+  9: {
+    dayDate: "11 de Agosto",
+    title: "9. La Nómina del Saboteador — El Costo de No Decidir",
+    reward: "+30 PC",
+    liveUrl: "https://taller.ingresarios.net/whatsapp",
+    resourceName: "Calculadora de Costo de Inacción (PDF)",
+    resourceLink: "#",
+    missionTitle: "Misión Día 9: Autoevaluación de Evolución Mental",
+    missionDesc: "Compara tu estado mental del Día 1 vs el de hoy. Describe la principal transformación en tu disciplina.",
+    renderMission: () => `
+      <textarea class="text-input" id="live9-evolution-input" rows="3" placeholder="Ej: Llegué como Vengador impulsivo y hoy opero bajo un sistema de reglas strictly..."></textarea>
+      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Autoevaluación Final Publicada</span>
+      </label>
+    `
+  },
+  10: {
+    dayDate: "12 de Agosto",
+    title: "10. La Gran Final — Premiación y Cierre",
+    reward: "+100 PC Bonus",
+    liveUrl: "https://taller.ingresarios.net/whatsapp",
+    resourceName: "Certificado del Juego Mental del Dinero (PDF)",
+    resourceLink: "#",
+    missionTitle: "Misión Día 10: Racha Perfecta y Premiación",
+    missionDesc: "Asiste a la ceremonia de premiación del Leaderboard y reclama tu Bonus de Racha Perfecta.",
+    renderMission: () => `
+      <div style="text-align:center; padding: 16px 0;">
+        <div style="font-size: 48px; margin-bottom: 8px;">🏆</div>
+        <h3 style="color: var(--yellow); margin-bottom: 8px;">¡Felicidades por completar el entrenamiento!</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">Has dominado el Juego Mental del Dinero.</p>
+      </div>
+      <label class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span>Reclamar 100 PC Bonus Racha Perfecta</span>
+      </label>
+    `
+  }
+};
+
 function getUnlockedInsignias() {
   const isVerPreview = window.location.search.includes('ver=true') || window.location.search.includes('ver=1');
   if (isVerPreview) {
@@ -1428,198 +1620,6 @@ function retakeTest() {
 // ========================================
 // FASE 2: 10 LIVE SESSIONS & DAILY MISSIONS
 // ========================================
-
-const liveSessionsData = {
-  1: {
-    dayDate: "3 de Agosto",
-    title: "1. La Anatomía del Saboteador",
-    reward: "+30 PC",
-    liveUrl: "https://www.youtube.com/watch?v=nmKG-urzbn4&list=PLZ3Gjdurk6HM&index=1",
-    resourceName: "Guía: Anatomía de los 4 Saboteadores Financieros (PDF)",
-    resourceLink: "#",
-    missionTitle: "Misión del Día 1: Identifica tu Saboteador",
-    missionDesc: "Realiza o repite el Test del Saboteador (8 preguntas) para descubrir o actualizar tu arquetipo mental dominante.",
-    renderMission: () => `
-      <div id="live1-saboteur-container"></div>
-      <label class="check-item" onclick="toggleCheck(this)" style="margin-top:14px;">
-        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Confirmar asistencia en vivo + Resultado de mi Saboteador</span>
-      </label>
-    `
-  },
-  2: {
-    dayDate: "4 de Agosto",
-    title: "2. Cuenta Abierta: El Espejo de la Mente",
-    reward: "+30 PC",
-    liveUrl: "https://www.youtube.com/watch?v=R2SAj0u3ESk&list=PLZ3Gjdurk6HM&index=2",
-    resourceName: "Plantilla: Definición de Meta de Proceso (PDF)",
-    resourceLink: "#",
-    missionTitle: "Misión del Día 2: Regla #1 Anti-Saboteador",
-    missionDesc: "Define tu meta de proceso para los 10 días y redacta la Regla #1 que impedirá que tu Saboteador tome el control.",
-    renderMission: () => `
-      <textarea class="text-input" id="live2-rule-input" rows="3" placeholder="Ej: Mi meta es seguir el riesgo al 100%. Regla #1: Si pierdo 2 trades seguidos, apago la pantalla por hoy."></textarea>
-      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
-        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Regla #1 Anti-Saboteador Registrada</span>
-      </label>
-    `
-  },
-  3: {
-    dayDate: "5 de Agosto",
-    title: "3. El Plan que Tu Saboteador No Puede Renegociar",
-    reward: "+30 PC (+15 extra por compartir)",
-    liveUrl: "https://www.youtube.com/watch?v=pv8l421vF5Y&list=PLZ3Gjdurk6HM&index=3",
-    resourceName: "Plantilla: Plan de Trading Anti-Saboteador (PDF)",
-    resourceLink: "#",
-    missionTitle: "Misión Viral Día 3: El Trade de Mi Saboteador",
-    missionDesc: "Publica en tus redes o en la comunidad el peor trade que tu Saboteador hizo por ti y qué le faltó al plan con el hashtag #JuegoMental.",
-    renderMission: () => `
-      <textarea class="text-input" id="live3-worst-trade" rows="3" placeholder="Ej: Entré por FOMO en Bitcoin sin stop loss y mi Saboteador Eufórico me hizo perder $500... #JuegoMental"></textarea>
-      <button id="copy-viral-btn" class="btn-secondary" style="width: 100%; margin-top: 10px; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="copyViralPost()">
-        <span>📋</span> COPIAR POST VIRAL (#JuegoMental)
-      </button>
-      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
-        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Misión Viral Publicada en Redes / Comunidad</span>
-      </label>
-    `
-  },
-  4: {
-    dayDate: "6 de Agosto",
-    title: "4. Ejecución con Inteligencia Artificial (Conoce a GENY)",
-    reward: "+30 PC",
-    liveUrl: "https://www.youtube.com/watch?v=XIHwkZRyFnw&list=PLZ3Gjdurk6HM&index=4",
-    resourceName: "Guía de Parámetros: Algoritmo Geny Trend (PDF)",
-    resourceLink: "#",
-    missionTitle: "Misión Día 4: Tu Primer Paper Trade con Plan",
-    missionDesc: "Haz 1 Paper Trade (simulado) definiendo tu activo, señal de Geny y nivel de Stop Loss.",
-    renderMission: () => `
-      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
-        <input class="text-input" id="live4-asset" type="text" placeholder="Activo (Ej: BTC/USD, Nasdaq, Gold)">
-        <input class="text-input" id="live4-signal" type="text" placeholder="Señal de IA (Ej: Geny Trend Alcista 15M)">
-        <input class="text-input" id="live4-stop" type="text" placeholder="Nivel de Stop Loss de Invalidación (Ej: $64,200)">
-      </div>
-      <label class="check-item" onclick="toggleCheck(this)">
-        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Paper Trade registrado con gestión de riesgo previa</span>
-      </label>
-    `
-  },
-  5: {
-    dayDate: "7 de Agosto",
-    title: "5. La Bitácora del Saboteador",
-    reward: "+30 PC",
-    liveUrl: "https://www.youtube.com/watch?v=0_aVXrWNPPQ&list=PLZ3Gjdurk6HM&index=5",
-    resourceName: "Plantilla Oficial: Bitácora PEDEM (Excel / PDF)",
-    resourceLink: "#",
-    missionTitle: "Misión Día 5: Registro en la Bitácora PEDEM",
-    missionDesc: "Documenta tu Paper Trade del Día 4 en la Bitácora PEDEM registrando las emociones de tu Saboteador.",
-    renderMission: () => `
-      <textarea class="text-input" id="live5-logbook-reflection" rows="3" placeholder="Ej: Documenté mi trade en la bitácora. Mi Saboteador sintió impaciencia antes del gatillo..."></textarea>
-      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
-        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Trade Registrado en la Bitácora PEDEM</span>
-      </label>
-    `
-  },
-  6: {
-    dayDate: "8 de Agosto",
-    title: "6. Evaluación y Métrica: Reditum Sniper",
-    reward: "+30 PC (+10 por reservar)",
-    liveUrl: "https://www.youtube.com/watch?v=L27tAmupgiY&list=PLZ3Gjdurk6HM&index=6",
-    resourceName: "Rúbrica de Evaluación Semanal PEDEM (PDF)",
-    resourceLink: "#",
-    missionTitle: "Misión Día 6: Rúbrica PEDEM + Asiento Masterclass",
-    missionDesc: "Responde la rúbrica de evaluación semanal (3 preguntas) y asegura tu cupo para la Masterclass de mañana.",
-    renderMission: () => `
-      <div class="checklist">
-        <label class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>1. Definí mi riesgo ANTES de entrar a cada trade</span>
-        </label>
-        <label class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>2. Respeté mi Regla #1 Anti-Saboteador esta semana</span>
-        </label>
-        <label class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>3. Reservé mi Asiento VIP para la Masterclass del Domingo</span>
-        </label>
-      </div>
-    `
-  },
-  7: {
-    dayDate: "9 de Agosto",
-    title: "7. MASTERCLASS: Mente · Sistema · Entorno",
-    reward: "+35 PC",
-    liveUrl: "https://www.youtube.com/watch?v=sMooQHrbPB4&list=PLZ3Gjdurk6HM&index=7",
-    resourceName: "Roadmap: Método INGRESARIOS 3.0 (PDF)",
-    resourceLink: "#",
-    missionTitle: "Misión Día 7: Asistencia a la Masterclass",
-    missionDesc: "Asiste a la Masterclass de apertura oficial del Método INGRESARIOS 3.0 y toma tu decisión de transformación.",
-    renderMission: () => `
-      <label class="check-item" onclick="toggleCheck(this)">
-        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Asistí a la Masterclass + Decisión de Transformación Tomada</span>
-      </label>
-    `
-  },
-  8: {
-    dayDate: "10 de Agosto",
-    title: "8. Panel de Casos Reales — Historias Sin Saboteador",
-    reward: "+30 PC",
-    liveUrl: "https://taller.ingresarios.net/whatsapp",
-    resourceName: "Casos de Estudio: De Reactivo a Inquebrantable (PDF)",
-    resourceLink: "#",
-    missionTitle: "Misión Día 8: Escribe tu Duda u Objeción Personal",
-    missionDesc: "Escribe la pregunta o inquietud que te está frenando para que Juan la responda en vivo mañana.",
-    renderMission: () => `
-      <textarea class="text-input" id="live8-question-input" rows="3" placeholder="Escribe tu pregunta o duda personal..."></textarea>
-      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
-        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Pregunta Enviada para el Q&A</span>
-      </label>
-    `
-  },
-  9: {
-    dayDate: "11 de Agosto",
-    title: "9. La Nómina del Saboteador — El Costo de No Decidir",
-    reward: "+30 PC",
-    liveUrl: "https://taller.ingresarios.net/whatsapp",
-    resourceName: "Calculadora de Costo de Inacción (PDF)",
-    resourceLink: "#",
-    missionTitle: "Misión Día 9: Autoevaluación de Evolución Mental",
-    missionDesc: "Compara tu estado mental del Día 1 vs el de hoy. Describe la principal transformación en tu disciplina.",
-    renderMission: () => `
-      <textarea class="text-input" id="live9-evolution-input" rows="3" placeholder="Ej: Llegué como Vengador impulsivo y hoy opero bajo un sistema de reglas estrictas..."></textarea>
-      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
-        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Autoevaluación Final Publicada</span>
-      </label>
-    `
-  },
-  10: {
-    dayDate: "12 de Agosto",
-    title: "10. La Gran Final — Premiación y Cierre",
-    reward: "+100 PC Bonus",
-    liveUrl: "https://taller.ingresarios.net/whatsapp",
-    resourceName: "Certificado del Juego Mental del Dinero (PDF)",
-    resourceLink: "#",
-    missionTitle: "Misión Día 10: Racha Perfecta y Premiación",
-    missionDesc: "Asiste a la ceremonia de premiación del Leaderboard y reclama tu Bonus de Racha Perfecta.",
-    renderMission: () => `
-      <div style="text-align:center; padding: 16px 0;">
-        <div style="font-size: 48px; margin-bottom: 8px;">🏆</div>
-        <h3 style="color: var(--yellow); margin-bottom: 8px;">¡Felicidades por completar el entrenamiento!</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">Has dominado el Juego Mental del Dinero.</p>
-      </div>
-      <label class="check-item" onclick="toggleCheck(this)">
-        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Reclamar 100 PC Bonus Racha Perfecta</span>
-      </label>
-    `
-  }
-};
 
 function copyViralPost() {
   const textInput = document.getElementById('live3-worst-trade');
