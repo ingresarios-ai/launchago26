@@ -254,37 +254,190 @@ function getAvailableDayNumber() {
   return Math.max(1, Math.min(10, diffDays));
 }
 
-function updateFeaturedLiveCard() {
-  const card = document.querySelector('.live-featured-card');
+let currentFeaturedSlideDay = null;
+
+function getSelectedFeaturedDay() {
+  if (!currentFeaturedSlideDay) {
+    currentFeaturedSlideDay = getAvailableDayNumber();
+  }
+  return currentFeaturedSlideDay;
+}
+
+function navigateFeaturedDay(direction) {
+  let current = getSelectedFeaturedDay();
+  let next = current + direction;
+  if (next >= 1 && next <= 10) {
+    currentFeaturedSlideDay = next;
+    renderFeaturedLiveSlider(next);
+  }
+}
+
+function selectFeaturedDay(dayNum) {
+  if (dayNum >= 1 && dayNum <= 10) {
+    currentFeaturedSlideDay = dayNum;
+    renderFeaturedLiveSlider(dayNum);
+  }
+}
+
+function handleFeaturedCardClick() {
+  const selectedDay = getSelectedFeaturedDay();
+  const releasedDay = getAvailableDayNumber();
+  const unlockedList = getUnlockedInsignias();
+  
+  if (selectedDay <= releasedDay || unlockedList.includes(selectedDay)) {
+    openLiveSession(selectedDay);
+  } else {
+    handleLockedInsigniaClick(selectedDay);
+  }
+}
+
+function renderFeaturedLiveSlider(dayNum) {
+  const card = document.getElementById('featured-card-wrapper');
+  const chipsContainer = document.getElementById('slider-day-chips');
+  const prevBtn = document.getElementById('btn-prev-day');
+  const nextBtn = document.getElementById('btn-next-day');
   if (!card) return;
 
-  const currentDay = getAvailableDayNumber();
-  const data = liveSessionsData[currentDay] || liveSessionsData[1];
-  const itemInsignia = insigniasData[currentDay] || { icon: '🛡️', name: 'Insignia de Dominio' };
+  const releasedDay = getAvailableDayNumber();
+  const selectedDay = dayNum || getSelectedFeaturedDay();
+  currentFeaturedSlideDay = selectedDay;
 
-  card.setAttribute('onclick', `openLiveSession(${currentDay})`);
+  const data = liveSessionsData[selectedDay] || liveSessionsData[1];
+  const itemInsignia = insigniasData[selectedDay] || { icon: '🛡️', name: 'Insignia de Dominio' };
+  const unlockedList = getUnlockedInsignias();
+  const isUnlocked = unlockedList.includes(selectedDay);
+  const isPast = selectedDay < releasedDay;
+  const isToday = selectedDay === releasedDay;
 
-  const badgeEl = card.querySelector('.featured-badge span');
-  if (badgeEl) badgeEl.textContent = `🔥 PRÓXIMA CLASE EN VIVO • DÍA ${currentDay}`;
+  // 1. Update Arrow Buttons State
+  if (prevBtn) prevBtn.disabled = selectedDay <= 1;
+  if (nextBtn) nextBtn.disabled = selectedDay >= 10;
 
-  const titleEl = card.querySelector('.featured-title');
-  if (titleEl) titleEl.textContent = `🔴 Día ${currentDay}: ${data.title.replace(/^\d+\.\s*/, '')}`;
+  // 2. Render Day Chips (1 to 10)
+  if (chipsContainer) {
+    let chipsHtml = '';
+    for (let d = 1; d <= 10; d++) {
+      const isChipSelected = d === selectedDay;
+      const isChipUnlocked = unlockedList.includes(d);
+      const isChipPast = d < releasedDay;
+      const isChipToday = d === releasedDay;
 
-  const descEl = card.querySelector('.featured-desc');
-  if (descEl) descEl.textContent = data.missionDesc || 'Accede a la sala interactiva en vivo para aprender el método y asegurar tus puntos.';
+      let chipStyle = "padding: 3px 8px; border-radius: 8px; font-size: 0.72rem; font-weight: 800; cursor: pointer; border: 1px solid transparent; transition: all 0.2s ease; white-space: nowrap;";
+      if (isChipSelected) {
+        chipStyle += " background: #38bdf8; color: #0f172a; border-color: #7dd3fc; box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);";
+      } else if (isChipUnlocked) {
+        chipStyle += " background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border-color: rgba(56, 189, 248, 0.4);";
+      } else if (isChipToday) {
+        chipStyle += " background: rgba(239, 68, 68, 0.2); color: #f87171; border-color: rgba(239, 68, 68, 0.5);";
+      } else if (isChipPast) {
+        chipStyle += " background: rgba(255, 255, 255, 0.05); color: #94a3b8; border-color: rgba(255, 255, 255, 0.1);";
+      } else {
+        chipStyle += " background: rgba(15, 23, 42, 0.6); color: #475569; border-color: rgba(255, 255, 255, 0.05);";
+      }
 
-  const iconEl = card.querySelector('div[style*="border-radius: 50%"]');
-  if (iconEl) iconEl.textContent = itemInsignia.icon || '🛡️';
+      let chipLabel = `Día ${d}`;
+      if (isChipToday) chipLabel += ' 🔴';
+      else if (isChipUnlocked) chipLabel += ' ✅';
+      else if (d > releasedDay) chipLabel += ' 🔒';
 
-  const insigniaNameEl = card.querySelector('div[style*="font-family: \'Outfit\'"]');
-  if (insigniaNameEl) insigniaNameEl.textContent = itemInsignia.name;
-
-  const metaItems = card.querySelectorAll('.meta-item');
-  if (metaItems && metaItems.length >= 3) {
-    metaItems[0].textContent = `🗓️ ${data.dayDate}`;
-    metaItems[1].textContent = `⏰ 8:00 PM (Colombia / Perú / México)`;
-    metaItems[2].textContent = `⚡ ${data.reward}`;
+      chipsHtml += `<button style="${chipStyle}" onclick="event.stopPropagation(); selectFeaturedDay(${d})">${chipLabel}</button>`;
+    }
+    chipsContainer.innerHTML = chipsHtml;
   }
+
+  // 3. Define Card Styles & Texts based on Past vs Today vs Future
+  let bgGradient, borderStyle, boxShadow, badgeHtml, ctaHtml;
+
+  if (isPast) {
+    // PAST CLASS: REPLAY MODE 📺
+    bgGradient = "background: linear-gradient(135deg, rgba(56, 189, 248, 0.14) 0%, rgba(15, 23, 42, 0.95) 100%);";
+    borderStyle = "border: 1.5px solid rgba(56, 189, 248, 0.45);";
+    boxShadow = "box-shadow: 0 8px 25px rgba(56, 189, 248, 0.18);";
+    badgeHtml = `
+      <div class="featured-badge" style="background: rgba(56, 189, 248, 0.18); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.35);">
+        <span>📺 REPETICIÓN DISPONIBLE • DÍA ${selectedDay}</span>
+      </div>
+    `;
+    ctaHtml = `
+      <button class="btn-live-hero" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <span>VER REPETICIÓN DEL DÍA ${selectedDay}</span>
+      </button>
+    `;
+  } else if (isToday) {
+    // TODAY CLASS: LIVE MODE 🔴
+    bgGradient = "background: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(20, 28, 40, 0.95) 100%);";
+    borderStyle = "border: 1.5px solid rgba(239, 68, 68, 0.5);";
+    boxShadow = "box-shadow: 0 8px 30px rgba(239, 68, 68, 0.25);";
+    badgeHtml = `
+      <div class="featured-badge" style="background: rgba(239, 68, 68, 0.22); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);">
+        <span class="pulse-dot-red"></span> <span>🔴 CLASE EN VIVO HOY • DÍA ${selectedDay}</span>
+      </div>
+    `;
+    ctaHtml = `
+      <button class="btn-live-hero" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); box-shadow: 0 4px 22px rgba(239, 68, 68, 0.45);">
+        <span>🔴 ENTRAR A LA SALA DE TRANSMISIÓN EN VIVO</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+    `;
+  } else {
+    // FUTURE CLASS: LOCKED MODE 🔒
+    bgGradient = "background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.9) 100%);";
+    borderStyle = "border: 1px solid rgba(255, 255, 255, 0.08);";
+    boxShadow = "box-shadow: none; opacity: 0.85;";
+    badgeHtml = `
+      <div class="featured-badge" style="background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.1);">
+        <span>🔒 PRÓXIMA SESIÓN • DÍA ${selectedDay}</span>
+      </div>
+    `;
+    ctaHtml = `
+      <button class="btn-live-hero" style="background: rgba(255, 255, 255, 0.06); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.12); cursor: not-allowed; box-shadow: none;">
+        <span>🔒 TRANSMISIÓN EL ${data.dayDate} (8:00 PM CO)</span>
+      </button>
+    `;
+  }
+
+  // 4. Render HTML Card Body
+  card.style.cssText = `${bgGradient} ${borderStyle} ${boxShadow} border-radius: 16px; padding: 24px; margin-bottom: 0; cursor: pointer; transition: all 0.3s ease; position: relative;`;
+
+  card.innerHTML = `
+    ${badgeHtml}
+    <div class="featured-content">
+      <h3 class="featured-title" style="font-family:'Outfit', sans-serif; font-size:1.35rem; font-weight:800; color:#ffffff; margin-bottom:8px;">
+        ${isPast ? '📺' : isToday ? '🔴' : '🔒'} Día ${selectedDay}: ${data.title.replace(/^\d+\.\s*/, '')}
+      </h3>
+      <p class="featured-desc" style="font-size:0.88rem; color:#94a3b8; margin-bottom:16px; line-height:1.5;">
+        ${data.missionDesc || 'Accede a la sesión para reclamar tu insignia y sumar puntos.'}
+      </p>
+
+      <div style="display: flex; align-items: center; gap: 12px; background: rgba(15, 23, 42, 0.75); border: 1px solid ${isPast ? 'rgba(56, 189, 248, 0.4)' : isToday ? 'rgba(239, 68, 68, 0.4)' : 'rgba(255, 255, 255, 0.1)'}; border-radius: 12px; padding: 10px 14px; margin-bottom: 16px;">
+        <div style="width: 42px; height: 42px; border-radius: 50%; background: ${isUnlocked ? 'radial-gradient(circle at 30% 30%, #7dd3fc 0%, #0284c7 60%, #0c4a6e 100%)' : 'radial-gradient(circle at 30% 30%, #334155, #0f172a)'}; border: 2px solid ${isUnlocked ? '#38bdf8' : 'rgba(255,255,255,0.2)'}; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
+          ${itemInsignia.icon}
+        </div>
+        <div>
+          <div style="font-size: 0.68rem; font-weight: 800; color: ${isUnlocked ? '#7dd3fc' : '#94a3b8'}; text-transform: uppercase; letter-spacing: 0.5px;">
+            ${isUnlocked ? 'INSIGNIA DESBLOQUEADA' : 'INSIGNIA DE ESTA SESIÓN'}
+          </div>
+          <div style="font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; color: #ffffff;">
+            ${itemInsignia.name} ${isUnlocked ? '✅' : ''}
+          </div>
+        </div>
+      </div>
+
+      <div class="featured-meta" style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 16px;">
+        <span class="meta-item">🗓️ ${data.dayDate}</span>
+        <span class="meta-item">⏰ 8:00 PM (Colombia / Perú / México)</span>
+        <span class="meta-item reward" style="color: #fde047; font-weight: 700;">⚡ ${data.reward}</span>
+      </div>
+    </div>
+    <div class="featured-cta">
+      ${ctaHtml}
+    </div>
+  `;
+}
+
+function updateFeaturedLiveCard() {
+  renderFeaturedLiveSlider();
 }
 
 function renderVitrinaInsignias() {

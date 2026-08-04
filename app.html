@@ -104,37 +104,28 @@
             <p class="stage-subtitle">10 Transmisiones Interactivas en Vivo con Juan Villegas & Equipo (3 al 14 de Agosto • 8:00 PM CO). Asiste cada noche para ganar +300 Puntos de Control y subir al Rango de Dominio.</p>
           </div>
 
-          <!-- TARJETA DESTACADA: CLASE EN VIVO DÍA 1 -->
-          <div class="live-featured-card" onclick="openLiveSession(1)">
-            <div class="featured-badge">
-              <span>🔥 PRÓXIMA CLASE EN VIVO • DÍA 1</span>
-            </div>
-            <div class="featured-content">
-              <h3 class="featured-title">🔴 Día 1: La Anatomía del Saboteador</h3>
-              <p class="featured-desc">Descubre el patrón invisible que sabotea tus operaciones financieras. Incluye el Test del Saboteador en vivo.</p>
-              
-              <!-- BOX DE INSIGNIA A DESBLOQUEAR -->
-              <div style="display: flex; align-items: center; gap: 12px; background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; box-shadow: 0 4px 16px rgba(56, 189, 248, 0.15);">
-                <div style="width: 42px; height: 42px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #7dd3fc 0%, #0284c7 60%, #0c4a6e 100%); border: 2px solid #38bdf8; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; box-shadow: 0 0 14px rgba(56, 189, 248, 0.6); flex-shrink: 0;">
-                  🏛️
-                </div>
-                <div>
-                  <div style="font-size: 0.68rem; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px;">INSIGNIA QUE DESBLOQUEARÁS EN ESTA CLASE</div>
-                  <div style="font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; color: #ffffff;">1. Domador Saboteador</div>
-                </div>
+          <!-- SLIDER NAVEGABLE DE SESIONES EN VIVO (DÍAS 1 AL 10) -->
+          <div class="featured-slider-container">
+            <div class="slider-nav-bar" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <button class="btn-slider-arrow" onclick="navigateFeaturedDay(-1)" id="btn-prev-day" title="Día Anterior">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <span style="font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">
+                  EXPLORAR DÍAS EN VIVO (1 AL 10)
+                </span>
+                <button class="btn-slider-arrow" onclick="navigateFeaturedDay(1)" id="btn-next-day" title="Día Siguiente">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
               </div>
+              <div class="slider-day-chips" id="slider-day-chips" style="display: flex; align-items: center; gap: 4px; overflow-x: auto; padding-bottom: 4px; max-width: 100%;">
+                <!-- Dynamic Chips -->
+              </div>
+            </div>
 
-              <div class="featured-meta">
-                <span class="meta-item">🗓️ Lunes 3 de Agosto</span>
-                <span class="meta-item">⏰ 8:00 PM (Colombia / Perú / México)</span>
-                <span class="meta-item reward">⚡ +30 Puntos de Control</span>
-              </div>
-            </div>
-            <div class="featured-cta">
-              <button class="btn-live-hero">
-                <span>🔴 ENTRAR A LA SALA DE TRANSMISIÓN EN VIVO</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </button>
+            <!-- TARJETA DESTACADA DINÁMICA DE LA SESIÓN SELECCIONADA -->
+            <div class="live-featured-card" id="featured-card-wrapper" onclick="handleFeaturedCardClick()">
+              <!-- Dynamic Content via renderFeaturedLiveSlider() -->
             </div>
           </div>
 

@@ -675,13 +675,43 @@ body {
   line-height: 1.5;
 }
 
-/* FEATURED LIVE HERO CARD */
+/* FEATURED LIVE HERO CARD & SLIDER */
+.featured-slider-container {
+  margin-bottom: 28px;
+}
+
+.btn-slider-arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-slider-arrow:hover:not(:disabled) {
+  background: #38bdf8;
+  color: #0f172a;
+  border-color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+}
+
+.btn-slider-arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 .live-featured-card {
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(20, 28, 40, 0.9) 100%);
   border: 1.5px solid rgba(239, 68, 68, 0.4);
   border-radius: var(--radius-lg);
   padding: 24px;
-  margin-bottom: 28px;
+  margin-bottom: 0;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 6px 24px rgba(239, 68, 68, 0.15);
