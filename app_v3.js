@@ -246,10 +246,10 @@ function getUnlockedInsignias() {
 function getAvailableDayNumber() {
   if (localStorage.getItem('preview_all_days') === 'true') return 10;
   
-  // Base date: August 3, 2026 00:00:00 GMT-0500 (COT)
-  const baseLaunchDate = new Date('2026-08-03T00:00:00-05:00').getTime();
-  const now = new Date().getTime();
-  const diffDays = Math.floor((now - baseLaunchDate) / (1000 * 60 * 60 * 24)) + 1;
+  // Base date: August 3, 2026 00:00:00 COT (05:00:00 UTC)
+  const baseLaunchTime = Date.UTC(2026, 7, 3, 5, 0, 0);
+  const now = Date.now();
+  const diffDays = Math.floor((now - baseLaunchTime) / (1000 * 60 * 60 * 24)) + 1;
 
   return Math.max(1, Math.min(10, diffDays));
 }
@@ -1146,10 +1146,10 @@ function showJourney() {
 // ========================================
 
 function getLiveTargetForDay(dayNum) {
-  const dayOffset = (dayNum || 1) - 1;
-  const target = new Date('2026-08-03T20:00:00-05:00');
-  target.setDate(target.getDate() + dayOffset);
-  return target;
+  const n = (dayNum || 1);
+  // August n, 2026 20:00:00 COT (UTC-5) = August (n+1), 2026 01:00:00 UTC
+  // Note: Month index 7 = August in JS Date.UTC
+  return Date.UTC(2026, 7, 2 + n, 1, 0, 0);
 }
 
 function initCountdown() {
@@ -1163,16 +1163,14 @@ function initCountdown() {
   if (!elDays) return; // Guard if not found
 
   function update() {
-    const now = new Date().getTime();
+    const now = Date.now();
     let currentDay = getAvailableDayNumber();
-    let target = getLiveTargetForDay(currentDay);
-    let targetTime = target.getTime();
+    let targetTime = getLiveTargetForDay(currentDay);
 
     // If today's live finished (> 2 hours after 8:00 PM COT) and day < 10, move countdown to next day
     if (now > targetTime + (2 * 60 * 60 * 1000) && currentDay < 10) {
       currentDay = Math.min(10, currentDay + 1);
-      target = getLiveTargetForDay(currentDay);
-      targetTime = target.getTime();
+      targetTime = getLiveTargetForDay(currentDay);
     }
 
     const diff = targetTime - now;
