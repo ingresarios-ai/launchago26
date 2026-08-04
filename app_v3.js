@@ -62,7 +62,42 @@ function getAvailableDayNumber() {
   return Math.max(1, Math.min(10, diffDays));
 }
 
+function updateFeaturedLiveCard() {
+  const card = document.querySelector('.live-featured-card');
+  if (!card) return;
+
+  const currentDay = getAvailableDayNumber();
+  const data = liveSessionsData[currentDay] || liveSessionsData[1];
+  const itemInsignia = insigniasData[currentDay] || { icon: '🛡️', name: 'Insignia de Dominio' };
+
+  card.setAttribute('onclick', `openLiveSession(${currentDay})`);
+
+  const badgeEl = card.querySelector('.featured-badge span');
+  if (badgeEl) badgeEl.textContent = `🔥 PRÓXIMA CLASE EN VIVO • DÍA ${currentDay}`;
+
+  const titleEl = card.querySelector('.featured-title');
+  if (titleEl) titleEl.textContent = `🔴 Día ${currentDay}: ${data.title.replace(/^\d+\.\s*/, '')}`;
+
+  const descEl = card.querySelector('.featured-desc');
+  if (descEl) descEl.textContent = data.missionDesc || 'Accede a la sala interactiva en vivo para aprender el método y asegurar tus puntos.';
+
+  const iconEl = card.querySelector('div[style*="border-radius: 50%"]');
+  if (iconEl) iconEl.textContent = itemInsignia.icon || '🛡️';
+
+  const insigniaNameEl = card.querySelector('div[style*="font-family: \'Outfit\'"]');
+  if (insigniaNameEl) insigniaNameEl.textContent = itemInsignia.name;
+
+  const metaItems = card.querySelectorAll('.meta-item');
+  if (metaItems && metaItems.length >= 3) {
+    metaItems[0].textContent = `🗓️ ${data.dayDate}`;
+    metaItems[1].textContent = `⏰ 8:00 PM (Colombia / Perú / México)`;
+    metaItems[2].textContent = `⚡ ${data.reward}`;
+  }
+}
+
 function renderVitrinaInsignias() {
+  updateFeaturedLiveCard();
+
   const grid = document.getElementById('insignias-grid');
   const counter = document.getElementById('vitrina-counter');
   const progressFill = document.getElementById('vitrina-progress-fill');
