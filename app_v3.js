@@ -953,27 +953,57 @@ function showJourney() {
 // COUNTDOWN TIMER
 // ========================================
 
+function getLiveTargetForDay(dayNum) {
+  const dayOffset = (dayNum || 1) - 1;
+  const target = new Date('2026-08-03T20:00:00-05:00');
+  target.setDate(target.getDate() + dayOffset);
+  return target;
+}
+
 function initCountdown() {
-  // Target: August 3, 2026, 19:00:00 (Colombia Time is UTC-5)
-  // Local dates in JS read the system timezone. To be safe, we parse an ISO string with offset.
-  const targetDate = new Date("2026-08-03T20:00:00-05:00").getTime();
-  
   const elDays = document.getElementById('cd-days');
   const elHours = document.getElementById('cd-hours');
   const elMins = document.getElementById('cd-mins');
   const elSecs = document.getElementById('cd-secs');
+  const elEyebrow = document.querySelector('#dashboard-countdown .countdown-eyebrow');
+  const elChip = document.querySelector('#dashboard-countdown .countdown-date-chip');
 
   if (!elDays) return; // Guard if not found
 
   function update() {
     const now = new Date().getTime();
-    const diff = targetDate - now;
+    let currentDay = getAvailableDayNumber();
+    let target = getLiveTargetForDay(currentDay);
+    let targetTime = target.getTime();
 
-    if (diff <= 0) {
+    // If today's live finished (> 2 hours after 8:00 PM COT) and day < 10, move countdown to next day
+    if (now > targetTime + (2 * 60 * 60 * 1000) && currentDay < 10) {
+      currentDay = Math.min(10, currentDay + 1);
+      target = getLiveTargetForDay(currentDay);
+      targetTime = target.getTime();
+    }
+
+    const diff = targetTime - now;
+    const sessionData = liveSessionsData[currentDay] || { dayDate: `Día ${currentDay}`, title: `Clase ${currentDay}` };
+
+    if (diff <= 0 && diff >= -(2 * 60 * 60 * 1000)) {
+      // Live is active right now!
       elDays.textContent = "00";
       elHours.textContent = "00";
       elMins.textContent = "00";
       elSecs.textContent = "00";
+      if (elEyebrow) elEyebrow.innerHTML = `<span style="color:#ef4444; font-weight:900;">🔴 ¡ESTAMOS EN VIVO EN ESTE MOMENTO!</span>`;
+      if (elChip) elChip.innerHTML = `🔴 Día ${currentDay}: ${escapeHTML(sessionData.title)} • 8:00 PM (CO)`;
+      return;
+    }
+
+    if (diff < -(2 * 60 * 60 * 1000) && currentDay >= 10) {
+      elDays.textContent = "00";
+      elHours.textContent = "00";
+      elMins.textContent = "00";
+      elSecs.textContent = "00";
+      if (elEyebrow) elEyebrow.textContent = `🏆 ¡EL ENTRENAMIENTO EN VIVO HA CONCLUIDO!`;
+      if (elChip) elChip.textContent = `🎉 Gracias por participar en las 10 Sesiones en Vivo`;
       return;
     }
 
@@ -986,6 +1016,9 @@ function initCountdown() {
     elHours.textContent = String(hours).padStart(2, '0');
     elMins.textContent = String(mins).padStart(2, '0');
     elSecs.textContent = String(secs).padStart(2, '0');
+
+    if (elEyebrow) elEyebrow.textContent = `⏳ LA CLASE EN VIVO DEL DÍA ${currentDay} COMIENZA EN:`;
+    if (elChip) elChip.textContent = `🗓️ ${sessionData.dayDate} • 8:00 PM (Colombia / Perú / México)`;
   }
 
   update(); // Initial call
