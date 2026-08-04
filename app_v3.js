@@ -892,7 +892,7 @@ function showJourney() {
 function initCountdown() {
   // Target: August 3, 2026, 19:00:00 (Colombia Time is UTC-5)
   // Local dates in JS read the system timezone. To be safe, we parse an ISO string with offset.
-  const targetDate = new Date("2026-08-03T19:00:00-05:00").getTime();
+  const targetDate = new Date("2026-08-03T20:00:00-05:00").getTime();
   
   const elDays = document.getElementById('cd-days');
   const elHours = document.getElementById('cd-hours');
@@ -1642,7 +1642,7 @@ function openLiveSession(dayNum) {
         <span style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; font-weight:800; color:#ef4444; background:rgba(239, 68, 68, 0.15); padding:4px 10px; border-radius:100px;">
           <span class="pulse-dot-red"></span> SALA OFICIAL DE TRANSMISIÓN
         </span>
-        <span style="font-size:0.78rem; color:var(--text-muted);">${data.dayDate} • 7:00 PM CO</span>
+        <span style="font-size:0.78rem; color:var(--text-muted);">${data.dayDate} • 8:00 PM CO</span>
       </div>
       <h3 style="font-size: 1.1rem; font-weight:800; color: var(--text-white); margin: 0 0 6px 0;">
         🔴 ${data.title}
@@ -1904,7 +1904,7 @@ function completeLiveSession(dayNum) {
           <div style="background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.3); padding: 18px; border-radius: 14px; margin-bottom: 20px; text-align: left;">
             <span style="font-size: 0.72rem; color: #4ade80; font-weight: 800; text-transform: uppercase; letter-spacing:0.05em;">Siguiente Día en Vivo:</span>
             <h3 style="font-size: 1.15rem; color: var(--text-white); margin: 6px 0 4px 0; font-weight:800;">${nextDay}. ${nextLive ? nextLive.title : ''}</h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin:0;">${nextLive ? nextLive.dayDate : ''} • 7:00 PM (Colombia)</p>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin:0;">${nextLive ? nextLive.dayDate : ''} • 8:00 PM (Colombia)</p>
           </div>
           
           <div style="display:flex; flex-direction:column; gap:10px;">
@@ -1972,7 +1972,7 @@ function updateLiveCardsUI() {
       if (icon) icon.innerHTML = '<span style="font-size:1.2rem;">🗓️</span>';
       if (badgeEl) {
         if (day === 1) {
-          badgeEl.innerHTML = '<span class="live-badge-upcoming">⚡ PRÓXIMO EN ACTIVARSE (3 AGO • 7:00 PM)</span>';
+          badgeEl.innerHTML = '<span class="live-badge-upcoming">⚡ PRÓXIMO EN ACTIVARSE (3 AGO • 8:00 PM)</span>';
         } else {
           badgeEl.innerHTML = `<span class="live-badge-locked">🔒 Se activa el ${data ? data.dayDate : ''}</span>`;
         }
