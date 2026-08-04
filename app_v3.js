@@ -1996,8 +1996,30 @@ function resetPreviewState() {
 
 // Initial UI update on page load
 document.addEventListener('DOMContentLoaded', () => {
+  // Sync unlocked insignias from current activity if completed
+  try {
+    const act = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
+    let unlocked = getUnlockedInsignias();
+    if (act > 1 && !unlocked.includes(1)) {
+      unlocked.push(1);
+      localStorage.setItem('unlocked_insignias', JSON.stringify(unlocked));
+    }
+  } catch(e) {}
+
+  renderVitrinaInsignias();
   updateLiveCardsUI();
   updateNextStepHero();
+
+  if (window.location.search.includes('unlocked=1')) {
+    setTimeout(() => {
+      if (typeof confetti === 'function') {
+        try { confetti({ particleCount: 100, spread: 70, origin: { y: 0.5 } }); } catch(e){}
+      }
+      showMissionToast('🏆 ¡INSIGNIA #1 DESBLOQUEADA! Tu avance a la Fase 2 está activo.');
+      const vitrina = document.getElementById('insignias-grid');
+      if (vitrina) vitrina.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 400);
+  }
 });
 
 function logoutUser() {

@@ -425,9 +425,17 @@ function showResult(skipPushState) {
   document.getElementById('result-desc').textContent = sab.desc;
   document.getElementById('result-insight').innerHTML = '<strong>💡 Insight:</strong> ' + sab.insight;
 
-  // Persist for SPA reloads
+  // Persist for SPA reloads & Unlock Insignia #1 & set Fase 2
   localStorage.setItem('saboteur_scores', JSON.stringify(scores));
   localStorage.setItem('saboteur_result', dominant);
+  localStorage.setItem('genoma_current_activity', '2');
+  try {
+    var unlocked = JSON.parse(localStorage.getItem('unlocked_insignias') || '[]');
+    if (!unlocked.includes(1)) {
+      unlocked.push(1);
+      localStorage.setItem('unlocked_insignias', JSON.stringify(unlocked));
+    }
+  } catch(e) {}
   // Populate mission saboteur name
   var missionEl = document.getElementById('mission-saboteur-name');
   if (missionEl) missionEl.textContent = sab.name;
@@ -1097,7 +1105,8 @@ function trackVisit(pageName) {
 
 function goToApp() {
   var t = localStorage.getItem('auth_token') || token;
-  window.location.href = '/app' + (t ? '?token=' + t : '');
+  var targetUrl = '/app' + (t ? '?token=' + t + '&unlocked=1#actividades' : '?unlocked=1#actividades');
+  window.location.href = targetUrl;
 }
 
 function retakeTest() {

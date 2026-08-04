@@ -422,8 +422,15 @@ async function handleActivitySubmit(e) {
       console.warn('Mission response save warning:', saveErr);
     }
 
-    // Save Progress Milestone
+    // Save Progress Milestone & Unlock Insignia
     try {
+      var unlocked = JSON.parse(localStorage.getItem('unlocked_insignias') || '[]');
+      if (!unlocked.includes(currentDay)) {
+        unlocked.push(currentDay);
+        localStorage.setItem('unlocked_insignias', JSON.stringify(unlocked));
+      }
+      localStorage.setItem('genoma_current_activity', String(currentDay + 1));
+
       if (leadData && leadData.auth_token) {
         await fetch(SUPABASE_URL + '/rest/v1/user_progress', {
           method: 'POST',
@@ -457,4 +464,9 @@ function showSuccessView() {
   document.getElementById('activity-view').style.display = 'none';
   document.getElementById('success-view').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToAppWithInsignia() {
+  const token = localStorage.getItem('auth_token') || '';
+  window.location.href = '/app' + (token ? '?token=' + token + '&unlocked=1#actividades' : '?unlocked=1#actividades');
 }
