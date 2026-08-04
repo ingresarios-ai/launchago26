@@ -51,6 +51,17 @@ function getUnlockedInsignias() {
   return list;
 }
 
+function getAvailableDayNumber() {
+  if (localStorage.getItem('preview_all_days') === 'true') return 10;
+  
+  // Base date: August 3, 2026 00:00:00 GMT-0500 (COT)
+  const baseLaunchDate = new Date('2026-08-03T00:00:00-05:00').getTime();
+  const now = new Date().getTime();
+  const diffDays = Math.floor((now - baseLaunchDate) / (1000 * 60 * 60 * 24)) + 1;
+
+  return Math.max(1, Math.min(10, diffDays));
+}
+
 function renderVitrinaInsignias() {
   const grid = document.getElementById('insignias-grid');
   const counter = document.getElementById('vitrina-counter');
@@ -59,6 +70,7 @@ function renderVitrinaInsignias() {
 
   const unlockedList = getUnlockedInsignias();
   const unlockedCount = unlockedList.length;
+  const releasedDay = getAvailableDayNumber();
 
   if (counter) counter.innerHTML = `<span>${unlockedCount} / 10 Insignias</span>`;
   if (progressFill) progressFill.style.width = `${unlockedCount * 10}%`;
@@ -74,31 +86,42 @@ function renderVitrinaInsignias() {
   for (let i = 1; i <= 10; i++) {
     const item = insigniasData[i];
     const isUnlocked = unlockedList.includes(i);
+    const isAvailable = i <= releasedDay || isUnlocked;
 
-    const cardStyle = isUnlocked
-      ? "background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.25), rgba(15, 23, 42, 0.95)); border: 1.5px solid #38bdf8; box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 25px rgba(56, 189, 248, 0.45); border-radius: 16px; padding: 16px 10px 14px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 165px; box-sizing: border-box; width: 100%; overflow: hidden; position: relative;"
-      : "background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9)); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: inset 0 2px 6px rgba(0,0,0,0.5); opacity: 0.88; border-radius: 16px; padding: 16px 10px 14px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 165px; box-sizing: border-box; width: 100%; overflow: hidden; position: relative;";
+    let cardStyle, circleStyle, statusStyle, clickHandler, lockBadge;
 
-    const circleStyle = isUnlocked
-      ? "width: 54px; height: 54px; margin: 4px auto 8px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 30%, #7dd3fc 0%, #0284c7 60%, #0c4a6e 100%); border: 2.5px solid #38bdf8; box-shadow: 0 0 22px rgba(56, 189, 248, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.8); position: relative;"
-      : "width: 54px; height: 54px; margin: 4px auto 8px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 30%, #334155, #0f172a); border: 2px solid rgba(255, 255, 255, 0.14); filter: grayscale(0.85) contrast(0.9); opacity: 0.7; position: relative;";
-
-    const statusStyle = isUnlocked
-      ? "font-size: 0.68rem; font-weight: 700; color: #7dd3fc; background: rgba(56, 189, 248, 0.18); border: 1px solid rgba(56, 189, 248, 0.4); padding: 4px 10px; border-radius: 12px; display: inline-block; white-space: nowrap;"
-      : "font-size: 0.68rem; font-weight: 700; color: #64748b; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 4px 10px; border-radius: 12px; display: inline-block; white-space: nowrap;";
+    if (isUnlocked) {
+      cardStyle = "background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.25), rgba(15, 23, 42, 0.95)); border: 1.5px solid #38bdf8; box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 25px rgba(56, 189, 248, 0.45); border-radius: 16px; padding: 16px 10px 14px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 165px; box-sizing: border-box; width: 100%; overflow: hidden; position: relative;";
+      circleStyle = "width: 54px; height: 54px; margin: 4px auto 8px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 30%, #7dd3fc 0%, #0284c7 60%, #0c4a6e 100%); border: 2.5px solid #38bdf8; box-shadow: 0 0 22px rgba(56, 189, 248, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.8); position: relative;";
+      statusStyle = "font-size: 0.68rem; font-weight: 700; color: #7dd3fc; background: rgba(56, 189, 248, 0.18); border: 1px solid rgba(56, 189, 248, 0.4); padding: 4px 10px; border-radius: 12px; display: inline-block; white-space: nowrap;";
+      clickHandler = `handleInsigniaClick(${i})`;
+      lockBadge = '';
+    } else if (isAvailable) {
+      cardStyle = "background: radial-gradient(circle at 50% 0%, rgba(234, 179, 8, 0.2), rgba(15, 23, 42, 0.95)); border: 1.5px solid #eab308; box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 20px rgba(234, 179, 8, 0.35); border-radius: 16px; padding: 16px 10px 14px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 165px; box-sizing: border-box; width: 100%; overflow: hidden; position: relative;";
+      circleStyle = "width: 54px; height: 54px; margin: 4px auto 8px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 30%, #fde047 0%, #ca8a04 60%, #713f12 100%); border: 2.5px solid #eab308; box-shadow: 0 0 18px rgba(234, 179, 8, 0.6); position: relative;";
+      statusStyle = "font-size: 0.68rem; font-weight: 800; color: #fde047; background: rgba(234, 179, 8, 0.2); border: 1px solid rgba(234, 179, 8, 0.5); padding: 4px 10px; border-radius: 12px; display: inline-block; white-space: nowrap;";
+      clickHandler = `handleInsigniaClick(${i})`;
+      lockBadge = '<span class="insignia-lock-icon" style="position:absolute; top:-4px; right:-4px; font-size:0.75rem; background:#0f172a; border:1px solid rgba(234,179,8,0.8); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 6px rgba(0,0,0,0.7);">🔓</span>';
+    } else {
+      cardStyle = "background: radial-gradient(circle at 50% 0%, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: none; opacity: 0.55; border-radius: 16px; padding: 16px 10px 14px; text-align: center; cursor: not-allowed; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 165px; box-sizing: border-box; width: 100%; overflow: hidden; position: relative;";
+      circleStyle = "width: 54px; height: 54px; margin: 4px auto 8px auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); filter: grayscale(1); opacity: 0.4; position: relative;";
+      statusStyle = "font-size: 0.68rem; font-weight: 700; color: #64748b; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); padding: 4px 10px; border-radius: 12px; display: inline-block; white-space: nowrap;";
+      clickHandler = `handleLockedInsigniaClick(${i})`;
+      lockBadge = '<span class="insignia-lock-icon" style="position:absolute; top:-4px; right:-4px; font-size:0.75rem; background:#0f172a; border:1px solid rgba(255,255,255,0.2); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 6px rgba(0,0,0,0.7);">🔒</span>';
+    }
 
     html += `
-      <div class="insignia-card ${isUnlocked ? 'insignia-card--unlocked' : 'insignia-card--locked'}" style="${cardStyle}" onclick="handleInsigniaClick(${i})">
-        <div style="display:flex; justify-content:space-between; align-items:center; width:100%; font-size:0.68rem; font-weight:800; color:#38bdf8; margin-bottom:4px;">
+      <div class="insignia-card ${isUnlocked ? 'insignia-card--unlocked' : isAvailable ? 'insignia-card--available' : 'insignia-card--locked'}" style="${cardStyle}" onclick="${clickHandler}">
+        <div style="display:flex; justify-content:space-between; align-items:center; width:100%; font-size:0.68rem; font-weight:800; color:${isAvailable ? '#38bdf8' : '#64748b'}; margin-bottom:4px;">
           <span style="background:rgba(56,189,248,0.12); padding:2px 6px; border-radius:6px; border:1px solid rgba(56,189,248,0.3);">${item.date}</span>
           <span style="color:#22c55e;">${item.pc}</span>
         </div>
         <div class="insignia-icon-wrapper" style="${circleStyle}">
           <span style="font-size:1.65rem;">${item.icon}</span>
-          ${!isUnlocked ? '<span class="insignia-lock-icon" style="position:absolute; top:-4px; right:-4px; font-size:0.75rem; background:#0f172a; border:1px solid rgba(56,189,248,0.6); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 6px rgba(0,0,0,0.7);">🔒</span>' : ''}
+          ${lockBadge}
         </div>
-        <div class="insignia-name" style="font-family:\'Outfit\', sans-serif; font-size:clamp(0.74rem, 1.2vw, 0.84rem); font-weight:800; color:${isUnlocked ? '#ffffff' : '#94a3b8'}; margin-bottom:6px; line-height:1.2; word-break:break-word; overflow-wrap:break-word;">${escapeHTML(item.name)}</div>
-        <div class="insignia-status-text" style="${statusStyle}">${isUnlocked ? 'Desbloqueada ✅' : 'Entrar a Sala 🔴'}</div>
+        <div class="insignia-name" style="font-family:\'Outfit\', sans-serif; font-size:clamp(0.74rem, 1.2vw, 0.84rem); font-weight:800; color:${isUnlocked ? '#ffffff' : isAvailable ? '#f8fafc' : '#64748b'}; margin-bottom:6px; line-height:1.2; word-break:break-word; overflow-wrap:break-word;">${escapeHTML(item.name)}</div>
+        <div class="insignia-status-text" style="${statusStyle}">${isUnlocked ? 'Desbloqueada ✅' : isAvailable ? 'Entrar a Sala 🔴' : '🔒 Bloqueada'}</div>
       </div>
     `;
   }
@@ -107,6 +130,12 @@ function renderVitrinaInsignias() {
 
 function handleInsigniaClick(id) {
   openLiveSession(id);
+}
+
+function handleLockedInsigniaClick(dayNum) {
+  const item = insigniasData[dayNum];
+  const dateStr = item ? item.date : `Día ${dayNum}`;
+  showMissionToast(`🔒 Esta misión se liberará el ${dateStr} (8:00 PM CO) durante la transmisión en vivo.`);
 }
 
 function claimInsignia(id) {

@@ -499,6 +499,17 @@ function showSuccessView() {
   document.getElementById('activity-view').style.display = 'none';
   document.getElementById('success-view').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Celebratory Confetti Burst 🎉
+  if (typeof confetti === 'function') {
+    try {
+      confetti({ particleCount: 140, spread: 90, origin: { y: 0.5 } });
+      setTimeout(() => {
+        try { confetti({ particleCount: 70, angle: 60, spread: 55, origin: { x: 0 } }); } catch(e){}
+        try { confetti({ particleCount: 70, angle: 120, spread: 55, origin: { x: 1 } }); } catch(e){}
+      }, 250);
+    } catch (e) {}
+  }
 }
 
 function goToAppWithInsignia() {
