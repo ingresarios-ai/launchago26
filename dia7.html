@@ -11,41 +11,62 @@
     var SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
     var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
 
-    try {
-      var sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
-      var urlParams = new URLSearchParams(window.location.search);
-      var utm_source = urlParams.get('utm_source') || 'sms';
-      var utm_medium = urlParams.get('utm_medium') || 'sms_blast';
-      var utm_campaign = urlParams.get('utm_campaign') || 'live7_reminder';
+    var sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    var urlParams = new URLSearchParams(window.location.search);
+    var utm_source = urlParams.get('utm_source') || 'sms';
+    var utm_medium = urlParams.get('utm_medium') || 'sms_blast';
+    var utm_campaign = urlParams.get('utm_campaign') || 'live7_reminder';
 
-      var payload = JSON.stringify({
-        page: PAGE_NAME,
-        utm_source: utm_source,
-        utm_medium: utm_medium,
-        utm_campaign: utm_campaign,
-        session_id: sessionId
+    var payloadData = {
+      page: PAGE_NAME,
+      utm_source: utm_source,
+      utm_medium: utm_medium,
+      utm_campaign: utm_campaign,
+      session_id: sessionId
+    };
+
+    var payloadStr = JSON.stringify(payloadData);
+    var redirected = false;
+
+    function redirectNow() {
+      if (redirected) return;
+      redirected = true;
+      window.location.replace(DESTINATION_URL);
+    }
+
+    try {
+      // 1. Send via fetch with keepalive & proper application/json header
+      fetch(SUPABASE_URL + '/rest/v1/analytics_pageviews?apikey=' + SUPABASE_ANON_KEY, {
+        method: 'POST',
+        keepalive: true,
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: payloadStr
+      }).then(function() {
+        redirectNow();
+      }).catch(function() {
+        redirectNow();
       });
 
+      // 2. Backup via sendBeacon with application/json Blob
       if (navigator.sendBeacon) {
-        navigator.sendBeacon(SUPABASE_URL + '/rest/v1/analytics_pageviews?apikey=' + SUPABASE_ANON_KEY, payload);
-      } else {
-        fetch(SUPABASE_URL + '/rest/v1/analytics_pageviews', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
-          },
-          body: payload
-        }).catch(function() {});
+        var blob = new Blob([payloadStr], { type: 'application/json' });
+        navigator.sendBeacon(SUPABASE_URL + '/rest/v1/analytics_pageviews?apikey=' + SUPABASE_ANON_KEY, blob);
       }
-    } catch(e) {}
+    } catch(e) {
+      redirectNow();
+    }
 
-    window.location.replace(DESTINATION_URL);
+    // Safety fallback redirect after 180ms
+    setTimeout(redirectNow, 180);
   </script>
 </head>
 <body style="background:#0a0e13; color:#fff; font-family:sans-serif; text-align:center; padding-top:100px;">
   <h2>Redirigiendo a la transmisión en vivo del Día 7... 🚀</h2>
-  <p>Si no eres redirigido automáticamente, <a href="https://www.youtube.com/@Ingresarios/live" style="color:#25d366;">haz clic aquí para entrar al Live</a>.</p>
+  <p>Si no eres redirigido automáticamente en unos segundos, <a href="https://www.youtube.com/@Ingresarios/live" style="color:#25d366;">haz clic aquí para entrar al Live</a>.</p>
 </body>
 </html>

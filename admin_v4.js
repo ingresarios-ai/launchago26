@@ -311,8 +311,19 @@ async function loadData() {
     // Process survey counts mapping (survey_responses count for each lead)
     // We will do this by looking up the responses locally since we retrieve both lists securely.
     
-    // 2. Fetch page visits via secure admin RPC function
-    allVisits = await dbFetchAll('/rest/v1/rpc/admin_get_pageviews', authParams);
+    // 2. Fetch page visits via secure admin RPC function + REST fallback
+    try {
+      allVisits = await dbFetchAll('/rest/v1/rpc/admin_get_pageviews', authParams);
+      if (!allVisits || !allVisits.length) {
+        allVisits = await dbFetch('/rest/v1/analytics_pageviews?select=*&order=created_at.desc', { method: 'GET' }) || [];
+      }
+    } catch (visitErr) {
+      try {
+        allVisits = await dbFetch('/rest/v1/analytics_pageviews?select=*&order=created_at.desc', { method: 'GET' }) || [];
+      } catch (e) {
+        allVisits = [];
+      }
+    }
 
     // 3. Fetch surveys via secure admin RPC function
     allSurveys = await dbFetchAll('/rest/v1/rpc/admin_get_surveys', authParams);
@@ -499,16 +510,23 @@ function buildAnalytics() {
   if (elLmSub) elLmSub.textContent = `${lmConvCount} inscritos (${lmConvRate}%)`;
 
   // Live Links SMS Click Monitor KPI
-  const clicksDia1 = allVisits.filter(v => v.page === 'dia1').length;
-  const clicksDia2 = allVisits.filter(v => v.page === 'dia2').length;
-  const clicksDia3 = allVisits.filter(v => v.page === 'dia3').length;
+  const clicksDia1 = allVisits.filter(v => (v.page || '').includes('dia1') || (v.page || '').includes('live1')).length;
+  const clicksDia2 = allVisits.filter(v => (v.page || '').includes('dia2') || (v.page || '').includes('live2')).length;
+  const clicksDia3 = allVisits.filter(v => (v.page || '').includes('dia3') || (v.page || '').includes('live3')).length;
+  const clicksDia4 = allVisits.filter(v => (v.page || '').includes('dia4') || (v.page || '').includes('live4')).length;
+  const clicksDia5 = allVisits.filter(v => (v.page || '').includes('dia5') || (v.page || '').includes('live5')).length;
 
   const elDia1 = document.getElementById('click-count-dia1');
   const elDia2 = document.getElementById('click-count-dia2');
   const elDia3 = document.getElementById('click-count-dia3');
+  const elDia4 = document.getElementById('click-count-dia4');
+  const elDia5 = document.getElementById('click-count-dia5');
+
   if (elDia1) elDia1.textContent = clicksDia1;
   if (elDia2) elDia2.textContent = clicksDia2;
   if (elDia3) elDia3.textContent = clicksDia3;
+  if (elDia4) elDia4.textContent = clicksDia4;
+  if (elDia5) elDia5.textContent = clicksDia5;
 
   // UTM Source table aggregation
   const utmSources = {};
