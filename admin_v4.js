@@ -1637,37 +1637,85 @@ function triggerCSVDownload(filename, headers, rows) {
   document.body.removeChild(link);
 }
 
-// ===== PRE-ACTIVITIES TAB =====
+// ===== PRE-ACTIVITIES & WORKSHOP ACTIVITIES TAB =====
 let allPreactivities = [];
 
 function buildPreactivitiesTab() {
   const tbody = document.getElementById('preactivities-tbody');
   if (!tbody) return;
 
-  // Filter pageviews for preactivity submissions
-  allPreactivities = (allVisits || []).filter(v => v.page && v.page.startsWith('preactividad'));
+  // 1. Gather Saboteur Test submissions from allTests (RPC data)
+  const testSubmissions = (allTests || []).map(t => {
+    const parentLead = (allLeads || []).find(l => l.id === t.lead_id);
+    return {
+      type: 'act1',
+      activityName: 'Actividad Día 1 (Saboteador)',
+      badgeHtml: '<span class="badge badge--orange" style="background:rgba(234,179,8,0.15); color:#facc15; border:1px solid rgba(234,179,8,0.3);">🏛️ Día 1 (Saboteador)</span>',
+      email: parentLead ? parentLead.email : (t.email || 'Lead Registrado'),
+      name: parentLead ? parentLead.name : '',
+      response: `Saboteador: ${t.saboteur_type || 'Completado'}`,
+      detail: t.answers ? (typeof t.answers === 'object' ? JSON.stringify(t.answers) : String(t.answers)) : `Resultado: ${t.saboteur_type || 'Test'}`,
+      created_at: t.created_at
+    };
+  });
 
-  const count1 = allPreactivities.filter(v => v.page === 'preactividad1_submission').length;
-  const count2 = allPreactivities.filter(v => v.page === 'preactividad2_submission').length;
+  // 2. Gather preactivity and activity submissions from pageviews / visits
+  const visitSubmissions = (allVisits || []).filter(v => 
+    v.page && (v.page.startsWith('preactividad') || v.page.includes('actividad') || v.page === 'test')
+  ).map(v => {
+    let actName = 'Pre-Actividad 1';
+    let badgeHtml = '<span class="badge badge--purple">🧠 Pre-Actividad 1</span>';
+    if (v.page === 'preactividad2_submission' || v.page.includes('preactividad2')) {
+      actName = 'Pre-Actividad 2';
+      badgeHtml = '<span class="badge badge--green">🔢 Pre-Actividad 2</span>';
+    } else if (v.page.includes('actividad1') || v.page === 'actividad' || v.page === 'test') {
+      actName = 'Actividad Día 1';
+      badgeHtml = '<span class="badge badge--orange" style="background:rgba(234,179,8,0.15); color:#facc15; border:1px solid rgba(234,179,8,0.3);">🏛️ Día 1 (Saboteador)</span>';
+    } else if (v.page.includes('actividad2')) {
+      actName = 'Actividad Día 2';
+      badgeHtml = '<span class="badge badge--blue">🎯 Día 2 (Cuenta Espejo)</span>';
+    }
 
-  const kpi1 = document.getElementById('kpi-preact1-count');
-  const kpi2 = document.getElementById('kpi-preact2-count');
-  if (kpi1) kpi1.textContent = count1;
-  if (kpi2) kpi2.textContent = count2;
+    return {
+      type: v.page,
+      activityName: actName,
+      badgeHtml: badgeHtml,
+      email: v.utm_source || 'Visitante',
+      name: '',
+      response: v.utm_medium || '-',
+      detail: v.utm_campaign || '-',
+      created_at: v.created_at
+    };
+  });
+
+  // Combine and sort by newest first
+  allPreactivities = testSubmissions.concat(visitSubmissions).sort((a, b) => 
+    new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
+
+  const countAct1 = testSubmissions.length + visitSubmissions.filter(v => v.activityName === 'Actividad Día 1').length;
+  const countAct2 = visitSubmissions.filter(v => v.activityName === 'Actividad Día 2').length;
+  const countPre1 = visitSubmissions.filter(v => v.activityName === 'Pre-Actividad 1').length;
+  const countPre2 = visitSubmissions.filter(v => v.activityName === 'Pre-Actividad 2').length;
+
+  const kpiAct1 = document.getElementById('kpi-act1-count');
+  const kpiAct2 = document.getElementById('kpi-act2-count');
+  const kpiPre1 = document.getElementById('kpi-preact1-count');
+  const kpiPre2 = document.getElementById('kpi-preact2-count');
+
+  if (kpiAct1) kpiAct1.textContent = countAct1;
+  if (kpiAct2) kpiAct2.textContent = countAct2;
+  if (kpiPre1) kpiPre1.textContent = countPre1;
+  if (kpiPre2) kpiPre2.textContent = countPre2;
 
   tbody.innerHTML = '';
 
   if (allPreactivities.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted" style="padding: 24px;">Aún no hay respuestas registradas de pre-actividades.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted" style="padding: 24px;">Aún no hay respuestas registradas de actividades.</td></tr>';
     return;
   }
 
   allPreactivities.forEach(item => {
-    const isAct1 = item.page === 'preactividad1_submission';
-    const actBadge = isAct1 
-      ? '<span class="badge badge--orange">Pre-Actividad 1 (Mindset)</span>'
-      : '<span class="badge badge--green">Pre-Actividad 2 (Dinero Quieto)</span>';
-      
     const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('es-ES', { 
       day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' 
     }) : '-';
@@ -1675,10 +1723,10 @@ function buildPreactivitiesTab() {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td style="font-size:0.85rem; color:var(--text-muted);">${dateStr}</td>
-      <td>${actBadge}</td>
-      <td><strong style="color:var(--text-white);">✉️ ${item.utm_source || 'Sin correo'}</strong></td>
-      <td style="font-weight:600; color:var(--text-white);">${item.utm_medium || '-'}</td>
-      <td style="font-size:0.88rem; color:var(--text-secondary); max-width:320px; word-break:break-word;">${item.utm_campaign || '-'}</td>
+      <td>${item.badgeHtml}</td>
+      <td><strong style="color:var(--text-white);">✉️ ${escapeHtml(item.email)} ${item.name ? '(' + escapeHtml(item.name) + ')' : ''}</strong></td>
+      <td style="font-weight:600; color:var(--text-white);">${escapeHtml(item.response)}</td>
+      <td style="font-size:0.88rem; color:var(--text-secondary); max-width:320px; word-break:break-word;">${escapeHtml(item.detail)}</td>
     `;
     tbody.appendChild(row);
   });
