@@ -2015,7 +2015,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof confetti === 'function') {
         try { confetti({ particleCount: 100, spread: 70, origin: { y: 0.5 } }); } catch(e){}
       }
-      showMissionToast('🏆 ¡INSIGNIA #1 DESBLOQUEADA! Tu avance a la Fase 2 está activo.');
+      showMissionToast('🏆 ¡INSIGNIA #1 DESBLOQUEADA! Tu avance en la Fase 1 está activo.');
       const vitrina = document.getElementById('insignias-grid');
       if (vitrina) vitrina.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 400);
