@@ -180,8 +180,40 @@ async function initActivity() {
 
   // Check Login / Session Status
   const urlParams = new URLSearchParams(window.location.search);
-  const token = urlParams.get('token') || urlParams.get('t') || localStorage.getItem('auth_token') || '';
-  const storedEmail = localStorage.getItem('user_email') || '';
+  let token = urlParams.get('token') || urlParams.get('t') || localStorage.getItem('auth_token') || '';
+  let storedEmail = localStorage.getItem('user_email') || '';
+
+  // If user has stored email or auth_token, mark as logged in immediately to hide reg-section
+  if (storedEmail || token) {
+    isLoggedIn = true;
+    if (storedEmail && !leadData) {
+      leadData = { email: storedEmail, name: localStorage.getItem('user_name') || '' };
+    }
+  }
+
+  // Resolve token from email if missing
+  if (!token && storedEmail) {
+    try {
+      const tokenRes = await fetch(SUPABASE_URL + '/rest/v1/rpc/get_token_by_email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+        },
+        body: JSON.stringify({ p_email: storedEmail })
+      });
+      const tokenData = await tokenRes.json();
+      if (Array.isArray(tokenData) && tokenData.length > 0) {
+        token = tokenData[0].get_token_by_email || tokenData[0].auth_token || (typeof tokenData[0] === 'string' ? tokenData[0] : '');
+      } else if (tokenData) {
+        token = tokenData.get_token_by_email || tokenData.auth_token || (typeof tokenData === 'string' ? tokenData : '');
+      }
+      if (token) localStorage.setItem('auth_token', token);
+    } catch (e) {
+      console.warn('Email lookup error:', e);
+    }
+  }
 
   if (token) {
     try {
@@ -200,6 +232,7 @@ async function initActivity() {
         isLoggedIn = true;
         localStorage.setItem('auth_token', token);
         if (leadData.email) localStorage.setItem('user_email', leadData.email);
+        if (leadData.name) localStorage.setItem('user_name', leadData.name);
       }
     } catch (err) {
       console.warn('Session lookup error:', err);
@@ -208,9 +241,11 @@ async function initActivity() {
 
   updateRaffleBanner();
 
-  if (!isLoggedIn) {
-    // Show registration fields inline if not logged in
-    document.getElementById('reg-section').style.display = 'block';
+  const regSection = document.getElementById('reg-section');
+  if (isLoggedIn) {
+    if (regSection) regSection.style.display = 'none';
+  } else {
+    if (regSection) regSection.style.display = 'block';
     
     // Init Phone Input
     const phoneInput = document.getElementById('reg-phone');
