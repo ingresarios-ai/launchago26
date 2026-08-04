@@ -1676,14 +1676,31 @@ function buildPreactivitiesTab() {
       badgeHtml = '<span class="badge badge--blue">🎯 Día 2 (Cuenta Espejo)</span>';
     }
 
+    let email = v.utm_source || 'Visitante';
+    let name = '';
+    let resp = v.utm_medium || '-';
+    let detail = v.utm_campaign || '-';
+
+    if (v.user_agent && v.user_agent.trim().startsWith('{')) {
+      try {
+        const parsed = JSON.parse(v.user_agent);
+        if (parsed.email) email = parsed.email;
+        if (parsed.name) name = parsed.name;
+        if (parsed.response_data) {
+          resp = parsed.response_data.meta_proceso || parsed.response_data.regla_1 || parsed.response_data.regla_1_antisaboteador || Object.values(parsed.response_data).join(' | ');
+          detail = JSON.stringify(parsed.response_data);
+        }
+      } catch (e) {}
+    }
+
     return {
       type: v.page,
       activityName: actName,
       badgeHtml: badgeHtml,
-      email: v.utm_source || 'Visitante',
-      name: '',
-      response: v.utm_medium || '-',
-      detail: v.utm_campaign || '-',
+      email: email,
+      name: name,
+      response: resp,
+      detail: detail,
       created_at: v.created_at
     };
   });

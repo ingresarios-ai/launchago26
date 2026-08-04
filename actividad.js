@@ -437,6 +437,7 @@ async function handleActivitySubmit(e) {
 
     // Save Mission Response to Supabase
     try {
+      const authTokenVal = localStorage.getItem('auth_token') || (leadData ? leadData.auth_token : '') || token || 'anon';
       await fetch(SUPABASE_URL + '/rest/v1/mission_responses', {
         method: 'POST',
         headers: {
@@ -446,16 +447,43 @@ async function handleActivitySubmit(e) {
           'Prefer': 'return=minimal'
         },
         body: JSON.stringify({
-          lead_id: leadData ? leadData.id : null,
-          day: currentDay,
-          response_data: formData,
-          points_awarded: 30,
+          auth_token: authTokenVal,
+          mission_id: currentDay,
+          response: typeof formData === 'object' ? JSON.stringify(formData) : String(formData),
+          points: 30,
           created_at: new Date().toISOString()
         })
       });
     } catch (saveErr) {
       console.warn('Mission response save warning:', saveErr);
     }
+
+    // Dual Log to analytics_pageviews for Admin Panel visibility
+    try {
+      const emailVal = localStorage.getItem('user_email') || (leadData ? leadData.email : '');
+      const phoneVal = leadData ? leadData.phone : '';
+      const nameVal = leadData ? leadData.name : '';
+      await fetch(SUPABASE_URL + '/rest/v1/analytics_pageviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          page: `actividad${currentDay}_submission`,
+          visitor_id: (leadData && leadData.auth_token) ? leadData.auth_token : (emailVal || 'anon'),
+          user_agent: JSON.stringify({
+            email: emailVal,
+            name: nameVal,
+            phone: phoneVal,
+            day: currentDay,
+            response_data: formData
+          })
+        })
+      });
+    } catch (pvErr) {}
 
     // Save Progress Milestone & Unlock Insignia
     try {

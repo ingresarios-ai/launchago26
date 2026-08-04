@@ -1981,6 +1981,49 @@ function completeLiveSession(dayNum) {
   
   const rewardsMap = { 1: 30, 2: 30, 3: 30, 4: 30, 5: 30, 6: 30, 7: 35, 8: 30, 9: 30, 10: 100 };
   const earnedPts = rewardsMap[dayNum] || 30;
+
+  // Persist Mission Response to Supabase DB
+  try {
+    const authTokenVal = localStorage.getItem('auth_token') || 'anon';
+    const emailVal = localStorage.getItem('user_email') || '';
+    
+    fetch(SUPABASE_URL_TEST + '/rest/v1/mission_responses', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY_TEST,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY_TEST,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        auth_token: authTokenVal,
+        mission_id: dayNum,
+        response: JSON.stringify(formData),
+        points: earnedPts,
+        created_at: new Date().toISOString()
+      })
+    }).catch(() => {});
+
+    fetch(SUPABASE_URL_TEST + '/rest/v1/analytics_pageviews', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY_TEST,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY_TEST,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        page: `actividad${dayNum}_submission`,
+        visitor_id: authTokenVal || emailVal || 'anon',
+        user_agent: JSON.stringify({
+          email: emailVal,
+          day: dayNum,
+          response_data: formData
+        })
+      })
+    }).catch(() => {});
+  } catch (e) {}
+
   triggerConfetti();
   showMissionToast(`🎉 ¡Misión del Día ${dayNum} completada! +${earnedPts} PC asignados a tu cuenta.`);
 
