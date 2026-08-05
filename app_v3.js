@@ -69,8 +69,6 @@ const liveSessionsData = {
         <p style="margin: 0; color:#f8fafc;"><strong>• Si aún no operas o estás aprendiendo:</strong> "Si siento ansiedad por empezar a ganar dinero rápido, no invertiré todavía. Primero completaré mi formación y practicaré en una cuenta demo."</p>
       </div>
       <textarea class="text-input" id="live2-rule-input" rows="3" placeholder="Escribe aquí tu Regla #1 Anti-Saboteador..."></textarea>
-      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
-        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
         <span>Regla #1 Anti-Saboteador Registrada</span>
       </label>
     `
@@ -85,153 +83,186 @@ const liveSessionsData = {
     missionTitle: "Misión del Día 3: Gastos Hormiga & Cláusula Anti-Saboteador",
     missionDesc: "Diagnostica tus salidas invisibles de dinero, calcula su proyección a 10 y 20 años y registra tu Cláusula Anti-Saboteador.",
     renderMission: () => `
-      <!-- MONEDA & INSTRUCCIONES -->
-      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:6px;">
-          <strong style="font-size:0.9rem; color:#f8fafc;">1. Moneda de Trabajo:</strong>
-          <input type="hidden" id="field-day3-currency" class="text-input" value="cop" />
-          <div style="display:flex; gap:6px;">
-            <button type="button" class="curr-btn-opt active" data-curr="cop" onclick="selectGastosCurr('cop', this)" style="padding:5px 12px; border-radius:6px; border:1px solid #3b82f6; background:rgba(59,130,246,0.25); color:#fff; font-weight:700; font-size:0.78rem; cursor:pointer;">🇨🇴 COP</button>
-            <button type="button" class="curr-btn-opt" data-curr="mxn" onclick="selectGastosCurr('mxn', this)" style="padding:5px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8; font-weight:700; font-size:0.78rem; cursor:pointer;">🇲🇽 MXN</button>
-            <button type="button" class="curr-btn-opt" data-curr="usd" onclick="selectGastosCurr('usd', this)" style="padding:5px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8; font-weight:700; font-size:0.78rem; cursor:pointer;">🇺🇸 USD</button>
-          </div>
+      <!-- WIZARD STEP HEADER -->
+      <div style="margin-bottom: 16px; background:rgba(255,255,255,0.03); border:1px solid var(--border-subtle); border-radius:12px; padding:10px 14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:0.78rem; font-weight:700;">
+          <span id="gastos-step-badge" style="color:#38bdf8; text-transform:uppercase; letter-spacing:0.8px;">Paso 1 de 3: Diagnóstico de Gastos</span>
+          <span id="gastos-step-pct" style="color:#22c55e; font-weight:800;">33%</span>
         </div>
-        <p style="font-size:0.78rem; color:#94a3b8; margin:0;">Ingresa una estimación de lo que gastas al mes en cada categoría.</p>
-      </div>
-
-      <!-- GRID DE 10 CATEGORÍAS GASTOS HORMIGA -->
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:10px; margin-bottom:16px;">
-        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
-            <span>☕ Café / Bebidas</span>
-            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
-          </div>
-          <input type="number" id="gasto-cafe" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
-        </div>
-        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
-            <span>🍔 Delivery / Comida</span>
-            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
-          </div>
-          <input type="number" id="gasto-delivery" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
-        </div>
-        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
-            <span>📺 Suscripciones</span>
-            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
-          </div>
-          <input type="number" id="gasto-streaming" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
-        </div>
-        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
-            <span>🍫 Snacks / Mecatos</span>
-            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
-          </div>
-          <input type="number" id="gasto-snacks" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
-        </div>
-        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
-            <span>🚗 Transporte VTC</span>
-            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
-          </div>
-          <input type="number" id="gasto-transporte" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
-        </div>
-        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
-            <span>🎬 Salidas / Bares</span>
-            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
-          </div>
-          <input type="number" id="gasto-salidas" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
-        </div>
-        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
-            <span>🛍️ Compras impulso</span>
-            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
-          </div>
-          <input type="number" id="gasto-compras" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
-        </div>
-        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
-            <span>💨 Cigarrillos / Vapes</span>
-            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
-          </div>
-          <input type="number" id="gasto-tabaco" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
-        </div>
-        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
-            <span>💄 Cuidado personal</span>
-            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
-          </div>
-          <input type="number" id="gasto-belleza" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
-        </div>
-        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
-            <span>🎮 Apps / Juegos</span>
-            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
-          </div>
-          <input type="number" id="gasto-apps" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
+        <div style="height:5px; background:rgba(255,255,255,0.08); border-radius:100px; overflow:hidden;">
+          <div id="gastos-step-bar" style="width:33%; height:100%; background:linear-gradient(90deg, #3b82f6, #22c55e); transition:width 0.35s ease; border-radius:100px;"></div>
         </div>
       </div>
 
-      <!-- DIAGNÓSTICO & PROYECCIÓN FINANCIERA -->
-      <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:12px;">
-          <div>
-            <span style="font-size:0.72rem; color:#94a3b8; font-weight:600; display:block;">Gasto Mensual:</span>
-            <strong id="res-gastos-mensual" style="font-size:1.1rem; color:#ef4444;">$0 COP</strong>
-            <input type="hidden" id="field-day3-gastos-total-mensual" class="text-input" value="0" />
-          </div>
-          <div>
-            <span style="font-size:0.72rem; color:#94a3b8; font-weight:600; display:block;">Fuga al Año:</span>
-            <strong id="res-gastos-anual" style="font-size:1.1rem; color:#f59e0b;">$0 COP</strong>
-            <input type="hidden" id="field-day3-gastos-total-anual" class="text-input" value="0" />
-          </div>
-        </div>
-
-        <div style="background:rgba(34, 197, 94, 0.08); border:1px solid rgba(34, 197, 94, 0.2); padding:10px; border-radius:10px; margin-bottom:10px;">
-          <span style="font-size:0.74rem; color:#22c55e; font-weight:700; display:block; margin-bottom:6px;">📈 Si invirtieras esta fuga al 7% compuesto:</span>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-            <div>
-              <span style="font-size:0.7rem; color:#cbd5e1; display:block;">En 10 Años:</span>
-              <strong id="res-proj-10a" style="font-size:1rem; color:#38bdf8;">$0 COP</strong>
-              <input type="hidden" id="field-day3-gastos-proj-10a" class="text-input" value="0" />
-            </div>
-            <div>
-              <span style="font-size:0.7rem; color:#cbd5e1; display:block;">En 20 Años:</span>
-              <strong id="res-proj-20a" style="font-size:1.05rem; color:#22c55e;">$0 COP</strong>
-              <input type="hidden" id="field-day3-gastos-proj-20a" class="text-input" value="0" />
+      <!-- PASO 1: DIAGNÓSTICO (MONEDA Y 10 CATEGORÍAS) -->
+      <div id="gastos-step-1" style="display:block;">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px; margin-bottom: 14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
+            <strong style="font-size:0.85rem; color:#f8fafc;">1. Moneda de Trabajo:</strong>
+            <input type="hidden" id="field-day3-currency" class="text-input" value="cop" />
+            <div style="display:flex; gap:6px;">
+              <button type="button" class="curr-btn-opt active" data-curr="cop" onclick="selectGastosCurr('cop', this)" style="padding:4px 10px; border-radius:6px; border:1px solid #3b82f6; background:rgba(59,130,246,0.25); color:#fff; font-weight:700; font-size:0.75rem; cursor:pointer;">🇨🇴 COP</button>
+              <button type="button" class="curr-btn-opt" data-curr="mxn" onclick="selectGastosCurr('mxn', this)" style="padding:4px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8; font-weight:700; font-size:0.75rem; cursor:pointer;">🇲🇽 MXN</button>
+              <button type="button" class="curr-btn-opt" data-curr="usd" onclick="selectGastosCurr('usd', this)" style="padding:4px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8; font-weight:700; font-size:0.75rem; cursor:pointer;">🇺🇸 USD</button>
             </div>
           </div>
+          <p style="font-size:0.75rem; color:#94a3b8; margin:0;">Ingresa una estimación de lo que gastas al mes en cada categoría.</p>
         </div>
 
-        <div id="res-recomendacion-box" style="font-size:0.76rem; color:#cbd5e1; line-height:1.4;">
-          💡 <span id="res-recomendacion-text">Ingresa tus gastos para ver tu diagnóstico de inversión.</span>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; margin-bottom:14px;">
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:8px 10px; border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.78rem; font-weight:700; color:#f1f5f9;">
+              <span>☕ Café / Bebidas</span>
+              <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+            </div>
+            <input type="number" id="gasto-cafe" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:5px; font-size:0.8rem;" />
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:8px 10px; border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.78rem; font-weight:700; color:#f1f5f9;">
+              <span>🍔 Delivery / Comida</span>
+              <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+            </div>
+            <input type="number" id="gasto-delivery" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:5px; font-size:0.8rem;" />
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:8px 10px; border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.78rem; font-weight:700; color:#f1f5f9;">
+              <span>📺 Suscripciones</span>
+              <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+            </div>
+            <input type="number" id="gasto-streaming" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:5px; font-size:0.8rem;" />
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:8px 10px; border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.78rem; font-weight:700; color:#f1f5f9;">
+              <span>🍫 Snacks / Mecatos</span>
+              <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+            </div>
+            <input type="number" id="gasto-snacks" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:5px; font-size:0.8rem;" />
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:8px 10px; border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.78rem; font-weight:700; color:#f1f5f9;">
+              <span>🚗 Transporte VTC</span>
+              <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+            </div>
+            <input type="number" id="gasto-transporte" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:5px; font-size:0.8rem;" />
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:8px 10px; border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.78rem; font-weight:700; color:#f1f5f9;">
+              <span>🎬 Salidas / Bares</span>
+              <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+            </div>
+            <input type="number" id="gasto-salidas" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:5px; font-size:0.8rem;" />
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:8px 10px; border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.78rem; font-weight:700; color:#f1f5f9;">
+              <span>🛍️ Compras impulso</span>
+              <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+            </div>
+            <input type="number" id="gasto-compras" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:5px; font-size:0.8rem;" />
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:8px 10px; border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.78rem; font-weight:700; color:#f1f5f9;">
+              <span>💨 Cigarrillos / Vapes</span>
+              <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+            </div>
+            <input type="number" id="gasto-tabaco" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:5px; font-size:0.8rem;" />
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:8px 10px; border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.78rem; font-weight:700; color:#f1f5f9;">
+              <span>💄 Cuidado personal</span>
+              <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+            </div>
+            <input type="number" id="gasto-belleza" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:5px; font-size:0.8rem;" />
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:8px 10px; border-radius:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.78rem; font-weight:700; color:#f1f5f9;">
+              <span>🎮 Apps / Juegos</span>
+              <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+            </div>
+            <input type="number" id="gasto-apps" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:5px; font-size:0.8rem;" />
+          </div>
+        </div>
+
+        <button type="button" onclick="goToGastosStep(2)" class="btn-primary" style="width:100%; margin-top:12px; font-weight:800; font-size:0.88rem; padding:12px; cursor:pointer;">
+          VER MI DIAGNÓSTICO FINANCIERO ➔
+        </button>
+      </div>
+
+      <!-- PASO 2: REVELACIÓN & PROYECCIÓN FINANCIERA -->
+      <div id="gastos-step-2" style="display:none;">
+        <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:12px;">
+            <div>
+              <span style="font-size:0.72rem; color:#94a3b8; font-weight:600; display:block;">Gasto Mensual:</span>
+              <strong id="res-gastos-mensual" style="font-size:1.1rem; color:#ef4444;">$0 COP</strong>
+              <input type="hidden" id="field-day3-gastos-total-mensual" class="text-input" value="0" />
+            </div>
+            <div>
+              <span style="font-size:0.72rem; color:#94a3b8; font-weight:600; display:block;">Fuga al Año:</span>
+              <strong id="res-gastos-anual" style="font-size:1.1rem; color:#f59e0b;">$0 COP</strong>
+              <input type="hidden" id="field-day3-gastos-total-anual" class="text-input" value="0" />
+            </div>
+          </div>
+
+          <div style="background:rgba(34, 197, 94, 0.08); border:1px solid rgba(34, 197, 94, 0.2); padding:10px; border-radius:10px; margin-bottom:10px;">
+            <span style="font-size:0.74rem; color:#22c55e; font-weight:700; display:block; margin-bottom:6px;">📈 Si invirtieras esta fuga al 7% compuesto:</span>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+              <div>
+                <span style="font-size:0.7rem; color:#cbd5e1; display:block;">En 10 Años:</span>
+                <strong id="res-proj-10a" style="font-size:1rem; color:#38bdf8;">$0 COP</strong>
+                <input type="hidden" id="field-day3-gastos-proj-10a" class="text-input" value="0" />
+              </div>
+              <div>
+                <span style="font-size:0.7rem; color:#cbd5e1; display:block;">En 20 Años:</span>
+                <strong id="res-proj-20a" style="font-size:1.05rem; color:#22c55e;">$0 COP</strong>
+                <input type="hidden" id="field-day3-gastos-proj-20a" class="text-input" value="0" />
+              </div>
+            </div>
+          </div>
+
+          <div id="res-recomendacion-box" style="font-size:0.76rem; color:#cbd5e1; line-height:1.4;">
+            💡 <span id="res-recomendacion-text">Ingresa tus gastos para ver tu diagnóstico de inversión.</span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+          <button type="button" onclick="goToGastosStep(1)" style="flex:1; min-width:120px; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:#cbd5e1; font-weight:700; cursor:pointer;">
+            ⬅ Modificar
+          </button>
+          <button type="button" onclick="goToGastosStep(3)" class="btn-primary" style="flex:2; min-width:160px; margin:0; background:linear-gradient(135deg, #10b981, #059669); color:#fff; font-weight:800; font-size:0.86rem; padding:10px; cursor:pointer;">
+            DEFINIR MI PLAN ➔
+          </button>
         </div>
       </div>
 
-      <!-- REDIRECCIÓN & CLÁUSULA -->
-      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:12px;">
-        <div>
-          <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Tu Ruta de Trabajo:</label>
-          <select id="field-day3-route" class="text-input" style="padding:8px; font-size:0.8rem;">
-            <option value="Ruta Cero — Dinero Consciente">🌱 Ruta Cero — Plan de Dinero Consciente (Sin experiencia)</option>
-            <option value="Ruta Experiencia — Plan de Mercado">⚡ Ruta Experiencia — Plan de Mercado (Trader)</option>
-          </select>
+      <!-- PASO 3: REDIRECCIÓN & CLÁUSULA -->
+      <div id="gastos-step-3" style="display:none;">
+        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:12px;">
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Tu Ruta de Trabajo:</label>
+            <select id="field-day3-route" class="text-input" style="padding:8px; font-size:0.8rem;">
+              <option value="Ruta Cero — Dinero Consciente">🌱 Ruta Cero — Plan de Dinero Consciente (Sin experiencia)</option>
+              <option value="Ruta Experiencia — Plan de Mercado">⚡ Ruta Experiencia — Plan de Mercado (Trader)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Monto a Redirigir al Mes:</label>
+            <input id="field-day3-redirect-amount" type="text" class="text-input" placeholder="Ej: $30 USD / $100,000 COP al mes" style="padding:8px; font-size:0.8rem;" />
+          </div>
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Cláusula Anti-Saboteador:</label>
+            <textarea id="field-day3-saboteur-clause" class="text-input" rows="2" placeholder="Ej: La separación ocurre el día 1 antes de cualquier gasto. Si no está en el plan, no existe." style="padding:8px; font-size:0.8rem;"></textarea>
+          </div>
         </div>
-        <div>
-          <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Monto a Redirigir al Mes:</label>
-          <input id="field-day3-redirect-amount" type="text" class="text-input" placeholder="Ej: $30 USD / $100,000 COP al mes" style="padding:8px; font-size:0.8rem;" />
-        </div>
-        <div>
-          <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Cláusula Anti-Saboteador:</label>
-          <textarea id="field-day3-saboteur-clause" class="text-input" rows="2" placeholder="Ej: La separación ocurre el día 1 antes de cualquier gasto. Si no está en el plan, no existe." style="padding:8px; font-size:0.8rem;"></textarea>
-        </div>
-      </div>
 
-      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 10px;">
-        <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Diagnóstico & Cláusula Anti-Saboteador Registrada (+30 PC)</span>
-      </label>
+        <button type="button" onclick="goToGastosStep(2)" style="margin-bottom:10px; width:100%; padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:#94a3b8; font-weight:700; font-size:0.78rem; cursor:pointer;">
+          ⬅ Volver al Diagnóstico
+        </button>
+
+        <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 8px;">
+          <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>Diagnóstico & Cláusula Anti-Saboteador Registrada (+30 PC)</span>
+        </label>
+      </div>
     `
   },
   4: {
@@ -2519,5 +2550,143 @@ function logoutUser() {
     window.location.href = '/identificate?logout=true';
   }
 }
+
+// ========================================
+// GASTOS HORMIGA ENGINE & WIZARD (DÍA 3)
+// ========================================
+window.selectGastosCurr = function(currCode, btnEl) {
+  var hiddenInp = document.getElementById('field-day3-currency');
+  if (hiddenInp) hiddenInp.value = currCode;
+
+  var btns = document.querySelectorAll('.curr-btn-opt');
+  btns.forEach(function(b) {
+    b.style.border = '1px solid rgba(255,255,255,0.1)';
+    b.style.background = 'rgba(255,255,255,0.04)';
+    b.style.color = '#94a3b8';
+    b.classList.remove('active');
+  });
+
+  if (btnEl) {
+    btnEl.style.border = '1px solid #3b82f6';
+    btnEl.style.background = 'rgba(59,130,246,0.25)';
+    btnEl.style.color = '#ffffff';
+    btnEl.classList.add('active');
+  }
+
+  var sym = currCode === 'cop' ? 'COP $' : (currCode === 'mxn' ? 'MXN $' : 'USD $');
+  var symEls = document.querySelectorAll('.curr-sym');
+  symEls.forEach(function(el) { el.textContent = sym; });
+
+  if (window.recalcGastosHormiga) window.recalcGastosHormiga();
+};
+
+window.recalcGastosHormiga = function() {
+  var currInp = document.getElementById('field-day3-currency');
+  var curr = currInp ? currInp.value : 'cop';
+
+  var catIds = [
+    'gasto-cafe', 'gasto-delivery', 'gasto-streaming', 'gasto-snacks', 'gasto-transporte',
+    'gasto-salidas', 'gasto-compras', 'gasto-tabaco', 'gasto-belleza', 'gasto-apps'
+  ];
+
+  var monthlyTotal = 0;
+  catIds.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      var val = parseFloat(el.value) || 0;
+      monthlyTotal += val;
+    }
+  });
+
+  var annualTotal = monthlyTotal * 12;
+
+  // Compound interest calculation: 7% annual rate
+  var r = 0.07 / 12;
+  var proj10 = monthlyTotal > 0 ? Math.round(monthlyTotal * ((Math.pow(1 + r, 120) - 1) / r)) : 0;
+  var proj20 = monthlyTotal > 0 ? Math.round(monthlyTotal * ((Math.pow(1 + r, 240) - 1) / r)) : 0;
+
+  function fmt(val) {
+    if (curr === 'cop') {
+      return '$' + Math.round(val).toLocaleString('es-CO') + ' COP';
+    } else if (curr === 'mxn') {
+      return '$' + Math.round(val).toLocaleString('es-MX') + ' MXN';
+    } else {
+      return '$' + Math.round(val).toLocaleString('en-US') + ' USD';
+    }
+  }
+
+  var elMensual = document.getElementById('res-gastos-mensual');
+  var elAnual = document.getElementById('res-gastos-anual');
+  var elProj10 = document.getElementById('res-proj-10a');
+  var elProj20 = document.getElementById('res-proj-20a');
+  var elRecText = document.getElementById('res-recomendacion-text');
+
+  if (elMensual) elMensual.textContent = fmt(monthlyTotal);
+  if (elAnual) elAnual.textContent = fmt(annualTotal);
+  if (elProj10) elProj10.textContent = fmt(proj10);
+  if (elProj20) elProj20.textContent = fmt(proj20);
+
+  var hMensual = document.getElementById('field-day3-gastos-total-mensual');
+  var hAnual = document.getElementById('field-day3-gastos-total-anual');
+  var hP10 = document.getElementById('field-day3-gastos-proj-10a');
+  var hP20 = document.getElementById('field-day3-gastos-proj-20a');
+
+  if (hMensual) hMensual.value = monthlyTotal;
+  if (hAnual) hAnual.value = annualTotal;
+  if (hP10) hP10.value = proj10;
+  if (hP20) hP20.value = proj20;
+
+  if (elRecText) {
+    var lowT = curr === 'usd' ? 12 : (curr === 'mxn' ? 200 : 50000);
+    var midT = curr === 'usd' ? 50 : (curr === 'mxn' ? 900 : 200000);
+
+    if (monthlyTotal === 0) {
+      elRecText.innerHTML = 'Ingresa tus gastos en las casillas para ver tu diagnóstico de inversión.';
+    } else if (monthlyTotal < lowT) {
+      elRecText.innerHTML = '<strong>Estrategia ETF de Bajo Costo (SCHD / VTI):</strong> Con este monto la clave es consistencia. Pequeñas cantidades invertidas a 20 años superan millones gracias al interés compuesto.';
+    } else if (monthlyTotal < midT) {
+      elRecText.innerHTML = '<strong>Combo INGRESARIOS (JEPQ + SCHD + VCIT):</strong> Combina ingresos mensuales (JEPQ) + crecimiento (SCHD) + estabilidad (VCIT). Empezarás a recibir dividendos reales en 3-5 años.';
+    } else {
+      elRecText.innerHTML = '<strong>Portafolio Income Completo INGRESARIOS (JEPQ + SCHD + VCIT + BTAL):</strong> El portafolio profesional de Juan Villegas con cobertura anticrisis. ¡Tu fuga actual puede financiar tu libertad financiera!';
+    }
+  }
+};
+
+window.goToGastosStep = function(stepNum) {
+  var s1 = document.getElementById('gastos-step-1');
+  var s2 = document.getElementById('gastos-step-2');
+  var s3 = document.getElementById('gastos-step-3');
+  var badge = document.getElementById('gastos-step-badge');
+  var pct = document.getElementById('gastos-step-pct');
+  var bar = document.getElementById('gastos-step-bar');
+
+  if (!s1 || !s2 || !s3) return;
+
+  if (window.recalcGastosHormiga) window.recalcGastosHormiga();
+
+  s1.style.display = 'none';
+  s2.style.display = 'none';
+  s3.style.display = 'none';
+
+  if (stepNum === 1) {
+    s1.style.display = 'block';
+    if (badge) badge.textContent = 'Paso 1 de 3: Diagnóstico de Gastos';
+    if (pct) pct.textContent = '33%';
+    if (bar) bar.style.width = '33%';
+  } else if (stepNum === 2) {
+    s2.style.display = 'block';
+    if (badge) badge.textContent = 'Paso 2 de 3: Proyección & Portafolio';
+    if (pct) pct.textContent = '66%';
+    if (bar) bar.style.width = '66%';
+  } else if (stepNum === 3) {
+    s3.style.display = 'block';
+    if (badge) badge.textContent = 'Paso 3 de 3: Plan & Cláusula Anti-Saboteador';
+    if (pct) pct.textContent = '100%';
+    if (bar) bar.style.width = '100%';
+  }
+
+  var modalContent = document.querySelector('.live-modal-content');
+  if (modalContent) modalContent.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
 

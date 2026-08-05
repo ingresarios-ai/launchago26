@@ -57,196 +57,229 @@ const dailyMissions = {
     title: "Día 3: P de Planear — Gastos Hormiga a Inversiones Hormiga",
     desc: "Diagnostica tus salidas invisibles de dinero, calcula su impacto a 10 y 20 años y define tu Cláusula Anti-Saboteador.",
     renderForm: () => `
-      <!-- MONEDA & INSTRUCCIONES -->
-      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; margin-bottom: 20px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:8px;">
-          <div>
-            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#3b82f6; display:block;">Paso 1</span>
-            <strong style="font-size:0.95rem; color:#f8fafc;">Selecciona tu Moneda de Trabajo</strong>
-          </div>
-          <input type="hidden" id="field-day3-currency" class="form-input" value="cop" />
-          <div style="display:flex; gap:8px;">
-            <button type="button" class="curr-btn-opt active" data-curr="cop" onclick="selectGastosCurr('cop', this)" style="padding:6px 14px; border-radius:8px; border:1px solid #3b82f6; background:rgba(59,130,246,0.25); color:#fff; font-weight:700; font-size:0.8rem; cursor:pointer;">🇨🇴 COP</button>
-            <button type="button" class="curr-btn-opt" data-curr="mxn" onclick="selectGastosCurr('mxn', this)" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8; font-weight:700; font-size:0.8rem; cursor:pointer;">🇲🇽 MXN</button>
-            <button type="button" class="curr-btn-opt" data-curr="usd" onclick="selectGastosCurr('usd', this)" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8; font-weight:700; font-size:0.8rem; cursor:pointer;">🇺🇸 USD</button>
-          </div>
+      <!-- WIZARD STEP HEADER -->
+      <div style="margin-bottom: 20px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.8rem; font-weight:700;">
+          <span id="gastos-step-badge" style="color:#38bdf8; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.8px;">Paso 1 de 3: Diagnóstico de Gastos</span>
+          <span id="gastos-step-pct" style="color:#22c55e; font-weight:800; font-size:0.82rem;">33%</span>
         </div>
-        <p style="font-size:0.82rem; color:#94a3b8; margin:0; line-height:1.45;">
-          Ingresa una estimación de lo que gastas al mes en cada categoría. Si no aplica a ti, déjalo en blanco o en 0.
-        </p>
-      </div>
-
-      <!-- GRID DE 10 CATEGORÍAS GASTOS HORMIGA -->
-      <div style="margin-bottom:24px;">
-        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#f59e0b; display:block; margin-bottom:10px;">Paso 2 • Tus 10 Salidas Invisibles (Monto Mensual)</span>
-        
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
-          <!-- 1. Café -->
-          <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">☕ Café / Bebidas fuera</span>
-              <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
-            </div>
-            <input type="number" id="gasto-cafe" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
-            <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Café, jugos, gaseosas de paso</span>
-          </div>
-
-          <!-- 2. Delivery -->
-          <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🍔 Delivery / Comida rápida</span>
-              <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
-            </div>
-            <input type="number" id="gasto-delivery" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
-            <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Rappi, UberEats, antojos</span>
-          </div>
-
-          <!-- 3. Suscripciones -->
-          <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">📺 Suscripciones digitales</span>
-              <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
-            </div>
-            <input type="number" id="gasto-streaming" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
-            <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Netflix, Spotify, apps sin uso</span>
-          </div>
-
-          <!-- 4. Snacks -->
-          <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🍫 Snacks / Mecatos</span>
-              <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
-            </div>
-            <input type="number" id="gasto-snacks" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
-            <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Dulces, chips, energéticas</span>
-          </div>
-
-          <!-- 5. Transporte -->
-          <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🚗 Transporte extra / VTC</span>
-              <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
-            </div>
-            <input type="number" id="gasto-transporte" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
-            <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Uber / InDriver no planeados</span>
-          </div>
-
-          <!-- 6. Salidas -->
-          <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🎬 Salidas / Entretenimiento</span>
-              <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
-            </div>
-            <input type="number" id="gasto-salidas" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
-            <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Cine, bares, eventos impulso</span>
-          </div>
-
-          <!-- 7. Compras -->
-          <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🛍️ Compras impulsivas</span>
-              <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
-            </div>
-            <input type="number" id="gasto-compras" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
-            <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Ropa o gadgets fuera de plan</span>
-          </div>
-
-          <!-- 8. Tabaco -->
-          <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">💨 Cigarrillos / Vapes</span>
-              <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
-            </div>
-            <input type="number" id="gasto-tabaco" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
-            <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Tabaco, vapes y similares</span>
-          </div>
-
-          <!-- 9. Cuidado Personal -->
-          <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">💄 Cuidado personal extra</span>
-              <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
-            </div>
-            <input type="number" id="gasto-belleza" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
-            <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Tratamientos o cosméticos de paso</span>
-          </div>
-
-          <!-- 10. Apps -->
-          <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🎮 Apps / Microtransacciones</span>
-              <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
-            </div>
-            <input type="number" id="gasto-apps" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
-            <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Juegos, compras in-app</span>
-          </div>
+        <div style="height:6px; background:rgba(255,255,255,0.08); border-radius:100px; overflow:hidden;">
+          <div id="gastos-step-bar" style="width:33%; height:100%; background:linear-gradient(90deg, #3b82f6, #22c55e); transition:width 0.35s ease; border-radius:100px;"></div>
         </div>
       </div>
 
-      <!-- RESULTADOS & PROYECCIÓN FINANCIERA (CALCULADO AUTOMÁTICAMENTE) -->
-      <div style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.9) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
-        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#22c55e; display:block; margin-bottom:12px;">Paso 3 • Tu Diagnóstico Financiero & Poder de Inversión</span>
-        
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:14px; margin-bottom:16px;">
-          <div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
-            <span style="font-size:0.75rem; color:#94a3b8; font-weight:600; display:block;">Gasto Hormiga Mensual:</span>
-            <strong id="res-gastos-mensual" style="font-size:1.3rem; color:#ef4444; font-weight:800;">$0 COP</strong>
-            <input type="hidden" id="field-day3-gastos-total-mensual" class="form-input" value="0" />
+      <!-- PASO 1: DIAGNÓSTICO (MONEDA Y 10 CATEGORÍAS) -->
+      <div id="gastos-step-1" style="display:block;">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; margin-bottom: 20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:8px;">
+            <div>
+              <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#3b82f6; display:block;">Paso 1</span>
+              <strong style="font-size:0.95rem; color:#f8fafc;">Selecciona tu Moneda de Trabajo</strong>
+            </div>
+            <input type="hidden" id="field-day3-currency" class="form-input" value="cop" />
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="curr-btn-opt active" data-curr="cop" onclick="selectGastosCurr('cop', this)" style="padding:6px 14px; border-radius:8px; border:1px solid #3b82f6; background:rgba(59,130,246,0.25); color:#fff; font-weight:700; font-size:0.8rem; cursor:pointer;">🇨🇴 COP</button>
+              <button type="button" class="curr-btn-opt" data-curr="mxn" onclick="selectGastosCurr('mxn', this)" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8; font-weight:700; font-size:0.8rem; cursor:pointer;">🇲🇽 MXN</button>
+              <button type="button" class="curr-btn-opt" data-curr="usd" onclick="selectGastosCurr('usd', this)" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8; font-weight:700; font-size:0.8rem; cursor:pointer;">🇺🇸 USD</button>
+            </div>
           </div>
-          <div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
-            <span style="font-size:0.75rem; color:#94a3b8; font-weight:600; display:block;">Fuga Total al Año:</span>
-            <strong id="res-gastos-anual" style="font-size:1.3rem; color:#f59e0b; font-weight:800;">$0 COP</strong>
-            <input type="hidden" id="field-day3-gastos-total-anual" class="form-input" value="0" />
-          </div>
+          <p style="font-size:0.82rem; color:#94a3b8; margin:0; line-height:1.45;">
+            Ingresa una estimación de lo que gastas al mes en cada categoría. Si no aplica a ti, déjalo en blanco o en 0.
+          </p>
         </div>
 
-        <!-- TARJETA INTERÉS COMPUESTO -->
-        <div style="background:rgba(34, 197, 94, 0.08); border:1px solid rgba(34, 197, 94, 0.25); padding:16px; border-radius:14px; margin-bottom:14px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <strong style="font-size:0.88rem; color:#22c55e;">📈 Si invirtieras esta fuga (7% anual compuesto):</strong>
-            <span style="font-size:0.72rem; background:rgba(34, 197, 94, 0.2); color:#22c55e; padding:3px 8px; border-radius:100px; font-weight:700;">Interés Compuesto</span>
-          </div>
+        <div style="margin-bottom:24px;">
+          <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#f59e0b; display:block; margin-bottom:10px;">Tus 10 Salidas Invisibles (Monto Mensual)</span>
           
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-            <div>
-              <span style="font-size:0.75rem; color:#cbd5e1; font-weight:600; display:block;">En 10 Años Tendrías:</span>
-              <strong id="res-proj-10a" style="font-size:1.2rem; color:#38bdf8; font-weight:900;">$0 COP</strong>
-              <input type="hidden" id="field-day3-gastos-proj-10a" class="form-input" value="0" />
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+            <!-- 1. Café -->
+            <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">☕ Café / Bebidas fuera</span>
+                <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
+              </div>
+              <input type="number" id="gasto-cafe" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
+              <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Café, jugos, gaseosas de paso</span>
             </div>
-            <div>
-              <span style="font-size:0.75rem; color:#cbd5e1; font-weight:600; display:block;">En 20 Años Tendrías:</span>
-              <strong id="res-proj-20a" style="font-size:1.25rem; color:#22c55e; font-weight:900;">$0 COP</strong>
-              <input type="hidden" id="field-day3-gastos-proj-20a" class="form-input" value="0" />
+
+            <!-- 2. Delivery -->
+            <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🍔 Delivery / Comida rápida</span>
+                <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
+              </div>
+              <input type="number" id="gasto-delivery" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
+              <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Rappi, UberEats, antojos</span>
+            </div>
+
+            <!-- 3. Suscripciones -->
+            <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">📺 Suscripciones digitales</span>
+                <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
+              </div>
+              <input type="number" id="gasto-streaming" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
+              <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Netflix, Spotify, apps sin uso</span>
+            </div>
+
+            <!-- 4. Snacks -->
+            <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🍫 Snacks / Mecatos</span>
+                <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
+              </div>
+              <input type="number" id="gasto-snacks" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
+              <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Dulces, chips, energéticas</span>
+            </div>
+
+            <!-- 5. Transporte -->
+            <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🚗 Transporte extra / VTC</span>
+                <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
+              </div>
+              <input type="number" id="gasto-transporte" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
+              <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Uber / InDriver no planeados</span>
+            </div>
+
+            <!-- 6. Salidas -->
+            <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🎬 Salidas / Entretenimiento</span>
+                <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
+              </div>
+              <input type="number" id="gasto-salidas" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
+              <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Cine, bares, eventos impulso</span>
+            </div>
+
+            <!-- 7. Compras -->
+            <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🛍️ Compras impulsivas</span>
+                <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
+              </div>
+              <input type="number" id="gasto-compras" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
+              <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Ropa o gadgets fuera de plan</span>
+            </div>
+
+            <!-- 8. Tabaco -->
+            <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">💨 Cigarrillos / Vapes</span>
+                <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
+              </div>
+              <input type="number" id="gasto-tabaco" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
+              <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Tabaco, vapes y similares</span>
+            </div>
+
+            <!-- 9. Cuidado Personal -->
+            <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">💄 Cuidado personal extra</span>
+                <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
+              </div>
+              <input type="number" id="gasto-belleza" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
+              <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Tratamientos o cosméticos de paso</span>
+            </div>
+
+            <!-- 10. Apps -->
+            <div class="gasto-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:12px 14px; border-radius:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:0.85rem; font-weight:700; color:#f1f5f9;">🎮 Apps / Microtransacciones</span>
+                <span class="curr-sym" style="font-size:0.75rem; color:#38bdf8; font-weight:700;">COP $</span>
+              </div>
+              <input type="number" id="gasto-apps" class="form-input gasto-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:8px 10px; font-size:0.88rem;" />
+              <span style="font-size:0.7rem; color:#64748b; margin-top:4px; display:block;">Juegos, compras in-app</span>
             </div>
           </div>
         </div>
 
-        <div id="res-recomendacion-box" style="font-size:0.8rem; color:#cbd5e1; background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:10px; line-height:1.45;">
-          💡 <span id="res-recomendacion-text">Ingresa tus gastos en las casillas para ver tu diagnóstico de inversión.</span>
+        <button type="button" onclick="goToGastosStep(2)" class="btn-submit" style="margin-top:16px; background:linear-gradient(135deg, #3b82f6, #2563eb); color:#fff; font-weight:800; width:100%; font-size:0.92rem; padding:14px; cursor:pointer;">
+          VER MI DIAGNÓSTICO FINANCIERO ➔
+        </button>
+      </div>
+
+      <!-- PASO 2: REVELACIÓN & PROYECCIÓN FINANCIERA -->
+      <div id="gastos-step-2" style="display:none;">
+        <div style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.9) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+          <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#22c55e; display:block; margin-bottom:12px;">Paso 2 • Tu Diagnóstico Financiero & Poder de Inversión</span>
+          
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:14px; margin-bottom:16px;">
+            <div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+              <span style="font-size:0.75rem; color:#94a3b8; font-weight:600; display:block;">Gasto Hormiga Mensual:</span>
+              <strong id="res-gastos-mensual" style="font-size:1.3rem; color:#ef4444; font-weight:800;">$0 COP</strong>
+              <input type="hidden" id="field-day3-gastos-total-mensual" class="form-input" value="0" />
+            </div>
+            <div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+              <span style="font-size:0.75rem; color:#94a3b8; font-weight:600; display:block;">Fuga Total al Año:</span>
+              <strong id="res-gastos-anual" style="font-size:1.3rem; color:#f59e0b; font-weight:800;">$0 COP</strong>
+              <input type="hidden" id="field-day3-gastos-total-anual" class="form-input" value="0" />
+            </div>
+          </div>
+
+          <!-- TARJETA INTERÉS COMPUESTO -->
+          <div style="background:rgba(34, 197, 94, 0.08); border:1px solid rgba(34, 197, 94, 0.25); padding:16px; border-radius:14px; margin-bottom:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <strong style="font-size:0.88rem; color:#22c55e;">📈 Si invirtieras esta fuga (7% anual compuesto):</strong>
+              <span style="font-size:0.72rem; background:rgba(34, 197, 94, 0.2); color:#22c55e; padding:3px 8px; border-radius:100px; font-weight:700;">Interés Compuesto</span>
+            </div>
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+              <div>
+                <span style="font-size:0.75rem; color:#cbd5e1; font-weight:600; display:block;">En 10 Años Tendrías:</span>
+                <strong id="res-proj-10a" style="font-size:1.2rem; color:#38bdf8; font-weight:900;">$0 COP</strong>
+                <input type="hidden" id="field-day3-gastos-proj-10a" class="form-input" value="0" />
+              </div>
+              <div>
+                <span style="font-size:0.75rem; color:#cbd5e1; font-weight:600; display:block;">En 20 Años Tendrías:</span>
+                <strong id="res-proj-20a" style="font-size:1.25rem; color:#22c55e; font-weight:900;">$0 COP</strong>
+                <input type="hidden" id="field-day3-gastos-proj-20a" class="form-input" value="0" />
+              </div>
+            </div>
+          </div>
+
+          <div id="res-recomendacion-box" style="font-size:0.8rem; color:#cbd5e1; background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:10px; line-height:1.45;">
+            💡 <span id="res-recomendacion-text">Ingresa tus gastos en el paso anterior para ver tu diagnóstico de inversión.</span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;">
+          <button type="button" onclick="goToGastosStep(1)" style="flex:1; min-width:130px; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:#cbd5e1; font-weight:700; cursor:pointer;">
+            ⬅ Modificar Gastos
+          </button>
+          <button type="button" onclick="goToGastosStep(3)" class="btn-submit" style="flex:2; min-width:170px; margin:0; background:linear-gradient(135deg, #10b981, #059669); color:#fff; font-weight:800; font-size:0.92rem; padding:14px; cursor:pointer;">
+            DEFINIR MI PLAN DE ACCIÓN ➔
+          </button>
         </div>
       </div>
 
-      <!-- PASO 4: FORMULARIO DE REDIRECCIÓN & CLÁUSULA ANTI-SABOTEADOR -->
-      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px;">
-        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#38bdf8; display:block; margin-bottom:12px;">Paso 4 • Redirección & Cláusula Anti-Saboteador</span>
+      <!-- PASO 3: REDIRECCIÓN & CLÁUSULA ANTI-SABOTEADOR -->
+      <div id="gastos-step-3" style="display:none;">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; margin-bottom:16px;">
+          <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#38bdf8; display:block; margin-bottom:12px;">Paso 3 • Redirección & Cláusula Anti-Saboteador</span>
 
-        <div class="form-group" style="margin-bottom:14px;">
-          <label class="form-label">Selecciona tu Ruta de Trabajo <span style="color:#ef4444;">*</span></label>
-          <select id="field-day3-route" class="form-input" required style="padding:10px; font-weight:600;">
-            <option value="Ruta Cero — Dinero Consciente">🌱 Ruta Cero — Plan de Dinero Consciente (Sin experiencia / Finanzas personales)</option>
-            <option value="Ruta Experiencia — Plan de Mercado">⚡ Ruta Experiencia — Plan de Mercado Profesional (Trader / Inversionista)</option>
-          </select>
+          <div class="form-group" style="margin-bottom:14px;">
+            <label class="form-label">Selecciona tu Ruta de Trabajo <span style="color:#ef4444;">*</span></label>
+            <select id="field-day3-route" class="form-input" required style="padding:10px; font-weight:600;">
+              <option value="Ruta Cero — Dinero Consciente">🌱 Ruta Cero — Plan de Dinero Consciente (Sin experiencia / Finanzas personales)</option>
+              <option value="Ruta Experiencia — Plan de Mercado">⚡ Ruta Experiencia — Plan de Mercado Profesional (Trader / Inversionista)</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom:14px;">
+            <label class="form-label">Monto de Redirección Sostenible Mensual <span style="color:#ef4444;">*</span></label>
+            <input id="field-day3-redirect-amount" type="text" class="form-input" placeholder="Ej: $30 USD / $100,000 COP al mes para mi bolsillo de construcción" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Escribe tu Cláusula Anti-Saboteador <span style="color:#ef4444;">*</span></label>
+            <textarea id="field-day3-saboteur-clause" class="form-textarea" rows="3" placeholder="Ej (Ruta Cero): La separación ocurre el día 1 antes de cualquier gasto discrecional. No usaré dinero real hasta simular 4 semanas.\nEj (Ruta Experiencia): Si no está en mi plan no existe. Después de 2 pérdidas consecutivas cierro plataforma." required></textarea>
+          </div>
         </div>
 
-        <div class="form-group" style="margin-bottom:14px;">
-          <label class="form-label">Monto de Redirección Sostenible Mensual <span style="color:#ef4444;">*</span></label>
-          <input id="field-day3-redirect-amount" type="text" class="form-input" placeholder="Ej: $30 USD / $100,000 COP al mes para mi bolsillo de construcción" required />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Escribe tu Cláusula Anti-Saboteador <span style="color:#ef4444;">*</span></label>
-          <textarea id="field-day3-saboteur-clause" class="form-textarea" rows="3" placeholder="Ej (Ruta Cero): La separación ocurre el día 1 antes de cualquier gasto discrecional. No usaré dinero real hasta simular 4 semanas.\nEj (Ruta Experiencia): Si no está en mi plan no existe. Después de 2 pérdidas consecutivas cierro plataforma." required></textarea>
-        </div>
+        <button type="button" onclick="goToGastosStep(2)" style="margin-bottom:14px; width:100%; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:#94a3b8; font-weight:700; cursor:pointer;">
+          ⬅ Volver al Diagnóstico
+        </button>
       </div>
     `
   },
@@ -395,6 +428,9 @@ async function initActivity() {
   }
 
   document.getElementById('activity-fields').innerHTML = mission.renderForm();
+  if (currentDay === 3 && window.goToGastosStep) {
+    setTimeout(function() { window.goToGastosStep(1); }, 30);
+  }
 
   // Check Login / Session Status
   const urlParams = new URLSearchParams(window.location.search);
@@ -880,4 +916,44 @@ window.recalcGastosHormiga = function() {
       elRecText.innerHTML = '<strong>Portafolio Income Completo INGRESARIOS (JEPQ + SCHD + VCIT + BTAL):</strong> El portafolio profesional de Juan Villegas con cobertura anticrisis. ¡Tu fuga actual puede financiar tu libertad financiera!';
     }
   }
+};
+
+window.goToGastosStep = function(stepNum) {
+  var s1 = document.getElementById('gastos-step-1');
+  var s2 = document.getElementById('gastos-step-2');
+  var s3 = document.getElementById('gastos-step-3');
+  var badge = document.getElementById('gastos-step-badge');
+  var pct = document.getElementById('gastos-step-pct');
+  var bar = document.getElementById('gastos-step-bar');
+  var mainSubmitBtn = document.getElementById('btn-submit-activity');
+
+  if (!s1 || !s2 || !s3) return;
+
+  if (window.recalcGastosHormiga) window.recalcGastosHormiga();
+
+  s1.style.display = 'none';
+  s2.style.display = 'none';
+  s3.style.display = 'none';
+
+  if (stepNum === 1) {
+    s1.style.display = 'block';
+    if (badge) badge.textContent = 'Paso 1 de 3: Diagnóstico de Gastos';
+    if (pct) pct.textContent = '33%';
+    if (bar) bar.style.width = '33%';
+    if (mainSubmitBtn) mainSubmitBtn.style.display = 'none';
+  } else if (stepNum === 2) {
+    s2.style.display = 'block';
+    if (badge) badge.textContent = 'Paso 2 de 3: Proyección & Portafolio';
+    if (pct) pct.textContent = '66%';
+    if (bar) bar.style.width = '66%';
+    if (mainSubmitBtn) mainSubmitBtn.style.display = 'none';
+  } else if (stepNum === 3) {
+    s3.style.display = 'block';
+    if (badge) badge.textContent = 'Paso 3 de 3: Plan & Cláusula Anti-Saboteador';
+    if (pct) pct.textContent = '100%';
+    if (bar) bar.style.width = '100%';
+    if (mainSubmitBtn) mainSubmitBtn.style.display = 'block';
+  }
+
+  window.scrollTo({ top: 150, behavior: 'smooth' });
 };
