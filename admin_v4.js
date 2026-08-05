@@ -13,6 +13,7 @@ let allLeads = [];
 let allVisits = [];
 let allSurveys = [];
 let allTests = [];
+let allMissions = [];
 let allLeadMagnets = [];
 let filteredLeads = [];
 let filteredLeadMagnets = [];
@@ -330,6 +331,13 @@ async function loadData() {
 
     // 4. Fetch tests via secure admin RPC function
     allTests = await dbFetchAll('/rest/v1/rpc/admin_get_tests', authParams);
+
+    // 4b. Fetch mission_responses (Activities 1, 2, 3...)
+    try {
+      allMissions = await dbFetch('/rest/v1/mission_responses?select=*&order=created_at.desc', { method: 'GET' }) || [];
+    } catch (e) {
+      allMissions = [];
+    }
 
     // 5. Populate lead magnets from allLeads (where landing or lead_magnet specifies a lead magnet) + RPC/REST fallback
     let fetchedLm = [];
@@ -1705,23 +1713,78 @@ function buildPreactivitiesTab() {
     };
   });
 
+  // 3. Gather mission responses from mission_responses table
+  const missionSubmissions = (allMissions || []).map(m => {
+    const parentLead = (allLeads || []).find(l => (l.token && l.token === m.auth_token) || l.id === m.lead_id);
+    let actName = `Actividad Día ${m.mission_id}`;
+    let badgeHtml = `<span class="badge badge--blue">🎯 Día ${m.mission_id}</span>`;
+    
+    if (String(m.mission_id) === '1' || m.mission_id === 'mission_01') {
+      actName = 'Actividad Día 1';
+      badgeHtml = '<span class="badge badge--orange" style="background:rgba(234,179,8,0.15); color:#facc15; border:1px solid rgba(234,179,8,0.3);">🏛️ Día 1 (Saboteador)</span>';
+    } else if (String(m.mission_id) === '2') {
+      actName = 'Actividad Día 2';
+      badgeHtml = '<span class="badge badge--blue">🎯 Día 2 (Cuenta Espejo)</span>';
+    } else if (String(m.mission_id) === '3') {
+      actName = 'Actividad Día 3';
+      badgeHtml = '<span class="badge badge--purple">🐜 Día 3 (Gastos Hormiga)</span>';
+    }
+
+    let email = parentLead ? parentLead.email : 'Lead Registrado';
+    let name = parentLead ? parentLead.name : '';
+    let resp = '-';
+    let detail = '-';
+
+    if (m.response) {
+      if (typeof m.response === 'string' && m.response.trim().startsWith('{')) {
+        try {
+          const parsed = JSON.parse(m.response);
+          if (parsed.email) email = parsed.email;
+          if (parsed.name) name = parsed.name;
+          resp = parsed.meta_proceso || parsed.regla_1 || parsed.regla_1_antisaboteador || parsed['live2-rule-input'] || Object.values(parsed).filter(Boolean).join(' | ') || m.response;
+          detail = JSON.stringify(parsed);
+        } catch (e) {
+          resp = m.response;
+          detail = m.response;
+        }
+      } else {
+        resp = m.response;
+        detail = m.response;
+      }
+    }
+
+    return {
+      type: `act${m.mission_id}`,
+      activityName: actName,
+      badgeHtml: badgeHtml,
+      email: email,
+      name: name,
+      response: resp,
+      detail: detail,
+      created_at: m.created_at
+    };
+  });
+
   // Combine and sort by newest first
-  allPreactivities = testSubmissions.concat(visitSubmissions).sort((a, b) => 
+  allPreactivities = testSubmissions.concat(visitSubmissions).concat(missionSubmissions).sort((a, b) => 
     new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 
-  const countAct1 = testSubmissions.length + visitSubmissions.filter(v => v.activityName === 'Actividad Día 1').length;
-  const countAct2 = visitSubmissions.filter(v => v.activityName === 'Actividad Día 2').length;
-  const countPre1 = visitSubmissions.filter(v => v.activityName === 'Pre-Actividad 1').length;
-  const countPre2 = visitSubmissions.filter(v => v.activityName === 'Pre-Actividad 2').length;
+  const countAct1 = allPreactivities.filter(v => v.activityName.includes('Día 1')).length;
+  const countAct2 = allPreactivities.filter(v => v.activityName.includes('Día 2')).length;
+  const countAct3 = allPreactivities.filter(v => v.activityName.includes('Día 3')).length;
+  const countPre1 = allPreactivities.filter(v => v.activityName === 'Pre-Actividad 1').length;
+  const countPre2 = allPreactivities.filter(v => v.activityName === 'Pre-Actividad 2').length;
 
   const kpiAct1 = document.getElementById('kpi-act1-count');
   const kpiAct2 = document.getElementById('kpi-act2-count');
+  const kpiAct3 = document.getElementById('kpi-act3-count');
   const kpiPre1 = document.getElementById('kpi-preact1-count');
   const kpiPre2 = document.getElementById('kpi-preact2-count');
 
   if (kpiAct1) kpiAct1.textContent = countAct1;
   if (kpiAct2) kpiAct2.textContent = countAct2;
+  if (kpiAct3) kpiAct3.textContent = countAct3;
   if (kpiPre1) kpiPre1.textContent = countPre1;
   if (kpiPre2) kpiPre2.textContent = countPre2;
 
