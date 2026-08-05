@@ -1899,23 +1899,42 @@ function openLiveSession(dayNum) {
   const itemInsignia = insigniasData[insigniaId] || { icon: '🛡️', name: 'Insignia de Dominio' };
   const hasInsignia = getUnlockedInsignias().includes(insigniaId);
 
+  const releasedDay = getAvailableDayNumber();
+  const isPast = dayNum < releasedDay;
+
+  const liveBoxBg = isPast 
+    ? "background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, var(--surface) 100%); border: 1px solid rgba(56, 189, 248, 0.35); padding: 20px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(56, 189, 248, 0.1);" 
+    : "background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, var(--surface) 100%); border: 1px solid rgba(239, 68, 68, 0.3); padding: 20px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(239, 68, 68, 0.1);";
+
+  const badgeHtml = isPast
+    ? `<span style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; font-weight:800; color:#7dd3fc; background:rgba(56, 189, 248, 0.15); padding:4px 10px; border-radius:100px;">📺 REPETICIÓN DISPONIBLE</span>`
+    : `<span style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; font-weight:800; color:#ef4444; background:rgba(239, 68, 68, 0.15); padding:4px 10px; border-radius:100px;"><span class="pulse-dot-red"></span> SALA OFICIAL DE TRANSMISIÓN</span>`;
+
+  const btnStyle = isPast
+    ? "background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35); text-decoration:none;"
+    : "text-decoration:none;";
+
+  const btnText = isPast
+    ? `VER REPETICIÓN DE LA CLASE DEL DÍA ${dayNum}`
+    : `ENTRAR A LA SALA DE TRANSMISIÓN EN VIVO`;
+
   let html = `
-    <!-- PASO 1: TRANSMISIÓN EN VIVO BROADCAST -->
-    <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, var(--surface) 100%); border: 1px solid rgba(239, 68, 68, 0.3); padding: 20px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(239, 68, 68, 0.1);">
+    <!-- PASO 1: TRANSMISIÓN O REPETICIÓN DE LA CLASE -->
+    <div style="${liveBoxBg}">
       <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
-        <span style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; font-weight:800; color:#ef4444; background:rgba(239, 68, 68, 0.15); padding:4px 10px; border-radius:100px;">
-          <span class="pulse-dot-red"></span> SALA OFICIAL DE TRANSMISIÓN
-        </span>
+        ${badgeHtml}
         <span style="font-size:0.78rem; color:var(--text-muted);">${data.dayDate} • 8:00 PM CO</span>
       </div>
       <h3 style="font-size: 1.1rem; font-weight:800; color: var(--text-white); margin: 0 0 6px 0;">
-        🔴 ${data.title}
+        ${isPast ? '📺' : '🔴'} ${data.title}
       </h3>
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px; line-height:1.4;">Accede a la sala interactiva en vivo o mira el replay grabado para resolver tus dudas en directo.</p>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px; line-height:1.4;">
+        ${isPast ? 'Revive la grabación completa de la sesión y descarga el material complementario.' : 'Accede a la sala interactiva en vivo o mira la transmisión para resolver tus dudas en directo.'}
+      </p>
       
-      <a href="${data.liveUrl}" target="_blank" class="btn-live-hero" style="text-decoration:none;">
+      <a href="${data.liveUrl}" target="_blank" class="btn-live-hero" style="${btnStyle}">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        ENTRAR A LA SALA DE TRANSMISIÓN EN VIVO
+        ${btnText}
       </a>
     </div>
 
