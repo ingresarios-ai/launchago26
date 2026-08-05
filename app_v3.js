@@ -77,21 +77,160 @@ const liveSessionsData = {
   },
   3: {
     dayDate: "5 de Agosto",
-    title: "3. El Plan que Tu Saboteador No Puede Renegociar",
-    reward: "+30 PC (+15 extra por compartir)",
+    title: "3. P de Planear: Gastos Hormiga a Inversiones Hormiga",
+    reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=pv8l421vF5Y&list=PLZ3Gjdurk6HM&index=3",
-    resourceName: "Plantilla: Plan de Trading Anti-Saboteador (PDF)",
+    resourceName: "Plantilla: Plan de Dinero Consciente & Inversiones Hormiga (PDF)",
     resourceLink: "#",
-    missionTitle: "Misión Viral Día 3: El Trade de Mi Saboteador",
-    missionDesc: "Publica en tus redes o en la comunidad el peor trade que tu Saboteador hizo por ti y qué le faltó al plan con el hashtag #JuegoMental.",
+    missionTitle: "Misión del Día 3: Gastos Hormiga & Cláusula Anti-Saboteador",
+    missionDesc: "Diagnostica tus salidas invisibles de dinero, calcula su proyección a 10 y 20 años y registra tu Cláusula Anti-Saboteador.",
     renderMission: () => `
-      <textarea class="text-input" id="live3-worst-trade" rows="3" placeholder="Ej: Entré por FOMO en Bitcoin sin stop loss y mi Saboteador Eufórico me hizo perder $500... #JuegoMental"></textarea>
-      <button id="copy-viral-btn" class="btn-secondary" style="width: 100%; margin-top: 10px; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="copyViralPost()">
-        <span>📋</span> COPIAR POST VIRAL (#JuegoMental)
-      </button>
-      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
+      <!-- MONEDA & INSTRUCCIONES -->
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:6px;">
+          <strong style="font-size:0.9rem; color:#f8fafc;">1. Moneda de Trabajo:</strong>
+          <input type="hidden" id="field-day3-currency" class="text-input" value="cop" />
+          <div style="display:flex; gap:6px;">
+            <button type="button" class="curr-btn-opt active" data-curr="cop" onclick="selectGastosCurr('cop', this)" style="padding:5px 12px; border-radius:6px; border:1px solid #3b82f6; background:rgba(59,130,246,0.25); color:#fff; font-weight:700; font-size:0.78rem; cursor:pointer;">🇨🇴 COP</button>
+            <button type="button" class="curr-btn-opt" data-curr="mxn" onclick="selectGastosCurr('mxn', this)" style="padding:5px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8; font-weight:700; font-size:0.78rem; cursor:pointer;">🇲🇽 MXN</button>
+            <button type="button" class="curr-btn-opt" data-curr="usd" onclick="selectGastosCurr('usd', this)" style="padding:5px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#94a3b8; font-weight:700; font-size:0.78rem; cursor:pointer;">🇺🇸 USD</button>
+          </div>
+        </div>
+        <p style="font-size:0.78rem; color:#94a3b8; margin:0;">Ingresa una estimación de lo que gastas al mes en cada categoría.</p>
+      </div>
+
+      <!-- GRID DE 10 CATEGORÍAS GASTOS HORMIGA -->
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:10px; margin-bottom:16px;">
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
+            <span>☕ Café / Bebidas</span>
+            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+          </div>
+          <input type="number" id="gasto-cafe" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
+        </div>
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
+            <span>🍔 Delivery / Comida</span>
+            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+          </div>
+          <input type="number" id="gasto-delivery" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
+        </div>
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
+            <span>📺 Suscripciones</span>
+            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+          </div>
+          <input type="number" id="gasto-streaming" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
+        </div>
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
+            <span>🍫 Snacks / Mecatos</span>
+            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+          </div>
+          <input type="number" id="gasto-snacks" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
+        </div>
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
+            <span>🚗 Transporte VTC</span>
+            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+          </div>
+          <input type="number" id="gasto-transporte" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
+        </div>
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
+            <span>🎬 Salidas / Bares</span>
+            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+          </div>
+          <input type="number" id="gasto-salidas" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
+        </div>
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
+            <span>🛍️ Compras impulso</span>
+            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+          </div>
+          <input type="number" id="gasto-compras" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
+        </div>
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
+            <span>💨 Cigarrillos / Vapes</span>
+            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+          </div>
+          <input type="number" id="gasto-tabaco" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
+        </div>
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
+            <span>💄 Cuidado personal</span>
+            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+          </div>
+          <input type="number" id="gasto-belleza" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
+        </div>
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem; font-weight:700; color:#f1f5f9;">
+            <span>🎮 Apps / Juegos</span>
+            <span class="curr-sym" style="color:#38bdf8;">COP $</span>
+          </div>
+          <input type="number" id="gasto-apps" class="text-input" placeholder="0" min="0" oninput="recalcGastosHormiga()" style="padding:6px; font-size:0.82rem;" />
+        </div>
+      </div>
+
+      <!-- DIAGNÓSTICO & PROYECCIÓN FINANCIERA -->
+      <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:12px;">
+          <div>
+            <span style="font-size:0.72rem; color:#94a3b8; font-weight:600; display:block;">Gasto Mensual:</span>
+            <strong id="res-gastos-mensual" style="font-size:1.1rem; color:#ef4444;">$0 COP</strong>
+            <input type="hidden" id="field-day3-gastos-total-mensual" class="text-input" value="0" />
+          </div>
+          <div>
+            <span style="font-size:0.72rem; color:#94a3b8; font-weight:600; display:block;">Fuga al Año:</span>
+            <strong id="res-gastos-anual" style="font-size:1.1rem; color:#f59e0b;">$0 COP</strong>
+            <input type="hidden" id="field-day3-gastos-total-anual" class="text-input" value="0" />
+          </div>
+        </div>
+
+        <div style="background:rgba(34, 197, 94, 0.08); border:1px solid rgba(34, 197, 94, 0.2); padding:10px; border-radius:10px; margin-bottom:10px;">
+          <span style="font-size:0.74rem; color:#22c55e; font-weight:700; display:block; margin-bottom:6px;">📈 Si invirtieras esta fuga al 7% compuesto:</span>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+            <div>
+              <span style="font-size:0.7rem; color:#cbd5e1; display:block;">En 10 Años:</span>
+              <strong id="res-proj-10a" style="font-size:1rem; color:#38bdf8;">$0 COP</strong>
+              <input type="hidden" id="field-day3-gastos-proj-10a" class="text-input" value="0" />
+            </div>
+            <div>
+              <span style="font-size:0.7rem; color:#cbd5e1; display:block;">En 20 Años:</span>
+              <strong id="res-proj-20a" style="font-size:1.05rem; color:#22c55e;">$0 COP</strong>
+              <input type="hidden" id="field-day3-gastos-proj-20a" class="text-input" value="0" />
+            </div>
+          </div>
+        </div>
+
+        <div id="res-recomendacion-box" style="font-size:0.76rem; color:#cbd5e1; line-height:1.4;">
+          💡 <span id="res-recomendacion-text">Ingresa tus gastos para ver tu diagnóstico de inversión.</span>
+        </div>
+      </div>
+
+      <!-- REDIRECCIÓN & CLÁUSULA -->
+      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:12px;">
+        <div>
+          <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Tu Ruta de Trabajo:</label>
+          <select id="field-day3-route" class="text-input" style="padding:8px; font-size:0.8rem;">
+            <option value="Ruta Cero — Dinero Consciente">🌱 Ruta Cero — Plan de Dinero Consciente (Sin experiencia)</option>
+            <option value="Ruta Experiencia — Plan de Mercado">⚡ Ruta Experiencia — Plan de Mercado (Trader)</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Monto a Redirigir al Mes:</label>
+          <input id="field-day3-redirect-amount" type="text" class="text-input" placeholder="Ej: $30 USD / $100,000 COP al mes" style="padding:8px; font-size:0.8rem;" />
+        </div>
+        <div>
+          <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Cláusula Anti-Saboteador:</label>
+          <textarea id="field-day3-saboteur-clause" class="text-input" rows="2" placeholder="Ej: La separación ocurre el día 1 antes de cualquier gasto. Si no está en el plan, no existe." style="padding:8px; font-size:0.8rem;"></textarea>
+        </div>
+      </div>
+
+      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 10px;">
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Misión Viral Publicada en Redes / Comunidad</span>
+        <span>Diagnóstico & Cláusula Anti-Saboteador Registrada (+30 PC)</span>
       </label>
     `
   },
@@ -2168,8 +2307,10 @@ function completeLiveSession(dayNum) {
   // Capture input data for persistence
   const formData = {};
   const inputIds = [
-    'live2-rule-input', 'live3-worst-trade', 'live4-asset', 'live4-signal', 'live4-stop',
-    'live5-logbook-reflection', 'live8-question-input', 'live9-evolution-input'
+    'live2-rule-input', 'field-day3-currency', 'field-day3-route', 'field-day3-redirect-amount', 'field-day3-saboteur-clause',
+    'field-day3-gastos-total-mensual', 'field-day3-gastos-total-anual', 'field-day3-gastos-proj-10a', 'field-day3-gastos-proj-20a',
+    'gasto-cafe', 'gasto-delivery', 'gasto-streaming', 'gasto-snacks', 'gasto-transporte', 'gasto-salidas', 'gasto-compras', 'gasto-tabaco', 'gasto-belleza', 'gasto-apps',
+    'live4-asset', 'live4-signal', 'live4-stop', 'live5-logbook-reflection', 'live8-question-input', 'live9-evolution-input'
   ];
   inputIds.forEach(id => {
     const el = document.getElementById(id);
