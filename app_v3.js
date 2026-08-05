@@ -236,25 +236,59 @@ const liveSessionsData = {
 
       <!-- PASO 3: REDIRECCIÓN & CLÁUSULA -->
       <div id="gastos-step-3" style="display:none;">
-        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:12px;">
-          <div>
-            <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Tu Ruta de Trabajo:</label>
-            <select id="field-day3-route" class="text-input" style="padding:8px; font-size:0.8rem;">
-              <option value="Ruta Cero — Dinero Consciente">🌱 Ruta Cero — Plan de Dinero Consciente (Sin experiencia)</option>
-              <option value="Ruta Experiencia — Plan de Mercado">⚡ Ruta Experiencia — Plan de Mercado (Trader)</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Monto a Redirigir al Mes:</label>
-            <input id="field-day3-redirect-amount" type="text" class="text-input" placeholder="Ej: $30 USD / $100,000 COP al mes" style="padding:8px; font-size:0.8rem;" />
-          </div>
-          <div>
-            <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">Cláusula Anti-Saboteador:</label>
-            <textarea id="field-day3-saboteur-clause" class="text-input" rows="2" placeholder="Ej: La separación ocurre el día 1 antes de cualquier gasto. Si no está en el plan, no existe." style="padding:8px; font-size:0.8rem;"></textarea>
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#38bdf8; display:block; margin-bottom:12px;">Paso 3 de 3 • Tu Plan de Acción & Cláusula Anti-Saboteador</span>
+
+        <!-- 1. SELECTOR VISUAL DE RUTA -->
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+          <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:8px;">1. Selecciona tu Ruta de Trabajo:</label>
+          <input type="hidden" id="field-day3-route" class="text-input" value="Ruta Cero — Dinero Consciente" />
+
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px;">
+            <!-- Tarjeta Ruta Cero -->
+            <div class="route-card-opt active" onclick="selectGastosRoute('Ruta Cero — Dinero Consciente', this)" style="border: 1px solid #3b82f6; background: rgba(59, 130, 246, 0.15); padding: 10px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease;">
+              <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+                <span style="font-size:1.1rem;">🌱</span>
+                <strong style="font-size:0.82rem; color:#fff;">Ruta Cero</strong>
+              </div>
+              <span style="font-size:0.73rem; color:#94a3b8; line-height:1.35; display:block;">
+                Dinero Consciente. Para ordenar finanzas e iniciar tu primer portafolio ETF.
+              </span>
+            </div>
+
+            <!-- Tarjeta Ruta Experiencia -->
+            <div class="route-card-opt" onclick="selectGastosRoute('Ruta Experiencia — Plan de Mercado', this)" style="border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.03); padding: 10px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease;">
+              <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+                <span style="font-size:1.1rem;">⚡</span>
+                <strong style="font-size:0.82rem; color:#fff;">Ruta Experiencia</strong>
+              </div>
+              <span style="font-size:0.73rem; color:#94a3b8; line-height:1.35; display:block;">
+                Plan de Mercado. Para traders activos con gestión de riesgo estricta.
+              </span>
+            </div>
           </div>
         </div>
 
-        <button type="button" onclick="goToGastosStep(2)" style="margin-bottom:10px; width:100%; padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:#94a3b8; font-weight:700; font-size:0.78rem; cursor:pointer;">
+        <!-- 2. MONTO A REDIRIGIR -->
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+          <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">2. Monto Sostenible a Redirigir al Mes:</label>
+          <span style="font-size:0.73rem; color:#94a3b8; display:block; margin-bottom:8px;">¿Qué cantidad mensual de la fuga vas a mover a tu fondo de inversión?</span>
+          <input id="field-day3-redirect-amount" type="text" class="text-input" placeholder="Ej: $30 USD / $100,000 COP al mes" style="padding:10px; font-size:0.82rem;" />
+        </div>
+
+        <!-- 3. CLÁUSULA CON EJEMPLOS -->
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+          <label style="font-size:0.78rem; font-weight:700; color:#f8fafc; display:block; margin-bottom:4px;">3. Tu Cláusula Anti-Saboteador (Regla de Oro):</label>
+          
+          <div style="background:rgba(59, 130, 246, 0.08); border:1px solid rgba(59, 130, 246, 0.2); border-radius:8px; padding:8px 10px; margin-bottom:8px; font-size:0.74rem; color:#cbd5e1; line-height:1.4;">
+            <strong style="color:#38bdf8; display:block; margin-bottom:2px;">💡 Ejemplos de Guía:</strong>
+            <div>🌱 <strong>Ruta Cero:</strong> "Separo el dinero el día 1 del mes antes de cualquier gasto discrecional."</div>
+            <div>⚡ <strong>Ruta Experiencia:</strong> "Si no está en mi plan de mercado, no existe. Máximo 2 pérdidas por día."</div>
+          </div>
+
+          <textarea id="field-day3-saboteur-clause" class="text-input" rows="3" placeholder="Escribe aquí tu compromiso innegociable..." style="padding:10px; font-size:0.82rem; line-height:1.45;"></textarea>
+        </div>
+
+        <button type="button" onclick="goToGastosStep(2)" style="margin-bottom:10px; width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:#94a3b8; font-weight:700; font-size:0.78rem; cursor:pointer;">
           ⬅ Volver al Diagnóstico
         </button>
 
@@ -2554,6 +2588,24 @@ function logoutUser() {
 // ========================================
 // GASTOS HORMIGA ENGINE & WIZARD (DÍA 3)
 // ========================================
+window.selectGastosRoute = function(routeVal, cardEl) {
+  var hiddenInp = document.getElementById('field-day3-route');
+  if (hiddenInp) hiddenInp.value = routeVal;
+
+  var cards = document.querySelectorAll('.route-card-opt');
+  cards.forEach(function(c) {
+    c.style.border = '1px solid rgba(255,255,255,0.1)';
+    c.style.background = 'rgba(255,255,255,0.03)';
+    c.classList.remove('active');
+  });
+
+  if (cardEl) {
+    cardEl.style.border = '1px solid #3b82f6';
+    cardEl.style.background = 'rgba(59,130,246,0.15)';
+    cardEl.classList.add('active');
+  }
+};
+
 window.selectGastosCurr = function(currCode, btnEl) {
   var hiddenInp = document.getElementById('field-day3-currency');
   if (hiddenInp) hiddenInp.value = currCode;
