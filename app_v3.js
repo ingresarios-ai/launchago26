@@ -437,11 +437,6 @@ const liveSessionsData = {
 };
 
 function getUnlockedInsignias() {
-  const isVerPreview = window.location.search.includes('ver=true') || window.location.search.includes('ver=1');
-  if (isVerPreview) {
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  }
-
   let list = [];
   try {
     const stored = localStorage.getItem('unlocked_insignias');
@@ -449,6 +444,14 @@ function getUnlockedInsignias() {
   } catch (e) {
     list = [];
   }
+
+  // Also include any live sessions explicitly marked completed
+  for (let d = 1; d <= 10; d++) {
+    if (localStorage.getItem(`live_session_${d}_completed`) === 'true' && !list.includes(d)) {
+      list.push(d);
+    }
+  }
+
   return list;
 }
 
@@ -1018,7 +1021,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlToken = urlParams.get('token');
   if (urlToken) {
     localStorage.setItem('auth_token', urlToken);
-    if (!isVerMode) history.replaceState(null, '', '/app');
+    localStorage.removeItem('is_ver_preview_mode');
+    history.replaceState(null, '', '/app');
   }
 
   const token = localStorage.getItem('auth_token') || '';
@@ -1102,49 +1106,23 @@ document.addEventListener('DOMContentLoaded', () => {
 // CORE ENGINE FUNCTIONS
 // ========================================
 
-function calculatePoints(activityLevel) {
+function calculatePoints() {
   const unlockedList = getUnlockedInsignias();
-  
-  let total = 0;
-  
-  // 1. Calculate from Phase 1 Live Sessions / Unlocked Insignias (30 pts per activity)
-  for (let day = 1; day <= 10; day++) {
-    if (unlockedList.includes(day) || localStorage.getItem(`live_session_${day}_completed`) === 'true') {
-      total += 30;
-    }
-  }
-
-  // 2. Fallback for Genoma 0 activities when no insignias unlocked yet
-  if (total === 0 && activityLevel > 1) {
-    total = (activityLevel - 1) * 30;
-  }
-
-  return total;
+  return unlockedList.length * 30;
 }
 
 function updatePointsDisplay() {
-  const pts = calculatePoints(currentActivity);
-  
-  // Genoma 0 completed count
-  const g0Completed = Math.min(currentActivity - 1, 9);
-  
-  // Phase 2 completed count
-  let livesCompleted = 0;
-  for (let d = 1; d <= 10; d++) {
-    if (localStorage.getItem(`live_session_${d}_completed`) === 'true') {
-      livesCompleted++;
-    }
-  }
-
-  const totalCompleted = g0Completed + livesCompleted;
+  const pts = calculatePoints();
+  const unlockedList = getUnlockedInsignias();
+  const totalCompleted = unlockedList.length;
 
   // Rank Calculation
   let rank = { title: 'Operador Reactivo', badge: '🔴', color: '#ef4444' };
-  if (pts >= 401) {
+  if (pts >= 240) {
     rank = { title: 'Trader Inquebrantable', badge: '🏆', color: '#eab308' };
-  } else if (pts >= 251) {
+  } else if (pts >= 120) {
     rank = { title: 'Operador PEDEM', badge: '🟢', color: '#22c55e' };
-  } else if (pts >= 101) {
+  } else if (pts >= 60) {
     rank = { title: 'Operador Consciente', badge: '🟡', color: '#f59e0b' };
   }
 
