@@ -340,7 +340,7 @@ const liveSessionsData = {
   6: {
     dayDate: "8 de Agosto",
     title: "6. Evaluación y Métrica: Reditum Sniper",
-    reward: "+30 PC (+10 por reservar)",
+    reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=L27tAmupgiY&list=PLZ3Gjdurk6HM&index=6",
     resourceName: "Rúbrica de Evaluación Semanal PEDEM (PDF)",
     resourceLink: "#",
@@ -366,7 +366,7 @@ const liveSessionsData = {
   7: {
     dayDate: "9 de Agosto",
     title: "7. MASTERCLASS: Mente · Sistema · Entorno",
-    reward: "+35 PC",
+    reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=sMooQHrbPB4&list=PLZ3Gjdurk6HM&index=7",
     resourceName: "Roadmap: Método INGRESARIOS 3.0 (PDF)",
     resourceLink: "#",
@@ -416,7 +416,7 @@ const liveSessionsData = {
   10: {
     dayDate: "12 de Agosto",
     title: "10. La Gran Final — Premiación y Cierre",
-    reward: "+100 PC Bonus",
+    reward: "+30 PC",
     liveUrl: "https://taller.ingresarios.net/whatsapp",
     resourceName: "Certificado del Juego Mental del Dinero (PDF)",
     resourceLink: "#",
@@ -1103,15 +1103,14 @@ document.addEventListener('DOMContentLoaded', () => {
 // ========================================
 
 function calculatePoints(activityLevel) {
-  const liveRewards = { 1: 30, 2: 30, 3: 30, 4: 30, 5: 30, 6: 30, 7: 35, 8: 30, 9: 30, 10: 100 };
   const unlockedList = getUnlockedInsignias();
   
   let total = 0;
   
-  // 1. Calculate from Phase 1 Live Sessions / Unlocked Insignias
+  // 1. Calculate from Phase 1 Live Sessions / Unlocked Insignias (30 pts per activity)
   for (let day = 1; day <= 10; day++) {
     if (unlockedList.includes(day) || localStorage.getItem(`live_session_${day}_completed`) === 'true') {
-      total += liveRewards[day] || 30;
+      total += 30;
     }
   }
 
@@ -2395,8 +2394,7 @@ function completeLiveSession(dayNum) {
   updatePointsDisplay();
   updateNextStepHero();
   
-  const rewardsMap = { 1: 30, 2: 30, 3: 30, 4: 30, 5: 30, 6: 30, 7: 35, 8: 30, 9: 30, 10: 100 };
-  const earnedPts = rewardsMap[dayNum] || 30;
+  const earnedPts = 30;
 
   // Persist Mission Response to Supabase DB
   try {
