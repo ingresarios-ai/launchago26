@@ -438,19 +438,18 @@ const liveSessionsData = {
 
 function getUnlockedInsignias() {
   let list = [];
-  try {
-    const stored = localStorage.getItem('unlocked_insignias');
-    if (stored) list = JSON.parse(stored);
-  } catch (e) {
-    list = [];
-  }
-
-  // Also include any live sessions explicitly marked completed
+  
+  // Count days explicitly completed by user submissions
   for (let d = 1; d <= 10; d++) {
-    if (localStorage.getItem(`live_session_${d}_completed`) === 'true' && !list.includes(d)) {
+    if (localStorage.getItem(`live_session_${d}_completed`) === 'true') {
       list.push(d);
     }
   }
+
+  // Sync unlocked_insignias in localStorage with real completed days
+  try {
+    localStorage.setItem('unlocked_insignias', JSON.stringify(list));
+  } catch (e) {}
 
   return list;
 }
@@ -2526,15 +2525,6 @@ function resetPreviewState() {
 
 // Initial UI update on page load
 document.addEventListener('DOMContentLoaded', () => {
-  // Sync unlocked insignias from current activity if completed
-  try {
-    const act = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
-    let unlocked = getUnlockedInsignias();
-    if (act > 1 && !unlocked.includes(1)) {
-      unlocked.push(1);
-      localStorage.setItem('unlocked_insignias', JSON.stringify(unlocked));
-    }
-  } catch(e) {}
 
   renderVitrinaInsignias();
   updateLiveCardsUI();
