@@ -37,11 +37,18 @@ const dailyMissions = {
   2: {
     dayDate: "4 de Agosto",
     title: "Día 2: Cuenta Abierta: El Espejo de la Mente",
-    desc: "Redacta tu Regla #1 Anti-Saboteador para evitar que las emociones controlen tus operaciones.",
+    desc: "Redacta tu Regla #1 Anti-Saboteador para evitar que las emociones controlen tus operaciones o tu proceso de aprendizaje.",
     renderForm: () => `
       <div class="form-group">
         <label class="form-label">Escribe tu Regla #1 Anti-Saboteador <span style="color:#ef4444;">*</span></label>
-        <textarea id="field-day2-rule" class="form-textarea" rows="3" placeholder="Ej: Si pierdo 2 trades seguidos en el día, apago la pantalla por hoy..." required></textarea>
+        
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; margin-bottom: 12px; font-size: 0.82rem; color: #94a3b8; line-height: 1.45;">
+          <strong style="color: var(--accent-yellow); display: block; margin-bottom: 4px;">💡 Ejemplos de referencia según tu nivel:</strong>
+          <p style="margin-bottom: 6px; color: #f8fafc;"><strong>• Si ya operas:</strong> <em>"Si pierdo 2 trades seguidos en el día, apago la pantalla por hoy."</em></p>
+          <p style="margin: 0; color: #f8fafc;"><strong>• Si estás empezando o aún no operas:</strong> <em>"Si siento ansiedad por empezar a ganar dinero rápido, no invertiré todavía. Primero completaré mi formación y practicaré en una cuenta demo."</em></p>
+        </div>
+
+        <textarea id="field-day2-rule" class="form-textarea" rows="3" placeholder="Escribe aquí tu Regla #1 Anti-Saboteador..." required></textarea>
       </div>
     `
   },

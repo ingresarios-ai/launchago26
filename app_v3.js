@@ -63,7 +63,12 @@ const liveSessionsData = {
     missionTitle: "Misión del Día 2: Regla #1 Anti-Saboteador",
     missionDesc: "Define tu meta de proceso para los 10 días y redacta la Regla #1 que impedirá que tu Saboteador tome el control.",
     renderMission: () => `
-      <textarea class="text-input" id="live2-rule-input" rows="3" placeholder="Ej: Mi meta es seguir el riesgo al 100%. Regla #1: Si pierdo 2 trades seguidos, apago la pantalla por hoy."></textarea>
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 12px; margin-bottom: 12px; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+        <strong style="color: var(--yellow); display: block; margin-bottom: 4px;">💡 Ejemplos de referencia según tu nivel:</strong>
+        <p style="margin-bottom: 4px; color:#f8fafc;"><strong>• Si ya operas:</strong> "Si pierdo 2 trades seguidos, apago la pantalla por hoy."</p>
+        <p style="margin: 0; color:#f8fafc;"><strong>• Si aún no operas o estás aprendiendo:</strong> "Si siento ansiedad por empezar a ganar dinero rápido, no invertiré todavía. Primero completaré mi formación y practicaré en una cuenta demo."</p>
+      </div>
+      <textarea class="text-input" id="live2-rule-input" rows="3" placeholder="Escribe aquí tu Regla #1 Anti-Saboteador..."></textarea>
       <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
         <span>Regla #1 Anti-Saboteador Registrada</span>
