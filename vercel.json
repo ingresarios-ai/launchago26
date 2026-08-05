@@ -79,7 +79,8 @@
     { "source": "/guia-antiestafas-gracias", "destination": "/guia-antiestafas-gracias.html" },
     { "source": "/cuanto-tienes", "destination": "/cuanto-tienes.html" },
     { "source": "/club-cerrado", "destination": "/club-cerrado.html" },
-    { "source": "/falta-metodo", "destination": "/falta-metodo.html" }
+    { "source": "/falta-metodo", "destination": "/falta-metodo.html" },
+    { "source": "/libro-dia1", "destination": "/libro-dia1.pdf" }
   ],
   "headers": [
     {

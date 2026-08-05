@@ -17,6 +17,8 @@ const dailyMissions = {
     dayDate: "3 de Agosto",
     title: "Día 1: La Anatomía del Saboteador",
     desc: "Identifica cuál de los 4 saboteadores financieros (El Vengador, El Eufórico, El Impaciente o El Paralizado) controla tu cuenta.",
+    resourceName: "Libro & Material Extra: La gran aventura del dinero y la bolsa de valores (PDF)",
+    resourceLink: "/referencias/La%20gran%20aventura%20del%20dinero%20y%20la%20bolsa%20de%20valores.pdf",
     renderForm: () => `
       <div class="form-group">
         <label class="form-label">¿Cuál es tu Saboteador Financiero dominante o mayor reto emocional?</label>
@@ -176,6 +178,30 @@ async function initActivity() {
   document.getElementById('day-badge').textContent = `Día ${currentDay}`;
   document.getElementById('act-title').textContent = mission.title;
   document.getElementById('act-desc').textContent = mission.desc;
+
+  const resContainer = document.getElementById('activity-resource-container');
+  if (resContainer) {
+    if (mission.resourceLink && mission.resourceLink !== '#') {
+      resContainer.innerHTML = `
+        <div style="background: linear-gradient(135deg, rgba(37, 211, 102, 0.12) 0%, rgba(16, 185, 129, 0.06) 100%); border: 1px solid rgba(37, 211, 102, 0.35); padding: 14px 16px; border-radius: 14px; margin-bottom: 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:1.6rem; background:rgba(37, 211, 102, 0.15); border:1px solid rgba(37, 211, 102, 0.4); border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center;">📚</span>
+            <div>
+              <strong style="font-size:0.88rem; color:#f8fafc; display:block;">Material Extra Descargable:</strong>
+              <span style="font-size:0.8rem; color:#25d366; font-weight:600;">${mission.resourceName || 'Recurso Descargable'}</span>
+            </div>
+          </div>
+          <a href="${mission.resourceLink}" download target="_blank" class="btn-submit" style="font-size:0.82rem; padding:8px 16px; background:#25d366; color:#000; font-weight:800; text-decoration:none; width:auto; margin:0; display:inline-flex; align-items:center; gap:6px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            DESCARGAR MATERIAL (PDF)
+          </a>
+        </div>
+      `;
+    } else {
+      resContainer.innerHTML = '';
+    }
+  }
+
   document.getElementById('activity-fields').innerHTML = mission.renderForm();
 
   // Check Login / Session Status

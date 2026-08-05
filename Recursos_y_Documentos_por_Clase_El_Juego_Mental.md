@@ -33,9 +33,9 @@ Este documento especifica la lista completa de guías, plantillas, archivos PDF 
 ---
 
 ### 🔴 DÍA 1: La Anatomía del Saboteador (Lunes 3 de Agosto)
-- **Nombre del Recurso:** `Guia_Anatomia_de_los_4_Saboteadores.pdf`
-- **Descripción:** Documento gráfico de 2-3 páginas con la anatomía detallada de cada patrón mental, los errores más comunes de ejecución que cometen en cuenta real y las señales de alerta antes de operar.
-- **Acción en la App:** Descarga directa en el Paso 2 del Modal del Día 1.
+- **Nombre del Recurso:** `Guia_Anatomia_de_los_4_Saboteadores.pdf` y `La gran aventura del dinero y la bolsa de valores.pdf` (Material Extra)
+- **Descripción:** Documento gráfico con la anatomía detallada de los 4 saboteadores + Libro completo de finanzas y bolsa de valores como material extra descargable.
+- **Acción en la App:** Descarga directa en el Modal del Día 1 de la Genoma App (`/app`) y en la página de Actividad (`/actividad1`).
 
 ---
 

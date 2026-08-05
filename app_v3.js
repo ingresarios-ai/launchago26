@@ -41,8 +41,8 @@ const liveSessionsData = {
     title: "1. La Anatomía del Saboteador",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=nmKG-urzbn4&list=PLZ3Gjdurk6HM&index=1",
-    resourceName: "Guía: Anatomía de los 4 Saboteadores Financieros (PDF)",
-    resourceLink: "#",
+    resourceName: "Libro & Material Extra: La gran aventura del dinero y la bolsa de valores (PDF)",
+    resourceLink: "/libro-dia1.pdf",
     missionTitle: "Misión del Día 1: Identifica tu Saboteador",
     missionDesc: "Realiza o repite el Test del Saboteador (8 preguntas) para descubrir o actualizar tu arquetipo mental dominante.",
     renderMission: () => `
@@ -424,6 +424,21 @@ function renderFeaturedLiveSlider(dayNum) {
         </div>
       </div>
 
+      ${data.resourceLink && data.resourceLink !== '#' ? `
+        <div style="background: linear-gradient(135deg, rgba(37, 211, 102, 0.16) 0%, rgba(16, 185, 129, 0.08) 100%); border: 1.5px solid #25d366; border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);" onclick="event.stopPropagation();">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.5rem;">📚</span>
+            <div>
+              <strong style="font-size: 0.85rem; color: #ffffff; display: block;">Material Extra (PDF):</strong>
+              <span style="font-size: 0.78rem; color: #25d366; font-weight: 700;">${escapeHTML(data.resourceName)}</span>
+            </div>
+          </div>
+          <a href="${data.resourceLink}" download target="_blank" class="btn-secondary" style="font-size: 0.78rem; padding: 8px 14px; background: #25d366; color: #000; font-weight: 900; text-decoration: none; border-radius: 8px; white-space: nowrap; box-shadow: 0 0 10px rgba(37, 211, 102, 0.4);">
+            📥 DESCARGAR PDF
+          </a>
+        </div>
+      ` : ''}
+
       <div class="featured-meta" style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 16px;">
         <span class="meta-item">🗓️ ${data.dayDate}</span>
         <span class="meta-item">⏰ 8:00 PM (Colombia / Perú / México)</span>
@@ -500,8 +515,9 @@ function renderVitrinaInsignias() {
           <span style="font-size:1.65rem;">${item.icon}</span>
           ${lockBadge}
         </div>
-        <div class="insignia-name" style="font-family:\'Outfit\', sans-serif; font-size:clamp(0.74rem, 1.2vw, 0.84rem); font-weight:800; color:${isUnlocked ? '#ffffff' : isAvailable ? '#f8fafc' : '#64748b'}; margin-bottom:6px; line-height:1.2; word-break:break-word; overflow-wrap:break-word;">${escapeHTML(item.name)}</div>
+        <div class="insignia-name" style="font-family:'Outfit', sans-serif; font-size:clamp(0.74rem, 1.2vw, 0.84rem); font-weight:800; color:${isUnlocked ? '#ffffff' : isAvailable ? '#f8fafc' : '#64748b'}; margin-bottom:6px; line-height:1.2; word-break:break-word; overflow-wrap:break-word;">${escapeHTML(item.name)}</div>
         <div class="insignia-status-text" style="${statusStyle}">${isUnlocked ? 'Desbloqueada ✅' : isAvailable ? 'Entrar a Sala 🔴' : '🔒 Bloqueada'}</div>
+        ${i === 1 ? `<a href="/libro-dia1.pdf" download target="_blank" onclick="event.stopPropagation();" style="font-size:0.68rem; font-weight:900; color:#000; background:#25d366; border-radius:6px; padding:3px 8px; text-decoration:none; margin-top:6px; display:inline-flex; align-items:center; gap:4px; box-shadow:0 0 8px rgba(37,211,102,0.4);">📚 PDF Extra</a>` : ''}
       </div>
     `;
   }
@@ -1902,6 +1918,23 @@ function openLiveSession(dayNum) {
         ENTRAR A LA SALA DE TRANSMISIÓN EN VIVO
       </a>
     </div>
+
+    ${data.resourceLink && data.resourceLink !== '#' ? `
+      <!-- RECURSO / MATERIAL EXTRA DESCARGABLE -->
+      <div style="background: linear-gradient(135deg, rgba(37, 211, 102, 0.12) 0%, rgba(16, 185, 129, 0.06) 100%); border: 1px solid rgba(37, 211, 102, 0.35); padding: 16px; border-radius: 14px; margin-bottom: 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.1);">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:1.8rem; background:rgba(37, 211, 102, 0.15); border:1px solid rgba(37, 211, 102, 0.4); border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center;">📚</span>
+          <div>
+            <strong style="font-size:0.9rem; color:#f8fafc; display:block;">Material Extra Descargable:</strong>
+            <span style="font-size:0.82rem; color:#25d366; font-weight:600;">${escapeHTML(data.resourceName)}</span>
+          </div>
+        </div>
+        <a href="${data.resourceLink}" download target="_blank" class="btn-secondary" style="font-size:0.82rem; padding:10px 18px; background:#25d366; color:#000; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:8px; border-radius:10px; box-shadow:0 0 12px rgba(37, 211, 102, 0.3);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          DESCARGAR MATERIAL (PDF)
+        </a>
+      </div>
+    ` : ''}
 
     <!-- PASO 2: RECLAMAR INSIGNIA DE DOMINIO Y MISIÓN PRÁCTICA DEL DÍA -->
     <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 18px; border-radius: 14px; margin-bottom: 16px;">
