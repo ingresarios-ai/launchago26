@@ -999,7 +999,19 @@ const activitiesData = {
   }
 };
 
+function sanitizeUserProgress() {
+  const isVerPreview = localStorage.getItem('is_ver_preview_mode') === 'true';
+  if (!isVerPreview) {
+    // Purge test completions for future days (Day 4 to Day 10)
+    for (let d = 4; d <= 10; d++) {
+      localStorage.removeItem(`live_session_${d}_completed`);
+      localStorage.removeItem(`live_session_${d}_data`);
+    }
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  sanitizeUserProgress();
   // 1. Process Magic Link token or Preview mode (?ver=true / ?ver / ?preview)
   const urlParams = new URLSearchParams(window.location.search);
   const isVerMode = urlParams.has('ver') || urlParams.has('preview') || urlParams.has('unlock') || localStorage.getItem('is_ver_preview_mode') === 'true';
