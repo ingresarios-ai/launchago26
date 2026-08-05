@@ -899,20 +899,21 @@ document.addEventListener('DOMContentLoaded', () => {
 // ========================================
 
 function calculatePoints(activityLevel) {
-  const pointsMap = {
-    1: 20, 2: 30, 3: 20, 4: 15, 5: 15, 6: 20, 7: 15, 8: 20, 9: 50
-  };
-  let total = 0;
-  for (let i = 1; i < activityLevel; i++) {
-    total += pointsMap[i] || 0;
-  }
-
-  // Phase 2 Live Session rewards
   const liveRewards = { 1: 30, 2: 30, 3: 30, 4: 30, 5: 30, 6: 30, 7: 35, 8: 30, 9: 30, 10: 100 };
+  const unlockedList = getUnlockedInsignias();
+  
+  let total = 0;
+  
+  // 1. Calculate from Phase 1 Live Sessions / Unlocked Insignias
   for (let day = 1; day <= 10; day++) {
-    if (localStorage.getItem(`live_session_${day}_completed`) === 'true') {
+    if (unlockedList.includes(day) || localStorage.getItem(`live_session_${day}_completed`) === 'true') {
       total += liveRewards[day] || 30;
     }
+  }
+
+  // 2. Fallback for Genoma 0 activities when no insignias unlocked yet
+  if (total === 0 && activityLevel > 1) {
+    total = (activityLevel - 1) * 30;
   }
 
   return total;

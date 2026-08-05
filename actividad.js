@@ -523,9 +523,27 @@ async function handleActivitySubmit(e) {
         unlocked.push(currentDay);
         localStorage.setItem('unlocked_insignias', JSON.stringify(unlocked));
       }
+      localStorage.setItem(`live_session_${currentDay}_completed`, 'true');
       localStorage.setItem('genoma_current_activity', String(currentDay + 1));
 
-      if (leadData && leadData.auth_token) {
+      var calcPts = unlocked.length * 30;
+      if (token) {
+        fetch(SUPABASE_URL + '/rest/v1/rpc/save_user_progress', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({
+            p_token: token,
+            p_activity: currentDay + 1,
+            p_points: calcPts
+          })
+        }).catch(function() {});
+      }
+
+      if (leadData && leadData.id) {
         await fetch(SUPABASE_URL + '/rest/v1/user_progress', {
           method: 'POST',
           headers: {
