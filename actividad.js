@@ -17,8 +17,6 @@ const dailyMissions = {
     dayDate: "3 de Agosto",
     title: "Día 1: La Anatomía del Saboteador",
     desc: "Identifica cuál de los 4 saboteadores financieros (El Vengador, El Eufórico, El Impaciente o El Paralizado) controla tu cuenta.",
-    resourceName: "Libro & Material Extra: La gran aventura del dinero y la bolsa de valores (PDF)",
-    resourceLink: "/referencias/La%20gran%20aventura%20del%20dinero%20y%20la%20bolsa%20de%20valores.pdf",
     renderForm: () => `
       <div class="form-group">
         <label class="form-label">¿Cuál es tu Saboteador Financiero dominante o mayor reto emocional?</label>

@@ -41,8 +41,8 @@ const liveSessionsData = {
     title: "1. La Anatomía del Saboteador",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=nmKG-urzbn4&list=PLZ3Gjdurk6HM&index=1",
-    resourceName: "Libro & Material Extra: La gran aventura del dinero y la bolsa de valores (PDF)",
-    resourceLink: "/libro-dia1.pdf",
+    resourceName: "Guía: Anatomía de los 4 Saboteadores Financieros (PDF)",
+    resourceLink: "#",
     missionTitle: "Misión del Día 1: Identifica tu Saboteador",
     missionDesc: "Realiza o repite el Test del Saboteador (8 preguntas) para descubrir o actualizar tu arquetipo mental dominante.",
     renderMission: () => `
@@ -517,7 +517,6 @@ function renderVitrinaInsignias() {
         </div>
         <div class="insignia-name" style="font-family:'Outfit', sans-serif; font-size:clamp(0.74rem, 1.2vw, 0.84rem); font-weight:800; color:${isUnlocked ? '#ffffff' : isAvailable ? '#f8fafc' : '#64748b'}; margin-bottom:6px; line-height:1.2; word-break:break-word; overflow-wrap:break-word;">${escapeHTML(item.name)}</div>
         <div class="insignia-status-text" style="${statusStyle}">${isUnlocked ? 'Desbloqueada ✅' : isAvailable ? 'Entrar a Sala 🔴' : '🔒 Bloqueada'}</div>
-        ${i === 1 ? `<a href="/libro-dia1.pdf" download target="_blank" onclick="event.stopPropagation();" style="font-size:0.68rem; font-weight:900; color:#000; background:#25d366; border-radius:6px; padding:3px 8px; text-decoration:none; margin-top:6px; display:inline-flex; align-items:center; gap:4px; box-shadow:0 0 8px rgba(37,211,102,0.4);">📚 PDF Extra</a>` : ''}
       </div>
     `;
   }
