@@ -78,11 +78,26 @@ const liveSessionsData = {
     title: "3. P de Planear: Gastos Hormiga a Inversiones Hormiga",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=pv8l421vF5Y&list=PLZ3Gjdurk6HM&index=3",
-    resourceName: "Plantilla: Plan de Dinero Consciente & Inversiones Hormiga (PDF)",
-    resourceLink: "#",
+    resourceName: "Libro PDF: La Gran Aventura del Dinero y la Bolsa de Valores",
+    resourceLink: "La_Gran_Aventura_del_Dinero.pdf",
     missionTitle: "Misión del Día 3: Gastos Hormiga & Cláusula Anti-Saboteador",
     missionDesc: "Diagnostica tus salidas invisibles de dinero, calcula su proyección a 10 y 20 años y registra tu Cláusula Anti-Saboteador.",
     renderMission: () => `
+      <!-- MATERIAL EXTRA DE REGALO -->
+      <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%); border: 1.5px solid rgba(56, 189, 248, 0.4); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 220px;">
+          <div style="font-size: 2rem; background: rgba(56, 189, 248, 0.12); border-radius: 10px; padding: 8px 12px; border: 1px solid rgba(56, 189, 248, 0.25);">📘</div>
+          <div>
+            <span style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #38bdf8; display: block; margin-bottom: 2px;">🎁 MATERIAL EXTRA COMPLEMENTARIO</span>
+            <strong style="font-size: 0.9rem; color: #f8fafc; font-family: 'Outfit', sans-serif; display: block;">La Gran Aventura del Dinero y la Bolsa de Valores</strong>
+            <span style="font-size: 0.78rem; color: #94a3b8;">Libro / Guía PDF para dominar las reglas del dinero y los mercados.</span>
+          </div>
+        </div>
+        <a href="La_Gran_Aventura_del_Dinero.pdf" target="_blank" download="La_Gran_Aventura_del_Dinero.pdf" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: #ffffff; font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 800; padding: 8px 16px; border-radius: 8px; text-decoration: none; border: 1px solid #38bdf8; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35);">
+          <span>📥 Descargar PDF</span>
+        </a>
+      </div>
+
       <!-- WIZARD STEP HEADER -->
       <div style="margin-bottom: 16px; background:rgba(255,255,255,0.03); border:1px solid var(--border-subtle); border-radius:12px; padding:10px 14px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:0.78rem; font-weight:700;">
