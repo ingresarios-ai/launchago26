@@ -851,7 +851,14 @@ function showSuccessView() {
   const insigniaMap = {
     1: { icon: '🏛️', name: 'Insignia Día 1: El Saboteador' },
     2: { icon: '🎯', name: 'Insignia Día 2: Cuenta Espejo' },
-    3: { icon: '🐜', name: 'Insignia Día 3: Gastos Hormiga' }
+    3: { icon: '🐜', name: 'Insignia Día 3: Gastos Hormiga' },
+    4: { icon: '🤖', name: 'Insignia Día 4: Trading con IA (GENY)' },
+    5: { icon: '📖', name: 'Insignia Día 5: Bitácora PEDEM' },
+    6: { icon: '📊', name: 'Insignia Día 6: Rúbrica de Disciplina' },
+    7: { icon: '⚡', name: 'Insignia Día 7: Masterclass de Dominio' },
+    8: { icon: '🛡️', name: 'Insignia Día 8: Q&A y Riesgo Avanzado' },
+    9: { icon: '🚀', name: 'Insignia Día 9: Evolución Mental' },
+    10: { icon: '🏆', name: 'Insignia Día 10: Rango de Dominio Total' }
   };
   const currentInsignia = insigniaMap[currentDay] || { icon: '🎖️', name: `Insignia Día ${currentDay}` };
 
