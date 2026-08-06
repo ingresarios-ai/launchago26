@@ -2542,13 +2542,26 @@ document.addEventListener('DOMContentLoaded', () => {
   updateLiveCardsUI();
   updateNextStepHero();
 
-  if (window.location.search.includes('unlocked=1')) {
+  const unlockedMatch = window.location.search.match(/unlocked=(\d+)/);
+  if (unlockedMatch) {
+    const dayNum = parseInt(unlockedMatch[1]) || 3;
+    localStorage.setItem(`live_session_${dayNum}_completed`, 'true');
+    let unlockedList = getUnlockedInsignias();
+    if (!unlockedList.includes(dayNum)) {
+      unlockedList.push(dayNum);
+      try { localStorage.setItem('unlocked_insignias', JSON.stringify(unlockedList)); } catch(e){}
+    }
+    renderJourney();
+    renderVitrinaInsignias();
+    updateNextStepHero();
+    updatePointsDisplay();
+
     setTimeout(() => {
       if (typeof confetti === 'function') {
-        try { confetti({ particleCount: 100, spread: 70, origin: { y: 0.5 } }); } catch(e){}
+        try { confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } }); } catch(e){}
       }
-      showMissionToast('🏆 ¡INSIGNIA #1 DESBLOQUEADA! Tu avance en la Fase 1 está activo.');
-      const vitrina = document.getElementById('insignias-grid');
+      showMissionToast(`🏆 ¡INSIGNIA DÍA ${dayNum} DESBLOQUEADA! Tu avance ha sido registrado.`);
+      const vitrina = document.getElementById('insignias-grid') || document.getElementById('view-journey');
       if (vitrina) vitrina.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 400);
   }

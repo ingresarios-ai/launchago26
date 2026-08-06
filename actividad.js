@@ -832,6 +832,22 @@ function showSuccessView() {
   document.getElementById('success-view').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
+  // Update insignia badge dynamically based on currentDay
+  const insigniaMap = {
+    1: { icon: '🏛️', name: 'Insignia Día 1: El Saboteador' },
+    2: { icon: '🎯', name: 'Insignia Día 2: Cuenta Espejo' },
+    3: { icon: '🐜', name: 'Insignia Día 3: Gastos Hormiga' }
+  };
+  const currentInsignia = insigniaMap[currentDay] || { icon: '🎖️', name: `Insignia Día ${currentDay}` };
+
+  const iconEl = document.getElementById('success-insignia-icon');
+  const titleEl = document.getElementById('success-insignia-title');
+  const descEl = document.getElementById('success-insignia-desc');
+
+  if (iconEl) iconEl.textContent = currentInsignia.icon;
+  if (titleEl) titleEl.textContent = `${currentInsignia.name} Acreditada`;
+  if (descEl) descEl.innerHTML = `Tu <strong>${currentInsignia.name}</strong> se ha desbloqueado exitosamente en tu plataforma.`;
+
   // Celebratory Confetti Burst 🎉
   if (typeof confetti === 'function') {
     try {
@@ -846,7 +862,8 @@ function showSuccessView() {
 
 function goToAppWithInsignia() {
   const token = localStorage.getItem('auth_token') || '';
-  window.location.href = '/app' + (token ? '?token=' + token + '&unlocked=1#actividades' : '?unlocked=1#actividades');
+  const dayNum = currentDay || 3;
+  window.location.href = '/app' + (token ? `?token=${encodeURIComponent(token)}&unlocked=${dayNum}` : `?unlocked=${dayNum}`);
 }
 
 // ========================================
