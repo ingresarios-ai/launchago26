@@ -1726,8 +1726,17 @@ function buildPreactivitiesTab() {
       actName = 'Actividad Día 2';
       badgeHtml = '<span class="badge badge--blue">🎯 Día 2 (Cuenta Espejo)</span>';
     } else if (String(m.mission_id) === '3') {
-      actName = 'Actividad Día 3';
-      badgeHtml = '<span class="badge badge--purple">🐜 Día 3 (Gastos Hormiga)</span>';
+      const respStr = m.response || '';
+      if (respStr.includes('field-day3') || respStr.includes('gasto-')) {
+        actName = 'Actividad Día 3 (Gastos Hormiga)';
+        badgeHtml = '<span class="badge badge--purple">🐜 Día 3 (Gastos Hormiga)</span>';
+      } else if (respStr.includes('live3-worst-trade')) {
+        actName = 'Actividad Día 3 (Anterior)';
+        badgeHtml = '<span class="badge" style="background:rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.3);">📜 Día 3 (Anterior)</span>';
+      } else {
+        actName = 'Actividad Día 3 (Inicial)';
+        badgeHtml = '<span class="badge" style="background:rgba(148,163,184,0.15); color:#94a3b8; border:1px solid rgba(148,163,184,0.3);">⚙️ Día 3 (Inicial)</span>';
+      }
     }
 
     let email = parentLead ? parentLead.email : 'Lead Registrado';
@@ -1741,7 +1750,7 @@ function buildPreactivitiesTab() {
           const parsed = JSON.parse(m.response);
           if (parsed.email) email = parsed.email;
           if (parsed.name) name = parsed.name;
-          resp = parsed.meta_proceso || parsed.regla_1 || parsed.regla_1_antisaboteador || parsed['live2-rule-input'] || Object.values(parsed).filter(Boolean).join(' | ') || m.response;
+          resp = parsed.meta_proceso || parsed.regla_1 || parsed.regla_1_antisaboteador || parsed['live2-rule-input'] || parsed['live3-worst-trade'] || Object.values(parsed).filter(Boolean).join(' | ') || m.response;
           detail = JSON.stringify(parsed);
         } catch (e) {
           resp = m.response;
@@ -1771,8 +1780,8 @@ function buildPreactivitiesTab() {
   );
 
   const countAct1 = allPreactivities.filter(v => v.activityName.includes('Día 1')).length;
-  const countAct2 = allPreactivities.filter(v => v.activityName.includes('Día 2')).length;
-  const countAct3 = allPreactivities.filter(v => v.activityName.includes('Día 3')).length;
+  const countAct2 = allPreactivities.filter(v => v.activityName.includes('Día 2') && v.response !== '{}' && v.response !== '-').length;
+  const countAct3 = allPreactivities.filter(v => v.activityName.includes('Gastos Hormiga')).length;
   const countPre1 = allPreactivities.filter(v => v.activityName === 'Pre-Actividad 1').length;
   const countPre2 = allPreactivities.filter(v => v.activityName === 'Pre-Actividad 2').length;
 
