@@ -154,6 +154,8 @@ function setupEventListeners() {
   document.getElementById('btn-export-surveys').addEventListener('click', exportSurveysCSV);
   const btnExportPreact = document.getElementById('btn-export-preactivities');
   if (btnExportPreact) btnExportPreact.addEventListener('click', exportPreactivitiesCSV);
+  const btnExportPending = document.getElementById('btn-export-pending-activities');
+  if (btnExportPending) btnExportPending.addEventListener('click', exportPendingActivitiesCSV);
   const btnExportLm = document.getElementById('btn-export-leadmagnets');
   if (btnExportLm) btnExportLm.addEventListener('click', exportLeadMagnetsCSV);
 
@@ -1835,6 +1837,62 @@ function exportPreactivitiesCSV() {
     item.utm_campaign || ''
   ]);
   triggerCSVDownload('preactividades_lanzamiento.csv', headers, rows);
+}
+
+function exportPendingActivitiesCSV() {
+  if (!allPreactivities || allPreactivities.length === 0) {
+    alert('No hay suficientes datos cargados para evaluar actividades pendientes.');
+    return;
+  }
+
+  const activeDays = [1, 2, 3, 4];
+  const userMap = {};
+
+  allPreactivities.forEach(item => {
+    const email = item.email ? item.email.toLowerCase().trim() : '';
+    if (!email || email === 'visitante' || email === 'lead registrado') return;
+
+    if (!userMap[email]) {
+      userMap[email] = {
+        name: item.name || '',
+        email: email,
+        completedDays: new Set()
+      };
+    }
+    if (item.name && !userMap[email].name) userMap[email].name = item.name;
+
+    if (item.activityName.includes('Día 1')) userMap[email].completedDays.add(1);
+    if (item.activityName.includes('Día 2')) userMap[email].completedDays.add(2);
+    if (item.activityName.includes('Día 3')) userMap[email].completedDays.add(3);
+    if (item.activityName.includes('Día 4')) userMap[email].completedDays.add(4);
+  });
+
+  const pendingList = [];
+  Object.values(userMap).forEach(u => {
+    const days = u.completedDays;
+    if (days.has(1) && activeDays.some(d => !days.has(d))) {
+      const completedList = activeDays.filter(d => days.has(d)).map(d => `Día ${d}`);
+      const missingList = activeDays.filter(d => !days.has(d)).map(d => `Día ${d}`);
+      const customLink = `https://taller.ingresarios.net/misiones?email=${encodeURIComponent(u.email)}`;
+      
+      pendingList.push([
+        u.name || 'Participante',
+        u.email,
+        '',
+        completedList.join(' | '),
+        missingList.join(' | '),
+        customLink
+      ]);
+    }
+  });
+
+  if (pendingList.length === 0) {
+    alert('No se encontraron leads con Actividad 1 completada que tengan misiones pendientes.');
+    return;
+  }
+
+  const headers = ['Nombre', 'Email', 'Telefono', 'Actividades_Completadas', 'Actividades_Pendientes', 'Link_Personalizado'];
+  triggerCSVDownload('leads_actividades_pendientes.csv', headers, pendingList);
 }
 
 // ===== LEAD MAGNETS TAB CONTROL =====

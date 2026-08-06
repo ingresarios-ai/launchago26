@@ -22,6 +22,8 @@
     { "source": "/test", "destination": "/test.html" },
     { "source": "/resultado", "destination": "/test.html" },
     { "source": "/app", "destination": "/app.html" },
+    { "source": "/misiones", "destination": "/misiones.html" },
+    { "source": "/pendientes", "destination": "/misiones.html" },
     { "source": "/identificate", "destination": "/identificate.html" },
     { "source": "/whatsapp", "destination": "/whatsapp.html" },
     { "source": "/wa", "destination": "/whatsapp.html" },
