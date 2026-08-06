@@ -1017,8 +1017,9 @@ const activitiesData = {
 function sanitizeUserProgress() {
   const isVerPreview = localStorage.getItem('is_ver_preview_mode') === 'true';
   if (!isVerPreview) {
-    // Purge test completions for future days (Day 4 to Day 10)
-    for (let d = 4; d <= 10; d++) {
+    const currentMaxDay = typeof getAvailableDayNumber === 'function' ? getAvailableDayNumber() : 4;
+    // Purge test completions for future unreleased days (> currentMaxDay)
+    for (let d = currentMaxDay + 1; d <= 10; d++) {
       localStorage.removeItem(`live_session_${d}_completed`);
       localStorage.removeItem(`live_session_${d}_data`);
     }
