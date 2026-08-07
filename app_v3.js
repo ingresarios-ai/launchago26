@@ -322,24 +322,30 @@ const liveSessionsData = {
     resourceName: "Guía de Parámetros: Algoritmo Geny Trend (PDF)",
     resourceLink: "#",
     missionTitle: "Misión Día 4: Tu Primer Paper Trade con Plan",
-    missionDesc: "Haz 1 Paper Trade (simulado) definiendo tu activo, señal de Geny y nivel de Stop Loss.",
+    missionDesc: "Registra tu primer ejercicio de práctica (sin dinero real) definiendo tu activo, señal de Geny y nivel de Stop Loss.",
     renderMission: () => `
-      <div style="margin-bottom:12px; font-size:0.85rem; color:#cbd5e1;">
-        🌱 <strong>Ruta Cero:</strong> Selecciona el activo de la clase o escribe tus propios datos si ya operas:
+      <div style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.25); border-radius:12px; padding:12px 14px; margin-bottom:14px; font-size:0.84rem; color:#cbd5e1; line-height:1.5;">
+        💡 <strong>¿Qué es un Paper Trade?</strong> Es una simulación de práctica sin dinero real.<br/>
+        🌱 <strong>Si vas empezando desde 0:</strong> Los campos abajo ya vienen listos con el ejemplo de la clase. Solo revísalos y marca la casilla.<br/>
+        ⚡ <strong>Si ya tienes experiencia:</strong> Puedes cambiarlos por tus propios datos de trading.
       </div>
       <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
-        <select class="text-input" id="live4-asset" style="background:#0f172a; color:#fff; padding:10px;">
-          <option value="Bitcoin (BTC/USD) — Ejemplo de la Clase">🟡 Bitcoin (BTC/USD) — Ejemplo de la Clase</option>
-          <option value="Índice Nasdaq (NQ) — Ejemplo de la Clase">🔵 Índice Nasdaq (NQ) — Ejemplo de la Clase</option>
-          <option value="Oro (XAU/USD) — Ejemplo de la Clase">🟡 Oro (XAU/USD) — Ejemplo de la Clase</option>
-          <option value="Otro activo personalizado...">⚡ Otrio activo personalizado (Experiencia)</option>
-        </select>
-        <input class="text-input" id="live4-signal" type="text" value="Geny Trend Alcista 15M (Confirmado por IA)" placeholder="Señal de IA (Ej: Geny Trend Alcista 15M)">
-        <input class="text-input" id="live4-stop" type="text" value="Stop Loss del 1% del capital (Sugerido en Clase)" placeholder="Nivel de Stop Loss de Invalidación (Ej: $64,200)">
+        <div>
+          <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:4px; font-weight:700;">1. Activo Financiero</label>
+          <input class="text-input" id="live4-asset" type="text" value="Bitcoin (BTC/USD) — Ejemplo de la Clase" placeholder="Ej: BTC/USD, Nasdaq, Gold">
+        </div>
+        <div>
+          <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:4px; font-weight:700;">2. Señal de IA / Análisis</label>
+          <input class="text-input" id="live4-signal" type="text" value="Geny Trend Alcista 15M (Confirmado por IA)" placeholder="Ej: Geny Trend Alcista 15M">
+        </div>
+        <div>
+          <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:4px; font-weight:700;">3. Nivel de Stop Loss (Invalidación)</label>
+          <input class="text-input" id="live4-stop" type="text" value="Stop Loss del 1% del capital ($64,200)" placeholder="Ej: $64,200 o Riesgo 1%">
+        </div>
       </div>
-      <label class="check-item" onclick="toggleCheck(this)">
+      <label class="check-item" onclick="toggleCheck(this)" style="margin-top:6px;">
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Paper Trade registrado con gestión de riesgo previa</span>
+        <span style="font-weight:700; color:#fff;">Confirmo mi Paper Trade registrado con gestión de riesgo previa</span>
       </label>
     `
   },
