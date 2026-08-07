@@ -333,19 +333,74 @@ const dailyMissions = {
   4: {
     dayDate: "6 de Agosto",
     title: "Día 4: Ejecución con IA (Conoce a GENY)",
-    desc: "Registra tu primer Paper Trade (simulado) con gestión de riesgo previa.",
+    desc: "Elige tu nivel para simular tu primer Paper Trade con gestión de riesgo previa.",
     renderForm: () => `
-      <div class="form-group">
-        <label class="form-label">Activo Financiero (Ej: BTC/USD, Nasdaq, Gold)</label>
-        <input id="field-day4-asset" type="text" class="form-input" placeholder="Ej: BTC/USD" required />
+      <div style="margin-bottom:20px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:16px; text-align:center;">
+        <label class="form-label" style="font-size:0.95rem; font-weight:800; color:#fff; margin-bottom:12px; display:block;">
+          🎯 ¿Cuál es tu nivel de experiencia en trading?
+        </label>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <button type="button" id="btn-ruta-cero-4" onclick="selectDay4Path('cero')" style="padding:12px; border-radius:12px; border:2px solid #22c55e; background:rgba(34,197,94,0.15); color:#fff; font-weight:800; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">
+            🌱 Ruta Cero<br><span style="font-size:0.72rem; font-weight:400; color:#cbd5e1;">(Voy empezando desde 0)</span>
+          </button>
+          <button type="button" id="btn-ruta-exp-4" onclick="selectDay4Path('exp')" style="padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:#94a3b8; font-weight:700; font-size:0.85rem; cursor:pointer; transition:all 0.2s;">
+            ⚡ Ruta Experiencia<br><span style="font-size:0.72rem; font-weight:400; color:#94a3b8;">(Ya tengo experiencia)</span>
+          </button>
+        </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Señal de IA / Análisis (Ej: Geny Trend Alcista 15M)</label>
-        <input id="field-day4-signal" type="text" class="form-input" placeholder="Ej: Geny Trend Alcista 15M" required />
+
+      <!-- FORMULARIO RUTA CERO (PRINCIPIANTE - ASISTIDO) -->
+      <div id="day4-form-cero" style="display:block;">
+        <div style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.25); border-radius:14px; padding:14px; margin-bottom:16px; font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
+          🌱 <strong>Simulador Asistido:</strong> No necesitas conocimientos previos. Simularás el Paper Trade visto en la clase con los parámetros recomendados por Juan en vivo.
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">1. Selecciona el Activo de la Clase <span style="color:#ef4444;">*</span></label>
+          <select id="field-day4-asset-cero" class="form-input" required style="background:#0f172a; color:#fff; border-color:rgba(255,255,255,0.2); font-size:0.9rem;">
+            <option value="Bitcoin (BTC/USD) — Ejemplo de la Clase">🟡 Bitcoin (BTC/USD) — Ejemplo de la Clase</option>
+            <option value="Índice Nasdaq (NQ) — Ejemplo de la Clase">🔵 Índice Nasdaq (NQ) — Ejemplo de la Clase</option>
+            <option value="Oro (XAU/USD) — Ejemplo de la Clase">🟡 Oro (XAU/USD) — Ejemplo de la Clase</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">2. Señal de IA Confirmada <span style="color:#ef4444;">*</span></label>
+          <select id="field-day4-signal-cero" class="form-input" required style="background:#0f172a; color:#fff; border-color:rgba(255,255,255,0.2); font-size:0.9rem;">
+            <option value="Geny Trend Alcista 15M (Confirmado por IA)">🤖 Geny Trend Alcista 15M (Confirmado por IA)</option>
+            <option value="Filtro de Invalidación de Tendencia (IA)">🛡️ Filtro de Invalidación de Tendencia (IA)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">3. Regla de Invalidación / Stop Loss <span style="color:#ef4444;">*</span></label>
+          <select id="field-day4-stop-cero" class="form-input" required style="background:#0f172a; color:#fff; border-color:rgba(255,255,255,0.2); font-size:0.9rem;">
+            <option value="Stop Loss del 1% del capital (Sugerido en Clase)">🛡️ Límite Máximo del 1% del Capital (Sugerido en Clase)</option>
+            <option value="Nivel de Invalidación Técnico de la Clase ($64,200)">📉 Nivel de Invalidación Técnico de la Clase ($64,200)</option>
+          </select>
+        </div>
+
+        <input type="hidden" id="field-day4-path-type" value="Ruta Cero (Principiante)" />
       </div>
-      <div class="form-group">
-        <label class="form-label">Nivel de Stop Loss de Invalidación</label>
-        <input id="field-day4-stop" type="text" class="form-input" placeholder="Ej: $64,200" required />
+
+      <!-- FORMULARIO RUTA EXPERIENCIA (AVANZADO - LIBRE) -->
+      <div id="day4-form-exp" style="display:none;">
+        <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.25); border-radius:14px; padding:14px; margin-bottom:16px; font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
+          ⚡ <strong>Trading Personalizado:</strong> Ingresa los parámetros exactos de tu plan de trading o de tu análisis técnico actual.
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Activo Financiero (Ej: BTC/USD, Nasdaq, Gold, EUR/USD)</label>
+          <input id="field-day4-asset-exp" type="text" class="form-input" placeholder="Ej: BTC/USD o Nasdaq" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Señal de IA / Análisis Técnico (Ej: Geny Trend Alcista 15M)</label>
+          <input id="field-day4-signal-exp" type="text" class="form-input" placeholder="Ej: Geny Trend Alcista 15M" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nivel de Stop Loss de Invalidación</label>
+          <input id="field-day4-stop-exp" type="text" class="form-input" placeholder="Ej: $64,200 o Riesgo 0.5%" />
+        </div>
       </div>
     `
   },
@@ -619,6 +674,44 @@ async function checkEmailExists() {
   }
 }
 
+function selectDay4Path(pathType) {
+  const btnCero = document.getElementById('btn-ruta-cero-4');
+  const btnExp = document.getElementById('btn-ruta-exp-4');
+  const formCero = document.getElementById('day4-form-cero');
+  const formExp = document.getElementById('day4-form-exp');
+  const pathTypeInput = document.getElementById('field-day4-path-type');
+
+  if (pathType === 'cero') {
+    if (btnCero) {
+      btnCero.style.borderColor = '#22c55e';
+      btnCero.style.background = 'rgba(34,197,94,0.15)';
+      btnCero.style.color = '#fff';
+    }
+    if (btnExp) {
+      btnExp.style.borderColor = 'rgba(255,255,255,0.15)';
+      btnExp.style.background = 'rgba(255,255,255,0.05)';
+      btnExp.style.color = '#94a3b8';
+    }
+    if (formCero) formCero.style.display = 'block';
+    if (formExp) formExp.style.display = 'none';
+    if (pathTypeInput) pathTypeInput.value = 'Ruta Cero (Principiante)';
+  } else {
+    if (btnExp) {
+      btnExp.style.borderColor = '#38bdf8';
+      btnExp.style.background = 'rgba(56,189,248,0.15)';
+      btnExp.style.color = '#fff';
+    }
+    if (btnCero) {
+      btnCero.style.borderColor = 'rgba(255,255,255,0.15)';
+      btnCero.style.background = 'rgba(255,255,255,0.05)';
+      btnCero.style.color = '#94a3b8';
+    }
+    if (formCero) formCero.style.display = 'none';
+    if (formExp) formExp.style.display = 'block';
+    if (pathTypeInput) pathTypeInput.value = 'Ruta Experiencia (Avanzado)';
+  }
+}
+
 async function handleActivitySubmit(e) {
   e.preventDefault();
   const btn = document.getElementById('btn-submit-activity');
@@ -631,6 +724,22 @@ async function handleActivitySubmit(e) {
   inputs.forEach(inp => {
     if (inp.id) formData[inp.id] = inp.value;
   });
+
+  if (currentDay === 4) {
+    const pathTypeInput = document.getElementById('field-day4-path-type');
+    const isCero = !pathTypeInput || pathTypeInput.value.includes('Cero');
+    if (isCero) {
+      formData.asset = document.getElementById('field-day4-asset-cero')?.value || 'Bitcoin (BTC/USD)';
+      formData.signal = document.getElementById('field-day4-signal-cero')?.value || 'Geny Trend Alcista 15M';
+      formData.stop_loss = document.getElementById('field-day4-stop-cero')?.value || '1% del capital';
+      formData.path = 'Ruta Cero (Principiante)';
+    } else {
+      formData.asset = document.getElementById('field-day4-asset-exp')?.value || 'BTC/USD';
+      formData.signal = document.getElementById('field-day4-signal-exp')?.value || 'Geny Trend Alcista 15M';
+      formData.stop_loss = document.getElementById('field-day4-stop-exp')?.value || 'Stop Loss del Plan';
+      formData.path = 'Ruta Experiencia (Avanzado)';
+    }
+  }
 
   try {
     if (!isLoggedIn) {

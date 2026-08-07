@@ -324,10 +324,18 @@ const liveSessionsData = {
     missionTitle: "Misión Día 4: Tu Primer Paper Trade con Plan",
     missionDesc: "Haz 1 Paper Trade (simulado) definiendo tu activo, señal de Geny y nivel de Stop Loss.",
     renderMission: () => `
+      <div style="margin-bottom:12px; font-size:0.85rem; color:#cbd5e1;">
+        🌱 <strong>Ruta Cero:</strong> Selecciona el activo de la clase o escribe tus propios datos si ya operas:
+      </div>
       <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
-        <input class="text-input" id="live4-asset" type="text" placeholder="Activo (Ej: BTC/USD, Nasdaq, Gold)">
-        <input class="text-input" id="live4-signal" type="text" placeholder="Señal de IA (Ej: Geny Trend Alcista 15M)">
-        <input class="text-input" id="live4-stop" type="text" placeholder="Nivel de Stop Loss de Invalidación (Ej: $64,200)">
+        <select class="text-input" id="live4-asset" style="background:#0f172a; color:#fff; padding:10px;">
+          <option value="Bitcoin (BTC/USD) — Ejemplo de la Clase">🟡 Bitcoin (BTC/USD) — Ejemplo de la Clase</option>
+          <option value="Índice Nasdaq (NQ) — Ejemplo de la Clase">🔵 Índice Nasdaq (NQ) — Ejemplo de la Clase</option>
+          <option value="Oro (XAU/USD) — Ejemplo de la Clase">🟡 Oro (XAU/USD) — Ejemplo de la Clase</option>
+          <option value="Otro activo personalizado...">⚡ Otrio activo personalizado (Experiencia)</option>
+        </select>
+        <input class="text-input" id="live4-signal" type="text" value="Geny Trend Alcista 15M (Confirmado por IA)" placeholder="Señal de IA (Ej: Geny Trend Alcista 15M)">
+        <input class="text-input" id="live4-stop" type="text" value="Stop Loss del 1% del capital (Sugerido en Clase)" placeholder="Nivel de Stop Loss de Invalidación (Ej: $64,200)">
       </div>
       <label class="check-item" onclick="toggleCheck(this)">
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
