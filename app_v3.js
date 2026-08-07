@@ -359,10 +359,30 @@ const liveSessionsData = {
     missionTitle: "Misión Día 5: Registro en la Bitácora PEDEM",
     missionDesc: "Documenta tu Paper Trade del Día 4 en la Bitácora PEDEM registrando las emociones de tu Saboteador.",
     renderMission: () => `
-      <textarea class="text-input" id="live5-logbook-reflection" rows="3" placeholder="Ej: Documenté mi trade en la bitácora. Mi Saboteador sintió impaciencia antes del gatillo..."></textarea>
-      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
+      <div style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.25); border-radius:12px; padding:12px 14px; margin-bottom:14px; font-size:0.84rem; color:#cbd5e1; line-height:1.5;">
+        💡 <strong>¿Qué es la Bitácora del Saboteador?</strong> Es tu diario emocional. Sirve para anotar si sentiste impaciencia o duda al operar, entrenando tu disciplina sin dinero real.<br/>
+        🌱 <strong>Si vas empezando desde 0:</strong> Selecciona tu emoción abajo y la reflexión se cargará automáticamente.
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
+        <div>
+          <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:4px; font-weight:700;">1. ¿Qué emoción identificaste en tu ejercicio?</label>
+          <select class="text-input" id="live5-emotion" style="background:#0f172a; color:#fff; padding:10px;">
+            <option value="Mantuve la calma y la disciplina al 100%">🟢 Mantuve la calma y la disciplina al 100%</option>
+            <option value="Sentí impaciencia o ganas de acelerar la entrada">🟡 Sentí impaciencia o ganas de acelerar la entrada</option>
+            <option value="Sentí duda o miedo a equivocarme">🔴 Sentí duda o miedo a equivocarme</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:4px; font-weight:700;">2. Reflexión de Bitácora PEDEM</label>
+          <textarea class="text-input" id="live5-logbook-reflection" rows="2">Registré mi ejercicio del Día 4 en la Bitácora PEDEM. Mantuve la disciplina y respeté mi límite de riesgo sin improvisar.</textarea>
+        </div>
+      </div>
+
+      <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 6px;">
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Trade Registrado en la Bitácora PEDEM</span>
+        <span style="font-weight:700; color:#fff;">Trade y Emociones Registradas en la Bitácora PEDEM</span>
       </label>
     `
   },

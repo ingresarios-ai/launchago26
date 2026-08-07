@@ -407,11 +407,34 @@ const dailyMissions = {
   5: {
     dayDate: "7 de Agosto",
     title: "Día 5: La Bitácora del Saboteador",
-    desc: "Documenta tu trade en la Bitácora PEDEM registrando las emociones de tu Saboteador.",
+    desc: "Registra tus emociones al operar para evitar que el Saboteador tome el control de tu dinero.",
     renderForm: () => `
+      <div style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.25); border-radius:14px; padding:14px; margin-bottom:16px; font-size:0.85rem; color:#cbd5e1; line-height:1.5;">
+        💡 <strong>¿Qué es la Bitácora del Saboteador?</strong> Es tu diario emocional de trading. Sirve para anotar si sentiste impaciencia, duda o calma durante tu simulación, entrenando tu mente antes de arriesgar capital real.
+      </div>
+
       <div class="form-group">
-        <label class="form-label">Registro de Bitácora PEDEM y Emociones <span style="color:#ef4444;">*</span></label>
-        <textarea id="field-day5-log" class="form-textarea" rows="3" placeholder="Ej: Trade en Nasdaq. Sentí ansiedad al inicio pero respeté el Stop Loss al 100%..." required></textarea>
+        <label class="form-label">1. ¿Qué emoción principal identificaste durante tu ejercicio? <span style="color:#ef4444;">*</span></label>
+        <select id="field-day5-emotion" class="form-input" required style="background:#0f172a; color:#fff; border-color:rgba(255,255,255,0.2); font-size:0.9rem;">
+          <option value="Mantuve la calma y la disciplina al 100%">🟢 Mantuve la calma y la disciplina al 100%</option>
+          <option value="Sentí impaciencia o ganas de acelerar la entrada">🟡 Sentí impaciencia o ganas de acelerar la entrada</option>
+          <option value="Sentí duda o miedo a equivocarme">🔴 Sentí duda o miedo a equivocarme</option>
+          <option value="Sentí la tentación de operar sin Stop Loss">⚠️ Sentí la tentación de operar sin Stop Loss</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">2. Cumplimiento de tu Plan y Regla de Invalidación <span style="color:#ef4444;">*</span></label>
+        <select id="field-day5-compliance" class="form-input" required style="background:#0f172a; color:#fff; border-color:rgba(255,255,255,0.2); font-size:0.9rem;">
+          <option value="Respeté mi límite de riesgo / Stop Loss sin excepción">🛡️ Respeté mi límite de riesgo / Stop Loss sin excepción</option>
+          <option value="Tuve dudas pero me mantuve dentro de mi plan">⚡ Tuve dudas pero me mantuve dentro de mi plan</option>
+          <option value="Es mi primera simulación y estoy aprendiendo a controlar impulsos">🌱 Es mi primera simulación y estoy aprendiendo a controlar impulsos</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">3. Tu Reflexión de Bitácora PEDEM (Opcional / Guiada)</label>
+        <textarea id="field-day5-log" class="form-textarea" rows="2" style="font-size:0.9rem;">Registré mi simulación del Día 4 en la Bitácora PEDEM. Mantuve la disciplina y respeté el límite de riesgo sin improvisar.</textarea>
       </div>
     `
   },
