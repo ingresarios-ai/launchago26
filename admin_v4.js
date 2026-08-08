@@ -156,6 +156,8 @@ function setupEventListeners() {
   if (btnExportPreact) btnExportPreact.addEventListener('click', exportPreactivitiesCSV);
   const btnExportPending = document.getElementById('btn-export-pending-activities');
   if (btnExportPending) btnExportPending.addEventListener('click', exportPendingActivitiesCSV);
+  const btnExportCompleted = document.getElementById('btn-export-completed-activities');
+  if (btnExportCompleted) btnExportCompleted.addEventListener('click', exportCompletedActivitiesCSV);
   const btnExportLm = document.getElementById('btn-export-leadmagnets');
   if (btnExportLm) btnExportLm.addEventListener('click', exportLeadMagnetsCSV);
 
@@ -1918,6 +1920,127 @@ function exportPendingActivitiesCSV() {
 
   const headers = ['Nombre', 'Email', 'Telefono', 'Actividades_Completadas', 'Actividades_Pendientes', 'Link_Personalizado'];
   triggerCSVDownload('leads_actividades_pendientes.csv', headers, pendingList);
+}
+
+function exportCompletedActivitiesCSV() {
+  const userMap = {};
+
+  (allMissions || []).forEach(m => {
+    let day = parseInt(m.mission_id);
+    if (isNaN(day) && m.mission_id === 'mission_01') day = 1;
+    if (isNaN(day) || day < 1 || day > 10) return;
+
+    let email = '';
+    let name = '';
+    let phone = '';
+
+    if (m.response && typeof m.response === 'string' && m.response.trim().startsWith('{')) {
+      try {
+        const parsed = JSON.parse(m.response);
+        email = (parsed.email || parsed['reg-email'] || '').toLowerCase().trim();
+        name = parsed.name || parsed['reg-name'] || '';
+        phone = parsed.phone || parsed['reg-phone'] || '';
+      } catch (e) {}
+    }
+
+    const key = email || m.auth_token;
+    if (!key) return;
+
+    if (!userMap[key]) {
+      userMap[key] = {
+        name: name,
+        email: email,
+        phone: phone,
+        completedDays: new Set()
+      };
+    }
+
+    userMap[key].completedDays.add(day);
+    if (!userMap[key].email && email) userMap[key].email = email;
+    if (!userMap[key].name && name) userMap[key].name = name;
+    if (!userMap[key].phone && phone) userMap[key].phone = phone;
+  });
+
+  (allSurveys || []).forEach(s => {
+    let email = (s.email || '').toLowerCase().trim();
+    let name = s.name || s.nombre || '';
+    let phone = s.phone || s.telefono || s.whatsapp || '';
+    const key = email || s.auth_token;
+
+    if (key) {
+      if (!userMap[key]) {
+        userMap[key] = {
+          name: name,
+          email: email,
+          phone: phone,
+          completedDays: new Set()
+        };
+      }
+      userMap[key].completedDays.add(1);
+      if (!userMap[key].email && email) userMap[key].email = email;
+      if (!userMap[key].name && name) userMap[key].name = name;
+      if (!userMap[key].phone && phone) userMap[key].phone = phone;
+    }
+  });
+
+  (allVisits || []).forEach(p => {
+    if (p.user_agent && typeof p.user_agent === 'string' && p.user_agent.trim().startsWith('{')) {
+      try {
+        const parsed = JSON.parse(p.user_agent);
+        const email = (parsed.email || '').toLowerCase().trim();
+        const name = parsed.name || '';
+        const phone = parsed.phone || '';
+        const key = email || p.visitor_id;
+
+        if (key) {
+          if (!userMap[key]) {
+            userMap[key] = {
+              name: name,
+              email: email,
+              phone: phone,
+              completedDays: new Set()
+            };
+          }
+
+          if (parsed.day) {
+            const d = parseInt(parsed.day);
+            if (d >= 1 && d <= 10) userMap[key].completedDays.add(d);
+          }
+          if (!userMap[key].email && email) userMap[key].email = email;
+          if (!userMap[key].name && name) userMap[key].name = name;
+          if (!userMap[key].phone && phone) userMap[key].phone = phone;
+        }
+      } catch (e) {}
+    }
+  });
+
+  const completedList = Object.values(userMap).filter(u => u.completedDays.size > 0);
+
+  if (completedList.length === 0) {
+    alert('No hay respuestas de actividades para exportar.');
+    return;
+  }
+
+  completedList.sort((a, b) => b.completedDays.size - a.completedDays.size);
+
+  const exportRows = completedList.map(u => {
+    const sortedDays = Array.from(u.completedDays).sort((a, b) => a - b);
+    const dayStr = sortedDays.map(d => `Día ${d}`).join(' | ');
+    const count = sortedDays.length;
+    const points = `${count * 30} PC`;
+
+    return [
+      u.name || 'Participante',
+      u.email || '-',
+      u.phone || '-',
+      count,
+      dayStr,
+      points
+    ];
+  });
+
+  const headers = ['Nombre', 'Correo', 'Telefono', 'Actividades_Completadas_Count', 'Lista_Actividades', 'Puntos_Acumulados'];
+  triggerCSVDownload('leads_actividades_completadas.csv', headers, exportRows);
 }
 
 // ===== LEAD MAGNETS TAB CONTROL =====

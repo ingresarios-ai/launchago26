@@ -614,12 +614,15 @@
               <h1>Actividades y Misiones del Taller</h1>
               <p class="panel-subtitle">Respuestas de Pre-Actividades, Test del Saboteador (Día 1) y Misiones Diarias</p>
             </div>
-            <div style="display:flex; gap:10px;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
               <button class="btn btn--secondary" id="btn-export-preactivities">
                 Exportar Respuestas CSV
               </button>
               <button class="btn btn--primary" id="btn-export-pending-activities" style="background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); color:#000; font-weight:800;">
                 ⚡ Exportar Leads Pendientes (CSV)
+              </button>
+              <button class="btn btn--primary" id="btn-export-completed-activities" style="background: linear-gradient(135deg, #25d366 0%, #16a34a 100%); color:#000; font-weight:800;">
+                📊 Exportar Leads Completados (CSV)
               </button>
             </div>
           </div>
@@ -953,6 +956,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="admin_v4.js?v=20260808_v53"></script>
+  <script src="admin_v4.js?v=20260808_v55"></script>
 </body>
 </html>
