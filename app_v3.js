@@ -1307,11 +1307,11 @@ function updateNextStepHero() {
   if (currentActivity <= MAX_ACTIVITIES) {
     const act = activitiesData[currentActivity];
     if (act) {
-      if (heroBadge) heroBadge.textContent = `FASE 1: PREPARACIÓN • MISIÓN ${currentActivity} DE 19`;
+      if (heroBadge) heroBadge.textContent = `MISIÓN DEL DÍA ${currentActivity} DE 10`;
       heroTitle.textContent = `${currentActivity}. ${act.title}`;
       heroDesc.textContent = `Completa la Misión ${currentActivity} para acondicionar tu mente y sumar tus ${act.reward}.`;
       if (heroBtn) heroBtn.innerHTML = `<span>ABRIR MISIÓN ${currentActivity} AHORA</span> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
-      if (topbarStep) topbarStep.textContent = `🎯 Misión ${currentActivity}/19`;
+      if (topbarStep) topbarStep.textContent = `🎯 Misión ${currentActivity}/10`;
       if (statusTag) statusTag.textContent = 'DISPONIBLE AHORA 🟢';
     }
   } else {
@@ -1334,14 +1334,14 @@ function updateNextStepHero() {
     }
   }
 
-  // Calculate total completed out of 19
-  let completedCount = g0Done;
+  // Calculate total completed out of 10 (Phase 2 live sessions only)
+  let completedCount = 0;
   for (let d = 1; d <= 10; d++) {
     if (localStorage.getItem(`live_session_${d}_completed`) === 'true') completedCount++;
   }
-  const pct = Math.round((completedCount / 19) * 100);
+  const pct = Math.round((completedCount / 10) * 100);
   if (heroFill) heroFill.style.width = `${pct}%`;
-  if (heroText) heroText.textContent = `Progreso total del entrenamiento: ${pct}% (${completedCount} de 19 misiones completadas)`;
+  if (heroText) heroText.textContent = `Progreso del Reto: ${pct}% (${completedCount} de 10 misiones completadas)`;
 }
 
 function continueNextStep() {
