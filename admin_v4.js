@@ -2112,7 +2112,7 @@ async function loadWhatsAppGroupsData() {
   const DEFAULT_CONFIG = {
     active_index: 0,
     groups: [
-      { url: "https://chat.whatsapp.com/Cu4MehXGT627zIckeELbOo", clicks: 0, max: 1000 }
+      { url: "https://chat.whatsapp.com/BoTEOyZfsMXDu7MmANTbmE", clicks: 0, max: 1000 }
     ]
   };
 
