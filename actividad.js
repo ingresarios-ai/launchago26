@@ -520,8 +520,45 @@ function determineDay() {
   return day;
 }
 
+function getAvailableDayNumber() {
+  if (localStorage.getItem('preview_all_days') === 'true') return 10;
+  const now = Date.now();
+  const day6UnlockTime = Date.UTC(2026, 7, 8, 23, 0, 0); // Aug 8, 18:00 COT
+  const day7UnlockTime = Date.UTC(2026, 7, 9, 23, 0, 0);
+  const day8UnlockTime = Date.UTC(2026, 7, 10, 23, 0, 0);
+  const day9UnlockTime = Date.UTC(2026, 7, 11, 23, 0, 0);
+  const day10UnlockTime = Date.UTC(2026, 7, 12, 23, 0, 0);
+
+  if (now < day6UnlockTime) return 5;
+  if (now < day7UnlockTime) return 6;
+  if (now < day8UnlockTime) return 7;
+  if (now < day9UnlockTime) return 8;
+  if (now < day10UnlockTime) return 9;
+  return 10;
+}
+
 async function initActivity() {
   currentDay = determineDay();
+  
+  const availableDay = getAvailableDayNumber();
+  if (currentDay > availableDay) {
+    const actCard = document.getElementById('activity-card');
+    if (actCard) {
+      actCard.innerHTML = `
+        <div style="text-align:center; padding: 40px 20px;">
+          <div style="font-size:3.5rem; margin-bottom:16px;">🔒</div>
+          <h2 style="font-size:1.4rem; color:#fff; margin-bottom:8px;">Actividad del Día ${currentDay} Bloqueada</h2>
+          <p style="color:#94a3b8; font-size:0.95rem; max-width:440px; margin:0 auto 24px auto;">
+            Esta actividad se desbloqueará hoy a las <strong>6:00 PM (Hora Colombia)</strong>.
+          </p>
+          <a href="/app" class="btn-submit" style="text-decoration:none; background:#25d366; color:#000; font-weight:800; display:inline-block; padding:12px 24px; border-radius:10px;">
+            VOLVER A LA APP
+          </a>
+        </div>
+      `;
+    }
+    return;
+  }
   
   // Setup Day Data
   const mission = dailyMissions[currentDay] || dailyMissions[1];

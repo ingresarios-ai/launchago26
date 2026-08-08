@@ -506,12 +506,21 @@ function getUnlockedInsignias() {
 function getAvailableDayNumber() {
   if (localStorage.getItem('preview_all_days') === 'true') return 10;
   
-  // Base date: August 3, 2026 00:00:00 COT (05:00:00 UTC)
-  const baseLaunchTime = Date.UTC(2026, 7, 3, 5, 0, 0);
   const now = Date.now();
-  const diffDays = Math.floor((now - baseLaunchTime) / (1000 * 60 * 60 * 24)) + 1;
+  // Specific release schedule for launch days in COT (UTC-5):
+  // Day 6 unlocks at 6:00 PM COT on August 8, 2026 (23:00:00 UTC)
+  const day6UnlockTime = Date.UTC(2026, 7, 8, 23, 0, 0); // Aug 8, 18:00 COT
+  const day7UnlockTime = Date.UTC(2026, 7, 9, 23, 0, 0); // Aug 9, 18:00 COT
+  const day8UnlockTime = Date.UTC(2026, 7, 10, 23, 0, 0); // Aug 10, 18:00 COT
+  const day9UnlockTime = Date.UTC(2026, 7, 11, 23, 0, 0); // Aug 11, 18:00 COT
+  const day10UnlockTime = Date.UTC(2026, 7, 12, 23, 0, 0); // Aug 12, 18:00 COT
 
-  return Math.max(1, Math.min(10, diffDays));
+  if (now < day6UnlockTime) return 5;
+  if (now < day7UnlockTime) return 6;
+  if (now < day8UnlockTime) return 7;
+  if (now < day9UnlockTime) return 8;
+  if (now < day10UnlockTime) return 9;
+  return 10;
 }
 
 let currentFeaturedSlideDay = null;

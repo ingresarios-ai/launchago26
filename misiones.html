@@ -462,10 +462,20 @@
     let completedDaysSet = new Set();
 
     function getAvailableDayNumber() {
-      const baseLaunchTime = Date.UTC(2026, 7, 3, 5, 0, 0); // Aug 3
+      if (localStorage.getItem('preview_all_days') === 'true') return 10;
       const now = Date.now();
-      const diffDays = Math.floor((now - baseLaunchTime) / (1000 * 60 * 60 * 24)) + 1;
-      return Math.max(1, Math.min(10, diffDays));
+      const day6UnlockTime = Date.UTC(2026, 7, 8, 23, 0, 0); // Aug 8, 18:00 COT
+      const day7UnlockTime = Date.UTC(2026, 7, 9, 23, 0, 0);
+      const day8UnlockTime = Date.UTC(2026, 7, 10, 23, 0, 0);
+      const day9UnlockTime = Date.UTC(2026, 7, 11, 23, 0, 0);
+      const day10UnlockTime = Date.UTC(2026, 7, 12, 23, 0, 0);
+
+      if (now < day6UnlockTime) return 5;
+      if (now < day7UnlockTime) return 6;
+      if (now < day8UnlockTime) return 7;
+      if (now < day9UnlockTime) return 8;
+      if (now < day10UnlockTime) return 9;
+      return 10;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
