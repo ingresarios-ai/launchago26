@@ -1741,7 +1741,7 @@ function buildPreactivitiesTab() {
       }
     }
 
-    let email = parentLead ? parentLead.email : 'Lead Registrado';
+    let email = parentLead ? parentLead.email : '';
     let name = parentLead ? parentLead.name : '';
     let resp = '-';
     let detail = '-';
@@ -1751,7 +1751,9 @@ function buildPreactivitiesTab() {
         try {
           const parsed = JSON.parse(m.response);
           if (parsed.email) email = parsed.email;
+          else if (parsed['reg-email']) email = parsed['reg-email'];
           if (parsed.name) name = parsed.name;
+          else if (parsed['reg-name']) name = parsed['reg-name'];
           resp = parsed.meta_proceso || parsed.regla_1 || parsed.regla_1_antisaboteador || parsed['live2-rule-input'] || parsed['live3-worst-trade'] || Object.values(parsed).filter(Boolean).join(' | ') || m.response;
           detail = JSON.stringify(parsed);
         } catch (e) {
@@ -1764,11 +1766,16 @@ function buildPreactivitiesTab() {
       }
     }
 
+    const displayEmail = email || (parentLead ? parentLead.email : '') || 'Lead Registrado';
+    const userKey = (email && email !== 'Lead Registrado') ? email.toLowerCase().trim() : (m.auth_token || String(m.id));
+
     return {
       type: `act${m.mission_id}`,
+      missionId: String(m.mission_id),
       activityName: actName,
       badgeHtml: badgeHtml,
-      email: email,
+      email: displayEmail,
+      userKey: userKey,
       name: name,
       response: resp,
       detail: detail,
@@ -1785,9 +1792,9 @@ function buildPreactivitiesTab() {
   const getUniqueCount = (filterFn) => {
     const uniqueKeys = new Set();
     allPreactivities.filter(filterFn).forEach(item => {
-      const email = item.email ? item.email.toLowerCase().trim() : '';
-      if (email && email !== 'visitante' && email !== 'lead registrado') {
-        uniqueKeys.add(email);
+      const key = item.userKey || (item.email ? item.email.toLowerCase().trim() : '');
+      if (key && key !== 'visitante' && key !== 'lead registrado') {
+        uniqueKeys.add(key);
       }
     });
     return uniqueKeys.size;
@@ -1796,18 +1803,24 @@ function buildPreactivitiesTab() {
   const countAct1 = getUniqueCount(v => v.activityName.includes('Día 1'));
   const countAct2 = getUniqueCount(v => v.activityName.includes('Día 2') && v.response !== '{}' && v.response !== '-');
   const countAct3 = getUniqueCount(v => v.activityName.includes('Gastos Hormiga') || (v.activityName.includes('Día 3') && v.response !== '{}' && v.response !== '-'));
+  const countAct4 = getUniqueCount(v => v.activityName.includes('Día 4') || v.missionId === '4');
+  const countAct5 = getUniqueCount(v => v.activityName.includes('Día 5') || v.missionId === '5');
   const countPre1 = getUniqueCount(v => v.activityName === 'Pre-Actividad 1');
   const countPre2 = getUniqueCount(v => v.activityName === 'Pre-Actividad 2');
 
   const kpiAct1 = document.getElementById('kpi-act1-count');
   const kpiAct2 = document.getElementById('kpi-act2-count');
   const kpiAct3 = document.getElementById('kpi-act3-count');
+  const kpiAct4 = document.getElementById('kpi-act4-count');
+  const kpiAct5 = document.getElementById('kpi-act5-count');
   const kpiPre1 = document.getElementById('kpi-preact1-count');
   const kpiPre2 = document.getElementById('kpi-preact2-count');
 
   if (kpiAct1) kpiAct1.textContent = countAct1;
   if (kpiAct2) kpiAct2.textContent = countAct2;
   if (kpiAct3) kpiAct3.textContent = countAct3;
+  if (kpiAct4) kpiAct4.textContent = countAct4;
+  if (kpiAct5) kpiAct5.textContent = countAct5;
   if (kpiPre1) kpiPre1.textContent = countPre1;
   if (kpiPre2) kpiPre2.textContent = countPre2;
 
