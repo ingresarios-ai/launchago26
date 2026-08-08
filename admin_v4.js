@@ -1781,11 +1781,23 @@ function buildPreactivitiesTab() {
     new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 
-  const countAct1 = allPreactivities.filter(v => v.activityName.includes('Día 1')).length;
-  const countAct2 = allPreactivities.filter(v => v.activityName.includes('Día 2') && v.response !== '{}' && v.response !== '-').length;
-  const countAct3 = allPreactivities.filter(v => v.activityName.includes('Gastos Hormiga')).length;
-  const countPre1 = allPreactivities.filter(v => v.activityName === 'Pre-Actividad 1').length;
-  const countPre2 = allPreactivities.filter(v => v.activityName === 'Pre-Actividad 2').length;
+  // Calculate unique participants per activity
+  const getUniqueCount = (filterFn) => {
+    const uniqueKeys = new Set();
+    allPreactivities.filter(filterFn).forEach(item => {
+      const email = item.email ? item.email.toLowerCase().trim() : '';
+      if (email && email !== 'visitante' && email !== 'lead registrado') {
+        uniqueKeys.add(email);
+      }
+    });
+    return uniqueKeys.size;
+  };
+
+  const countAct1 = getUniqueCount(v => v.activityName.includes('Día 1'));
+  const countAct2 = getUniqueCount(v => v.activityName.includes('Día 2') && v.response !== '{}' && v.response !== '-');
+  const countAct3 = getUniqueCount(v => v.activityName.includes('Gastos Hormiga') || (v.activityName.includes('Día 3') && v.response !== '{}' && v.response !== '-'));
+  const countPre1 = getUniqueCount(v => v.activityName === 'Pre-Actividad 1');
+  const countPre2 = getUniqueCount(v => v.activityName === 'Pre-Actividad 2');
 
   const kpiAct1 = document.getElementById('kpi-act1-count');
   const kpiAct2 = document.getElementById('kpi-act2-count');
