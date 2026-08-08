@@ -2,6 +2,11 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/",
+      "destination": "https://www.youtube.com/watch?v=L27tAmupgiY&list=PLZ3Gjdurk6HM&index=6",
+      "permanent": false
+    },
+    {
       "source": "/ig",
       "destination": "/?utm_source=instagram&utm_medium=dm_auto&utm_campaign=taller_ia_carrusel",
       "permanent": false
