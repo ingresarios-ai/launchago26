@@ -1093,31 +1093,34 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // 1b. Load progress from Supabase (only for real users)
+  // 1b. Load progress and completed missions from Supabase (only for real users)
   if (token && token !== 'preview_admin_token') {
-    fetch('https://chnpzcpczjtdsbfmjhei.supabase.co/rest/v1/rpc/get_progress_by_token', {
-      method: 'POST',
+    fetch(`${SUPABASE_URL}/rest/v1/mission_responses?auth_token=eq.${encodeURIComponent(token)}`, {
       headers: {
-        'Content-Type': 'application/json',
-        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU'
-      },
-      body: JSON.stringify({ p_token: token })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data && data.length > 0) {
-        const dbProgress = data[0];
-        if (dbProgress.activation_score) {
-          const localProgress = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
-          const finalProgress = Math.max(localProgress, dbProgress.activation_score);
-          localStorage.setItem(STORAGE_KEY, finalProgress.toString());
-          currentActivity = finalProgress;
-          renderJourney();
-        }
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
       }
     })
-    .catch(err => console.error('Error fetching progress:', err));
+    .then(res => res.json())
+    .then(missions => {
+      if (Array.isArray(missions) && missions.length > 0) {
+        let maxDayCompleted = 1;
+        missions.forEach(m => {
+          let dayNum = parseInt(m.mission_id);
+          if (!isNaN(dayNum) && dayNum >= 1 && dayNum <= 10) {
+            localStorage.setItem(`live_session_${dayNum}_completed`, 'true');
+            if (dayNum > maxDayCompleted) maxDayCompleted = dayNum;
+          }
+        });
+        const currentLocal = parseInt(localStorage.getItem(STORAGE_KEY)) || 1;
+        const nextActivity = Math.min(10, Math.max(currentLocal, maxDayCompleted + 1));
+        localStorage.setItem(STORAGE_KEY, String(nextActivity));
+        currentActivity = nextActivity;
+        renderJourney();
+        updateLiveCardsUI();
+      }
+    })
+    .catch(err => console.error('Error fetching mission progress:', err));
   }
 
   // 2. Render initial journey & live cards
