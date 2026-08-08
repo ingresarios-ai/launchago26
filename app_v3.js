@@ -2,6 +2,10 @@
 // GENOMA CERO - JOURNEY ENGINE
 // ========================================
 
+// Supabase Configuration (single source of truth)
+const SUPABASE_URL = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
+
 const STORAGE_KEY = 'genoma_current_activity';
 const MAX_ACTIVITIES = 9;
 
@@ -1651,8 +1655,9 @@ initCountdown();
 // Runs inside Activity 1 modal
 // ========================================
 
-const SUPABASE_URL_TEST = 'https://chnpzcpczjtdsbfmjhei.supabase.co';
-const SUPABASE_ANON_KEY_TEST = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNobnB6Y3Bjemp0ZHNiZm1qaGVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwOTc5ODYsImV4cCI6MjA5OTY3Mzk4Nn0.-0v-yxG8M4aAmt-TEezV-4il22ZqW9wSA0XwspmwQRU';
+// Legacy aliases — point to the top-level Supabase constants
+const SUPABASE_URL_TEST = SUPABASE_URL;
+const SUPABASE_ANON_KEY_TEST = SUPABASE_ANON_KEY;
 const GHL_WEBHOOK_TEST = 'https://services.leadconnectorhq.com/hooks/jTugwykceKyJlATOSvkb/webhook-trigger/AF9SlEmf2Qj2H4GxsFjf';
 
 const inlineFilterQuestion = {
