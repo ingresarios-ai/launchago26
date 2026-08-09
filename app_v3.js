@@ -1165,16 +1165,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 4. Auto-open Activity 1 on first entry (only for real users)
+  // 4. Auto-open first live session on first entry (only for real users)
   if (!isVerMode) {
     const hasEntered = localStorage.getItem('app_has_entered');
     if (!hasEntered) {
       localStorage.setItem('app_has_entered', 'true');
-      currentActivity = 1;
-      localStorage.setItem(STORAGE_KEY, '1');
-      renderJourney();
-      showJourney();
-      openActivity(1);
+      showDashboard();
     }
   }
 });
@@ -1345,20 +1341,16 @@ function updateNextStepHero() {
 }
 
 function continueNextStep() {
-  if (currentActivity <= MAX_ACTIVITIES) {
-    showJourney();
-    openActivity(currentActivity);
-  } else {
-    let nextLive = 10;
-    for (let d = 1; d <= 10; d++) {
-      if (localStorage.getItem(`live_session_${d}_completed`) !== 'true') {
-        nextLive = d;
-        break;
-      }
+  // Always go to the Dashboard (Fase 1: Live Sessions)
+  let nextLive = 10;
+  for (let d = 1; d <= 10; d++) {
+    if (localStorage.getItem(`live_session_${d}_completed`) !== 'true') {
+      nextLive = d;
+      break;
     }
-    showDashboard();
-    openLiveSession(nextLive);
   }
+  showDashboard();
+  openLiveSession(nextLive);
 }
 
 function openActivity(actId) {
