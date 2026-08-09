@@ -1073,7 +1073,8 @@ function sanitizeUserProgress() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+(document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init());
+function init() {
   sanitizeUserProgress();
   // 1. Process Magic Link token or Preview mode (?ver=true / ?ver / ?preview)
   const urlParams = new URLSearchParams(window.location.search);
@@ -1176,7 +1177,7 @@ document.addEventListener('DOMContentLoaded', () => {
       showDashboard();
     }
   }
-});
+}
 
 // ========================================
 // CORE ENGINE FUNCTIONS
@@ -2598,7 +2599,8 @@ function resetPreviewState() {
 }
 
 // Initial UI update on page load
-document.addEventListener('DOMContentLoaded', () => {
+(document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initSync) : initSync());
+function initSync() {
 
   renderVitrinaInsignias();
   updateLiveCardsUI();
@@ -2627,7 +2629,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (vitrina) vitrina.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 400);
   }
-});
+}
 
 function logoutUser() {
   if (confirm('¿Estás seguro de que deseas cerrar sesión? Tu avance queda guardado en la nube.')) {
