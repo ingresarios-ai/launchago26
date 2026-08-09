@@ -1131,6 +1131,9 @@ document.addEventListener('DOMContentLoaded', () => {
         currentActivity = nextActivity;
         renderJourney();
         updateLiveCardsUI();
+        updatePointsDisplay();
+        renderVitrinaInsignias();
+        updateNextStepHero();
       }
     })
     .catch(err => console.error('Error fetching mission progress:', err));
