@@ -440,18 +440,64 @@ const dailyMissions = {
   },
   6: {
     dayDate: "8 de Agosto",
-    title: "Día 6: La Rúbrica PEDEM",
-    desc: "Evalúa del 1 al 5 la disciplina con la que ejecutaste tu plan en la sesión de hoy.",
+    title: "Día 6: La Rúbrica PEDEM — Tu Evaluación de Dominio",
+    desc: "Evalúa la disciplina con la que ejecutaste tu plan durante la sesión de hoy. La Rúbrica PEDEM mide 5 pilares clave de tu desempeño como operador consciente.",
     renderForm: () => `
+      <div style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.25); border-radius:14px; padding:14px; margin-bottom:16px; font-size:0.85rem; color:#cbd5e1; line-height:1.5;">
+        💡 <strong>¿Qué es la Rúbrica PEDEM?</strong> Es tu sistema de autoevaluación en 5 pilares: <strong>P</strong>lan (seguí mi plan), <strong>E</strong>jecución (entré y salí según las reglas), <strong>D</strong>isciplina (no improvisé), <strong>E</strong>moción (no dejé que el miedo o la euforia decidieran), <strong>M</strong>ejora (aprendí algo nuevo hoy). Califica cada pilar del 1 al 5.
+      </div>
+
       <div class="form-group">
-        <label class="form-label">Calificación de Disciplina (1 al 5)</label>
-        <select id="field-day6-score" class="form-input" required>
-          <option value="5">5 — Disciplina Perfecta (Seguí el plan 100%)</option>
-          <option value="4">4 — Alta Disciplina (Mínimas dudas)</option>
-          <option value="3">3 — Disciplina Media (Tuve tentación de romper reglas)</option>
-          <option value="2">2 — Baja Disciplina (Improvisé en 1 trade)</option>
-          <option value="1">1 — Sin Disciplina (El Saboteador tomó el control)</option>
+        <label class="form-label">1. 📋 PLAN — ¿Seguiste tu plan de operación previamente definido? <span style="color:#ef4444;">*</span></label>
+        <select id="field-day6-plan" class="form-input" required style="background:#0f172a; color:#fff; border-color:rgba(255,255,255,0.2); font-size:0.9rem;">
+          <option value="5 — Seguí el plan al 100%, sin modificaciones">5 — Seguí el plan al 100%, sin modificaciones</option>
+          <option value="4 — Seguí el plan con ajustes mínimos justificados">4 — Seguí el plan con ajustes mínimos justificados</option>
+          <option value="3 — Tuve dudas y modifiqué algo sobre la marcha">3 — Tuve dudas y modifiqué algo sobre la marcha</option>
+          <option value="2 — Improvisé la mayor parte de mis decisiones">2 — Improvisé la mayor parte de mis decisiones</option>
+          <option value="1 — No tenía un plan definido antes de empezar">1 — No tenía un plan definido antes de empezar</option>
         </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">2. ⚡ EJECUCIÓN — ¿Entraste y saliste según tus reglas predefinidas? <span style="color:#ef4444;">*</span></label>
+        <select id="field-day6-execution" class="form-input" required style="background:#0f172a; color:#fff; border-color:rgba(255,255,255,0.2); font-size:0.9rem;">
+          <option value="5 — Entradas y salidas exactas según mis reglas">5 — Entradas y salidas exactas según mis reglas</option>
+          <option value="4 — Casi perfecto, un error menor de timing">4 — Casi perfecto, un error menor de timing</option>
+          <option value="3 — Respeté la entrada pero moví el Stop Loss o Take Profit">3 — Respeté la entrada pero moví el Stop Loss o Take Profit</option>
+          <option value="2 — Entré fuera de mis condiciones por ansiedad">2 — Entré fuera de mis condiciones por ansiedad</option>
+          <option value="1 — No usé reglas, operé por intuición">1 — No usé reglas, operé por intuición</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">3. 🛡️ DISCIPLINA — ¿Respetaste tu Stop Loss y la regla de invalidación? <span style="color:#ef4444;">*</span></label>
+        <select id="field-day6-discipline" class="form-input" required style="background:#0f172a; color:#fff; border-color:rgba(255,255,255,0.2); font-size:0.9rem;">
+          <option value="5 — Mi Stop Loss se ejecutó o no lo necesité, 0 improvisación">5 — Mi Stop Loss se ejecutó o no lo necesité, 0 improvisación</option>
+          <option value="4 — Mantuve el Stop pero sentí la tentación de moverlo">4 — Mantuve el Stop pero sentí la tentación de moverlo</option>
+          <option value="3 — Lo moví una vez para 'darle más espacio'">3 — Lo moví una vez para "darle más espacio"</option>
+          <option value="2 — Lo eliminé y confié en que el precio iba a regresar">2 — Lo eliminé y confié en que el precio iba a regresar</option>
+          <option value="1 — Nunca puse Stop Loss">1 — Nunca puse Stop Loss</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">4. 🧠 EMOCIÓN — ¿Tu Saboteador tomó alguna decisión hoy? <span style="color:#ef4444;">*</span></label>
+        <select id="field-day6-emotion" class="form-input" required style="background:#0f172a; color:#fff; border-color:rgba(255,255,255,0.2); font-size:0.9rem;">
+          <option value="5 — Operé con calma total, cero reacción emocional">5 — Operé con calma total, cero reacción emocional</option>
+          <option value="4 — Sentí algo de ansiedad pero no afectó mis decisiones">4 — Sentí algo de ansiedad pero no afectó mis decisiones</option>
+          <option value="3 — La emoción me hizo dudar pero finalmente seguí el plan">3 — La emoción me hizo dudar pero finalmente seguí el plan</option>
+          <option value="2 — Tomé una decisión impulsiva por miedo o euforia">2 — Tomé una decisión impulsiva por miedo o euforia</option>
+          <option value="1 — El Saboteador dominó toda la sesión">1 — El Saboteador dominó toda la sesión</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">5. 📈 MEJORA — ¿Qué aprendiste hoy que puedes mejorar mañana? <span style="color:#ef4444;">*</span></label>
+        <textarea id="field-day6-improvement" class="form-textarea" rows="2" placeholder="Ej: Aprendí que debo esperar confirmación antes de entrar, mañana lo aplicaré sin excepción." required></textarea>
+      </div>
+
+      <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.25); border-radius:14px; padding:14px; margin-top:8px; font-size:0.82rem; color:#94a3b8; line-height:1.5;">
+        🏆 <strong>Tu Rango PEDEM de hoy se calcula automáticamente:</strong> 20-25 pts = Trader Inquebrantable 🏆 | 15-19 pts = Operador PEDEM 🟢 | 10-14 pts = Operador Consciente 🟡 | 5-9 pts = Operador Reactivo 🔴
       </div>
     `
   },
