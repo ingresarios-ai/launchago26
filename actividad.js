@@ -518,17 +518,61 @@ const dailyMissions = {
     desc: "Diagnostica tu brecha principal: ¿qué te separa de tomar decisiones repetibles? Selecciona tu ruta y responde con honestidad.",
     renderForm: () => `
       <!-- ROUTE SELECTOR -->
-      <div class="form-group">
-        <label class="form-label">¿Con cuál ruta te identificas más? <span style="color:#ef4444;">*</span></label>
-        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; margin-bottom: 12px; font-size: 0.82rem; color: #94a3b8; line-height: 1.45;">
-          <p style="margin-bottom: 6px; color: #f8fafc;"><strong>• Ruta Cero:</strong> <em>Estoy empezando. Todavía no opero o tengo muy poca experiencia.</em></p>
-          <p style="margin: 0; color: #f8fafc;"><strong>• Ruta Experiencia:</strong> <em>Ya tengo conocimientos o he operado, pero no logro ser consistente.</em></p>
+      <div class="form-group" id="day8-route-selector-container">
+        <label class="form-label" style="text-align: center; font-size: 1.1rem; margin-bottom: 16px;">¿Con cuál ruta te identificas más? <span style="color:#ef4444;">*</span></label>
+        
+        <input type="hidden" id="field-day8-route" value="" required>
+
+        <style>
+          .route-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+          }
+          .route-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+          }
+          .route-btn.selected-cero {
+            background: rgba(37, 211, 102, 0.15);
+            border-color: #25d366;
+          }
+          .route-btn.selected-exp {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: #38bdf8;
+          }
+          .route-btn-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
+          .route-btn-desc {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.4;
+          }
+        </style>
+        
+        <div id="btn-route-cero" class="route-btn" onclick="selectDay8Route('Ruta Cero')">
+          <div class="route-btn-title"><span>🟢</span> Ruta Cero</div>
+          <div class="route-btn-desc">Estoy empezando. Todavía no opero o tengo muy poca experiencia.</div>
         </div>
-        <select id="field-day8-route" class="form-input" required onchange="toggleDay8Route(this.value)" style="margin-bottom: 12px;">
-          <option value="">-- Selecciona tu ruta --</option>
-          <option value="Ruta Cero">🟢 Ruta Cero (Estoy empezando)</option>
-          <option value="Ruta Experiencia">🔵 Ruta Experiencia (Ya tengo conocimientos)</option>
-        </select>
+
+        <div id="btn-route-exp" class="route-btn" onclick="selectDay8Route('Ruta Experiencia')">
+          <div class="route-btn-title"><span>🔵</span> Ruta Experiencia</div>
+          <div class="route-btn-desc">Ya tengo conocimientos o he operado, pero no logro ser consistente.</div>
+        </div>
       </div>
 
       <!-- RUTA CERO QUESTIONS -->
@@ -765,6 +809,12 @@ async function initActivity() {
   document.getElementById('activity-fields').innerHTML = mission.renderForm();
   if (currentDay === 3 && window.goToGastosStep) {
     setTimeout(function() { window.goToGastosStep(1); }, 30);
+  }
+  if (currentDay === 8) {
+    setTimeout(function() { 
+      var mainSubmitBtn = document.getElementById('btn-submit-activity');
+      if (mainSubmitBtn) mainSubmitBtn.style.display = 'none';
+    }, 30);
   }
 
   // Check Login / Session Status
@@ -1480,11 +1530,37 @@ window.generateGenyMap = async function() {
     document.getElementById('geny-result-container').style.display = 'block';
     document.getElementById('btn-geny-generate').style.display = 'inline-block';
     document.getElementById('btn-geny-generate').innerText = "✨ Volver a generar";
+    
+    // Show the final submit button so they can save the mission
+    var mainSubmitBtn = document.getElementById('btn-submit-activity');
+    if (mainSubmitBtn) mainSubmitBtn.style.display = 'flex';
 
   } catch (err) {
     console.error(err);
     alert("Hubo un error contactando a Geny. Intenta de nuevo.");
     document.getElementById('geny-loading').style.display = 'none';
     document.getElementById('btn-geny-generate').style.display = 'inline-block';
+  }
+};
+
+window.selectDay8Route = function(route) {
+  document.getElementById('field-day8-route').value = route;
+  
+  // Highlight the selected button
+  var btnCero = document.getElementById('btn-route-cero');
+  var btnExp = document.getElementById('btn-route-exp');
+  if (btnCero) btnCero.classList.remove('selected-cero');
+  if (btnExp) btnExp.classList.remove('selected-exp');
+  
+  if (route === 'Ruta Cero' && btnCero) btnCero.classList.add('selected-cero');
+  if (route === 'Ruta Experiencia' && btnExp) btnExp.classList.add('selected-exp');
+  
+  // Hide the final submit button until Geny generates the map
+  var mainSubmitBtn = document.getElementById('btn-submit-activity');
+  if (mainSubmitBtn) mainSubmitBtn.style.display = 'none';
+
+  // Trigger the original route toggle logic
+  if (window.toggleDay8Route) {
+    window.toggleDay8Route(route);
   }
 };
