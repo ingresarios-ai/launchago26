@@ -1,92 +1,495 @@
-Nombre,Correo,Telefono,Actividades_Completadas_Count,Lista_Actividades,Puntos_Acumulados
-"","misacciones@gmail.com","",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+Nombre,Correo,Telefono,Actividades_Completadas,Lista_Actividades,Puntos_Acumulados
+"Ronald","ravc198011@gmail.com","3206881687",10,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9 | Dia 10",300 PC
+"","angelam1609@hotmail.com","",10,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9 | Dia 10",300 PC
+"","juanpaga@hotmail.com","",10,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9 | Dia 10",300 PC
+"Fabezlina Zuluaga","fabezlinazuluaga@gmail.com","534087",10,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9 | Dia 10",300 PC
+"","fernando.1404b@hotmail.com","",10,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9 | Dia 10",300 PC
+"Martin Oñate","monate223@gmail.com","+573142336458",10,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9 | Dia 10",300 PC
+"Yamid diaz","yamiddiazreyes@gmail.com","3012950397",9,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9 | Dia 10",270 PC
+"Rafael Augusto Mesa Báez","rafiko_189@hotmail.com","3202623899",9,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9 | Dia 10",270 PC
+"Gina Paola Vásquez Jiménez","paolavasquezjimenez1226@gmail.com","3243684845",9,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9 | Dia 10",270 PC
+"Ruben Dario Gómez","rdgdls1@gmail.com","5613824963",8,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9",240 PC
+"Dubian Montoya","montoyadubian72@gmail.com","3004165624",8,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8",240 PC
+"Yaneris Paola urina Mejia","yanerisurina@gmail.com","3018324399",8,"Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9 | Dia 10",240 PC
+"Marioxys Garcia","gmarioxys@gmail.com","3122106916",8,"Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7 | Dia 8 | Dia 9 | Dia 10",240 PC
+"","albernal1@gmail.com","",7,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7",210 PC
+"Liceth Vélez Cardona","liceth.velezcardona@sabaneta.edu.co","3243481918",7,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7",210 PC
+"SERGIO VILLAMIZAR","sergiovillamizar2014@hotmail.com","3144228737",7,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7",210 PC
+"Hernando García Osorio","hernando.garcia.osorio@gmail.com","3117515314",7,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7",210 PC
+"","marioacastro@gmail.com","",7,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7",210 PC
+"Darwin Rondon","darwinrondon.p@gmail.com","3106289360",7,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7",210 PC
+"George Gonzalez Arias","george.627@hotmail.com","3154206806",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"Harol calderon","calderonhlj1976@gmail.com","4121442649",6,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7",180 PC
+"Nestor Yopasa","arquingeyop@gmail.com","310 3114098",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"William otero espitia","wxps2010@gmail.com","3012103617",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"","alexisprada22@gmail.com","",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"ANDRES FELIPE GALLO RUIZ","galloruiz0912@hotmail.com","3104745854",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"Lina","multiserviciosyvariedades8@gmail.com","+573207528994",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"Lizeth Natalia Medina Poloche","lizethnataliapoloche@gmail.com","3332710457",6,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7",180 PC
+"yauris Vargas","yaurivargas3@gmail.com","3238119152",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"","superiorltda@gmail.com","",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"Wilson Ausique Lozano","wilson.ausique@gmail.com","3187125531",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"Andres Benjumea","andresbenjumeas@gmail.com","3102570299",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"Andres Felipe Vaquiro Villabon","proyectosupragenesis@gmail.com","3206052824",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"","enatural2019@gmail.com","",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"PAOLA RODRIGUEZ","paola.rodriguez@amarilo.com","3112739066",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"Juan Felipe","juanfe2529@gmail.com","+573024029656",6,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",180 PC
+"","galbsonora_1971@hotmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","juandtg21@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","jesusdavidgarcialora@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Juan henao","juanitorivas1981@gmail.com","3507148392",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","steel1751@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Ronald Valencia","ravc1953@gmai.com","+573206881687",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Oscar Manuel Bernal Sánchez","oscarbernalsanchez2@gmail.com","3219438857",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","misacciones@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Eduardo Lozano","elozano789@gmail.com","966405802",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Carlos","chperdomoc@gmail.com","3168624675",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"IRIS FIGUEROA GUEVARA","ifigue@elsifg.com","998565485",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Saúl Alberto Mira","aioria0904@yahoo.es","3206222088",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Oscar Alturo","oscaralturo@gmail.com","3188424608",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","alejandrogillopez99@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Aura Pineda","auracc.ac@gmail.com","04146220364",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Alex oweimar cultid Rodríguez","alexcultid1@gmail.com","3161288318",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Sayan Camilo Mosquera Román","camimosquera2@hotmail.com","3113666733",5,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",150 PC
+"Andrea Henao Arroyave","andreah00@hotmail.com","3127275491",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"cristina velasquez","cristinavelasquez.m@hotmail.com","3147106215",5,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",150 PC
+"Alvaro Atehortua","alvaroateho2012@hotmail.es","3164317904",5,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",150 PC
+"","douglasvargas27@gmail.com","",5,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",150 PC
+"Ivanovva Verjel","ivanovva@hotmail.com","3176654975",5,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",150 PC
+"Adriana Perdomo","adri.per@hotmail.com","+573217041552",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Juan Pablo Rengifo Zapata","pablorengifoz1212@hotmail.com","3168168786",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Néstor Ferney Garzón","nefega7758@hotmail.com","312 8206871",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","anacubides18@hotmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"JUAN CANTOR","jscantora@gmail.com","3138185613",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","camachomaria329@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Ajenis","yarne34@hotmail.com","3208061178",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","ojroca@hotmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Edgardo Martínez Galindo","emgalind@gmail.com","2221929444",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","mexisano@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Jhon Alvear","jhonalvear@gmail.com","+573168765303",5,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",150 PC
+"","jesus23lucero@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Claudia Aristizabal","caristizabals@gmail.com","3148968119",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","joj_gibor@hotmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Carolina Granados Munar Munevar","carolinamunar34@gmail.com","3103225347",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"kelly johana sanchez bravo","giovana.91sanche@gmail.com","+573245189771",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","cachiva2020@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","falesvel@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Edith Morales","atmanangta@live.com.mx","4622428849",5,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",150 PC
+"Marleny Rojas","marorojas05@gmail.com","3228089823",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Mariela Sanchez","maye270102@gmail.com","3026727900",5,"Dia 2 | Dia 4 | Dia 5 | Dia 6 | Dia 7",150 PC
+"Ricardo Herrera","ricardo.herrera3000@gmail.com","979351806",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Daniel","daniel910325@hotmail.com","3156902794",5,"Dia 3 | Dia 4 | Dia 5 | Dia 6 | Dia 7",150 PC
+"Daiana Wareiczuk","wareiczukd@gmail.com","2625674441",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Juan Alberto","jalozanogil@gmail.com","991690463",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Franklin Valderrama","traderfrankxx@gmail.com","3162795660",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Carlos Arias","carlosariasmago@gmail.com","+584242413280",5,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",150 PC
+"","gregoriomon76@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Dany Guerrero","reikishangrila@gmail.com","01 442 179 7311",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Keller David Molero Avila","kellermolero@gmail.com","+573114115017",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","melymo31@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","buyis09@gmail.com","",5,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",150 PC
+"Patricia Gargiso","pegc2020@gmail.com","04122644246",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","juanpor87@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Arlette Sanchez","aasr78@gmail.com","3209000520",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Jhonny LEIBER Gomez Anacona","gomezjhonny065@gmail.com","3124704921",5,"Dia 2 | Dia 3 | Dia 4 | Dia 5 | Dia 6",150 PC
+"miguel rojas","migue321go@gmail.com","+12397787023",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"natalia cuenca jimenez","nataliacuencajimenez@gmail.com","3168574244",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","pipe9513@hotmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Frank Contreras","frankalbertcontreras@gmail.com","4145068876",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Pedro Beltran","peter1303@hotmail.com","3223076511",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Juan Urbina","jc_urbina_2007@hotmail.com","3224603637",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","zeusimperio2016@gmail.com","",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"CRISTINA RUIZ","cristy_dgo7@yahoo.com.mx","6181344348",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Javier Sanabria","sanabjr1925@gmail.com","3105850164",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Roberto","lroberto_gt@hotmail.com","4773956321",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"Lucho Colombia Castaño","luchoporeducar@gmail.com","3007744193",5,"Dia 1 | Dia 2 | Dia 3 | Dia 4 | Dia 5",150 PC
+"","charlottechemello@gmail.com","",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Santiago Jimenez","lsantiagojimenezmartin@gmail.com","3114908034",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Ivan Cardenas","ivancardenas@gmail.com","3043279741",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Joan Sebastian Carmona","joansebastian.carmona@gmail.com","3165113856",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Carlos García Ortega","cgaortega@gmail.com","8718974630",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Jhan Carlos Velasquez","jhancarlosvg@hotmail.com","+573003617008",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Astrid Aparicio","astrid.trading16@gmail.com","3209868324",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Jorge Ramirez","jorgeramm744@gmail.com","3212508195",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Yakelin castillo","yakelincastillo25@gmail.com","3132816472",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"sofia cifuentes","cifuentessofia091@gmail.com","3222361614",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Jorge Puche","jpuche2021@gmail.com","4141855755",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Carmen Cuellar","carmencitacelicuellar@gmail.com","4247643457",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Ana María Remolina Muñoz","anam.remolinam@gmail.com","4145986482",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Diana Garcia","nita0923@hotmail.com","3206839973",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"","lopitrading1@gmail.com","",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Martínez castiblanco","arlettemartcas1@hotmail.com","3173748943",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"","lfelipevf@gmail.com","",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Karen Franco","krenfranco064@gmail.com","3017729156",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"","juaneshoyos2026@gmail.com","",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Edwin Rodríguez","edurodri919@gmail.com","3026410584",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Ivan Montenegro","imonten1978@gmail.com","3028342825",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Jurgen Karl","jkarlchiro72@gmail.com","8333276772",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"CARLOS ORJUELA","caog15@hotmail.com","3138857315",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Diego Alexander Restrepo Henao","diegolin9@hotmail.com","3127811621",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Wilson D.","salmos119.1.176@gmail.com","No tengo whatsapp, tengo Telegram",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Andres Bohorquez","andres.bohorquez.p@gmail.com","+573006005125",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"José Fernando Jiménez Gutierrez","josefer15@gmail.com","3204272859",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Alejandro Barragán","alejo0724.bm@gmail.com","3124087209",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Oscar Eduardo Velez","oscar.edu.velez12@gmail.com","+573117165524",4,"Dia 1 | Dia 2 | Dia 3 | Dia 5",120 PC
+"Lisandro Cifuentes","lisandrocifuentes29@gmail.com","4129290380",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Luis Miguel Angulo","luismiguelmasarrolloangulo@gmail.com","3162709107",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"María Eugenia Alday Eugenia Alday Eugenia Alday Eugenia Alday","aldaygutierrezmariaeugenia@gmail.com","56 9 8341 6101",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"","antgarcia59@hotmail.com","",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"silvia jaramillo","jaramillosilvia70@gmail.com","+573235056856",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"","uramirezgarcia@gmail.com","",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Saul ortiz","saulito1108@hotmail.com","+15714884505",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Andrés Fabián Velasquez","fabian777my@gmail.com","991280008",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Eric Mejia","erik8111@hotmail.com","3226930913",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Tifany Figueroa","carol25_27@hotmail.com","+56997338510",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"","jamrcivil@hotmail.com","",4,"Dia 1 | Dia 3 | Dia 4 | Dia 5",120 PC
+"","rommelpereiraotero@gmail.com","",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"","jorgeguisar@gmail.com","",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Carlos Fernando Mesa Vidal","nandomv1976@yahoo.com","3102847446",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Janet","lia.jari2017@gmail.com","3103055109",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Nicolas Ramirez Motato","ramireznico15r@gmail.com","3027538166",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Heliana","helianazapatac@gmail.com","317 6705635",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Jorge Estrada","jorgeestradacursos@gmail.com","3007087673",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"","terdo24@gmail.com","",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Jorge Alejandro Cely Naranjo","celynalejandroj44@outlook.com","3137484917",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"ELIZABETH RUBIO SALAZAR","monirubio333@yahoo.com","3205868115",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Miller sanchez","millersanchez31@gmail.com","3052103045",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"","pinchotrincho1@gmail.com","",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"","saul_1108@hotmail.com","",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Melissa Arango","nany603.mely@hotmail.com","3012329775",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"","hluis1547@gmail.com","",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Alexander montenegro ruiz","alexm13698@gmail.com","3123139997",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Usd","florezandrea6@gmail.com","3045939076",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Mario Barcenas","excelente138@gmail.com","3232845618",4,"Dia 3 | Dia 4 | Dia 5 | Dia 6",120 PC
+"CONNY","connybecerra.2805@gmail.com","3168312472",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Emecú Cadavid","emecu.cadavid@gmail.com","3155853582",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Jose Alvarado","alvaradojj@gmail.com","3156071407",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Harold Palacio","hpgleo.69@hotmail.com","3219085244",4,"Dia 1 | Dia 2 | Dia 3 | Dia 4",120 PC
+"Anderson Lizana Lujan","alizanalujan@gmail.com","+51910629264",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Yesenia Lagunes palacios","lagunes700@gmail.com","+522294612367",4,"Dia 2 | Dia 3 | Dia 4 | Dia 5",120 PC
+"Kevin Yeudiel Serrano Flores","yeudiel.61@hotmail.com","5585228462",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Luis Fernando Grajales","lufegraca@gmail.com","3127571805",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"","mirianguarinc@gmail.com","",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Wilfredo betancur","betancurwilfredo65@gmail.com","3115438863",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"Maribel Parra","maribel-1801@hotmail.com","+573012769646",3,"Dia 1 | Dia 2 | Dia 5",90 PC
+"Tomás Restrepo","tomas.repo@gmail.com","3165231367",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Edgar Jose Reyes Fuentes","seguridadypc@gmail.com","4121288290",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"Sandra González","sgonzapa25@gmail.com","+573106169739",3,"Dia 2 | Dia 4 | Dia 5",90 PC
+"Sebastián Galindo","effataturismo@gmail.com","3228668959",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"100.000","mariluciamolinasaltarin2@gmail.com","",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Wilmer Enrique","wilmermartinez346@gmail.com","4129436054",3,"Dia 2 | Dia 4 | Dia 5",90 PC
+"","albasu74@gmail.com","",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Angie Patricia Vergara Vergara","angiepvv-1994@hotmail.com","3213358390",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"","mmv26y@gmail.com","",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Julian Valencia","juliancristian@hotmail.com","3144683492",3,"Dia 4 | Dia 5 | Dia 6",90 PC
+"Alba Osorio","janeth.osorio@gmail.com","3108639727",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Sergio Salas","sergio17salas@yahoo.es","3125797232",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Julián Jaramillo","julianjaramillollano2@gmail.com","3213830103",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Gladys De Leon","chapinaha1935@gmail.com","3137906228",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"martha celia garcia","martinicelia@gmail.com","4121117038",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Rodrigo","leivarjj@gmail.com","1124991570",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Yessenia Mendoza","yessblank@outlook.com","3132547940",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Harold Palacio","appshpalacio@gmail.com","+573219085244",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Jeison Ramirez","yeiandres01996@hotmail.com","3042847877",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Luis Gil","lgilpantoja@gmail.com","4144860833",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"","jco_rosas@outlook.com","",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Carlos H","cahr90jf@gmail.com","3163767442",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Ernesto Murillo","sadeverda@yahoo.es","3103432134",3,"Dia 2 | Dia 4 | Dia 5",90 PC
+"Carlos Eduardo Londoño Naranjo","calalo67@gmail.com","3005253456",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"loreholy andreina lugo","loreholyandreinal@gmail.com","04262676135",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Carolina Esther Osorio Coronado","carolina.esther.ceoc@gmail.com","3134792770",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Garcia Garcia","gg9419159@gmail.com","4424940141",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"NACHO LOPEZ","njara13@gmail.com","3164726595",3,"Dia 2 | Dia 3 | Dia 5",90 PC
+"Giannfranco Tepedino","gianfrancotepedino@gmail.com","743006384",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Daniel Acosta","daniel.acosta162010@gmail.com","6623576687",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"","ferchofc@hotmail.com","",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Juan Pablo Torres Alvarez","juanpabto@gmail.com","3167423819",3,"Dia 1 | Dia 2 | Dia 4",90 PC
+"Sergio Triana","satc18@gmail.com","3174281851",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Miguel Marchetti","miguelmarchettiok@gmail.com","2342461830",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Isabel Allende Castillo","iszaa30@gmail.com","5656599290",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"","federico.coronado@yahoo.com.mx","",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"","fdelgadonyc@gmail.com","",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Yuly Andrea Rodríguez","yulyroma@unisabana.edu.co","3176381392",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Jamed Moisés Tellez Rodríguez","samircumpleanostellez@gmail.com","3023329727",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"Andrés Gutiérrez","angutiman@gmail.com","3053014079",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"Eduardo","eramirezb13@gmail.com","312 8792301",3,"Dia 2 | Dia 4 | Dia 5",90 PC
+"","daniel@ladifferent.com","",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"MARIO DE LA TORRE","mariodelatorre07@gmail.vcom","33 1175 5923",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"jose david vega caro","josedavidvegacaro@gmail.com","3117795620",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"franklin quintero","cncsc22@gmail.com","4347717306",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"Andrés Felipe García Arango","andresfelipegarciaarango198@gmail.com","3017114710",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Samuel Gil","samuelgvdocente@gmail.com","+573216071162",3,"Dia 1 | Dia 3 | Dia 4",90 PC
+"Claudia Miranda","claudiamirp@gmail.com","5539310071",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Stella","stelladaczuk24@gmail.com","1140870220",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"Dario Giraldo","egiraldoechavarria@gmail.com","3207091210",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Pedro Alvarez","pedro.alvarezc@gmail.com","+34644342368",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"DIANA CORTEZ MULATO","cortez.24diana@gmail.com","8688187173",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"Giraldo","lilianajesusconfioenti@gmail.com","3227170165",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"Luz","luzyolimacuellar@gmail.com","7481085488",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Moisés Chinchilla Cisneros","moiseschinchilla89@gmail.com","85541752",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Hazael Ake","construccion@doas.com.mx","9841576688",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"","vlacursez@gmail.com","",3,"Dia 3 | Dia 4 | Dia 5",90 PC
+"","cafegamboa@gmail.com","",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Julia Rincón","juliatrf@gmail.com","4146238873",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"","jonathanta28@gmail.com","",3,"Dia 2 | Dia 3 | Dia 4",90 PC
+"Jose Francisco Becerra Peñaloza","trabajofranco1987@gmail.com","3025617207",3,"Dia 1 | Dia 2 | Dia 3",90 PC
+"Alberto Cordero","albertocorderoulab@gmail.com","+50683251157",2,"Dia 1 | Dia 2",60 PC
+"Juan andres Cantillo González","keyperson2025@gmail.com","+573004080317",2,"Dia 2 | Dia 3",60 PC
+"Gold ","jorgemarin_02@hotmail.com","3242690688",2,"Dia 2 | Dia 4",60 PC
+"","angelsoft.intel.amd@gmail.com","",2,"Dia 1 | Dia 2",60 PC
 "","am.corralest@gmail.com","",2,"Dia 2 | Dia 3",60 PC
-"","mmv26y@gmail.com","",2,"Dia 2 | Dia 3",60 PC
+"","halfra@hotmail.com","",2,"Dia 2 | Dia 4",60 PC
+"Yajaira","yayita_tos@hotmail.com","3128079884",2,"Dia 2 | Dia 4",60 PC
+"Andrés Felipe Gómez Trejos","afelipegzig20@gmail.com","3106104903",2,"Dia 2 | Dia 3",60 PC
+"Ignacio Cortes","ignachotc@hotmail.com","+573168742640",2,"Dia 2 | Dia 3",60 PC
+"OSCAR","un1cos.chiquillob@gmail.com","3212817716",2,"Dia 3 | Dia 5",60 PC
+"Mavis Orozco","maviseuge2007@hotmail.com","+573218167834",2,"Dia 2 | Dia 5",60 PC
+"James Parra","jameparr@hotmail.com","3177891599",2,"Dia 2 | Dia 3",60 PC
+"Andrés Suarez","andressuarezg@outlook.com","3182165798",2,"Dia 1 | Dia 2",60 PC
+"HECTOR MENDEZ","heckmendez@gmail.com","3464753676",2,"Dia 1 | Dia 2",60 PC
+"Luis Alejandro","luisalejandro@hotmaul.com","3136436401",2,"Dia 2 | Dia 3",60 PC
+"Julian Jaramillo","julianjaramillocal19@gmail.com","3197974633",2,"Dia 2 | Dia 3",60 PC
+"Johanna Niño Guerra","joa_nino@hotmail.com","3165212076",2,"Dia 2 | Dia 3",60 PC
+"sandra patricia bolivar rodriguez","sandrabolivar7258@gmail.com","3138865990",2,"Dia 2 | Dia 3",60 PC
+"","ministeriohoreb316@gmail.com","",2,"Dia 1 | Dia 2",60 PC
+"Juan Manuel Fragoso","fragosomjm@gmail.com","5576426668",2,"Dia 2 | Dia 3",60 PC
+"","eblithhenao64@gmail.com","",2,"Dia 2 | Dia 3",60 PC
+"Heyver Useche","usecheheyver@gmail.com","3204827659",2,"Dia 2 | Dia 4",60 PC
+"","beltrangaitanj@gmail.com","",2,"Dia 2 | Dia 3",60 PC
+"John Jairo Vargas Zuluaga","jojavazu2008@gmail.com","3164735819",2,"Dia 2 | Dia 3",60 PC
+"","monica.rodriguezv2013@gmail.com","",2,"Dia 2 | Dia 4",60 PC
+"Carlos Ard","carlosardilah@hotmail.com","3153102246",2,"Dia 2 | Dia 4",60 PC
+"","abayter31@gmail.com","",2,"Dia 2 | Dia 3",60 PC
+"Rafael Mirabal","mirabalr827@gmail.com","04148653581",2,"Dia 2 | Dia 3",60 PC
+"Carlos Alvarez","carlosalvarez466@gmail.com","3136331607",2,"Dia 2 | Dia 3",60 PC
+"Yeimi Paola Martínez","yeipamarti@gmail.com","+573003249528",2,"Dia 2 | Dia 3",60 PC
+"Santiago Pulecio","santiago.pulecio@ladifferent.com","3115146886",2,"Dia 2 | Dia 3",60 PC
+"Raymundo","ray.tribuna@gmail.com","4521628801",2,"Dia 2 | Dia 3",60 PC
+"","freddy_vargas26@hotmail.com","",2,"Dia 2 | Dia 3",60 PC
+"","sotello361@gmail.com","",2,"Dia 2 | Dia 4",60 PC
+"Daniel Bohorquez inchima","danielbohorquezinchima@gmail.com","+573156902794",2,"Dia 1 | Dia 2",60 PC
+"Daniel Camilo","camirubio440@gmail.com","3227445844",2,"Dia 2 | Dia 3",60 PC
+"Andrés Gómez","andresgomezv97@hotmail.com","3004073364",2,"Dia 2 | Dia 3",60 PC
+"OSCAR TORRES","otorres29@gmail.com","3152053568",2,"Dia 2 | Dia 3",60 PC
+"Giovanny","castrorodriguezgiovanny803@gmail.com","3046715373",2,"Dia 3 | Dia 4",60 PC
 "","alfonso.mercado.g@gmail.com","",2,"Dia 2 | Dia 3",60 PC
+"Carolina Bolaños Rios","carolinabr77777@gmail.com","3178668516",2,"Dia 2 | Dia 4",60 PC
+"Carlos Maximiliano Mercado Zepeda","maxmercado98@outlook.com","3111171019",2,"Dia 2 | Dia 3",60 PC
+"Héctor Eduardo Gómez Riveros","gamin@hotmail.es","3118521884",2,"Dia 2 | Dia 3",60 PC
+"Mauro Guerrero","mauro.guerrero2015@gmail.com","2994557327",2,"Dia 2 | Dia 3",60 PC
+"Yamili Muñoz","yamili.munoz@gmail.com","3187343177",2,"Dia 3 | Dia 4",60 PC
+"Camilo Rico","camilorgom92@gmail.com","3183825245",2,"Dia 2 | Dia 3",60 PC
+"Javier Puig","jjpuigp@gmail.com","+524427474309",2,"Dia 1 | Dia 2",60 PC
+"Said234567852","saidsalazar249@gmail.com","5521859125",2,"Dia 2 | Dia 3",60 PC
+"María De Los Angeles Marrtinez","mariangi_30@hotmail.com","314 4526678",2,"Dia 2 | Dia 3",60 PC
+"Marilis Fuenmayor","marilisfuenmayor6@gmail.com","3122893406",2,"Dia 1 | Dia 2",60 PC
+"","silver726@hotmail.com","",2,"Dia 2 | Dia 3",60 PC
+"David Juarez","dj5214161@gmail.com","9993946420",2,"Dia 3 | Dia 4",60 PC
+"Jarinson Membache isarama","jarinsonmembache@gmail.com","3242621636",2,"Dia 3 | Dia 4",60 PC
+"Leidy Muñoz","azmoralesjohana95@gmail.com","3205032803",2,"Dia 3 | Dia 4",60 PC
+"Maria camila Ortega polanco","ortegapolancomariacamila@gmail.com","3104331874",2,"Dia 3 | Dia 4",60 PC
+"LUISA GABRIELA GONZALES","lugago182022@gmail.com","3212396937",2,"Dia 1 | Dia 2",60 PC
+"ANGELA CEDENO","cedenoangela08@gmail.com","3174566239",2,"Dia 2 | Dia 3",60 PC
+"Sady Carbonell bruno","carbonelsady@gmail.com","3215395659",2,"Dia 1 | Dia 2",60 PC
+"","alexameneses02@gmail.com","",2,"Dia 2 | Dia 3",60 PC
+"John","jalexander.sies@gmail.com","3207303213",2,"Dia 1 | Dia 2",60 PC
+"Gertrudis Carrasco","trudy77750@gmail.com","1130140773",2,"Dia 1 | Dia 2",60 PC
+"","maerio@gmail.com","",2,"Dia 2 | Dia 3",60 PC
+"","pahenriqueba@gmail.com","",2,"Dia 2 | Dia 3",60 PC
+"Steve pire","steve.alejandro.pire@gmail.com","64283951",2,"Dia 2 | Dia 3",60 PC
+"Claudia Gonzalez","gonzalezcpc@hotmail.com","7863711265",2,"Dia 2 | Dia 3",60 PC
+"Catalina Devia Castiblanco","cadeca219004@gmail.com","+573192318029",2,"Dia 3 | Dia 4",60 PC
+"Jesus Candelo","candelobravojesus@gmail.com","3163092744",2,"Dia 1 | Dia 2",60 PC
+"Emilio Guerra","envalbs@gmail.com","871 922 3334",2,"Dia 2 | Dia 3",60 PC
+"Jarrinson patrón","jarry2509@outlook.com","3012349513",2,"Dia 2 | Dia 3",60 PC
+"Mauricio Vasquez","mauriciovafer@gmail.com","9547986462",2,"Dia 2 | Dia 3",60 PC
+"Yonatan","yonathan.mantenimiento@gmail.com","3192114413",2,"Dia 3 | Dia 4",60 PC
+"Yonatan Gamboa","archiline.cad@gmail.com","+573192114413",2,"Dia 1 | Dia 2",60 PC
+"Alonso","aosorio@utp.edu.co","3162434872",2,"Dia 3 | Dia 4",60 PC
+"Jesús Martínez","edw_1309@hotmail.com","+573213166371",2,"Dia 1 | Dia 2",60 PC
+"","leilabautistao@gmail.com","",2,"Dia 2 | Dia 3",60 PC
+"","rafaelrodriguez1305@gmail.com","",2,"Dia 2 | Dia 3",60 PC
+"Francisco Olivares UVM","folivaresuvm@gmail.com","38155690",2,"Dia 3 | Dia 4",60 PC
+"Luis","quero1516@gmail.com","4145025578",2,"Dia 3 | Dia 4",60 PC
+"Josué García","jozhmet@gmail.com","5554589524",2,"Dia 4 | Dia 5",60 PC
+"Diana Becerra","dibean2000@hotmail.com","5147569903",2,"Dia 3 | Dia 4",60 PC
+"Rogelio Hernandez","tonydelivery21@gmail.com","4737375964",2,"Dia 1 | Dia 2",60 PC
+"Alejandra Aranguren","aranglma7319@gmail.com","4147209782",2,"Dia 3 | Dia 4",60 PC
+"Marco Ruiz","marcoaruizrojas@gmail.com","9612857734",2,"Dia 2 | Dia 3",60 PC
+"OSCAR ALFONSO ALVAREZ VILLADA","osyme1@hotmail.com","1 647-473-1711",2,"Dia 2 | Dia 3",60 PC
+"Olieth Barreto","olieth1122@hotmail.com","3133122646",2,"Dia 3 | Dia 4",60 PC
+"Juan","mr.juseca@gmail.com","301 3800509",2,"Dia 2 | Dia 3",60 PC
+"Jaime Fonnegra","jaimecrack@gmail.com","3148722002",2,"Dia 2 | Dia 3",60 PC
+"","lunariki42@gmail.com","",2,"Dia 4 | Dia 5",60 PC
+"Fabián Romero Pérez","fabianromeroperez@gmail.com","3165203281",2,"Dia 3 | Dia 4",60 PC
+"Jose ballardo Fernández icabalzeta","ballardfernandes@gmail.com","+50684941377",2,"Dia 1 | Dia 4",60 PC
+"","josue.carrillo.h@gmail.com","",2,"Dia 3 | Dia 4",60 PC
+"Jenny Estrada","estrada.jenny@gmail.com","3173717355",2,"Dia 1 | Dia 2",60 PC
+"Saúl Torres","squall2112@hotmail.com","987623077",2,"Dia 2 | Dia 3",60 PC
+"Francisco javier Wong salazar","pocketbony50@gmail.com","6613336280",2,"Dia 1 | Dia 2",60 PC
+"","mireyag2000@yahoo.com","",2,"Dia 1 | Dia 2",60 PC
+"Dillan Test","test@test.com","3113424711",1,"Dia 1",30 PC
+"","","",1,"Dia 2",30 PC
+"","","",1,"Dia 2",30 PC
+"DanielTrading","zuluagadaniel85@gmail.com","3116604211",1,"Dia 1",30 PC
+"Ecker","agustinagarcia91411@gmail.com","2491042635",1,"Dia 2",30 PC
 "","jfonsecaa1@gmail.com","",1,"Dia 2",30 PC
-"","angelsoft.intel.amd@gmail.com","",1,"Dia 2",30 PC
 "","hectorkcastaneda@gmail.com","",1,"Dia 2",30 PC
+"Scarlet Sánchez Herrera","denyherrera20@gmail.com","618 308 5600",1,"Dia 2",30 PC
 "","cristiancamilo191249@gmail.com","",1,"Dia 2",30 PC
-"","galbsonora_1971@hotmail.com","",1,"Dia 2",30 PC
+"Luis Wintergerst","gravitatpower@gmail.com","3336774518",1,"Dia 2",30 PC
+"Warner Garita Víquez","wgaritaviquez@gmail.com","84253961",1,"Dia 2",30 PC
 "","cesarmum26@gmail.com","",1,"Dia 2",30 PC
-"","jesusdavidgarcialora@gmail.com","",1,"Dia 2",30 PC
-"","halfra@hotmail.com","",1,"Dia 2",30 PC
-"","charlottechemello@gmail.com","",1,"Dia 2",30 PC
-"","mirianguarinc@gmail.com","",1,"Dia 2",30 PC
+"Luis Guillermo Diaz Marquez","lgdiazmarquez64@gmail.com","5574383848",1,"Dia 2",30 PC
+"Mayo Rios","mayo.rios@yahoo.com.mx","6671620677",1,"Dia 2",30 PC
+"NANCY HENAO","nbeatrizhenao@yahoo.com","3155571752",1,"Dia 2",30 PC
 "","rodrigo.pamador@gmail.com","",1,"Dia 2",30 PC
 "","kmilo.baquerov8a@hotmail.com","",1,"Dia 2",30 PC
+"Luis","luisvrodriguez19@hotmail.com","3474762715",1,"Dia 4",30 PC
+"Victor Hugo Santana Ortíz","victorhugosantanaortiz11@gmail.com","8711119828",1,"Dia 2",30 PC
 "","maranayive@gmail.com","",1,"Dia 2",30 PC
+"Carlos Gabriel Rozo","rozop359@gmail.com","3008556172",1,"Dia 2",30 PC
+"Hugo Cosco","hugocosco@yahoo.es","+51975030690",1,"Dia 2",30 PC
+"Jhonatan","jhonatan.botero.99@gmail.com","3134641041",1,"Dia 2",30 PC
+"Marco Macavilca","marcomc.91@hotmail.com","6472198371",1,"Dia 2",30 PC
+"Carmen Donado","yahyn1967@gmail.com","4142325673",1,"Dia 2",30 PC
+"CARMEN SISO","comercializadoramipueblo@gmail.com","4269455816",1,"Dia 2",30 PC
 "","andrespalaciov@gmail.com","",1,"Dia 2",30 PC
+"Angelo Silva Faraco","asf@ingges.com","3208558702",1,"Dia 2",30 PC
 "","colorsmeil.0.8@gmail.com","",1,"Dia 2",30 PC
+"alex javier gonzalez suarez","alexmuisca@gmail.com","3005206528",1,"Dia 2",30 PC
 "","melania.2@aol.com","",1,"Dia 2",30 PC
-"","mariluciamolinasaltarin2@gmail.com","",1,"Dia 2",30 PC
-"","anacubides18@hotmail.com","",1,"Dia 2",30 PC
-"","ministeriohoreb316@gmail.com","",1,"Dia 2",30 PC
-"","ojroca@hotmail.com","",1,"Dia 4",30 PC
+"Felisa Fernández","delisa.fernandez@gmail.com","4127715840",1,"Dia 2",30 PC
+"Dario Chinchilla","dariochinchillasuarez@gmail.com","989046920",1,"Dia 2",30 PC
+"Alexander Molina Guzmán","amo196928@gmail.com","3208706033",1,"Dia 2",30 PC
+"Alfredo Revello","alfredo.revello@americold.com.ar","1160447961",1,"Dia 2",30 PC
+"Carlos Romero","carlosromerobmr@gmail.com","3204647642",1,"Dia 2",30 PC
 "","mauroserrano84@gmail.com","",1,"Dia 2",30 PC
-"","eblithhenao64@gmail.com","",1,"Dia 2",30 PC
-"","lfelipevf@gmail.com","",1,"Dia 2",30 PC
+"Luisa Fernanda Escobar Toro","luisafescobart@hotmail.com","+573155399002",1,"Dia 2",30 PC
+"Marlio Avilés Patiño","marioavil47283@gmail.com","3014979447",1,"Dia 2",30 PC
+"Natalia Cordero","naatico258@gmail.com","3147814686",1,"Dia 2",30 PC
+"Lucia","lusalinas2004@gmail.com","+542604053770",1,"Dia 2",30 PC
 "","nestorrmg@gmail.com","",1,"Dia 2",30 PC
+"Wilson Ruiz","wora821@gmail.com","3104757651",1,"Dia 2",30 PC
+"JOSE LUIS QUINTERO RUBIO","joseluisquintero2@gmail.com","3108097660",1,"Dia 2",30 PC
 "","cervidec@gmail.com","",1,"Dia 2",30 PC
 "","juancabo@yahoo.com","",1,"Dia 2",30 PC
-"","jesus23lucero@gmail.com","",1,"Dia 2",30 PC
-"","beltrangaitanj@gmail.com","",1,"Dia 2",30 PC
+"DIANA GALARZA","dianaglarzx24@gmail.com","3234869484",1,"Dia 2",30 PC
+"gaby","jakely12ey@gmail.com","951969787",1,"Dia 2",30 PC
 "","blanquirolon27@gmail.com","",1,"Dia 2",30 PC
-"","monica.rodriguezv2013@gmail.com","",1,"Dia 2",30 PC
+"Lizeth Miranda","lizethmiranda6@gmail.com","3174662140",1,"Dia 2",30 PC
+"Sonia Cuervo","esmeraldacuervoabog@gmail.com","3003640079",1,"Dia 2",30 PC
+"EMMANUEL SERRANO","eserranoq9@gmail.com","6671845835",1,"Dia 2",30 PC
 "","andrealopez1035@gmail.com","",1,"Dia 2",30 PC
 "","carloscarloseliaseliascaelcael@gmail.com","",1,"Dia 4",30 PC
+"Elba Tua","elbatua7@gmail.com","4245298673",1,"Dia 2",30 PC
+"JOHN CARDENAS","jjtr4d3r@gmail.com","3122895799",1,"Dia 2",30 PC
 "","cesarmedina.inc@gmail.com","",1,"Dia 2",30 PC
 "","hermoqui@hotmail.com","",1,"Dia 2",30 PC
-"","angelam1609@hotmail.com","",1,"Dia 2",30 PC
-"","cachiva2020@gmail.com","",1,"Dia 2",30 PC
+"Ivan Gomez","taller.decima.12@gmail.com","+525527107356",1,"Dia 2",30 PC
+"C******* D****","barkontheroad@gmail.com","3192318029",1,"Dia 5",30 PC
+"Cristian Camilo Trujillo Gutiérrez","trujillocristiang@gmail.com","314 3660379",1,"Dia 5",30 PC
+"Pedro David Cuadros Sanchez","pdcuadross@gmail.com","3117572946",1,"Dia 2",30 PC
+"Alex Moreno","amoreno1252@gmail.com","4244917757",1,"Dia 2",30 PC
 "","carlismarcr2122@gmail.com","",1,"Dia 2",30 PC
-"","freddy_vargas26@hotmail.com","",1,"Dia 2",30 PC
+"Moisés Salazar Moreno","chelobasket10@gmail.com","3168667382",1,"Dia 2",30 PC
+"Carlos","celobf@gmail.com","940584773",1,"Dia 2",30 PC
+"Monica Ramirez","monyrc62@gmail.com","3152912323",1,"Dia 2",30 PC
 "","jorgeivan.carrillo@outlook.com","",1,"Dia 2",30 PC
-"","sotello361@gmail.com","",1,"Dia 2",30 PC
-"","superiorltda@gmail.com","",1,"Dia 4",30 PC
-"","jco_rosas@outlook.com","",1,"Dia 2",30 PC
+"Luk","talujob@gmail.com","515104719",1,"Dia 2",30 PC
+"Nelson Rodriguez Merchan","nerod-46@hotmail.com","3213193453",1,"Dia 2",30 PC
+"Nicolás Campos A","eventoespecial2000@gmail.com","04141964092",1,"Dia 2",30 PC
+"Javier Andrés Hernández Burgos","jh0348599@gmail.com","3222192262",1,"Dia 2",30 PC
+"Hedry Fortoul","hedryf@gmail.com","4147495452",1,"Dia 2",30 PC
 "","ramon.lingan@gmail.com","",1,"Dia 2",30 PC
-"","uramirezgarcia@gmail.com","",1,"Dia 2",30 PC
-"","camachomaria329@gmail.com","",1,"Dia 2",30 PC
+"Carlos Valencia","cvalenciabog@gmail.com","3118000778",1,"Dia 2",30 PC
+"Alejandra Bernal","ale_b_er@hotmail.com","6621956644",1,"Dia 2",30 PC
 "","soriaeliana.10@gmail.com","",1,"Dia 2",30 PC
-"","jorgeguisar@gmail.com","",1,"Dia 2",30 PC
 "","jaibensis@gmail.com","",1,"Dia 2",30 PC
-"","falesvel@gmail.com","",1,"Dia 2",30 PC
+"TOMAS RAMIREZ","toraco2409@gmail.com","3208555486",1,"Dia 2",30 PC
+"Cristóbal Chacón","cristobalc636@gmail.com","+573212217915",1,"Dia 2",30 PC
+"Tatiana Saavedra","jtsaavedra2019@gmail.com","3012171672",1,"Dia 2",30 PC
+"Javier Iván Gómez Franco","gomezfrancojavierivan@gmail.com","3167714839",1,"Dia 2",30 PC
+"Horacio sequeda","horaseq@gmail.com","3132158499",1,"Dia 2",30 PC
 "","reyanaya27@gmail.com","",1,"Dia 2",30 PC
-"","buyis09@gmail.com","",1,"Dia 2",30 PC
-"","juanpaga@hotmail.com","",1,"Dia 2",30 PC
-"","silver726@hotmail.com","",1,"Dia 2",30 PC
+"Andrea Marlene Gil herrera","angi0216@hotmail.com","3115833625",1,"Dia 2",30 PC
+"Helena Moya rodriguez","moyarodriguezhelena@gmail.com","3134295672",1,"Dia 3",30 PC
+"Armando Valdez","av4695584@gmail.com","7206721789",1,"Dia 2",30 PC
+"Jesus Antonio Ramirez Domínguez","jesusantonioramirezdominguez@gmail.com","9331366051",1,"Dia 3",30 PC
+"Leo Leal","leoleal0210@gmail.com","3043828786",1,"Dia 2",30 PC
+"Jorge Betancourt","ingjlbetancourt@gmail.com","+573238632981",1,"Dia 2",30 PC
+"Jenny Paola forero","jennypaforero-6527@hotmail.com","3176570725",1,"Dia 1",30 PC
+"María Angélica cortes","angelicacorz13@gmail.com","3136154680",1,"Dia 3",30 PC
+"Gh641832@gmail.com","gh641832@gmail.com","3003724852",1,"Dia 3",30 PC
+"José Luis","licjoselcm@gmail.com","5512861202",1,"Dia 2",30 PC
 "","andrea510andy@hotmail.com","",1,"Dia 2",30 PC
+"Enrrique castillo","enrriquecastilloamaya123@gmail.com","30066322802",1,"Dia 1",30 PC
 "","jjballesteros@gmail.com","",1,"Dia 2",30 PC
+"Luz Angélica ul cometa","ulmaria377@gmail.com","3115392682",1,"Dia 3",30 PC
+"Tatiana Vargas Perdomo","tatianavargasperdomo68@gmail.com","3224813778",1,"Dia 3",30 PC
+"Alejandra","alejaecheverri1993@gmail.com","3006902937",1,"Dia 2",30 PC
 "","ramondebentrader1@gmail.com","",1,"Dia 2",30 PC
-"","alexameneses02@gmail.com","",1,"Dia 2",30 PC
+"julian camilo laverde peñuela","julcaverde@gmail.com","3175270447",1,"Dia 2",30 PC
+"Angel said Romero","romeroangelsaid262@gmail.com","4421177046",1,"Dia 3",30 PC
+"vanina","vaninacirullo@gmail.com","2494014983",1,"Dia 2",30 PC
 "","luisb111894@gmail.com","",1,"Dia 2",30 PC
-"","albernal1@gmail.com","",1,"Dia 2",30 PC
-"","pinchotrincho1@gmail.com","",1,"Dia 2",30 PC
-"","federico.coronado@yahoo.com.mx","",1,"Dia 2",30 PC
-"","fdelgadonyc@gmail.com","",1,"Dia 2",30 PC
-"","maerio@gmail.com","",1,"Dia 2",30 PC
-"","albasu74@gmail.com","",1,"Dia 2",30 PC
-"","pahenriqueba@gmail.com","",1,"Dia 2",30 PC
-"","saul_1108@hotmail.com","",1,"Dia 2",30 PC
+"Claudia Gonzalez","claudiagonzaleza05@gmail.com","(478) 918-5971",1,"Dia 1",30 PC
+"Berenice torres","berenicet164@gmail.com","3347901220",1,"Dia 3",30 PC
 "","info@andreaarroyave.com","",1,"Dia 3",30 PC
+"Darwin Moscoso","darwin8808@hotmail.com","3112184692",1,"Dia 3",30 PC
+"Gonzalo Jaramillo C","gjara88@gmail.com","319 2513714",1,"Dia 3",30 PC
+"Fajardo","cafg27@hotmail.com","3134209037",1,"Dia 4",30 PC
 "","emanupf@gmail.com","",1,"Dia 3",30 PC
-"100.000","","",1,"Dia 3",30 PC
+"CARLOS GRANDA","carlos.granda266@gmail.com","3178942412",1,"Dia 3",30 PC
 "","clausbecerra22@gmail.com","",1,"Dia 3",30 PC
-"","alejandrogillopez99@gmail.com","",1,"Dia 3",30 PC
-"","pipe9513@hotmail.com","",1,"Dia 3",30 PC
-"","daniel@ladifferent.com","",1,"Dia 3",30 PC
-"","steel1751@gmail.com","",1,"Dia 2",30 PC
-"","joj_gibor@hotmail.com","",1,"Dia 3",30 PC
-"","juaneshoyos2026@gmail.com","",1,"Dia 2",30 PC
-"","terdo24@gmail.com","",1,"Dia 3",30 PC
-"","lopitrading1@gmail.com","",1,"Dia 3",30 PC
-"","abayter31@gmail.com","",1,"Dia 3",30 PC
+"Edwing Díaz Suárez","edwingdsius1@yahoo.com","3150457060",1,"Dia 3",30 PC
+"Paula Colorado Ordoñez","paula1225@gmail.com","3143984352",1,"Dia 1",30 PC
+"luis fabian diaz","lufadim@yahoo.es","3018504436",1,"Dia 3",30 PC
+"Diego","diegoamendozamendoza2403@gmail.com","+573208574210",1,"Dia 3",30 PC
+"Cristobal León","leones61@gmail.com","3208005527",1,"Dia 3",30 PC
+"Claudio Gustavo","sportmotos@hotmail.com","3873337492",1,"Dia 3",30 PC
+"Yeibis Karina Salcedo Pacheco","yeibiskarina@gmail.com","3136699700",1,"Dia 3",30 PC
+"ingrid arcos","pleyades9696@gmail.com","3157682451",1,"Dia 3",30 PC
+"Juan Aramayo","aramayoandres470@gmail.com","3878796932",1,"Dia 3",30 PC
+"Yeny Arboleda","cristye299@gmail.com","3117925428",1,"Dia 2",30 PC
+"Metzli","zumaya.mzm@gmail.com","5526617490",1,"Dia 3",30 PC
+"Sandra","patricia.buitragoariza@gmail.com","3174282820",1,"Dia 3",30 PC
+"Diana Guzmán","dicrisg@yahoo.com","3216483201",1,"Dia 3",30 PC
+"Claudia","alejandra164encina@gmail.com","2975793082",1,"Dia 3",30 PC
 "","marthadelpilarmartinez1@hotmail.com","",1,"Dia 3",30 PC
-"","douglasvargas27@gmail.com","",1,"Dia 3",30 PC
-"","zeusimperio2016@gmail.com","",1,"Dia 3",30 PC
-"","leilabautistao@gmail.com","",1,"Dia 2",30 PC
-"","alexisprada22@gmail.com","",1,"Dia 3",30 PC
-"","rafaelrodriguez1305@gmail.com","",1,"Dia 2",30 PC
-"","mexisano@gmail.com","",1,"Dia 3",30 PC
-"","rommelpereiraotero@gmail.com","",1,"Dia 3",30 PC
+"Luisa Fernanda Escobar Toro","inversionesexitosas4452@gmail.com","3155399002",1,"Dia 3",30 PC
+"frency guedez","frencyguez@gmail.com","4247349217",1,"Dia 1",30 PC
+"Derly Agudelo","derly6748@gmail.com","3128942905",1,"Dia 3",30 PC
+"Eduardo Arregui","earreguis@hotmail.com","3322333435",1,"Dia 4",30 PC
+"Bryan Umaña","clunie25@gmail.com","87923839",1,"Dia 3",30 PC
+"Carlos Marcano","carloseducccyc@gmail.com","04121037664",1,"Dia 3",30 PC
+"Alberto","remodelacionesyacabadosing@gmail.com","3102932594",1,"Dia 2",30 PC
+"Phanor Alvarez Guerrero","phanor3@hotmail.com","+573103207859",1,"Dia 2",30 PC
+"Trina Fuentes","tri.fuentesr@gmail.com","88979702",1,"Dia 2",30 PC
+"EDGAR GARZON","edggarzon@gmail.com","300 5563058",1,"Dia 3",30 PC
+"","adrianleonardocaromartinez@gmail.com","",1,"Dia 3",30 PC
+"Cristian","ccricay@gmail.com","3102898251",1,"Dia 3",30 PC
+"Cristal Galindo","cdgalindod@gmail.com","5526726676",1,"Dia 3",30 PC
+"Carlos Lopez","carloslopez1026@gmail.com","+573224532726",1,"Dia 3",30 PC
+"","gustavo12198887@hotmail.com","",1,"Dia 3",30 PC
+"Jorge Josue Mora Z","morazapata522@gmail.com","62409040",1,"Dia 2",30 PC
+"María Alejandra Sánchez Calderón","scmarial0610@gmail.com","907621759",1,"Dia 2",30 PC
+"Vanessa Yuliana Rivas Franco","vyrivasf@gmail.com","34 602 50 41 83",1,"Dia 2",30 PC
+"","mao_tst@hotmail.com","",1,"Dia 3",30 PC
+"","simongutierrezj2009@gmail.com","",1,"Dia 3",30 PC
+"80000","delfipatricia@yahoo.es","3186662405",1,"Dia 3",30 PC
+"Karina Del Pilar Vasquez Caicedo","vasquezkarina52@gmail.com","3135024616",1,"Dia 4",30 PC
+"","valdes693@gmail.com","",1,"Dia 4",30 PC
+"Juan Cortez","juanecochiclayo@yahoo.es","5142679420",1,"Dia 4",30 PC
+"juan carlos mesa lara","jcmautotrader@gmail.com","+573203065299",1,"Dia 4",30 PC
+"","leonellb07@gmail.com","",1,"Dia 4",30 PC
+"Rosario Pastrano","anomar2341@hotmail.com","4143833163",1,"Dia 3",30 PC
+"Emmanuel galeano","tabgal601@gmail.com","3232412242",1,"Dia 3",30 PC
+"Omar","sanka72@yahoo.com","3166911372",1,"Dia 4",30 PC
+"","alanajewelrycr@gmail.com","",1,"Dia 4",30 PC
+"Andrés Reyes","andres.reyeslrcolombia@gmail.com","3124996753",1,"Dia 2",30 PC
+"Nayara Portela","pportelaprado@gmail.com","3052458885",1,"Dia 4",30 PC
+"Joe Alvar","jalfus2003@yahoo.es","8134952348",1,"Dia 5",30 PC
+"EMIGDIO CESAR COGOLLO","cesarteaga@hotmail.com","3175769522",1,"Dia 3",30 PC
+"johan tabares","johan.901754@gmail.com","3106353959",1,"Dia 2",30 PC

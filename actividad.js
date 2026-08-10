@@ -514,12 +514,139 @@ const dailyMissions = {
   },
   8: {
     dayDate: "10 de Agosto",
-    title: "Día 8: Panel de Casos Reales (Q&A)",
-    desc: "Escribe tu pregunta o duda personal para que Juan la responda en vivo.",
+    title: "Día 8: Tu Mapa de Brecha",
+    desc: "Diagnostica tu brecha principal: ¿qué te separa de tomar decisiones repetibles? Selecciona tu ruta y responde con honestidad.",
     renderForm: () => `
+      <!-- ROUTE SELECTOR -->
       <div class="form-group">
-        <label class="form-label">Tu Pregunta Personal para el Q&A <span style="color:#ef4444;">*</span></label>
-        <textarea id="field-day8-question" class="form-textarea" rows="3" placeholder="Escribe aquí tu pregunta o duda de trading o mentalidad..." required></textarea>
+        <label class="form-label">¿Con cuál ruta te identificas más? <span style="color:#ef4444;">*</span></label>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px; margin-bottom: 12px; font-size: 0.82rem; color: #94a3b8; line-height: 1.45;">
+          <p style="margin-bottom: 6px; color: #f8fafc;"><strong>• Ruta Cero:</strong> <em>Estoy empezando. Todavía no opero o tengo muy poca experiencia.</em></p>
+          <p style="margin: 0; color: #f8fafc;"><strong>• Ruta Experiencia:</strong> <em>Ya tengo conocimientos o he operado, pero no logro ser consistente.</em></p>
+        </div>
+        <select id="field-day8-route" class="form-input" required onchange="toggleDay8Route(this.value)" style="margin-bottom: 12px;">
+          <option value="">-- Selecciona tu ruta --</option>
+          <option value="Ruta Cero">🟢 Ruta Cero (Estoy empezando)</option>
+          <option value="Ruta Experiencia">🔵 Ruta Experiencia (Ya tengo conocimientos)</option>
+        </select>
+      </div>
+
+      <!-- RUTA CERO QUESTIONS -->
+      <div id="day8-route-cero" style="display:none;">
+        <div style="background: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
+          <strong style="color: #25d366; font-size: 0.85rem;">🟢 MAPA DE BRECHA — RUTA CERO</strong>
+        </div>
+        <div class="form-group">
+          <label class="form-label">1. ¿Qué concepto todavía no puedes explicar con tus propias palabras? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-rc-q1" class="form-textarea" rows="2" placeholder="Ej: No entiendo bien qué es un ETF, o cómo funciona un bróker..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">2. ¿Qué riesgo debes evitar mientras aprendes? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-rc-q2" class="form-textarea" rows="2" placeholder="Ej: Abrir una cuenta real antes de practicar en demo..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">3. ¿Qué práctica puedes hacer sin dinero real? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-rc-q3" class="form-textarea" rows="2" placeholder="Ej: Observar gráficas, practicar en simulador, documentar lo que aprendo..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">4. ¿Qué pregunta debes poder responder antes de avanzar? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-rc-q4" class="form-textarea" rows="2" placeholder="Ej: ¿Cuánto puedo perder sin que afecte mi vida?"></textarea>
+        </div>
+      </div>
+
+      <!-- RUTA EXPERIENCIA QUESTIONS -->
+      <div id="day8-route-exp" style="display:none;">
+        <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
+          <strong style="color: #38bdf8; font-size: 0.85rem;">🔵 MAPA DE BRECHA — RUTA EXPERIENCIA</strong>
+        </div>
+        <div class="form-group">
+          <label class="form-label">1. ¿Qué pieza de tu proceso falla más? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-re-q1" class="form-textarea" rows="2" placeholder="Ej: Planeación, ejecución, documentación, evaluación..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">2. ¿Qué evidencia tienes de que realmente falla? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-re-q2" class="form-textarea" rows="2" placeholder="Ej: Mis últimas 10 operaciones no siguieron el plan original..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">3. ¿Qué regla falta o se negocia? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-re-q3" class="form-textarea" rows="2" placeholder="Ej: Mi regla de stop loss... la muevo cuando estoy perdiendo..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">4. ¿Qué variable medirás durante tu próxima muestra? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-re-q4" class="form-textarea" rows="2" placeholder="Ej: % de trades donde seguí el plan vs. donde improvisé..."></textarea>
+        </div>
+      </div>
+
+      <!-- BRECHA PRINCIPAL (both routes) -->
+      <div id="day8-brecha-principal" style="display:none;">
+        <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
+          <strong style="color: #f59e0b; font-size: 0.85rem;">⚡ IDENTIFICA TU BRECHA PRINCIPAL</strong>
+          <p style="color: #94a3b8; font-size: 0.8rem; margin: 4px 0 0 0;">No elijas todas. ¿Cuál, si la fortalecieras, mejoraría más tu proceso?</p>
+        </div>
+        
+        <input type="hidden" id="field-day8-capa" value="" required>
+        
+        <style>
+          .gap-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            color: #e2e8f0;
+          }
+          .gap-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+          }
+          .gap-card.selected {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: #f59e0b;
+            color: #f8fafc;
+            font-weight: bold;
+          }
+          .gap-icon {
+            font-size: 1.2rem;
+            margin-right: 12px;
+          }
+        </style>
+        
+        <div class="gap-cards-container" style="margin-bottom: 16px;">
+          <div class="gap-card" onclick="selectGapCard('Fundamentos', this)">
+            <span class="gap-icon">📚</span> Fundamentos
+          </div>
+          <div class="gap-card" onclick="selectGapCard('Mente', this)">
+            <span class="gap-icon">🧠</span> Mente
+          </div>
+          <div class="gap-card" onclick="selectGapCard('Método', this)">
+            <span class="gap-icon">📐</span> Método
+          </div>
+          <div class="gap-card" onclick="selectGapCard('Riesgo', this)">
+            <span class="gap-icon">🛡️</span> Riesgo
+          </div>
+          <div class="gap-card" onclick="selectGapCard('Oficio', this)">
+            <span class="gap-icon">⚒️</span> Oficio
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 16px;">
+          <button type="button" id="btn-geny-generate" class="submit-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); margin: 0 auto; display: inline-block; width: auto; padding: 12px 24px;" onclick="generateGenyMap()">
+            ✨ Generar mi Mapa con Geny
+          </button>
+        </div>
+
+        <div id="geny-loading" style="display:none; text-align: center; padding: 20px; color: #10b981;">
+          <div class="spinner" style="margin: 0 auto; border-top-color: #10b981;"></div>
+          <p style="margin-top: 10px; font-size: 0.85rem;">Geny está analizando tus respuestas...</p>
+        </div>
+
+        <div id="geny-result-container" style="display:none; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+          <h4 style="margin: 0 0 10px 0; color: #10b981; font-size: 0.9rem;">MI MAPA DE BRECHA</h4>
+          <textarea id="field-day8-brecha" class="form-textarea" rows="5" style="border: none; background: transparent; padding: 0; box-shadow: none; font-size: 0.95rem; line-height: 1.5; color: #f8fafc;" readonly required></textarea>
+        </div>
       </div>
     `
   },
@@ -818,6 +945,41 @@ function selectDay4Path(pathType) {
   }
 }
 
+// Day 8: Toggle route-specific Mapa de Brecha questions
+function toggleDay8Route(value) {
+  const routeCero = document.getElementById('day8-route-cero');
+  const routeExp = document.getElementById('day8-route-exp');
+  const brechaPrincipal = document.getElementById('day8-brecha-principal');
+
+  if (routeCero) routeCero.style.display = 'none';
+  if (routeExp) routeExp.style.display = 'none';
+  if (brechaPrincipal) brechaPrincipal.style.display = 'none';
+
+  if (value === 'Ruta Cero') {
+    if (routeCero) routeCero.style.display = 'block';
+    // Set required on Ruta Cero fields, remove from Ruta Experiencia
+    ['field-day8-rc-q1','field-day8-rc-q2','field-day8-rc-q3','field-day8-rc-q4'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.required = true;
+    });
+    ['field-day8-re-q1','field-day8-re-q2','field-day8-re-q3','field-day8-re-q4'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.required = false;
+    });
+  } else if (value === 'Ruta Experiencia') {
+    if (routeExp) routeExp.style.display = 'block';
+    // Set required on Ruta Experiencia fields, remove from Ruta Cero
+    ['field-day8-re-q1','field-day8-re-q2','field-day8-re-q3','field-day8-re-q4'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.required = true;
+    });
+    ['field-day8-rc-q1','field-day8-rc-q2','field-day8-rc-q3','field-day8-rc-q4'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.required = false;
+    });
+  }
+
+  if (value) {
+    if (brechaPrincipal) brechaPrincipal.style.display = 'block';
+  }
+}
+
 async function handleActivitySubmit(e) {
   e.preventDefault();
   const btn = document.getElementById('btn-submit-activity');
@@ -1071,7 +1233,7 @@ function showSuccessView() {
     5: { icon: '📖', name: 'Insignia Día 5: Bitácora PEDEM' },
     6: { icon: '📊', name: 'Insignia Día 6: Rúbrica de Disciplina' },
     7: { icon: '⚡', name: 'Insignia Día 7: Masterclass de Dominio' },
-    8: { icon: '🛡️', name: 'Insignia Día 8: Q&A y Riesgo Avanzado' },
+    8: { icon: '🗺️', name: 'Insignia Día 8: Mapa de Brecha' },
     9: { icon: '🚀', name: 'Insignia Día 9: Evolución Mental' },
     10: { icon: '🏆', name: 'Insignia Día 10: Rango de Dominio Total' }
   };
@@ -1260,4 +1422,69 @@ window.goToGastosStep = function(stepNum) {
   }
 
   window.scrollTo({ top: 150, behavior: 'smooth' });
+};
+
+window.selectGapCard = function(gapName, element) {
+  document.getElementById('field-day8-capa').value = gapName;
+  var cards = document.querySelectorAll('.gap-card');
+  cards.forEach(function(c) { c.classList.remove('selected'); });
+  element.classList.add('selected');
+};
+
+window.generateGenyMap = async function() {
+  var route = document.getElementById('field-day8-route').value;
+  var gap = document.getElementById('field-day8-capa').value;
+  
+  if (!route || !gap) {
+    alert("Por favor selecciona tu ruta y tu brecha principal antes de generar el mapa.");
+    return;
+  }
+
+  var q1, q2, q3, q4;
+  if (route === 'Ruta Cero') {
+    q1 = document.getElementById('field-day8-rc-q1').value;
+    q2 = document.getElementById('field-day8-rc-q2').value;
+    q3 = document.getElementById('field-day8-rc-q3').value;
+    q4 = document.getElementById('field-day8-rc-q4').value;
+  } else {
+    q1 = document.getElementById('field-day8-re-q1').value;
+    q2 = document.getElementById('field-day8-re-q2').value;
+    q3 = document.getElementById('field-day8-re-q3').value;
+    q4 = document.getElementById('field-day8-re-q4').value;
+  }
+
+  if (!q1 || !q2 || !q3 || !q4) {
+    alert("Por favor responde las 4 preguntas de diagnóstico primero.");
+    return;
+  }
+
+  document.getElementById('btn-geny-generate').style.display = 'none';
+  document.getElementById('geny-loading').style.display = 'block';
+  document.getElementById('geny-result-container').style.display = 'none';
+
+  try {
+    const res = await fetch(SUPABASE_URL + '/functions/v1/generate_mapa_brecha', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ route, gap, q1, q2, q3, q4 })
+    });
+
+    if (!res.ok) throw new Error("Error en el servidor de Geny.");
+    
+    const data = await res.json();
+    
+    document.getElementById('field-day8-brecha').value = data.result || "Error procesando. Intenta de nuevo.";
+    document.getElementById('geny-loading').style.display = 'none';
+    document.getElementById('geny-result-container').style.display = 'block';
+    document.getElementById('btn-geny-generate').style.display = 'inline-block';
+    document.getElementById('btn-geny-generate').innerText = "✨ Volver a generar";
+
+  } catch (err) {
+    console.error(err);
+    alert("Hubo un error contactando a Geny. Intenta de nuevo.");
+    document.getElementById('geny-loading').style.display = 'none';
+    document.getElementById('btn-geny-generate').style.display = 'inline-block';
+  }
 };
