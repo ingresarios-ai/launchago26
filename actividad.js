@@ -1508,6 +1508,11 @@ window.generateGenyMap = async function() {
     return;
   }
 
+  if (q1.trim().length < 15 || q2.trim().length < 15 || q3.trim().length < 15 || q4.trim().length < 15) {
+    alert("Tus respuestas son muy cortas. Por favor, tómate el tiempo de responder con más detalle (mínimo 15 caracteres por pregunta) para que Geny pueda analizar bien tu caso.");
+    return;
+  }
+
   document.getElementById('btn-geny-generate').style.display = 'none';
   document.getElementById('geny-loading').style.display = 'block';
   document.getElementById('geny-result-container').style.display = 'none';
