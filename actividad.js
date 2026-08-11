@@ -521,7 +521,7 @@ const dailyMissions = {
       <div class="form-group" id="day8-route-selector-container">
         <label class="form-label" style="text-align: center; font-size: 1.1rem; margin-bottom: 16px;">¿Con cuál ruta te identificas más? <span style="color:#ef4444;">*</span></label>
         
-        <input type="hidden" id="field-day8-route" value="" required>
+        <input type="hidden" id="field-day8-route" class="form-input" value="" required>
 
         <style>
           .route-btn {
@@ -628,7 +628,7 @@ const dailyMissions = {
           <p style="color: #94a3b8; font-size: 0.8rem; margin: 4px 0 0 0;">No elijas todas. ¿Cuál, si la fortalecieras, mejoraría más tu proceso?</p>
         </div>
         
-        <input type="hidden" id="field-day8-capa" value="" required>
+        <input type="hidden" id="field-day8-capa" class="form-input" value="" required>
         
         <style>
           .gap-card {
