@@ -677,7 +677,7 @@ const dailyMissions = {
         </div>
 
         <div style="text-align: center; margin-bottom: 16px;">
-          <button type="button" id="btn-geny-generate" class="submit-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); margin: 0 auto; display: inline-block; width: auto; padding: 12px 24px;" onclick="generateGenyMap()">
+          <button type="button" id="btn-geny-generate" class="btn-submit" onclick="generateGenyMap()">
             ✨ Generar mi Mapa con Geny
           </button>
         </div>
@@ -1533,7 +1533,7 @@ window.generateGenyMap = async function() {
     document.getElementById('field-day8-brecha').value = data.result || "Error procesando. Intenta de nuevo.";
     document.getElementById('geny-loading').style.display = 'none';
     document.getElementById('geny-result-container').style.display = 'block';
-    document.getElementById('btn-geny-generate').style.display = 'inline-block';
+    document.getElementById('btn-geny-generate').style.display = 'flex';
     document.getElementById('btn-geny-generate').innerText = "✨ Volver a generar";
     
     // Show the final submit button so they can save the mission
@@ -1544,7 +1544,7 @@ window.generateGenyMap = async function() {
     console.error(err);
     alert("Hubo un error contactando a Geny. Intenta de nuevo.");
     document.getElementById('geny-loading').style.display = 'none';
-    document.getElementById('btn-geny-generate').style.display = 'inline-block';
+    document.getElementById('btn-geny-generate').style.display = 'flex';
   }
 };
 
