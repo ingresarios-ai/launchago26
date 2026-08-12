@@ -436,7 +436,7 @@ const liveSessionsData = {
     dayDate: "10 de Agosto",
     title: "8. Panel de Casos Reales — Historias Sin Saboteador",
     reward: "+30 PC",
-    liveUrl: "https://taller.ingresarios.net/whatsapp",
+    liveUrl: "https://www.youtube.com/watch?v=w8t3lPxXsu0",
     resourceName: "Casos de Estudio: De Reactivo a Inquebrantable (PDF)",
     resourceLink: "#",
     missionTitle: "Misión Día 8: Escribe tu Duda u Objeción Personal",
