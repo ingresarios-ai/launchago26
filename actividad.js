@@ -1071,7 +1071,7 @@ function showSuccessView() {
     5: { icon: '📖', name: 'Insignia Día 5: Bitácora PEDEM' },
     6: { icon: '📊', name: 'Insignia Día 6: Rúbrica de Disciplina' },
     7: { icon: '⚡', name: 'Insignia Día 7: Masterclass de Dominio' },
-    8: { icon: '🗺️', name: 'Insignia Día 8: Mapa de Brecha' },
+    8: { icon: '💬', name: 'Insignia Día 8: Duda u Objeción' },
     9: { icon: '🚀', name: 'Insignia Día 9: Evolución Mental' },
     10: { icon: '🏆', name: 'Insignia Día 10: Rango de Dominio Total' }
   };
