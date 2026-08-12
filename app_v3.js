@@ -42,6 +42,7 @@ const insigniasData = {
 const liveSessionsData = {
   1: {
     dayDate: "3 de Agosto",
+    pngLink: "boveda/dia1.png",
     title: "1. La Anatomía del Saboteador",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=nmKG-urzbn4&list=PLZ3Gjdurk6HM&index=1",
@@ -59,6 +60,7 @@ const liveSessionsData = {
   },
   2: {
     dayDate: "4 de Agosto",
+    pngLink: "boveda/dia2.png",
     title: "2. Cuenta Abierta: El Espejo de la Mente",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=R2SAj0u3ESk&list=PLZ3Gjdurk6HM&index=2",
@@ -79,6 +81,7 @@ const liveSessionsData = {
   },
   3: {
     dayDate: "5 de Agosto",
+    pngLink: "boveda/dia3.png",
     title: "3. P de Planear: Gastos Hormiga a Inversiones Hormiga",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=pv8l421vF5Y&list=PLZ3Gjdurk6HM&index=3",
@@ -320,6 +323,7 @@ const liveSessionsData = {
   },
   4: {
     dayDate: "6 de Agosto",
+    pngLink: "boveda/dia4.png",
     title: "4. Ejecución con Inteligencia Artificial (Conoce a GENY)",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=XIHwkZRyFnw&list=PLZ3Gjdurk6HM&index=4",
@@ -355,6 +359,7 @@ const liveSessionsData = {
   },
   5: {
     dayDate: "7 de Agosto",
+    pngLink: "boveda/dia5.png",
     title: "5. La Bitácora del Saboteador",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=0_aVXrWNPPQ&list=PLZ3Gjdurk6HM&index=5",
@@ -392,6 +397,7 @@ const liveSessionsData = {
   },
   6: {
     dayDate: "8 de Agosto",
+    pngLink: "boveda/dia6.png",
     title: "6. Evaluación y Métrica: Reditum Sniper",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=L27tAmupgiY&list=PLZ3Gjdurk6HM&index=6",
@@ -418,6 +424,7 @@ const liveSessionsData = {
   },
   7: {
     dayDate: "9 de Agosto",
+    pngLink: "boveda/dia7.png",
     title: "7. MASTERCLASS: Mente · Sistema · Entorno",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=sMooQHrbPB4&list=PLZ3Gjdurk6HM&index=7",
@@ -434,6 +441,7 @@ const liveSessionsData = {
   },
   8: {
     dayDate: "10 de Agosto",
+    pngLink: "boveda/dia8.png",
     title: "8. Panel de Casos Reales — Historias Sin Saboteador",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=w8t3lPxXsu0",
@@ -881,6 +889,22 @@ function renderFeaturedLiveSlider(dayNum) {
           </a>
         </div>
       ` : ''}
+
+      ${data.pngLink ? `
+        <div style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.16) 0%, rgba(202, 138, 4, 0.08) 100%); border: 1.5px solid #eab308; border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 0 0 15px rgba(234, 179, 8, 0.2);" onclick="event.stopPropagation();">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.5rem;">🖼️</span>
+            <div>
+              <strong style="font-size: 0.85rem; color: #ffffff; display: block;">Resumen del Día (PNG):</strong>
+              <span style="font-size: 0.78rem; color: #eab308; font-weight: 700;">Infografía Resumen</span>
+            </div>
+          </div>
+          <a href="${data.pngLink}" download target="_blank" class="btn-secondary" style="font-size: 0.78rem; padding: 8px 14px; background: #eab308; color: #000; font-weight: 900; text-decoration: none; border-radius: 8px; white-space: nowrap; box-shadow: 0 0 10px rgba(234, 179, 8, 0.4);">
+            📥 DESCARGAR
+          </a>
+        </div>
+      ` : ''}
+
 
       <div class="featured-meta" style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 16px;">
         <span class="meta-item">🗓️ ${data.dayDate}</span>
@@ -2405,6 +2429,24 @@ function openLiveSession(dayNum) {
         </a>
       </div>
     ` : ''}
+
+    ${data.pngLink ? `
+      <!-- RESUMEN EN IMAGEN -->
+      <div style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(202, 138, 4, 0.06) 100%); border: 1px solid rgba(234, 179, 8, 0.35); padding: 16px; border-radius: 14px; margin-bottom: 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.1);">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:1.8rem; background:rgba(234, 179, 8, 0.15); border:1px solid rgba(234, 179, 8, 0.4); border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center;">🖼️</span>
+          <div>
+            <strong style="font-size:0.9rem; color:#f8fafc; display:block;">Resumen Gráfico del Día:</strong>
+            <span style="font-size:0.82rem; color:#eab308; font-weight:600;">Infografía Resumen (PNG)</span>
+          </div>
+        </div>
+        <a href="${data.pngLink}" download target="_blank" class="btn-secondary" style="font-size:0.82rem; padding:10px 18px; background:#eab308; color:#000; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:8px; border-radius:10px; box-shadow:0 0 12px rgba(234, 179, 8, 0.3);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          DESCARGAR IMAGEN (PNG)
+        </a>
+      </div>
+    ` : ''}
+
 
     <!-- PASO 2: RECLAMAR INSIGNIA DE DOMINIO Y MISIÓN PRÁCTICA DEL DÍA -->
     <div style="background: var(--surface); border: 1px solid var(--border-subtle); padding: 18px; border-radius: 14px; margin-bottom: 16px;">
