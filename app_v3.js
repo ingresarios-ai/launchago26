@@ -442,9 +442,14 @@ const liveSessionsData = {
     missionTitle: "Misión Día 8: Tu Mapa de Brecha",
     missionDesc: "Diagnostica tu brecha principal y genera tu mapa con Geny AI en la actividad oficial.",
     renderMission: () => `
+      <div style="text-align: center; margin: 16px 0;">
+        <a href="/actividad8" target="_blank" style="display: inline-block; width: 100%; text-decoration: none; padding: 14px 24px; font-size: 1rem; font-weight: 800; border-radius: 12px; border: none; background: #25d366; color: #000; cursor: pointer; text-align: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);">
+          IR A GENERAR MI MAPA DE BRECHA ➔
+        </a>
+      </div>
       <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Mapa de Brecha Generado y Guardado</span>
+        <span>Completé mi Mapa de Brecha en la Actividad Oficial</span>
       </label>
     `
   },
