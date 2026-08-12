@@ -1757,11 +1757,23 @@ function showJourney() {
 // COUNTDOWN TIMER
 // ========================================
 
-function getLiveTargetForDay(dayNum) {
-  const n = (dayNum || 1);
-  // August n, 2026 20:00:00 COT (UTC-5) = August (n+1), 2026 01:00:00 UTC
-  // Note: Month index 7 = August in JS Date.UTC
-  return Date.UTC(2026, 7, 2 + n, 1, 0, 0);
+function getNextEventTime() {
+  const events = [
+    Date.UTC(2026, 7, 9, 1, 0, 0),   // Aug 8, 8PM COT
+    Date.UTC(2026, 7, 10, 1, 0, 0),  // Aug 9, 8PM COT
+    Date.UTC(2026, 7, 11, 1, 0, 0),  // Aug 10, 8PM COT
+    Date.UTC(2026, 7, 12, 1, 0, 0),  // Aug 11, 8PM COT (Clase Extra)
+    Date.UTC(2026, 7, 13, 1, 0, 0),  // Aug 12, 8PM COT (Day 9)
+    Date.UTC(2026, 7, 15, 1, 0, 0)   // Aug 14, 8PM COT (Day 10)
+  ];
+  const now = Date.now();
+  // Find the first event that is either in the future, or happened less than 2 hours ago
+  for (let t of events) {
+    if (now < t + (2 * 60 * 60 * 1000)) {
+      return t;
+    }
+  }
+  return events[events.length - 1]; // fallback to last event
 }
 
 function initCountdown() {
@@ -1777,13 +1789,8 @@ function initCountdown() {
   function update() {
     const now = Date.now();
     let currentDay = getAvailableDayNumber();
-    let targetTime = getLiveTargetForDay(currentDay);
+    let targetTime = getNextEventTime();
 
-    // If today's live finished (> 2 hours after 8:00 PM COT) and day < 10, move countdown to next day
-    if (now > targetTime + (2 * 60 * 60 * 1000) && currentDay < 10) {
-      currentDay = Math.min(10, currentDay + 1);
-      targetTime = getLiveTargetForDay(currentDay);
-    }
 
     const diff = targetTime - now;
     const sessionData = liveSessionsData[currentDay] || { dayDate: `Día ${currentDay}`, title: `Clase ${currentDay}` };
