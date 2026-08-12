@@ -153,6 +153,111 @@
             <div class="insignias-grid" id="insignias-grid">
               <!-- Rendered dynamically by app_v3.js -->
             </div>
+
+            <!-- BÓVEDA DE CONOCIMIENTO (NUEVO) -->
+            <div id="boveda-container" style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1);">
+              <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px;">
+                <span style="font-size: 2.5rem;">📦</span>
+                <h2 style="font-family: 'Outfit', sans-serif; font-weight: 800; margin: 0; color: #f8fafc; font-size: 1.5rem; text-align: center;">BÓVEDA DE CONOCIMIENTO</h2>
+              </div>
+              
+              <!-- ESTADO BLOQUEADO -->
+              <div id="boveda-locked" style="text-align: center; background: rgba(15, 23, 42, 0.6); border: 1px dashed rgba(255,255,255,0.2); padding: 30px; border-radius: 12px;">
+                <span style="font-size: 2rem; display: block; margin-bottom: 10px;">🔒</span>
+                <h3 style="color: #94a3b8; font-size: 1.1rem; margin: 0 0 10px 0;">Bóveda Bloqueada</h3>
+                <p style="color: #64748b; font-size: 0.9rem; margin: 0; max-width: 400px; margin-left: auto; margin-right: auto;">Para abrir el cofre y descargar las diapositivas oficiales, necesitas tener al menos <strong>8 insignias</strong> completadas.</p>
+              </div>
+
+              <!-- ESTADO DESBLOQUEADO -->
+              <div id="boveda-unlocked" style="display: none;">
+                <p style="text-align: center; color: #94a3b8; margin-bottom: 24px; font-size: 0.95rem;">¡Felicidades! Has desbloqueado el material oficial de las clases.</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
+                  <a href="/boveda/dia1.pdf" target="_blank" class="boveda-item">
+                    <span class="boveda-icon">📄</span>
+                    <span class="boveda-text">Día 1: El Saboteador</span>
+                  </a>
+                  <a href="/boveda/dia2.pdf" target="_blank" class="boveda-item">
+                    <span class="boveda-icon">📄</span>
+                    <span class="boveda-text">Día 2: El Espejo</span>
+                  </a>
+                  <a href="/boveda/dia3.pdf" target="_blank" class="boveda-item">
+                    <span class="boveda-icon">📄</span>
+                    <span class="boveda-text">Día 3: Planear</span>
+                  </a>
+                  <a href="/boveda/dia4.pdf" target="_blank" class="boveda-item">
+                    <span class="boveda-icon">📄</span>
+                    <span class="boveda-text">Día 4: Ejecutar</span>
+                  </a>
+                  <a href="/boveda/dia5.pdf" target="_blank" class="boveda-item">
+                    <span class="boveda-icon">📄</span>
+                    <span class="boveda-text">Día 5: Documentar</span>
+                  </a>
+                  <a href="/boveda/dia6.pdf" target="_blank" class="boveda-item">
+                    <span class="boveda-icon">📄</span>
+                    <span class="boveda-text">Día 6: Evaluar/Mejorar</span>
+                  </a>
+                  <a href="/boveda/dia7.pdf" target="_blank" class="boveda-item">
+                    <span class="boveda-icon">📄</span>
+                    <span class="boveda-text">Día 7: Termostato</span>
+                  </a>
+                  <a href="/boveda/dia8.pdf" target="_blank" class="boveda-item">
+                    <span class="boveda-icon">📄</span>
+                    <span class="boveda-text">Día 8: PLC 1</span>
+                  </a>
+                </div>
+
+                <h3 style="font-family: 'Outfit', sans-serif; font-weight: 700; color: #f8fafc; font-size: 1.1rem; margin-top: 30px; margin-bottom: 16px; text-align: center;">Material Extra</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px;">
+                  <a href="/boveda/extra_aventura.pdf" target="_blank" class="boveda-item boveda-extra">
+                    <span class="boveda-icon">📙</span>
+                    <span class="boveda-text">La Gran Aventura del Dinero</span>
+                  </a>
+                  <a href="/boveda/extra_pivots.pdf" target="_blank" class="boveda-item boveda-extra">
+                    <span class="boveda-icon">📈</span>
+                    <span class="boveda-text">Tendencias y Pivots</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <style>
+              .boveda-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                padding: 16px;
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 12px;
+                text-decoration: none;
+                transition: all 0.2s ease;
+              }
+              .boveda-item:hover {
+                background: rgba(16, 185, 129, 0.15);
+                border-color: #10b981;
+                transform: translateY(-2px);
+              }
+              .boveda-icon {
+                font-size: 2rem;
+              }
+              .boveda-text {
+                font-size: 0.85rem;
+                color: #e2e8f0;
+                font-weight: 600;
+                text-align: center;
+              }
+              .boveda-extra {
+                background: rgba(245, 158, 11, 0.1);
+                border-color: rgba(245, 158, 11, 0.3);
+              }
+              .boveda-extra:hover {
+                background: rgba(245, 158, 11, 0.2);
+                border-color: #f59e0b;
+              }
+            </style>
           </div>
         </section>
       </div>

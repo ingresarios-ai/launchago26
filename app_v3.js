@@ -35,8 +35,8 @@ const insigniasData = {
   6: { id: 6, icon: "🏹", date: "8 AGO", name: "6. Reditum Sniper", pc: "+30 PC", desc: "Estrategia Sniper (8 AGO)" },
   7: { id: 7, icon: "🧠", date: "9 AGO", name: "7. Masterclass Mente", pc: "+35 PC", desc: "Mente · Sistema · Entorno (9 AGO)" },
   8: { id: 8, icon: "💎", date: "10 AGO", name: "8. Casos Reales", pc: "+30 PC", desc: "Panel de Casos Reales (10 AGO)" },
-  9: { id: 9, icon: "💼", date: "11 AGO", name: "9. Nómina Saboteador", pc: "+30 PC", desc: "El Costo de No Decidir (11 AGO)" },
-  10: { id: 10, icon: "🏆", date: "12 AGO", name: "10. Gran Final 3.0", pc: "+100 PC Bonus", desc: "Premiación y Cierre (12 AGO)" }
+  9: { id: 9, icon: "💼", date: "12 AGO", name: "9. Nómina Saboteador", pc: "+30 PC", desc: "El Costo de No Decidir (12 AGO)" },
+  10: { id: 10, icon: "🏆", date: "14 AGO", name: "10. Gran Final 3.0", pc: "+100 PC Bonus", desc: "Premiación y Cierre (14 AGO)" }
 };
 
 const liveSessionsData = {
@@ -450,7 +450,7 @@ const liveSessionsData = {
     `
   },
   9: {
-    dayDate: "11 de Agosto",
+    dayDate: "12 de Agosto",
     title: "9. La Nómina del Saboteador — El Costo de No Decidir",
     reward: "+30 PC",
     liveUrl: "https://taller.ingresarios.net/whatsapp",
@@ -467,7 +467,7 @@ const liveSessionsData = {
     `
   },
   10: {
-    dayDate: "12 de Agosto",
+    dayDate: "14 de Agosto",
     title: "10. La Gran Final — Premiación y Cierre",
     reward: "+30 PC",
     liveUrl: "https://taller.ingresarios.net/whatsapp",
@@ -794,6 +794,20 @@ function renderVitrinaInsignias() {
     `;
   }
   grid.innerHTML = html;
+
+  // Actualizar visibilidad de la Bóveda de Conocimiento
+  const bovedaLocked = document.getElementById('boveda-locked');
+  const bovedaUnlocked = document.getElementById('boveda-unlocked');
+  
+  if (bovedaLocked && bovedaUnlocked) {
+    if (unlockedCount >= 8) {
+      bovedaLocked.style.display = 'none';
+      bovedaUnlocked.style.display = 'block';
+    } else {
+      bovedaLocked.style.display = 'block';
+      bovedaUnlocked.style.display = 'none';
+    }
+  }
 }
 
 function handleInsigniaClick(id) {
