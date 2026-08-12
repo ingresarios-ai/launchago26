@@ -634,13 +634,28 @@ const liveSessionsData = {
     liveUrl: "https://taller.ingresarios.net/whatsapp",
     resourceName: "⚖️ Calculadora de Costo de Inacción (PDF)",
     resourceLink: "#",
-    missionTitle: "Misión Día 9: Autoevaluación de Evolución Mental",
-    missionDesc: "Compara tu estado mental del Día 1 vs el de hoy. Describe la principal transformación en tu disciplina.",
+    missionTitle: "Misión Día 9: Mi Historia en Construcción",
+    missionDesc: "Documenta tu transformación real. No inventes una transformación que todavía no existe, documenta la que sí puedes demostrar.",
     renderMission: () => `
-      <textarea class="text-input" id="live9-evolution-input" rows="3" placeholder="Ej: Llegué como Vengador impulsivo y hoy opero bajo un sistema de reglas strictly..."></textarea>
+      <div style="margin-bottom: 12px;">
+        <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 4px;">1. Antes...</label>
+        <textarea class="text-input" id="live9-antes" rows="2" placeholder="Ej: Antes era impaciente y saltaba de estrategia en estrategia..."></textarea>
+      </div>
+      <div style="margin-bottom: 12px;">
+        <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 4px;">2. Descubrí...</label>
+        <textarea class="text-input" id="live9-descubri" rows="2" placeholder="Ej: Descubrí que la confianza nace de la evidencia..."></textarea>
+      </div>
+      <div style="margin-bottom: 12px;">
+        <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 4px;">3. Ahora estoy entrenando...</label>
+        <textarea class="text-input" id="live9-entrenando" rows="2" placeholder="Ej: Ahora estoy entrenando respetar mi regla anti-saboteador..."></textarea>
+      </div>
+      <div style="margin-bottom: 12px;">
+        <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 4px;">4. Mi evidencia es...</label>
+        <textarea class="text-input" id="live9-evidencia" rows="2" placeholder="Ej: Mi evidencia es que llevo 3 días documentando mi bitácora antes de operar."></textarea>
+      </div>
       <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Autoevaluación Final Publicada</span>
+        <span>Mi Historia en Construcción Publicada</span>
       </label>
     `
   },

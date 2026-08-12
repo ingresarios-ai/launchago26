@@ -696,12 +696,24 @@ const dailyMissions = {
   },
   9: {
     dayDate: "11 de Agosto",
-    title: "Día 9: Autoevaluación de Evolución Mental",
-    desc: "Compara tu estado mental del Día 1 vs hoy. Describe tu transformación.",
+    title: "Día 9: Mi Historia en Construcción",
+    desc: "Documenta tu transformación. No inventes una que todavía no existe, documenta la que sí puedes demostrar.",
     renderForm: () => `
       <div class="form-group">
-        <label class="form-label">Tu Autoevaluación de Evolución Mental <span style="color:#ef4444;">*</span></label>
-        <textarea id="field-day9-eval" class="form-textarea" rows="3" placeholder="Ej: Llegué como Vengador impulsivo y hoy opero bajo un sistema de reglas estrictas..." required></textarea>
+        <label class="form-label">1. Antes... <span style="color:#ef4444;">*</span></label>
+        <textarea id="field-day9-antes" class="form-textarea" rows="2" placeholder="Ej: Antes era impaciente y saltaba de estrategia en estrategia..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">2. Descubrí... <span style="color:#ef4444;">*</span></label>
+        <textarea id="field-day9-descubri" class="form-textarea" rows="2" placeholder="Ej: Descubrí que la confianza nace de la evidencia..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">3. Ahora estoy entrenando... <span style="color:#ef4444;">*</span></label>
+        <textarea id="field-day9-entrenando" class="form-textarea" rows="2" placeholder="Ej: Ahora estoy entrenando respetar mi regla anti-saboteador..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">4. Mi evidencia es... <span style="color:#ef4444;">*</span></label>
+        <textarea id="field-day9-evidencia" class="form-textarea" rows="2" placeholder="Ej: Mi evidencia es que llevo 3 días documentando mi bitácora antes de operar." required></textarea>
       </div>
     `
   },
