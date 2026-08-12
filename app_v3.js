@@ -439,13 +439,12 @@ const liveSessionsData = {
     liveUrl: "https://www.youtube.com/watch?v=w8t3lPxXsu0",
     resourceName: "Casos de Estudio: De Reactivo a Inquebrantable (PDF)",
     resourceLink: "#",
-    missionTitle: "Misión Día 8: Escribe tu Duda u Objeción Personal",
-    missionDesc: "Escribe la pregunta o inquietud que te está frenando para que Juan la responda en vivo mañana.",
+    missionTitle: "Misión Día 8: Tu Mapa de Brecha",
+    missionDesc: "Diagnostica tu brecha principal y genera tu mapa con Geny AI en la actividad oficial.",
     renderMission: () => `
-      <textarea class="text-input" id="live8-question-input" rows="3" placeholder="Escribe tu pregunta o duda personal..."></textarea>
       <label class="check-item" onclick="toggleCheck(this)" style="margin-top: 12px;">
         <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span>Pregunta Enviada para el Q&A</span>
+        <span>Mapa de Brecha Generado y Guardado</span>
       </label>
     `
   },
