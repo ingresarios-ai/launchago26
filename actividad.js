@@ -1260,4 +1260,4 @@ window.goToGastosStep = function(stepNum) {
   }
 
   window.scrollTo({ top: 150, behavior: 'smooth' });
-};
+
