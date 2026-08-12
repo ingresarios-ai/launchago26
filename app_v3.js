@@ -1478,17 +1478,17 @@ function updateNextStepHero() {
 
   if (!heroTitle) return;
 
-  const g0Done = Math.min(currentActivity - 1, 9);
-  const g0Pct = Math.round((g0Done / 9) * 100);
+  const g0Done = Math.min(currentActivity - 1, MAX_ACTIVITIES);
+  const g0Pct = Math.round((g0Done / MAX_ACTIVITIES) * 100);
   if (phase1Sub) {
-    phase1Sub.textContent = `Genoma 0 • ${g0Done}/9 Completadas (${g0Pct}%) 🟢`;
+    phase1Sub.textContent = `Genoma 0 • ${g0Done}/${MAX_ACTIVITIES} Completadas (${g0Pct}%) 🟢`;
   }
   const tabBadge = document.getElementById('tab-phase1-badge');
   if (tabBadge) {
-    tabBadge.textContent = `Genoma 0 (${g0Done}/9)`;
+    tabBadge.textContent = `Genoma 0 (${g0Done}/${MAX_ACTIVITIES})`;
   }
 
-  if (currentActivity <= MAX_ACTIVITIES) {
+  if (currentActivity <= MAX_ACTIVITIES && getUnlockedInsignias().length === 0) {
     const act = activitiesData[currentActivity];
     if (act) {
       if (heroBadge) heroBadge.textContent = `MISIÓN DEL DÍA ${currentActivity} DE 10`;
@@ -1692,7 +1692,7 @@ function completeActivity(actId) {
   // Render seamless victory transition inside modal
   const content = document.getElementById('activity-content');
   if (content) {
-    if (currentActivity <= MAX_ACTIVITIES) {
+    if (currentActivity <= MAX_ACTIVITIES && getUnlockedInsignias().length === 0) {
       const nextAct = activitiesData[currentActivity];
       content.innerHTML = `
         <div style="text-align: center; padding: 30px 10px;">
