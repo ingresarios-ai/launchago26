@@ -42,7 +42,7 @@ const insigniasData = {
 const liveSessionsData = {
   1: {
     dayDate: "3 de Agosto",
-    pngLink: "boveda/dia1.png",
+    pngLink: "/boveda/dia1.png",
     title: "1. La Anatomía del Saboteador",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=nmKG-urzbn4&list=PLZ3Gjdurk6HM&index=1",
@@ -60,7 +60,7 @@ const liveSessionsData = {
   },
   2: {
     dayDate: "4 de Agosto",
-    pngLink: "boveda/dia2.png",
+    pngLink: "/boveda/dia2.png",
     title: "2. Cuenta Abierta: El Espejo de la Mente",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=R2SAj0u3ESk&list=PLZ3Gjdurk6HM&index=2",
@@ -81,7 +81,7 @@ const liveSessionsData = {
   },
   3: {
     dayDate: "5 de Agosto",
-    pngLink: "boveda/dia3.png",
+    pngLink: "/boveda/dia3.png",
     title: "3. P de Planear: Gastos Hormiga a Inversiones Hormiga",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=pv8l421vF5Y&list=PLZ3Gjdurk6HM&index=3",
@@ -323,7 +323,7 @@ const liveSessionsData = {
   },
   4: {
     dayDate: "6 de Agosto",
-    pngLink: "boveda/dia4.png",
+    pngLink: "/boveda/dia4.png",
     title: "4. Ejecución con Inteligencia Artificial (Conoce a GENY)",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=XIHwkZRyFnw&list=PLZ3Gjdurk6HM&index=4",
@@ -359,7 +359,7 @@ const liveSessionsData = {
   },
   5: {
     dayDate: "7 de Agosto",
-    pngLink: "boveda/dia5.png",
+    pngLink: "/boveda/dia5.png",
     title: "5. La Bitácora del Saboteador",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=0_aVXrWNPPQ&list=PLZ3Gjdurk6HM&index=5",
@@ -397,7 +397,7 @@ const liveSessionsData = {
   },
   6: {
     dayDate: "8 de Agosto",
-    pngLink: "boveda/dia6.png",
+    pngLink: "/boveda/dia6.png",
     title: "6. Evaluación y Métrica: Reditum Sniper",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=L27tAmupgiY&list=PLZ3Gjdurk6HM&index=6",
@@ -424,7 +424,7 @@ const liveSessionsData = {
   },
   7: {
     dayDate: "9 de Agosto",
-    pngLink: "boveda/dia7.png",
+    pngLink: "/boveda/dia7.png",
     title: "7. MASTERCLASS: Mente · Sistema · Entorno",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=sMooQHrbPB4&list=PLZ3Gjdurk6HM&index=7",
@@ -441,7 +441,7 @@ const liveSessionsData = {
   },
   8: {
     dayDate: "10 de Agosto",
-    pngLink: "boveda/dia8.png",
+    pngLink: "/boveda/dia8.png",
     title: "8. Panel de Casos Reales — Historias Sin Saboteador",
     reward: "+30 PC",
     liveUrl: "https://www.youtube.com/watch?v=w8t3lPxXsu0",
