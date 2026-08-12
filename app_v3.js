@@ -686,8 +686,8 @@ function getAvailableDayNumber() {
   const day6UnlockTime = Date.UTC(2026, 7, 8, 23, 0, 0); // Aug 8, 18:00 COT
   const day7UnlockTime = Date.UTC(2026, 7, 9, 23, 0, 0); // Aug 9, 18:00 COT
   const day8UnlockTime = Date.UTC(2026, 7, 10, 23, 0, 0); // Aug 10, 18:00 COT
-  const day9UnlockTime = Date.UTC(2026, 7, 11, 23, 0, 0); // Aug 11, 18:00 COT
-  const day10UnlockTime = Date.UTC(2026, 7, 12, 23, 0, 0); // Aug 12, 18:00 COT
+  const day9UnlockTime = Date.UTC(2026, 7, 12, 23, 0, 0); // Aug 12, 18:00 COT
+  const day10UnlockTime = Date.UTC(2026, 7, 14, 23, 0, 0); // Aug 14, 18:00 COT
 
   if (now < day6UnlockTime) return 5;
   if (now < day7UnlockTime) return 6;
