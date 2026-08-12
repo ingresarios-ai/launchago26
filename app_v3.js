@@ -443,8 +443,8 @@ const liveSessionsData = {
     missionDesc: "Diagnostica tu brecha principal y genera tu mapa con Geny AI en la actividad oficial.",
     renderMission: () => `
       <!-- ROUTE SELECTOR -->
-      <div class="form-group" id="day8-route-selector-container">
-        <label class="form-label" style="text-align: center; font-size: 1.1rem; margin-bottom: 16px;">¿Con cuál ruta te identificas más? <span style="color:#ef4444;">*</span></label>
+      <div style="margin-bottom: 16px;" id="day8-route-selector-container">
+        <label style="display:block; margin-bottom: 6px; font-size:0.95rem; font-weight:600; color:#f8fafc;" style="text-align: center; font-size: 1.1rem; margin-bottom: 16px;">¿Con cuál ruta te identificas más? <span style="color:#ef4444;">*</span></label>
         
         <input type="hidden" id="field-day8-route" class="form-input" value="" required>
 
@@ -505,21 +505,21 @@ const liveSessionsData = {
         <div style="background: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
           <strong style="color: #25d366; font-size: 0.85rem;">🟢 MAPA DE BRECHA — RUTA CERO</strong>
         </div>
-        <div class="form-group">
-          <label class="form-label">1. ¿Qué concepto todavía no puedes explicar con tus propias palabras? <span style="color:#ef4444;">*</span></label>
-          <textarea id="field-day8-rc-q1" class="form-textarea" rows="2" placeholder="Ej: No entiendo bien qué es un ETF, o cómo funciona un bróker..."></textarea>
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom: 6px; font-size:0.95rem; font-weight:600; color:#f8fafc;">1. ¿Qué concepto todavía no puedes explicar con tus propias palabras? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-rc-q1" class="text-input" rows="2" placeholder="Ej: No entiendo bien qué es un ETF, o cómo funciona un bróker..."></textarea>
         </div>
-        <div class="form-group">
-          <label class="form-label">2. ¿Qué riesgo debes evitar mientras aprendes? <span style="color:#ef4444;">*</span></label>
-          <textarea id="field-day8-rc-q2" class="form-textarea" rows="2" placeholder="Ej: Abrir una cuenta real antes de practicar en demo..."></textarea>
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom: 6px; font-size:0.95rem; font-weight:600; color:#f8fafc;">2. ¿Qué riesgo debes evitar mientras aprendes? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-rc-q2" class="text-input" rows="2" placeholder="Ej: Abrir una cuenta real antes de practicar en demo..."></textarea>
         </div>
-        <div class="form-group">
-          <label class="form-label">3. ¿Qué práctica puedes hacer sin dinero real? <span style="color:#ef4444;">*</span></label>
-          <textarea id="field-day8-rc-q3" class="form-textarea" rows="2" placeholder="Ej: Observar gráficas, practicar en simulador, documentar lo que aprendo..."></textarea>
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom: 6px; font-size:0.95rem; font-weight:600; color:#f8fafc;">3. ¿Qué práctica puedes hacer sin dinero real? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-rc-q3" class="text-input" rows="2" placeholder="Ej: Observar gráficas, practicar en simulador, documentar lo que aprendo..."></textarea>
         </div>
-        <div class="form-group">
-          <label class="form-label">4. ¿Qué pregunta debes poder responder antes de avanzar? <span style="color:#ef4444;">*</span></label>
-          <textarea id="field-day8-rc-q4" class="form-textarea" rows="2" placeholder="Ej: ¿Cuánto puedo perder sin que afecte mi vida?"></textarea>
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom: 6px; font-size:0.95rem; font-weight:600; color:#f8fafc;">4. ¿Qué pregunta debes poder responder antes de avanzar? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-rc-q4" class="text-input" rows="2" placeholder="Ej: ¿Cuánto puedo perder sin que afecte mi vida?"></textarea>
         </div>
       </div>
 
@@ -528,21 +528,21 @@ const liveSessionsData = {
         <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
           <strong style="color: #38bdf8; font-size: 0.85rem;">🔵 MAPA DE BRECHA — RUTA EXPERIENCIA</strong>
         </div>
-        <div class="form-group">
-          <label class="form-label">1. ¿Qué pieza de tu proceso falla más? <span style="color:#ef4444;">*</span></label>
-          <textarea id="field-day8-re-q1" class="form-textarea" rows="2" placeholder="Ej: Planeación, ejecución, documentación, evaluación..."></textarea>
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom: 6px; font-size:0.95rem; font-weight:600; color:#f8fafc;">1. ¿Qué pieza de tu proceso falla más? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-re-q1" class="text-input" rows="2" placeholder="Ej: Planeación, ejecución, documentación, evaluación..."></textarea>
         </div>
-        <div class="form-group">
-          <label class="form-label">2. ¿Qué evidencia tienes de que realmente falla? <span style="color:#ef4444;">*</span></label>
-          <textarea id="field-day8-re-q2" class="form-textarea" rows="2" placeholder="Ej: Mis últimas 10 operaciones no siguieron el plan original..."></textarea>
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom: 6px; font-size:0.95rem; font-weight:600; color:#f8fafc;">2. ¿Qué evidencia tienes de que realmente falla? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-re-q2" class="text-input" rows="2" placeholder="Ej: Mis últimas 10 operaciones no siguieron el plan original..."></textarea>
         </div>
-        <div class="form-group">
-          <label class="form-label">3. ¿Qué regla falta o se negocia? <span style="color:#ef4444;">*</span></label>
-          <textarea id="field-day8-re-q3" class="form-textarea" rows="2" placeholder="Ej: Mi regla de stop loss... la muevo cuando estoy perdiendo..."></textarea>
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom: 6px; font-size:0.95rem; font-weight:600; color:#f8fafc;">3. ¿Qué regla falta o se negocia? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-re-q3" class="text-input" rows="2" placeholder="Ej: Mi regla de stop loss... la muevo cuando estoy perdiendo..."></textarea>
         </div>
-        <div class="form-group">
-          <label class="form-label">4. ¿Qué variable medirás durante tu próxima muestra? <span style="color:#ef4444;">*</span></label>
-          <textarea id="field-day8-re-q4" class="form-textarea" rows="2" placeholder="Ej: % de trades donde seguí el plan vs. donde improvisé..."></textarea>
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom: 6px; font-size:0.95rem; font-weight:600; color:#f8fafc;">4. ¿Qué variable medirás durante tu próxima muestra? <span style="color:#ef4444;">*</span></label>
+          <textarea id="field-day8-re-q4" class="text-input" rows="2" placeholder="Ej: % de trades donde seguí el plan vs. donde improvisé..."></textarea>
         </div>
       </div>
 
@@ -614,7 +614,7 @@ const liveSessionsData = {
 
         <div id="geny-result-container" style="display:none; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
           <h4 style="margin: 0 0 10px 0; color: #10b981; font-size: 0.9rem;">MI MAPA DE BRECHA</h4>
-          <textarea id="field-day8-brecha" class="form-textarea" rows="5" style="border: none; background: transparent; padding: 0; box-shadow: none; font-size: 0.95rem; line-height: 1.5; color: #f8fafc;" readonly required></textarea>
+          <textarea id="field-day8-brecha" class="text-input" rows="5" style="border: none; background: transparent; padding: 0; box-shadow: none; font-size: 0.95rem; line-height: 1.5; color: #f8fafc;" readonly required></textarea>
         </div>
       </div>
     `
