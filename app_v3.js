@@ -2628,10 +2628,17 @@ function completeLiveSession(dayNum) {
 
   localStorage.setItem(`live_session_${dayNum}_completed`, 'true');
   
+  // Auto-claim the insignia for this day if not already claimed
+  let unlockedList = getUnlockedInsignias();
+  if (!unlockedList.includes(dayNum)) {
+    unlockedList.push(dayNum);
+    localStorage.setItem('unlocked_insignias', JSON.stringify(unlockedList));
+  }
+
+  renderVitrinaInsignias(); // Ensure UI (like Bóveda) updates instantly
   updateLiveCardsUI();
   updatePointsDisplay();
   updateNextStepHero();
-  
   const earnedPts = 30;
 
   // Persist Mission Response to Supabase DB
