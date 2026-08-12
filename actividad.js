@@ -731,7 +731,7 @@ const dailyMissions = {
 };
 
 // DOM Init
-document.addEventListener('DOMContentLoaded', initActivity);
+(document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initActivity) : initActivity());
 
 function determineDay() {
   if (window.FORCE_DAY) return window.FORCE_DAY;
