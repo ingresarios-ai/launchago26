@@ -1807,6 +1807,11 @@ function buildPreactivitiesTab() {
   const countAct3 = getUniqueCount(v => v.activityName.includes('Gastos Hormiga') || (v.activityName.includes('Día 3') && v.response !== '{}' && v.response !== '-'));
   const countAct4 = getUniqueCount(v => v.activityName.includes('Día 4') || v.missionId === '4');
   const countAct5 = getUniqueCount(v => v.activityName.includes('Día 5') || v.missionId === '5');
+  const countAct6 = getUniqueCount(v => v.activityName.includes('Día 6') || v.missionId === '6');
+  const countAct7 = getUniqueCount(v => v.activityName.includes('Día 7') || v.missionId === '7');
+  const countAct8 = getUniqueCount(v => v.activityName.includes('Día 8') || v.missionId === '8');
+  const countAct9 = getUniqueCount(v => v.activityName.includes('Día 9') || v.missionId === '9');
+  const countAct10 = getUniqueCount(v => v.activityName.includes('Día 10') || v.missionId === '10');
   const countPre1 = getUniqueCount(v => v.activityName === 'Pre-Actividad 1');
   const countPre2 = getUniqueCount(v => v.activityName === 'Pre-Actividad 2');
 
@@ -1815,6 +1820,11 @@ function buildPreactivitiesTab() {
   const kpiAct3 = document.getElementById('kpi-act3-count');
   const kpiAct4 = document.getElementById('kpi-act4-count');
   const kpiAct5 = document.getElementById('kpi-act5-count');
+  const kpiAct6 = document.getElementById('kpi-act6-count');
+  const kpiAct7 = document.getElementById('kpi-act7-count');
+  const kpiAct8 = document.getElementById('kpi-act8-count');
+  const kpiAct9 = document.getElementById('kpi-act9-count');
+  const kpiAct10 = document.getElementById('kpi-act10-count');
   const kpiPre1 = document.getElementById('kpi-preact1-count');
   const kpiPre2 = document.getElementById('kpi-preact2-count');
 
@@ -1823,6 +1833,11 @@ function buildPreactivitiesTab() {
   if (kpiAct3) kpiAct3.textContent = countAct3;
   if (kpiAct4) kpiAct4.textContent = countAct4;
   if (kpiAct5) kpiAct5.textContent = countAct5;
+  if (kpiAct6) kpiAct6.textContent = countAct6;
+  if (kpiAct7) kpiAct7.textContent = countAct7;
+  if (kpiAct8) kpiAct8.textContent = countAct8;
+  if (kpiAct9) kpiAct9.textContent = countAct9;
+  if (kpiAct10) kpiAct10.textContent = countAct10;
   if (kpiPre1) kpiPre1.textContent = countPre1;
   if (kpiPre2) kpiPre2.textContent = countPre2;
 
