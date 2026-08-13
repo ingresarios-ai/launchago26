@@ -121,4 +121,24 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTimer();
     setInterval(updateTimer, 1000);
 
+    // 5. Sticky Cart Button Scroll Visibility
+    const stickyCartBtn = document.getElementById('sticky-cart-btn');
+    if (stickyCartBtn) {
+        const handleScroll = () => {
+            const checkoutSec = document.getElementById('checkout');
+            if (checkoutSec) {
+                const rect = checkoutSec.getBoundingClientRect();
+                // If user is inside checkout section, hide sticky button to avoid duplication
+                if (rect.top <= window.innerHeight - 100 && rect.bottom >= 100) {
+                    stickyCartBtn.classList.add('is-hidden');
+                } else {
+                    stickyCartBtn.classList.remove('is-hidden');
+                }
+            }
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+    }
+
 });
+
