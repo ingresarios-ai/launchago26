@@ -1,6 +1,7 @@
 /* ========================================
-   COMPRA EXITOSA — Styles v1
+   COMPRA EXITOSA — Styles v2
    Dark taller aesthetic, green accent
+   Desktop-optimized layout
    ======================================== */
 
 :root {
@@ -34,8 +35,6 @@ body {
   background: var(--bg-main);
   color: var(--text-gray);
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -43,12 +42,12 @@ body {
 .text-muted { color: var(--text-muted); font-size: 0.88em; }
 
 /* ========================================
-   LAYOUT
+   LAYOUT — centrado responsive
    ======================================== */
 
 .ce {
   width: 100%;
-  max-width: 680px;
+  max-width: 760px;
   margin: 0 auto;
   padding: 0 24px 48px;
 }
@@ -59,7 +58,7 @@ body {
 
 .ce-hero {
   text-align: center;
-  padding: 56px 0 32px;
+  padding: 56px 0 36px;
   position: relative;
   overflow: hidden;
 }
@@ -70,9 +69,9 @@ body {
   top: -40%;
   left: 50%;
   transform: translateX(-50%);
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(34, 197, 94, 0.12) 0%, transparent 70%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -103,7 +102,7 @@ body {
 
 .ce-hero__title {
   font-family: var(--font-heading);
-  font-size: 2.4rem;
+  font-size: 2.6rem;
   font-weight: 900;
   color: var(--text-white);
   line-height: 1.15;
@@ -114,7 +113,7 @@ body {
 }
 
 .ce-hero__subtitle {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1.5;
   color: var(--text-gray);
   animation: fadeInDown 0.6s ease 0.3s both;
@@ -131,7 +130,7 @@ body {
    ======================================== */
 
 .ce-section {
-  padding: 0 0 32px;
+  padding: 0 0 36px;
   animation: fadeInUp 0.5s ease 0.4s both;
 }
 
@@ -159,21 +158,6 @@ body {
   border: 1px solid var(--border-subtle);
   background: #000;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-}
-
-.ce-video__wrapper {
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%;
-}
-
-.ce-video__wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
 }
 
 /* ========================================
@@ -225,13 +209,13 @@ body {
   min-width: 0;
 }
 
-.ce-step__text p {
+.ce-step__text > p {
   font-size: 0.95rem;
   line-height: 1.7;
   margin-bottom: 20px;
 }
 
-.ce-step__text p strong {
+.ce-step__text > p strong {
   color: var(--text-white);
 }
 
@@ -241,6 +225,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 16px;
 }
 
 .ce-step__support {
@@ -381,7 +366,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 16px 36px;
+  padding: 16px 40px;
   font-family: var(--font-heading);
   font-size: 1rem;
   font-weight: 800;
@@ -425,9 +410,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.12) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -497,7 +482,55 @@ body {
 }
 
 /* ========================================
-   RESPONSIVE
+   DESKTOP ENHANCEMENTS (≥768px)
+   ======================================== */
+
+@media (min-width: 768px) {
+  .ce {
+    max-width: 800px;
+    padding: 0 40px 64px;
+  }
+
+  .ce-hero {
+    padding: 72px 0 40px;
+  }
+
+  .ce-hero__title {
+    font-size: 3rem;
+  }
+
+  .ce-hero__subtitle {
+    font-size: 1.2rem;
+  }
+
+  .ce-section__title {
+    font-size: 1.6rem;
+  }
+
+  .ce-video {
+    border-radius: 20px;
+  }
+
+  .ce-step__body {
+    gap: 40px;
+  }
+
+  .ce-step__visual {
+    width: 180px;
+  }
+
+  .ce-callout {
+    padding: 24px 28px;
+  }
+
+  .ce-btn {
+    padding: 18px 48px;
+    font-size: 1.05rem;
+  }
+}
+
+/* ========================================
+   RESPONSIVE — MOBILE (≤640px)
    ======================================== */
 
 @media (max-width: 640px) {
