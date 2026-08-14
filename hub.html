@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PG9F8H6M');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Juego Mental del Dinero — Taller en Curso</title>
+  <meta name="description" content="El taller ya comenzó. Accede a tus clases en vivo, completa tus actividades y prepárate para lo que viene." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" />
+
+  <!-- SEO & Social Share -->
+  <meta property="og:title" content="El Juego Mental del Dinero — Taller en Curso" />
+  <meta property="og:description" content="El taller ya comenzó. Accede a tus clases en vivo y completa tus actividades." />
+  <meta property="og:image" content="https://taller.ingresarios.net/socialshare.jpg" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="El Juego Mental del Dinero — Taller en Curso" />
+  <meta name="twitter:description" content="El taller ya comenzó. Accede a tus clases en vivo y completa tus actividades." />
+  <meta name="twitter:image" content="https://taller.ingresarios.net/socialshare.jpg" />
+
+  <style>
+    :root {
+      --bg-dark: #0a0e13;
+      --bg-card: #111820;
+      --border-subtle: #1e2a38;
+      --green-primary: #22c55e;
+      --green-glow: #4ade80;
+      --green-accent: #15803d;
+      --text-white: #f8fafc;
+      --text-gray: #94a3b8;
+      --text-gray-light: #cbd5e1;
+      --text-muted: #64748b;
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --transition-fast: 0.2s ease;
+      --transition-medium: 0.35s ease;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Background Orbs */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.5;
+    }
+    .bg-orb--1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(34,197,94,0.18) 0%, transparent 70%);
+      top: -15%; right: -8%;
+      animation: float1 8s ease-in-out infinite;
+    }
+    .bg-orb--2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%);
+      bottom: -20%; left: -10%;
+      animation: float2 10s ease-in-out infinite;
+    }
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-30px, 20px); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20px, -25px); }
+    }
+
+    /* Main Container */
+    .hub {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 580px;
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Logo */
+    .hub__logo {
+      max-width: 220px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s forwards;
+    }
+
+    /* Badge */
+    .hub__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green-primary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+    .hub__badge-dot {
+      width: 8px; height: 8px;
+      background: var(--green-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green-primary);
+      animation: pulseDot 1.5s ease-in-out infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.3); }
+    }
+
+    /* Title */
+    .hub__title {
+      font-family: var(--font-heading);
+      font-size: 2.4rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.3s forwards;
+    }
+    .hub__title span {
+      color: var(--green-primary);
+      text-shadow: 0 0 25px rgba(34,197,94,0.35);
+    }
+
+    /* Subtitle */
+    .hub__subtitle {
+      font-size: 1.05rem;
+      color: var(--text-gray-light);
+      margin-bottom: 40px;
+      max-width: 440px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s forwards;
+    }
+
+    /* Buttons */
+    .hub__actions {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.5s forwards;
+    }
+
+    .hub__btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 18px 24px;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-medium);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .hub__btn--primary {
+      background: linear-gradient(135deg, var(--green-primary) 0%, var(--green-accent) 100%);
+      color: var(--text-white);
+      box-shadow: 0 4px 24px rgba(34,197,94,0.35);
+    }
+    .hub__btn--primary:hover {
+      background: linear-gradient(135deg, var(--green-glow) 0%, var(--green-primary) 100%);
+      box-shadow: 0 8px 36px rgba(34,197,94,0.5);
+      transform: translateY(-3px);
+    }
+
+    .hub__btn--secondary {
+      background: var(--bg-card);
+      color: var(--text-white);
+      border: 1px solid var(--border-subtle);
+    }
+    .hub__btn--secondary:hover {
+      border-color: rgba(34,197,94,0.4);
+      background: rgba(34,197,94,0.06);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .hub__btn--outline {
+      background: transparent;
+      color: var(--green-primary);
+      border: 1px solid rgba(34,197,94,0.35);
+    }
+    .hub__btn--outline:hover {
+      background: rgba(34,197,94,0.08);
+      border-color: var(--green-primary);
+      transform: translateY(-2px);
+    }
+
+    .hub__btn-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* Divider */
+    .hub__divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(34,197,94,0.3), transparent);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.6s forwards;
+    }
+
+    /* Footer */
+    .hub__footer {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      opacity: 0;
+      animation: fadeUp 0.6s 0.7s forwards;
+    }
+    .hub__footer a {
+      color: var(--green-primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .hub__footer a:hover {
+      color: var(--green-glow);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .hub__title { font-size: 1.9rem; }
+      .hub__subtitle { font-size: 0.95rem; }
+      .hub__btn { padding: 16px 20px; font-size: 0.88rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PG9F8H6M"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- Background -->
+  <div class="bg-orbs">
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+  </div>
+
+  <!-- Hub -->
+  <main class="hub">
+    <img src="logo-evento.png" alt="El Juego Mental del Dinero" class="hub__logo" />
+
+    <div class="hub__badge">
+      <span class="hub__badge-dot"></span>
+      Taller en curso
+    </div>
+
+    <h1 class="hub__title">El taller ya <span>comenzó</span></h1>
+    <p class="hub__subtitle">Entra a la clase en vivo, completa tus actividades y prepárate para lo que viene.</p>
+
+    <div class="hub__actions">
+      <a href="https://www.youtube.com/watch?v=vQ1SM0ZxCis" class="hub__btn hub__btn--primary" id="btn-live">
+        <span class="hub__btn-icon">🔴</span>
+        Entrar al en vivo ahora
+      </a>
+      <a href="/misiones" class="hub__btn hub__btn--secondary" id="btn-actividades">
+        <span class="hub__btn-icon">📋</span>
+        Completar mis actividades
+      </a>
+      <a href="/whatsapp" class="hub__btn hub__btn--outline" id="btn-whatsapp">
+        <span class="hub__btn-icon">💬</span>
+        Unirme al grupo de WhatsApp
+      </a>
+    </div>
+
+    <div class="hub__divider"></div>
+
+    <p class="hub__footer">¿Necesitas ayuda? Escríbenos a <a href="mailto:soporte@ingresarios.net">soporte@ingresarios.net</a></p>
+  </main>
+</body>
+</html>
