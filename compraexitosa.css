@@ -1,0 +1,548 @@
+/* ========================================
+   COMPRA EXITOSA — Styles v1
+   Dark taller aesthetic, green accent
+   ======================================== */
+
+:root {
+  --bg-main: #0a0e13;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --bg-card-hover: rgba(255, 255, 255, 0.07);
+  --green: #22c55e;
+  --green-dim: rgba(34, 197, 94, 0.08);
+  --green-glow: rgba(34, 197, 94, 0.3);
+  --text-white: #f1f5f9;
+  --text-gray: #94a3b8;
+  --text-muted: #64748b;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Outfit', 'Inter', system-ui, sans-serif;
+  --whatsapp: #25D366;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-main);
+  color: var(--text-gray);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+.text-green { color: var(--green); }
+.text-muted { color: var(--text-muted); font-size: 0.88em; }
+
+/* ========================================
+   LAYOUT
+   ======================================== */
+
+.ce {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+}
+
+/* ========================================
+   HERO
+   ======================================== */
+
+.ce-hero {
+  text-align: center;
+  padding: 56px 0 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ce-hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ce-hero__confetti {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  animation: bounceIn 0.8s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.ce-hero__badge {
+  display: inline-block;
+  padding: 8px 20px;
+  background: var(--green-dim);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--green);
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+  animation: fadeInDown 0.6s ease 0.1s both;
+  position: relative;
+  z-index: 1;
+}
+
+.ce-hero__title {
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--text-white);
+  line-height: 1.15;
+  margin-bottom: 14px;
+  animation: fadeInDown 0.6s ease 0.2s both;
+  position: relative;
+  z-index: 1;
+}
+
+.ce-hero__subtitle {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--text-gray);
+  animation: fadeInDown 0.6s ease 0.3s both;
+  position: relative;
+  z-index: 1;
+}
+
+.ce-hero__subtitle strong {
+  color: var(--text-white);
+}
+
+/* ========================================
+   SECTION (Video area)
+   ======================================== */
+
+.ce-section {
+  padding: 0 0 32px;
+  animation: fadeInUp 0.5s ease 0.4s both;
+}
+
+.ce-section__title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-white);
+  margin-bottom: 8px;
+}
+
+.ce-section__desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* ========================================
+   VIDEO PLAYER
+   ======================================== */
+
+.ce-video {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: #000;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+}
+
+.ce-video__wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+}
+
+.ce-video__wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ========================================
+   STEP (Paso 2)
+   ======================================== */
+
+.ce-step {
+  padding: 32px 0;
+  animation: fadeInUp 0.5s ease 0.5s both;
+}
+
+.ce-step__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.ce-step__number {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--green);
+  color: #0a0e13;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1.1rem;
+  border-radius: 50%;
+}
+
+.ce-step__label {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-white);
+}
+
+.ce-step__body {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.ce-step__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ce-step__text p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.ce-step__text p strong {
+  color: var(--text-white);
+}
+
+.ce-step__visual {
+  flex-shrink: 0;
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ce-step__support {
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  font-size: 0.88rem !important;
+  line-height: 1.7 !important;
+  color: var(--text-muted) !important;
+}
+
+/* ========================================
+   EMAIL ITEMS
+   ======================================== */
+
+.ce-email-item {
+  display: flex;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  margin-bottom: 14px;
+  transition: all 0.3s ease;
+}
+
+.ce-email-item:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+.ce-email-item__icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--green-dim);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 8px;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 0.85rem;
+  color: var(--green);
+}
+
+.ce-email-item__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-white);
+  margin-bottom: 4px !important;
+}
+
+.ce-email-item__desc {
+  font-size: 0.88rem !important;
+  color: var(--text-gray) !important;
+  margin-bottom: 0 !important;
+}
+
+/* ========================================
+   LINKS
+   ======================================== */
+
+.ce-link {
+  color: var(--green);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(34, 197, 94, 0.3);
+  transition: all 0.2s ease;
+}
+
+.ce-link:hover {
+  border-bottom-color: var(--green);
+}
+
+/* ========================================
+   ENVELOPE SVG
+   ======================================== */
+
+.ce-envelope {
+  width: 140px;
+  height: 120px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.ce-envelope__svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   CALLOUT (SPAM WARNING)
+   ======================================== */
+
+.ce-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 24px;
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  border-radius: 14px;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.5s ease 0.6s both;
+}
+
+.ce-callout__icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ce-callout__text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-gray);
+}
+
+.ce-callout__text strong {
+  color: var(--text-white);
+}
+
+/* ========================================
+   CTA BUTTON
+   ======================================== */
+
+.ce-cta-wrap {
+  text-align: center;
+  padding: 8px 0 40px;
+  animation: fadeInUp 0.5s ease 0.7s both;
+}
+
+.ce-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 36px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.ce-btn--whatsapp {
+  background: var(--whatsapp);
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(37, 211, 102, 0.35);
+  animation: whatsappPulse 2.5s ease-in-out infinite;
+}
+
+.ce-btn--whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 36px rgba(37, 211, 102, 0.5);
+}
+
+.ce-btn--whatsapp:active {
+  transform: translateY(0);
+}
+
+/* ========================================
+   INSTRUCTOR
+   ======================================== */
+
+.ce-instructor {
+  text-align: center;
+  padding: 20px 0 40px;
+  position: relative;
+  animation: fadeInUp 0.5s ease 0.8s both;
+}
+
+.ce-instructor__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ce-instructor__photo {
+  width: 180px;
+  height: auto;
+  border-radius: 50%;
+  border: 3px solid rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.15);
+  position: relative;
+  z-index: 1;
+  object-fit: cover;
+}
+
+.ce-instructor__text {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--text-white);
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.ce-footer {
+  text-align: center;
+  padding: 24px 0;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.3); }
+  50% { transform: scale(1.15); }
+  70% { transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes whatsappPulse {
+  0%, 100% { box-shadow: 0 4px 24px rgba(37, 211, 102, 0.35); }
+  50% { box-shadow: 0 4px 32px rgba(37, 211, 102, 0.55), 0 0 0 10px rgba(37, 211, 102, 0.08); }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 640px) {
+  .ce-hero__title {
+    font-size: 1.9rem;
+  }
+
+  .ce-step__body {
+    flex-direction: column;
+  }
+
+  .ce-step__visual {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ce-envelope {
+    width: 120px;
+    height: 100px;
+  }
+
+  .ce-btn {
+    width: 100%;
+    padding: 16px 24px;
+  }
+
+  .ce-email-item {
+    padding: 14px 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .ce {
+    padding: 0 16px 40px;
+  }
+
+  .ce-hero__title {
+    font-size: 1.6rem;
+  }
+
+  .ce-hero__confetti {
+    font-size: 2.4rem;
+  }
+
+  .ce-instructor__photo {
+    width: 140px;
+  }
+}

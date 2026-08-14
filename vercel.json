@@ -83,6 +83,7 @@
     { "source": "/club-cerrado", "destination": "/club-cerrado.html" },
     { "source": "/falta-metodo", "destination": "/falta-metodo.html" },
     { "source": "/unirme", "destination": "/unirme.html" },
+    { "source": "/compraexitosa", "destination": "/compraexitosa.html" },
     { "source": "/libro-dia1", "destination": "/libro-dia1.pdf" }
   ],
   "headers": [
