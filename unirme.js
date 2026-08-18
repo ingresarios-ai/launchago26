@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Countdown Timer Logic
-    const targetDate = new Date('2026-08-14T22:00:00-05:00');
+    // 4. Countdown Timer Logic (Closes Aug 18, 2026 at 9:00 PM Bogotá / UTC-5)
+    const targetDate = new Date('2026-08-18T21:00:00-05:00');
     const countdownContainer = document.getElementById('countdown-container');
 
     function updateTimer() {
@@ -68,8 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const difference = targetDate.getTime() - now.getTime();
 
         if (difference <= 0) {
-            countdownContainer.innerHTML = '';
-            // Update text to show expired if needed, but original behavior just hides digits
+            countdownContainer.innerHTML = '<span class="text-base md:text-xl font-black text-white uppercase tracking-wider bg-black/40 px-4 py-2 rounded-lg border border-red-400/40">¡Inscripciones Cerradas!</span>';
             return;
         }
 
