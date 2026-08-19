@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Countdown Timer Logic (Closes Aug 18, 2026 at 9:00 PM Bogotá / UTC-5)
-    const targetDate = new Date('2026-08-18T21:00:00-05:00');
+    // 4. Countdown Timer Logic (Closes Friday Aug 21, 2026 at 11:59:59 PM Bogotá / UTC-5)
+    const targetDate = new Date('2026-08-21T23:59:59-05:00');
     const countdownContainer = document.getElementById('countdown-container');
 
     function updateTimer() {
