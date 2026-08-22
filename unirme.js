@@ -241,6 +241,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Non-blocking — continue to thank you
                 }
 
+                // Send to GoHighLevel webhook (non-blocking)
+                try {
+                    await fetch('https://services.leadconnectorhq.com/hooks/jTugwykceKyJlATOSvkb/webhook-trigger/e1921818-8187-4a23-9b09-e8a8b6bfcd1a', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            name, email, phone,
+                            landing: 'Lista de Espera',
+                            source: 'waitlist_closed_page',
+                            utm_source: leadData.utm_source,
+                            utm_medium: leadData.utm_medium,
+                            utm_campaign: leadData.utm_campaign,
+                            utm_content: leadData.utm_content,
+                            utm_term: leadData.utm_term,
+                        })
+                    });
+                } catch (e) {
+                    // Non-blocking — continue to thank you
+                }
+
                 // Show success state
                 const card = overlay.querySelector('.closed-card');
                 card.innerHTML = `
