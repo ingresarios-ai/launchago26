@@ -661,6 +661,7 @@ a { color: inherit; text-decoration: none; }
 
   .speaker {
     min-height: auto;
+    aspect-ratio: auto;
     background: var(--bg) url('/vip/hero-movil.png') no-repeat center bottom / 100% auto;
     padding-bottom: 120vw;
   }
