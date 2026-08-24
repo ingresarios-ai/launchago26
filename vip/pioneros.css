@@ -487,6 +487,97 @@ a { color: inherit; text-decoration: none; }
 
 
 /* ═══════════════════
+   HOW TO JOIN (TUTORIAL)
+   ═══════════════════ */
+.howto {
+  padding: 100px 0;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+.howto::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,230,118,0.04), transparent 65%);
+  pointer-events: none;
+}
+
+.howto__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.howto__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.howto__phone-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 8px 40px rgba(0,0,0,0.4),
+    0 0 0 1px rgba(255,255,255,0.04) inset;
+  transition: var(--transition);
+}
+.howto__step:hover .howto__phone-wrap {
+  border-color: var(--border-hover);
+  transform: translateY(-6px);
+  box-shadow:
+    0 16px 60px rgba(0,0,0,0.5),
+    0 0 30px rgba(0,230,118,0.08),
+    0 0 0 1px rgba(255,255,255,0.06) inset;
+}
+
+.howto__phone {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.howto__step .howto__step-number {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), var(--blue));
+  color: var(--bg);
+  font-weight: 900;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.howto__desc {
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 300px;
+}
+.howto__desc strong {
+  color: var(--text);
+}
+
+
+/* ═══════════════════
    SPEAKER
    ═══════════════════ */
 .speaker {
@@ -660,6 +751,19 @@ a { color: inherit; text-decoration: none; }
     width: 100%;
   }
 
+  .howto {
+    padding: 60px 0;
+  }
+  .howto__grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+  .howto__phone-wrap {
+    max-width: 260px;
+  }
+
   .speaker {
     min-height: auto;
     aspect-ratio: auto;
@@ -701,5 +805,9 @@ a { color: inherit; text-decoration: none; }
   }
   .pain__card {
     padding: 20px 16px;
+  }
+  .howto__phone-wrap {
+    max-width: 240px;
+    border-radius: 22px;
   }
 }
