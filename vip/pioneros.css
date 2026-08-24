@@ -74,7 +74,7 @@ a { color: inherit; text-decoration: none; }
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: var(--bg) url('/vip/evento.png') no-repeat center bottom / cover;
+  background: var(--bg);
 }
 
 .hero__bg-orbs {
@@ -640,9 +640,6 @@ a { color: inherit; text-decoration: none; }
   .hero {
     padding: 48px 0 60px;
     min-height: auto;
-    background-image: url('/vip/evento-movil.png');
-    background-size: cover;
-    background-position: center bottom;
   }
   .hero__title {
     font-size: clamp(1.6rem, 7vw, 2.2rem);
