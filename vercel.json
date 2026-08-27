@@ -2,6 +2,11 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/",
+      "destination": "/vip",
+      "permanent": false
+    },
+    {
       "source": "/ig",
       "destination": "/?utm_source=instagram&utm_medium=dm_auto&utm_campaign=taller_ia_carrusel",
       "permanent": false
