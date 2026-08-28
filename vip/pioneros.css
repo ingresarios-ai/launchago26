@@ -844,3 +844,30 @@ a { color: inherit; text-decoration: none; }
     border-radius: 22px;
   }
 }
+
+/* ═══════════════════
+   MASONRY GRID (Testimonials)
+   ═══════════════════ */
+.masonry-grid {
+  column-count: 3;
+  column-gap: 20px;
+  width: 100%;
+}
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 20px;
+  display: block;
+  transform: translateZ(0); /* Fixes some rendering issues in Safari */
+}
+
+@media (max-width: 900px) {
+  .masonry-grid {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .masonry-grid {
+    column-count: 1;
+  }
+}
