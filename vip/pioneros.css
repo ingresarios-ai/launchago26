@@ -590,13 +590,13 @@ a { color: inherit; text-decoration: none; }
   aspect-ratio: 941 / 1672; /* Proporción móvil vertical aproximada */
   display: flex;
   align-items: center;
-  background: var(--bg) url('/pioneros-equipo-mobile.jpg') no-repeat right center / cover;
+  background: var(--bg) url('../pioneros-equipo-mobile.jpg') no-repeat right center / cover;
 }
 
 @media (min-width: 768px) {
   .speaker {
     aspect-ratio: 1672 / 941;
-    background: var(--bg) url('/pioneros-equipo-desktop.jpg') no-repeat right center / contain;
+    background: var(--bg) url('../pioneros-equipo-desktop.jpg') no-repeat right center / contain;
   }
 }
 
