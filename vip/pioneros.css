@@ -822,7 +822,11 @@ a { color: inherit; text-decoration: none; }
   .speaker {
     min-height: auto;
     aspect-ratio: auto;
-    background: var(--bg) url('/vip/hero-movil.jpg') no-repeat center bottom / 100% auto;
+    background-color: var(--bg);
+    background-image: url('/pioneros-equipo-mobile.jpg');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: 100% auto;
     padding-bottom: 120vw;
   }
   .speaker__grid {
