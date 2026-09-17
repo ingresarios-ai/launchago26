@@ -3,7 +3,7 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "/vip",
+      "destination": "https://30x.ingresarios.net/",
       "permanent": false
     },
     {
