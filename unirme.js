@@ -57,31 +57,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Countdown Timer Logic (Active Urgency Evergreen Timer)
+    // 4. Countdown Timer Logic (Cierre: Viernes 16 de octubre a las 9:00 PM Colombia / UTC-5)
     const countdownContainer = document.getElementById('countdown-container');
-    const STORAGE_KEY = 'ingresarios_urgency_timer_target';
-    let targetTime = parseInt(localStorage.getItem(STORAGE_KEY), 10);
-    const nowMs = Date.now();
-
-    if (!targetTime || targetTime <= nowMs) {
-        // Establecer a 28 horas hacia adelante para mostrar horas, minutos y segundos activos
-        targetTime = nowMs + (28 * 60 * 60 * 1000);
-        try {
-            localStorage.setItem(STORAGE_KEY, targetTime.toString());
-        } catch (e) {}
-    }
+    const targetDate = new Date("2026-10-16T21:00:00-05:00");
+    const targetTime = targetDate.getTime();
+    try {
+        localStorage.removeItem('ingresarios_urgency_timer_target');
+    } catch (e) {}
 
     function updateTimer() {
         if (!countdownContainer) return;
         
         let difference = targetTime - Date.now();
 
-        if (difference <= 0) {
-            targetTime = Date.now() + (24 * 60 * 60 * 1000);
-            try {
-                localStorage.setItem(STORAGE_KEY, targetTime.toString());
-            } catch (e) {}
-            difference = targetTime - Date.now();
+        if (difference < 0) {
+            difference = 0;
         }
 
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));

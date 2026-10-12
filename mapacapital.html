@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>EL OTRO 10% — Mapa de Capital | Ingresarios</title>
+  <meta name="description" content="Calculadora de diagnóstico personal y mapa de capital patrimonial. Herramienta privada de sesión financiera basada en el Método Ingresarios." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ing: {
+              dark: '#070a0f',
+              base: '#0b1017',
+              card: '#111823',
+              cardInner: '#162232',
+              cardHover: '#1a273a',
+              border: '#1e2c3f',
+              borderLight: '#2a3b52',
+              green: '#22c55e',
+              greenGlow: '#4ade80',
+              greenDark: '#15803d',
+              accent: '#10b981',
+              gold: '#eab308',
+              goldLight: '#fde047',
+              cyan: '#06b6d4',
+              sky: '#38bdf8',
+              purple: '#a855f7'
+            }
+          },
+          fontFamily: {
+            heading: ['Outfit', 'sans-serif'],
+            body: ['Inter', 'sans-serif']
+          },
+          boxShadow: {
+            'glow-green': '0 0 25px -5px rgba(34, 197, 94, 0.35)',
+            'glow-amber': '0 0 25px -5px rgba(245, 158, 11, 0.35)',
+            'card': '0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05)'
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- React 18, ReactDOM & Babel -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    /* Custom Global & Print Styles */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #070a0f;
+      color: #f8fafc;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4, h5, h6, .font-heading {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Subtle background grid pattern */
+    .bg-grid-pattern {
+      background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* Glow orb elements */
+    .glow-orb-green {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.12) 0%, rgba(34, 197, 94, 0) 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow-orb-blue {
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.09) 0%, rgba(14, 165, 233, 0) 70%);
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Print Stylesheet */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-only {
+        display: block !important;
+      }
+      .print-card {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+      }
+      .print-text-dark {
+        color: #0f172a !important;
+      }
+      .print-text-muted {
+        color: #64748b !important;
+      }
+      .print-bg-subtle {
+        background-color: #f8fafc !important;
+        border-color: #e2e8f0 !important;
+      }
+      .print-accent {
+        color: #166534 !important;
+      }
+      @page {
+        margin: 15mm;
+        size: A4 portrait;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-ing-dark text-slate-100 relative overflow-x-hidden selection:bg-emerald-500 selection:text-black">
+  <div id="root"></div>
+
+  <!-- React Application Logic -->
+  <script type="text/babel">
+    const { useState, useMemo, useEffect } = React;
+
+    // --- SVG Icon Components for Zero Dependencies & High Performance ---
+    const IconShield = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    );
+
+    const IconTarget = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+    );
+
+    const IconBookOpen = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    );
+
+    const IconTrendingUp = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+    );
+
+    const IconAlertTriangle = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    );
+
+    const IconCheckCircle = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    );
+
+    const IconLock = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    );
+
+    const IconUser = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    );
+
+    const IconCalendar = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    );
+
+    const IconBriefcase = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+    );
+
+    const IconRocket = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+    );
+
+    const IconSun = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    );
+
+    const IconPrinter = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    );
+
+    const IconEdit3 = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    );
+
+    const IconCheck = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    );
+
+    const IconRotateCcw = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+    );
+
+    const IconSparkles = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+    );
+
+    const IconAward = ({ className = "w-5 h-5" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+    );
+
+    // --- Helper Functions ---
+    const formatNumberWithCommas = (val) => {
+      if (val === null || val === undefined || val === '') return '';
+      const num = parseFloat(val);
+      if (isNaN(num)) return '';
+      return num.toLocaleString('en-US');
+    };
+
+    const cleanNumericInput = (val) => {
+      if (!val) return '';
+      // allow only digits
+      return val.replace(/[^0-9]/g, '');
+    };
+
+    const formatCurrency = (val, currency = 'USD') => {
+      const num = parseFloat(val) || 0;
+      return `$${num.toLocaleString('en-US')} ${currency}`;
+    };
+
+    // --- Main App Component ---
+    function MapaCapitalApp() {
+      // Form State
+      const [nombre, setNombre] = useState('');
+      const [fecha, setFecha] = useState(() => new Date().toISOString().split('T')[0]);
+      const [perfil, setPerfil] = useState('Trader');
+      const [currency, setCurrency] = useState('USD');
+
+      // Paso 1: Brecha
+      const [necesidadHogar, setNecesidadHogar] = useState('');
+      const [ingresoNoDep, setIngresoNoDep] = useState('');
+
+      // Paso 2: Las 4 Zonas de Capital
+      const [zonaSeguridad, setZonaSeguridad] = useState('');
+      const [zonaObjetivos, setZonaObjetivos] = useState('');
+      const [zonaAprendizaje, setZonaAprendizaje] = useState('');
+      const [zonaOperacion, setZonaOperacion] = useState('');
+
+      // Paso 3: Validación (Licencia de Protección)
+      const [checkNoDeuda, setCheckNoDeuda] = useState(false);
+      const [checkNoFamilia, setCheckNoFamilia] = useState(false);
+      const [checkSimulacion, setCheckSimulacion] = useState(false);
+
+      // Paso 4: Fuga y Regla
+      const [fugaPersonal, setFugaPersonal] = useState('');
+      const [reglaPersonal, setReglaPersonal] = useState('');
+
+      // View State: 'form' | 'summary'
+      const [viewMode, setViewMode] = useState('form');
+
+      // Load draft from localStorage on mount
+      useEffect(() => {
+        try {
+          const saved = localStorage.getItem('ingresarios_mapa_capital_draft');
+          if (saved) {
+            const data = JSON.parse(saved);
+            if (data.nombre) setNombre(data.nombre);
+            if (data.fecha) setFecha(data.fecha);
+            if (data.perfil) setPerfil(data.perfil);
+            if (data.currency) setCurrency(data.currency);
+            if (data.necesidadHogar) setNecesidadHogar(data.necesidadHogar);
+            if (data.ingresoNoDep) setIngresoNoDep(data.ingresoNoDep);
+            if (data.zonaSeguridad) setZonaSeguridad(data.zonaSeguridad);
+            if (data.zonaObjetivos) setZonaObjetivos(data.zonaObjetivos);
+            if (data.zonaAprendizaje) setZonaAprendizaje(data.zonaAprendizaje);
+            if (data.zonaOperacion) setZonaOperacion(data.zonaOperacion);
+            if (data.checkNoDeuda) setCheckNoDeuda(data.checkNoDeuda);
+            if (data.checkNoFamilia) setCheckNoFamilia(data.checkNoFamilia);
+            if (data.checkSimulacion) setCheckSimulacion(data.checkSimulacion);
+            if (data.fugaPersonal) setFugaPersonal(data.fugaPersonal);
+            if (data.reglaPersonal) setReglaPersonal(data.reglaPersonal);
+          }
+        } catch (e) {
+          // ignore storage read issues
+        }
+      }, []);
+
+      // Auto-save draft
+      useEffect(() => {
+        try {
+          const draft = {
+            nombre, fecha, perfil, currency,
+            necesidadHogar, ingresoNoDep,
+            zonaSeguridad, zonaObjetivos, zonaAprendizaje, zonaOperacion,
+            checkNoDeuda, checkNoFamilia, checkSimulacion,
+            fugaPersonal, reglaPersonal
+          };
+          localStorage.setItem('ingresarios_mapa_capital_draft', JSON.stringify(draft));
+        } catch (e) {
+          // ignore
+        }
+      }, [
+        nombre, fecha, perfil, currency,
+        necesidadHogar, ingresoNoDep,
+        zonaSeguridad, zonaObjetivos, zonaAprendizaje, zonaOperacion,
+        checkNoDeuda, checkNoFamilia, checkSimulacion,
+        fugaPersonal, reglaPersonal
+      ]);
+
+      // --- Numerical Calculations ---
+      const numNecesidad = parseFloat(necesidadHogar) || 0;
+      const numIngresoNoDep = parseFloat(ingresoNoDep) || 0;
+
+      // Brecha = A - B (Si B > A, Brecha = 0)
+      const brechaMensual = useMemo(() => {
+        return Math.max(0, numNecesidad - numIngresoNoDep);
+      }, [numNecesidad, numIngresoNoDep]);
+
+      // Cobertura porcentual
+      const ratioCobertura = useMemo(() => {
+        if (numNecesidad <= 0) return numIngresoNoDep > 0 ? 100 : 0;
+        return (numIngresoNoDep / numNecesidad) * 100;
+      }, [numNecesidad, numIngresoNoDep]);
+
+      // Dynamic Diagnostic Badge:
+      // - CUBIERTA: Si Brecha <= 0 (Color Verde)
+      // - BAJA: Si B cubre más del 60% de A (Color Amarillo/Verde claro)
+      // - MEDIA: Si B cubre entre el 20% y 60% de A (Color Naranja)
+      // - ALTA: Si B cubre menos del 20% de A (Color Rojo)
+      const diagnostico = useMemo(() => {
+        if (numNecesidad <= 0 && numIngresoNoDep <= 0) {
+          return {
+            tipo: 'PENDIENTE',
+            label: 'PENDIENTE DE DATOS',
+            colorBadge: 'bg-slate-800 text-slate-400 border-slate-700',
+            colorCard: 'border-slate-800 bg-slate-900/40',
+            titulo: 'Ingresa tus números para diagnosticar',
+            mensaje: 'Completa los montos de necesidad mensual y fuentes de ingreso no dependiente para calcular tu brecha de tranquilidad.'
+          };
+        }
+
+        if (brechaMensual <= 0 && numNecesidad > 0) {
+          return {
+            tipo: 'CUBIERTA',
+            label: 'CUBIERTA (100%+)',
+            colorBadge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50',
+            colorCard: 'border-emerald-500/30 bg-emerald-950/20',
+            titulo: 'Tranquilidad Total — Emancipación Operativa',
+            mensaje: 'Tus ingresos no dependientes cubren por completo los gastos fundamentales de tu hogar. Cuentas con la máxima solidez psicológica para tomar decisiones en el mercado sin prisa ni necesidad.'
+          };
+        }
+
+        if (ratioCobertura >= 60) {
+          return {
+            tipo: 'BAJA',
+            label: 'BRECHA BAJA',
+            colorBadge: 'bg-lime-500/20 text-lime-300 border-lime-500/50',
+            colorCard: 'border-lime-500/30 bg-lime-950/20',
+            titulo: 'Margen Favorable — Cobertura Superior al 60%',
+            mensaje: 'Cuentas con un colchón de protección muy respetable. Más del 60% de tu costo de vida digno está asegurado sin depender de tus horas diarias de trabajo activo.'
+          };
+        }
+
+        if (ratioCobertura >= 20 && ratioCobertura < 60) {
+          return {
+            tipo: 'MEDIA',
+            label: 'BRECHA MEDIA',
+            colorBadge: 'bg-amber-500/20 text-amber-300 border-amber-500/50',
+            colorCard: 'border-amber-500/30 bg-amber-950/20',
+            titulo: 'Transición Activa — Cobertura entre 20% y 60%',
+            mensaje: 'Cubres una porción de tus costos vitales, pero una interrupción en tus ingresos laborales comprometería la estabilidad del hogar. Requiere máxima disciplina para no arriesgar este patrimonio.'
+          };
+        }
+
+        return {
+          tipo: 'ALTA',
+          label: 'BRECHA ALTA',
+          colorBadge: 'bg-rose-500/20 text-rose-300 border-rose-500/50',
+          colorCard: 'border-rose-500/30 bg-rose-950/20',
+          titulo: 'Alerta de Vulnerabilidad — Menos del 20% Cubierto',
+          mensaje: 'Dependencia crítica del 80%+ de tu tiempo y trabajo presente. La urgencia económica en el trading es letal: el mercado huele la necesidad de pagar cuentas y castiga la desesperación.'
+        };
+      }, [brechaMensual, ratioCobertura, numNecesidad, numIngresoNoDep]);
+
+      // Paso 2: Zonas de Capital
+      const numZona1 = parseFloat(zonaSeguridad) || 0;
+      const numZona2 = parseFloat(zonaObjetivos) || 0;
+      const numZona3 = parseFloat(zonaAprendizaje) || 0;
+      const numZona4 = parseFloat(zonaOperacion) || 0;
+
+      const capitalTotal = useMemo(() => {
+        return numZona1 + numZona2 + numZona3 + numZona4;
+      }, [numZona1, numZona2, numZona3, numZona4]);
+
+      // Porcentajes de Zonas
+      const pctZona1 = capitalTotal > 0 ? (numZona1 / capitalTotal) * 100 : 0;
+      const pctZona2 = capitalTotal > 0 ? (numZona2 / capitalTotal) * 100 : 0;
+      const pctZona3 = capitalTotal > 0 ? (numZona3 / capitalTotal) * 100 : 0;
+      const pctZona4 = capitalTotal > 0 ? (numZona4 / capitalTotal) * 100 : 0;
+
+      // Validación visual: Zona 4 > 0 pero Zona 1 en 0 o vacía
+      const showWarningZonaSeguridad = useMemo(() => {
+        return numZona4 > 0 && numZona1 <= 0;
+      }, [numZona4, numZona1]);
+
+      // Paso 3: Licencia de Protección
+      const allCheckboxesChecked = checkNoDeuda && checkNoFamilia && checkSimulacion;
+
+      // Reset Function
+      const handleResetForm = () => {
+        if (window.confirm('¿Deseas reiniciar la calculadora y limpiar los datos ingresados?')) {
+          setNombre('');
+          setFecha(new Date().toISOString().split('T')[0]);
+          setPerfil('Trader');
+          setNecesidadHogar('');
+          setIngresoNoDep('');
+          setZonaSeguridad('');
+          setZonaObjetivos('');
+          setZonaAprendizaje('');
+          setZonaOperacion('');
+          setCheckNoDeuda(false);
+          setCheckNoFamilia(false);
+          setCheckSimulacion(false);
+          setFugaPersonal('');
+          setReglaPersonal('');
+          setViewMode('form');
+          localStorage.removeItem('ingresarios_mapa_capital_draft');
+        }
+      };
+
+      // Handle Submit to Summary
+      const handleGenerateMap = (e) => {
+        e.preventDefault();
+        if (!allCheckboxesChecked) {
+          alert('Debes validar y marcar las 3 casillas de la Licencia de Protección antes de continuar.');
+          return;
+        }
+        if (!nombre.trim()) {
+          alert('Por favor ingresa tu nombre para personalizar tu Mapa de Capital.');
+          return;
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setViewMode('summary');
+      };
+
+      return (
+        <div className="min-h-screen relative flex flex-col justify-between">
+          {/* Ambient Lighting & Gradients */}
+          <div className="glow-orb-green top-0 right-10"></div>
+          <div className="glow-orb-blue bottom-40 left-10"></div>
+          <div className="fixed inset-0 bg-grid-pattern pointer-events-none opacity-40"></div>
+
+          {/* Top Bar Header */}
+          <header className="relative z-20 border-b border-ing-border bg-ing-dark/85 backdrop-blur-md sticky top-0 no-print">
+            <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <img 
+                  src="ingresarios-logo.webp" 
+                  alt="Ingresarios Logo" 
+                  className="h-7 w-auto object-contain"
+                  onError={(e) => { e.target.style.display = 'none'; }}
+                />
+                <div className="border-l border-slate-700 pl-3 hidden sm:block">
+                  <span className="text-[11px] font-semibold tracking-widest text-emerald-400 uppercase font-heading">
+                    El Otro 10%
+                  </span>
+                  <span className="block text-xs text-slate-400 font-medium">
+                    Mapa de Capital
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 sm:gap-4">
+                {/* Privacy Badge */}
+                <div className="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+                  <IconLock className="w-3.5 h-3.5" />
+                  <span>100% Privado (Client-Side)</span>
+                </div>
+
+                {/* Currency Selector */}
+                <div className="flex items-center gap-1 bg-slate-900/90 border border-slate-700/80 rounded-lg p-0.5 text-xs">
+                  {['USD', 'MXN', 'COP'].map((curr) => (
+                    <button
+                      key={curr}
+                      type="button"
+                      onClick={() => setCurrency(curr)}
+                      className={`px-2.5 py-1 rounded-md font-semibold transition-all ${
+                        currency === curr 
+                          ? 'bg-emerald-500 text-slate-950 shadow-sm' 
+                          : 'text-slate-400 hover:text-slate-200'
+                      }`}
+                    >
+                      {curr}
+                    </button>
+                  ))}
+                </div>
+
+                {viewMode === 'summary' && (
+                  <button
+                    onClick={() => { setViewMode('form'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition"
+                  >
+                    <IconEdit3 className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Editar Formulario</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </header>
+
+          {/* MAIN CONTAINER */}
+          <main className="relative z-10 max-w-5xl mx-auto px-4 py-8 sm:py-12 w-full flex-grow">
+            {viewMode === 'form' ? (
+              /* ================= FORM VIEW ================= */
+              <form onSubmit={handleGenerateMap} className="space-y-10">
+                {/* Hero Title & Context */}
+                <div className="text-center max-w-3xl mx-auto space-y-3">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider font-heading">
+                    <IconSparkles className="w-3.5 h-3.5 text-emerald-400" />
+                    Diagnóstico Financiero Personal
+                  </div>
+                  <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white font-heading">
+                    EL OTRO 10% — <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-green-300 to-emerald-500">Mapa de Capital</span>
+                  </h1>
+                  <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+                    La mayoría de las personas pierde dinero en el trading no por falta de técnica, sino por operar con dinero que su mente no puede permitirse perder. Estructura tus zonas de capital y certifica tu licencia de protección.
+                  </p>
+
+                  <div className="pt-2 flex items-center justify-center gap-2 text-xs text-slate-400">
+                    <IconLock className="w-4 h-4 text-emerald-400" />
+                    <span>Uso estrictamente confidencial. Ningún dato sale de tu dispositivo.</span>
+                  </div>
+                </div>
+
+                {/* 1. Encabezado e Identificación */}
+                <section className="bg-ing-card border border-ing-border rounded-2xl p-6 sm:p-8 shadow-card relative overflow-hidden">
+                  <div className="flex items-center gap-3 mb-6 border-b border-slate-800 pb-4">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                      <IconUser className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h2 className="text-lg sm:text-xl font-bold text-white font-heading">
+                        Identificación del Inversor
+                      </h2>
+                      <p className="text-xs text-slate-400">
+                        Define la identidad y el perfil de partida para tu sesión de hoy.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2 font-heading">
+                        Nombre Completo
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          required
+                          value={nombre}
+                          onChange={(e) => setNombre(e.target.value)}
+                          placeholder="Ej. Carlos Mendoza"
+                          className="w-full px-4 py-3 bg-ing-cardInner border border-ing-border rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition text-sm font-medium"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2 font-heading">
+                        Fecha del Diagnóstico
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="date"
+                          required
+                          value={fecha}
+                          onChange={(e) => setFecha(e.target.value)}
+                          className="w-full px-4 py-3 bg-ing-cardInner border border-ing-border rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition text-sm font-medium"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Radio Cards Perfil */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3 font-heading">
+                      Perfil Profesional / Financiero
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                      {[
+                        { id: 'Empleado', label: 'Empleado', desc: 'Ingresos estables por nómina/salario fijo.', icon: IconBriefcase },
+                        { id: 'Emprendedor', label: 'Emprendedor', desc: 'Flujos dinámicos de proyectos propios.', icon: IconRocket },
+                        { id: 'Trader', label: 'Trader', desc: 'Operación activa y gestión de riesgo.', icon: IconTrendingUp },
+                        { id: 'Jubilación', label: 'Jubilación', desc: 'Preservación de patrimonio y rentas.', icon: IconSun }
+                      ].map((item) => {
+                        const Icon = item.icon;
+                        const isSelected = perfil === item.id;
+                        return (
+                          <div
+                            key={item.id}
+                            onClick={() => setPerfil(item.id)}
+                            className={`cursor-pointer rounded-xl p-4 border transition-all relative flex flex-col justify-between ${
+                              isSelected
+                                ? 'bg-emerald-950/30 border-emerald-500 shadow-glow-green text-white'
+                                : 'bg-ing-cardInner/70 border-slate-800 text-slate-300 hover:border-slate-700 hover:bg-ing-cardInner'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isSelected ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-slate-400'}`}>
+                                <Icon className="w-4 h-4" />
+                              </div>
+                              <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${isSelected ? 'border-emerald-500 bg-emerald-500' : 'border-slate-600'}`}>
+                                {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-slate-950"></div>}
+                              </div>
+                            </div>
+                            <h4 className="font-bold text-sm text-white font-heading">{item.label}</h4>
+                            <p className="text-[11px] text-slate-400 mt-1 leading-snug">{item.desc}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </section>
+
+                {/* 2. Paso 1: Cálculo de la Brecha Mensual de Tranquilidad */}
+                <section className="bg-ing-card border border-ing-border rounded-2xl p-6 sm:p-8 shadow-card relative">
+                  <div className="flex items-center gap-3 mb-6 border-b border-slate-800 pb-4">
+                    <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-black font-heading text-lg">
+                      01
+                    </div>
+                    <div>
+                      <h2 className="text-lg sm:text-xl font-bold text-white font-heading flex items-center gap-2">
+                        Paso 1: Brecha Mensual de Tranquilidad
+                      </h2>
+                      <p className="text-xs text-slate-400">
+                        Mide qué tan vulnerable es tu familia si dejaras de trabajar activamente hoy.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    {/* Input A */}
+                    <div className="bg-ing-cardInner/60 p-5 rounded-xl border border-slate-800/80">
+                      <div className="flex justify-between items-baseline mb-1">
+                        <label className="text-xs font-bold text-slate-200 uppercase tracking-wider font-heading">
+                          A. Necesidad Mensual del Hogar
+                        </label>
+                        <span className="text-[11px] text-slate-400 font-mono">Básicos Vitales</span>
+                      </div>
+                      <p className="text-xs text-slate-400 mb-3 leading-relaxed">
+                        Gastos fundamentales para vivir con dignidad: techo, alimentación, salud, educación y servicios esenciales.
+                      </p>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-base">$</span>
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          value={formatNumberWithCommas(necesidadHogar)}
+                          onChange={(e) => setNecesidadHogar(cleanNumericInput(e.target.value))}
+                          placeholder="Ej. 2,500"
+                          className="w-full pl-9 pr-14 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white font-mono text-base font-semibold focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500 uppercase">
+                          {currency}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Input B */}
+                    <div className="bg-ing-cardInner/60 p-5 rounded-xl border border-slate-800/80">
+                      <div className="flex justify-between items-baseline mb-1">
+                        <label className="text-xs font-bold text-slate-200 uppercase tracking-wider font-heading">
+                          B. Ingreso No Dependiente del Trabajo
+                        </label>
+                        <span className="text-[11px] text-emerald-400 font-mono">Flujos Pasivos</span>
+                      </div>
+                      <p className="text-xs text-slate-400 mb-3 leading-relaxed">
+                        Recursos recurrentes que no exigen tu tiempo directo: rentas, dividendos, negocios delegados o regalías.
+                      </p>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-base">$</span>
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          value={formatNumberWithCommas(ingresoNoDep)}
+                          onChange={(e) => setIngresoNoDep(cleanNumericInput(e.target.value))}
+                          placeholder="Ej. 800"
+                          className="w-full pl-9 pr-14 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white font-mono text-base font-semibold focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500 uppercase">
+                          {currency}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Real-time Calculation Result Card */}
+                  <div className={`p-5 rounded-xl border transition-all ${diagnostico.colorCard}`}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4 mb-4">
+                      <div>
+                        <span className="text-xs font-semibold tracking-wider text-slate-400 uppercase font-heading block mb-1">
+                          Brecha Mensual Calculada (A - B)
+                        </span>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-3xl sm:text-4xl font-black font-heading text-white tracking-tight">
+                            {formatCurrency(brechaMensual, currency)}
+                          </span>
+                          <span className="text-xs text-slate-400">/ mes por cubrir</span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col sm:items-end">
+                        <span className="text-[11px] font-semibold text-slate-400 mb-1">Estado de Diagnóstico</span>
+                        <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border uppercase tracking-wider font-heading ${diagnostico.colorBadge}`}>
+                          {diagnostico.tipo === 'CUBIERTA' && <IconCheckCircle className="w-4 h-4" />}
+                          {diagnostico.tipo === 'BAJA' && <IconShield className="w-4 h-4" />}
+                          {(diagnostico.tipo === 'MEDIA' || diagnostico.tipo === 'ALTA') && <IconAlertTriangle className="w-4 h-4" />}
+                          <span>{diagnostico.label}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Progress Bar of Coverage */}
+                    <div className="mb-4">
+                      <div className="flex justify-between text-xs font-medium text-slate-300 mb-1.5">
+                        <span>Cobertura de Gastos Vitales</span>
+                        <span className="font-mono font-bold text-white">
+                          {numNecesidad > 0 ? `${ratioCobertura.toFixed(1)}%` : '0%'}
+                        </span>
+                      </div>
+                      <div className="w-full bg-slate-900 rounded-full h-3 p-0.5 overflow-hidden border border-slate-700/50">
+                        <div
+                          className={`h-full rounded-full transition-all duration-500 ${
+                            ratioCobertura >= 100 
+                              ? 'bg-gradient-to-r from-emerald-500 to-green-400' 
+                              : ratioCobertura >= 60 
+                                ? 'bg-gradient-to-r from-lime-500 to-emerald-400'
+                                : ratioCobertura >= 20
+                                  ? 'bg-gradient-to-r from-amber-500 to-yellow-400'
+                                  : 'bg-gradient-to-r from-rose-600 to-red-500'
+                          }`}
+                          style={{ width: `${Math.min(100, Math.max(0, ratioCobertura))}%` }}
+                        ></div>
+                      </div>
+                      <div className="flex justify-between text-[10px] text-slate-500 mt-1 font-mono">
+                        <span>0% Crítico</span>
+                        <span>20% Media</span>
+                        <span>60% Baja</span>
+                        <span>100% Cubierta</span>
+                      </div>
+                    </div>
+
+                    <div className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      <strong className="text-white block font-heading mb-0.5">{diagnostico.titulo}</strong>
+                      {diagnostico.mensaje}
+                    </div>
+                  </div>
+                </section>
+
+                {/* 3. Paso 2: El Mapa de Capital (Las 4 Zonas) */}
+                <section className="bg-ing-card border border-ing-border rounded-2xl p-6 sm:p-8 shadow-card relative">
+                  <div className="flex items-center gap-3 mb-6 border-b border-slate-800 pb-4">
+                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 font-black font-heading text-lg">
+                      02
+                    </div>
+                    <div>
+                      <h2 className="text-lg sm:text-xl font-bold text-white font-heading">
+                        Paso 2: El Mapa de Capital (Las 4 Zonas)
+                      </h2>
+                      <p className="text-xs text-slate-400">
+                        Divide tu patrimonio en 4 cajones estancos para blindar tu mente y tu hogar.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 4 Zone Inputs */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+                    {/* Zona 1 */}
+                    <div className="bg-ing-cardInner/70 p-5 rounded-xl border border-emerald-500/30 relative">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm font-heading">
+                          <IconShield className="w-4 h-4 text-emerald-400" />
+                          <span>Zona 1: Seguridad (Protección)</span>
+                        </div>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 uppercase font-mono">
+                          Prioridad 1
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-400 mb-3 leading-relaxed">
+                        Emergencias y estabilidad absoluta (3 a 6 meses de gastos del hogar en liquidez total).
+                      </p>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-400 font-bold text-base">$</span>
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          value={formatNumberWithCommas(zonaSeguridad)}
+                          onChange={(e) => setZonaSeguridad(cleanNumericInput(e.target.value))}
+                          placeholder="Ej. 10,000"
+                          className="w-full pl-9 pr-14 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white font-mono text-base font-semibold focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500 uppercase">
+                          {currency}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Zona 2 */}
+                    <div className="bg-ing-cardInner/70 p-5 rounded-xl border border-sky-500/30 relative">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2 text-sky-400 font-bold text-sm font-heading">
+                          <IconTarget className="w-4 h-4 text-sky-400" />
+                          <span>Zona 2: Objetivos</span>
+                        </div>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-500/10 text-sky-300 border border-sky-500/20 uppercase font-mono">
+                          Mediano Plazo
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-400 mb-3 leading-relaxed">
+                        Vivienda, educación universitaria, compra de activos fijos, proyectos familiares clave.
+                      </p>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sky-400 font-bold text-base">$</span>
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          value={formatNumberWithCommas(zonaObjetivos)}
+                          onChange={(e) => setZonaObjetivos(cleanNumericInput(e.target.value))}
+                          placeholder="Ej. 15,000"
+                          className="w-full pl-9 pr-14 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white font-mono text-base font-semibold focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500 uppercase">
+                          {currency}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Zona 3 */}
+                    <div className="bg-ing-cardInner/70 p-5 rounded-xl border border-purple-500/30 relative">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2 text-purple-400 font-bold text-sm font-heading">
+                          <IconBookOpen className="w-4 h-4 text-purple-400" />
+                          <span>Zona 3: Aprendizaje</span>
+                        </div>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20 uppercase font-mono">
+                          Capacidad
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-400 mb-3 leading-relaxed">
+                        Desarrollo de capacidades, cursos, mentorías de alto nivel, libros, herramientas y software.
+                      </p>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 font-bold text-base">$</span>
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          value={formatNumberWithCommas(zonaAprendizaje)}
+                          onChange={(e) => setZonaAprendizaje(cleanNumericInput(e.target.value))}
+                          placeholder="Ej. 2,000"
+                          className="w-full pl-9 pr-14 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white font-mono text-base font-semibold focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500 uppercase">
+                          {currency}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Zona 4 */}
+                    <div className="bg-ing-cardInner/70 p-5 rounded-xl border border-amber-500/30 relative">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2 text-amber-400 font-bold text-sm font-heading">
+                          <IconTrendingUp className="w-4 h-4 text-amber-400" />
+                          <span>Zona 4: Operación (Capital Entrenable)</span>
+                        </div>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 uppercase font-mono">
+                          Riesgo Controlado
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-400 mb-3 leading-relaxed">
+                        Riesgo controlado. El capital asignado al broker para ejecutar el método con estricta gestión.
+                      </p>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-amber-400 font-bold text-base">$</span>
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          value={formatNumberWithCommas(zonaOperacion)}
+                          onChange={(e) => setZonaOperacion(cleanNumericInput(e.target.value))}
+                          placeholder="Ej. 3,000"
+                          className="w-full pl-9 pr-14 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white font-mono text-base font-semibold focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500 uppercase">
+                          {currency}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Warning Visual: Si Zona 4 > 0 pero Zona 1 == 0 */}
+                  {showWarningZonaSeguridad && (
+                    <div className="mb-6 p-4 rounded-xl bg-amber-950/40 border-2 border-amber-500/60 text-amber-200 flex items-start gap-3 shadow-glow-amber animate-pulse">
+                      <IconAlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                      <div className="text-xs sm:text-sm">
+                        <strong className="block text-amber-300 font-bold font-heading mb-0.5">
+                          ⚠️ Alerta de Prioridad Patrimonial
+                        </strong>
+                        Es altamente recomendable tener fondos en tu Zona de Seguridad antes de asignar capital operable. Operar en los mercados sin colchón de emergencia genera presión de supervivencia y sabotea tu psicología.
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Distribution Bar & Breakdown */}
+                  <div className="bg-slate-900/80 p-5 rounded-xl border border-slate-800">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                      <span className="text-xs font-semibold tracking-wider text-slate-300 uppercase font-heading">
+                        Distribución del Capital Total Asignado
+                      </span>
+                      <span className="text-sm font-bold text-emerald-400 font-mono">
+                        Total: {formatCurrency(capitalTotal, currency)}
+                      </span>
+                    </div>
+
+                    {/* Proportional Segmented Flexbox Bar */}
+                    <div className="w-full bg-slate-950 rounded-xl h-5 p-1 flex overflow-hidden border border-slate-800 gap-1 mb-4">
+                      {capitalTotal > 0 ? (
+                        <>
+                          {numZona1 > 0 && (
+                            <div 
+                              style={{ width: `${pctZona1}%` }} 
+                              className="h-full bg-emerald-500 rounded-sm transition-all duration-300 relative group cursor-pointer"
+                              title={`Zona 1: Seguridad ${pctZona1.toFixed(1)}%`}
+                            ></div>
+                          )}
+                          {numZona2 > 0 && (
+                            <div 
+                              style={{ width: `${pctZona2}%` }} 
+                              className="h-full bg-sky-500 rounded-sm transition-all duration-300 relative group cursor-pointer"
+                              title={`Zona 2: Objetivos ${pctZona2.toFixed(1)}%`}
+                            ></div>
+                          )}
+                          {numZona3 > 0 && (
+                            <div 
+                              style={{ width: `${pctZona3}%` }} 
+                              className="h-full bg-purple-500 rounded-sm transition-all duration-300 relative group cursor-pointer"
+                              title={`Zona 3: Aprendizaje ${pctZona3.toFixed(1)}%`}
+                            ></div>
+                          )}
+                          {numZona4 > 0 && (
+                            <div 
+                              style={{ width: `${pctZona4}%` }} 
+                              className="h-full bg-amber-500 rounded-sm transition-all duration-300 relative group cursor-pointer"
+                              title={`Zona 4: Operación ${pctZona4.toFixed(1)}%`}
+                            ></div>
+                          )}
+                        </>
+                      ) : (
+                        <div className="w-full h-full bg-slate-800 rounded flex items-center justify-center text-[10px] text-slate-500">
+                          Ingresa montos en las zonas para ver la distribución porcentual
+                        </div>
+                      )}
+                    </div>
+
+                    {/* 4 Zone Legends */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded bg-emerald-500 flex-shrink-0"></div>
+                        <div className="truncate">
+                          <span className="text-slate-400 block text-[10px]">Seguridad</span>
+                          <span className="font-bold text-white font-mono">{pctZona1.toFixed(1)}%</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded bg-sky-500 flex-shrink-0"></div>
+                        <div className="truncate">
+                          <span className="text-slate-400 block text-[10px]">Objetivos</span>
+                          <span className="font-bold text-white font-mono">{pctZona2.toFixed(1)}%</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded bg-purple-500 flex-shrink-0"></div>
+                        <div className="truncate">
+                          <span className="text-slate-400 block text-[10px]">Aprendizaje</span>
+                          <span className="font-bold text-white font-mono">{pctZona3.toFixed(1)}%</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded bg-amber-500 flex-shrink-0"></div>
+                        <div className="truncate">
+                          <span className="text-slate-400 block text-[10px]">Operación</span>
+                          <span className="font-bold text-white font-mono">{pctZona4.toFixed(1)}%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                {/* 4. Paso 3: Validación del Capital Operable (Licencia de Protección) */}
+                <section className="bg-ing-card border border-ing-border rounded-2xl p-6 sm:p-8 shadow-card relative">
+                  <div className="flex items-center gap-3 mb-6 border-b border-slate-800 pb-4">
+                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-black font-heading text-lg">
+                      03
+                    </div>
+                    <div>
+                      <h2 className="text-lg sm:text-xl font-bold text-white font-heading">
+                        Paso 3: Validación del Capital Operable (Licencia de Protección)
+                      </h2>
+                      <p className="text-xs text-slate-400">
+                        Tres condiciones obligatorias e innegociables para obtener tu permiso financiero.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 3 Mandatary Checkboxes Cards */}
+                  <div className="space-y-3.5 mb-6">
+                    {/* Checkbox 1 */}
+                    <div
+                      onClick={() => setCheckNoDeuda(!checkNoDeuda)}
+                      className={`cursor-pointer p-4 rounded-xl border transition-all flex items-start gap-4 ${
+                        checkNoDeuda 
+                          ? 'bg-emerald-950/30 border-emerald-500/80 shadow-sm' 
+                          : 'bg-ing-cardInner/60 border-slate-800 hover:border-slate-700'
+                      }`}
+                    >
+                      <div className={`w-5 h-5 rounded border mt-0.5 flex items-center justify-center flex-shrink-0 transition-colors ${
+                        checkNoDeuda ? 'bg-emerald-500 border-emerald-500 text-slate-950' : 'border-slate-600 bg-slate-900'
+                      }`}>
+                        {checkNoDeuda && <IconCheck className="w-3.5 h-3.5" />}
+                      </div>
+                      <div>
+                        <span className="text-sm font-bold text-white block font-heading">
+                          1. Este capital NO proviene de deuda.
+                        </span>
+                        <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">
+                          No es un préstamo bancario, avance con tarjeta de crédito, empeño ni dinero pedido a familiares o amigos.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Checkbox 2 */}
+                    <div
+                      onClick={() => setCheckNoFamilia(!checkNoFamilia)}
+                      className={`cursor-pointer p-4 rounded-xl border transition-all flex items-start gap-4 ${
+                        checkNoFamilia 
+                          ? 'bg-emerald-950/30 border-emerald-500/80 shadow-sm' 
+                          : 'bg-ing-cardInner/60 border-slate-800 hover:border-slate-700'
+                      }`}
+                    >
+                      <div className={`w-5 h-5 rounded border mt-0.5 flex items-center justify-center flex-shrink-0 transition-colors ${
+                        checkNoFamilia ? 'bg-emerald-500 border-emerald-500 text-slate-950' : 'border-slate-600 bg-slate-900'
+                      }`}>
+                        {checkNoFamilia && <IconCheck className="w-3.5 h-3.5" />}
+                      </div>
+                      <div>
+                        <span className="text-sm font-bold text-white block font-heading">
+                          2. Perder una parte de este capital NO altera la estabilidad de mi familia.
+                        </span>
+                        <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">
+                          Si ocurre una racha de operaciones negativas dentro del riesgo planificado, la alimentación, vivienda y salud de tu hogar siguen 100% intactas.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Checkbox 3 */}
+                    <div
+                      onClick={() => setCheckSimulacion(!checkSimulacion)}
+                      className={`cursor-pointer p-4 rounded-xl border transition-all flex items-start gap-4 ${
+                        checkSimulacion 
+                          ? 'bg-emerald-950/30 border-emerald-500/80 shadow-sm' 
+                          : 'bg-ing-cardInner/60 border-slate-800 hover:border-slate-700'
+                      }`}
+                    >
+                      <div className={`w-5 h-5 rounded border mt-0.5 flex items-center justify-center flex-shrink-0 transition-colors ${
+                        checkSimulacion ? 'bg-emerald-500 border-emerald-500 text-slate-950' : 'border-slate-600 bg-slate-900'
+                      }`}>
+                        {checkSimulacion && <IconCheck className="w-3.5 h-3.5" />}
+                      </div>
+                      <div>
+                        <span className="text-sm font-bold text-white block font-heading">
+                          3. Antes de utilizarlo, debo demostrar que puedo seguir un plan en simulación o con tamaño reducido.
+                        </span>
+                        <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">
+                          Cuentas con la humildad y disciplina de validar tus reglas y estadísticas en demo o micro-lotes antes de arriesgar volumen real.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Business Rule Warning/Notice */}
+                  <div className={`p-4 rounded-xl border transition-all ${
+                    allCheckboxesChecked 
+                      ? 'bg-emerald-950/30 border-emerald-500/50 text-emerald-300' 
+                      : 'bg-amber-950/30 border-amber-500/40 text-amber-300'
+                  }`}>
+                    <div className="flex items-start gap-3">
+                      {allCheckboxesChecked ? (
+                        <IconCheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                      ) : (
+                        <IconAlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                      )}
+                      <div className="text-xs sm:text-sm">
+                        {allCheckboxesChecked ? (
+                          <span>
+                            <strong>Licencia de Protección Habilitada:</strong> Has certificado los 3 principios de solvencia ética y psicológica para operar tu capital de riesgo.
+                          </span>
+                        ) : (
+                          <span>
+                            <strong>Regla de Protección Innegociable:</strong> Si no puedes marcar las tres casillas, no tienes permiso financiero para operar este capital todavía.
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                {/* 5. Paso 4: Fuga Personal y Regla Personal de Protección */}
+                <section className="bg-ing-card border border-ing-border rounded-2xl p-6 sm:p-8 shadow-card relative">
+                  <div className="flex items-center gap-3 mb-6 border-b border-slate-800 pb-4">
+                    <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 font-black font-heading text-lg">
+                      04
+                    </div>
+                    <div>
+                      <h2 className="text-lg sm:text-xl font-bold text-white font-heading">
+                        Paso 4: Fuga Personal y Regla de Oro
+                      </h2>
+                      <p className="text-xs text-slate-400">
+                        Identifica tu patrón destructivo principal y crea un candado de conducta inquebrantable.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2 font-heading">
+                        Mi principal fuga financiera u operativa es:
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={fugaPersonal}
+                        onChange={(e) => setFugaPersonal(e.target.value)}
+                        placeholder="Ejemplo: Entrar al mercado por aburrimiento o ansiedad, mover el stop loss cuando la operación va en contra, sobreapalancarme tras una pérdida para intentar recuperarme rápido..."
+                        className="w-full px-4 py-3 bg-ing-cardInner border border-ing-border rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400 transition text-sm leading-relaxed"
+                      ></textarea>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2 font-heading">
+                        Desde hoy no tomaré una decisión de inversión sin (conducta observable):
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={reglaPersonal}
+                        onChange={(e) => setReglaPersonal(e.target.value)}
+                        placeholder="Ejemplo: Tener mi checklist técnico de 4 puntos marcado en papel, confirmar que el riesgo monetario no supere el 1% de mi capital operable, y registrar la tesis en mi bitácora antes de disparar la orden..."
+                        className="w-full px-4 py-3 bg-ing-cardInner border border-ing-border rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition text-sm leading-relaxed"
+                      ></textarea>
+                    </div>
+                  </div>
+                </section>
+
+                {/* 6. Cierre y Botón de Envío */}
+                <div className="flex flex-col items-center gap-4 pt-4">
+                  <button
+                    type="submit"
+                    disabled={!allCheckboxesChecked}
+                    className={`w-full sm:w-auto px-10 py-4 rounded-xl font-heading font-black text-base uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-3 ${
+                      allCheckboxesChecked
+                        ? 'bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-600 text-slate-950 shadow-glow-green hover:shadow-lg hover:scale-[1.02] cursor-pointer'
+                        : 'bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed opacity-50'
+                    }`}
+                  >
+                    <span>Generar y Guardar mi Mapa</span>
+                    <IconTrendingUp className="w-5 h-5" />
+                  </button>
+
+                  {!allCheckboxesChecked && (
+                    <p className="text-xs text-amber-400 text-center font-medium">
+                      🔒 El botón se habilitará únicamente cuando marques las 3 casillas de la Licencia de Protección (Paso 3).
+                    </p>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={handleResetForm}
+                    className="text-xs text-slate-500 hover:text-slate-400 flex items-center gap-1 transition pt-2"
+                  >
+                    <IconRotateCcw className="w-3.5 h-3.5" />
+                    <span>Reiniciar y limpiar campos</span>
+                  </button>
+                </div>
+              </form>
+            ) : (
+              /* ================= SUMMARY VIEW (MISIÓN CUMPLIDA) ================= */
+              <div className="space-y-8 animate-fadeIn">
+                {/* Print & Action Bar */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-slate-900/90 border border-slate-800 no-print">
+                  <div className="flex items-center gap-3 text-emerald-400">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                      <IconAward className="w-5 h-5 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-heading font-bold text-sm text-white">
+                        ¡Diagnóstico de Mapa de Capital Completado!
+                      </h3>
+                      <p className="text-xs text-slate-400">
+                        Guarda tu hoja de ruta o imprímela para tenerla visible en tu espacio de trabajo.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 w-full sm:w-auto">
+                    <button
+                      type="button"
+                      onClick={() => window.print()}
+                      className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-black text-xs uppercase tracking-wider transition shadow-glow-green"
+                    >
+                      <IconPrinter className="w-4 h-4" />
+                      <span>Descargar / Imprimir PDF</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setViewMode('form'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                      className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-heading font-bold text-xs uppercase transition flex items-center gap-1.5"
+                    >
+                      <IconEdit3 className="w-4 h-4" />
+                      <span>Editar</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* CERTIFIED DOCUMENT CONTAINER (OPTIMIZED FOR SCREEN & PRINT) */}
+                <div className="bg-ing-card border border-ing-border rounded-3xl p-6 sm:p-10 shadow-2xl relative print-card">
+                  {/* Watermark / Seal in Background */}
+                  <div className="absolute right-6 top-6 opacity-5 pointer-events-none no-print">
+                    <IconShield className="w-64 h-64 text-emerald-500" />
+                  </div>
+
+                  {/* Document Header */}
+                  <div className="border-b border-slate-800 pb-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <img 
+                        src="ingresarios-logo.webp" 
+                        alt="Ingresarios" 
+                        className="h-9 w-auto object-contain"
+                        onError={(e) => { e.target.style.display = 'none'; }}
+                      />
+                      <div className="border-l border-slate-700 pl-4">
+                        <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-widest font-heading block">
+                          Documento Oficial de Estrategia
+                        </span>
+                        <h1 className="text-xl sm:text-2xl font-black text-white font-heading tracking-tight print-text-dark">
+                          EL OTRO 10% — Mapa de Capital
+                        </h1>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col sm:items-end text-xs text-slate-400 font-mono">
+                      <span>Ref: CAP-{Math.abs((nombre + fecha).split('').reduce((a,b)=>{a=((a<<5)-a)+b.charCodeAt(0);return a&a},0)).toString(16).toUpperCase()}</span>
+                      <span className="text-emerald-400 font-semibold">SESIÓN CERTIFICADA</span>
+                    </div>
+                  </div>
+
+                  {/* 1. Identification Box */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-5 rounded-2xl bg-ing-cardInner/60 border border-slate-800 mb-8 print-bg-subtle">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-wider text-slate-400 font-heading font-semibold block mb-0.5 print-text-muted">
+                        Inversor / Titular
+                      </span>
+                      <p className="text-base font-bold text-white font-heading print-text-dark">
+                        {nombre || 'Anónimo'}
+                      </p>
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] uppercase tracking-wider text-slate-400 font-heading font-semibold block mb-0.5 print-text-muted">
+                        Fecha de Emisión
+                      </span>
+                      <p className="text-sm font-semibold text-slate-200 font-mono print-text-dark">
+                        {fecha}
+                      </p>
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] uppercase tracking-wider text-slate-400 font-heading font-semibold block mb-0.5 print-text-muted">
+                        Perfil Declarado
+                      </span>
+                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold uppercase font-heading">
+                        {perfil}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 2. Diagnóstico de Brecha de Tranquilidad */}
+                  <div className="mb-8">
+                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest font-heading mb-3 flex items-center gap-2 print-text-muted">
+                      <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                      1. Diagnóstico de Brecha Mensual de Tranquilidad
+                    </h3>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-3">
+                      <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 print-bg-subtle">
+                        <span className="text-[11px] text-slate-400 block mb-1">Necesidad Mensual Hogar (A)</span>
+                        <span className="text-xl font-bold font-mono text-white print-text-dark">
+                          {formatCurrency(numNecesidad, currency)}
+                        </span>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 print-bg-subtle">
+                        <span className="text-[11px] text-slate-400 block mb-1">Ingreso No Dependiente (B)</span>
+                        <span className="text-xl font-bold font-mono text-emerald-400 print-accent">
+                          {formatCurrency(numIngresoNoDep, currency)}
+                        </span>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 print-bg-subtle">
+                        <span className="text-[11px] text-slate-400 block mb-1">Brecha Restante (A - B)</span>
+                        <span className="text-xl font-bold font-mono text-cyan-300">
+                          {formatCurrency(brechaMensual, currency)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className={`p-4 rounded-xl border flex items-center justify-between gap-4 ${diagnostico.colorCard}`}>
+                      <div className="text-xs">
+                        <strong className="text-white block font-heading print-text-dark">{diagnostico.titulo}</strong>
+                        <span className="text-slate-300 print-text-muted">{diagnostico.mensaje}</span>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-xs font-bold border uppercase whitespace-nowrap font-heading ${diagnostico.colorBadge}`}>
+                        {diagnostico.label}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 3. Distribución de las 4 Zonas de Capital */}
+                  <div className="mb-8">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest font-heading flex items-center gap-2 print-text-muted">
+                        <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                        2. Estructura Patrimonial (Las 4 Zonas de Capital)
+                      </h3>
+                      <span className="text-xs font-bold text-emerald-400 font-mono">
+                        Capital Total: {formatCurrency(capitalTotal, currency)}
+                      </span>
+                    </div>
+
+                    {/* Progress Segment Bar */}
+                    <div className="w-full bg-slate-950 rounded-xl h-4 p-0.5 flex overflow-hidden border border-slate-800 gap-1 mb-4 print-bg-subtle">
+                      {capitalTotal > 0 ? (
+                        <>
+                          {numZona1 > 0 && <div style={{ width: `${pctZona1}%` }} className="h-full bg-emerald-500 rounded-sm"></div>}
+                          {numZona2 > 0 && <div style={{ width: `${pctZona2}%` }} className="h-full bg-sky-500 rounded-sm"></div>}
+                          {numZona3 > 0 && <div style={{ width: `${pctZona3}%` }} className="h-full bg-purple-500 rounded-sm"></div>}
+                          {numZona4 > 0 && <div style={{ width: `${pctZona4}%` }} className="h-full bg-amber-500 rounded-sm"></div>}
+                        </>
+                      ) : (
+                        <div className="w-full h-full bg-slate-800 rounded"></div>
+                      )}
+                    </div>
+
+                    {/* 4 Cards Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {/* Zona 1 */}
+                      <div className="p-4 rounded-xl bg-slate-900/60 border border-emerald-500/30 print-bg-subtle">
+                        <div className="flex items-center justify-between text-xs text-emerald-400 font-bold mb-1">
+                          <span>Zona 1: Seguridad</span>
+                          <span className="font-mono">{pctZona1.toFixed(1)}%</span>
+                        </div>
+                        <div className="text-lg font-black font-mono text-white mb-1 print-text-dark">
+                          {formatCurrency(numZona1, currency)}
+                        </div>
+                        <p className="text-[11px] text-slate-400 leading-snug print-text-muted">
+                          Emergencias & Protección familiar.
+                        </p>
+                      </div>
+
+                      {/* Zona 2 */}
+                      <div className="p-4 rounded-xl bg-slate-900/60 border border-sky-500/30 print-bg-subtle">
+                        <div className="flex items-center justify-between text-xs text-sky-400 font-bold mb-1">
+                          <span>Zona 2: Objetivos</span>
+                          <span className="font-mono">{pctZona2.toFixed(1)}%</span>
+                        </div>
+                        <div className="text-lg font-black font-mono text-white mb-1 print-text-dark">
+                          {formatCurrency(numZona2, currency)}
+                        </div>
+                        <p className="text-[11px] text-slate-400 leading-snug print-text-muted">
+                          Vivienda, educación y proyectos.
+                        </p>
+                      </div>
+
+                      {/* Zona 3 */}
+                      <div className="p-4 rounded-xl bg-slate-900/60 border border-purple-500/30 print-bg-subtle">
+                        <div className="flex items-center justify-between text-xs text-purple-400 font-bold mb-1">
+                          <span>Zona 3: Aprendizaje</span>
+                          <span className="font-mono">{pctZona3.toFixed(1)}%</span>
+                        </div>
+                        <div className="text-lg font-black font-mono text-white mb-1 print-text-dark">
+                          {formatCurrency(numZona3, currency)}
+                        </div>
+                        <p className="text-[11px] text-slate-400 leading-snug print-text-muted">
+                          Capacidades, software y mentorías.
+                        </p>
+                      </div>
+
+                      {/* Zona 4 */}
+                      <div className="p-4 rounded-xl bg-slate-900/60 border border-amber-500/30 print-bg-subtle">
+                        <div className="flex items-center justify-between text-xs text-amber-400 font-bold mb-1">
+                          <span>Zona 4: Operación</span>
+                          <span className="font-mono">{pctZona4.toFixed(1)}%</span>
+                        </div>
+                        <div className="text-lg font-black font-mono text-white mb-1 print-text-dark">
+                          {formatCurrency(numZona4, currency)}
+                        </div>
+                        <p className="text-[11px] text-slate-400 leading-snug print-text-muted">
+                          Capital Entrenable en Broker.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 4. Licencia de Protección Certificada */}
+                  <div className="mb-8 p-5 rounded-2xl bg-emerald-950/20 border border-emerald-500/40 print-bg-subtle">
+                    <div className="flex items-center gap-2 mb-3">
+                      <IconShield className="w-5 h-5 text-emerald-400" />
+                      <h4 className="text-sm font-bold text-white uppercase tracking-wider font-heading print-text-dark">
+                        Licencia de Protección Patrimonial (Certificada)
+                      </h4>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                      <div className="flex items-start gap-2 text-slate-200 print-text-dark">
+                        <IconCheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                        <span>Capital 100% libre de deuda o apalancamiento bancario.</span>
+                      </div>
+                      <div className="flex items-start gap-2 text-slate-200 print-text-dark">
+                        <IconCheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                        <span>Cero impacto a la estabilidad básica y bienestar del hogar.</span>
+                      </div>
+                      <div className="flex items-start gap-2 text-slate-200 print-text-dark">
+                        <IconCheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                        <span>Validación previa estricta en simulación y tamaño micro.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 5. Declaraciones Personales de Protección */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div className="p-5 rounded-2xl bg-slate-900/70 border border-rose-500/30 print-bg-subtle">
+                      <span className="text-[11px] font-bold text-rose-400 uppercase tracking-widest font-heading block mb-2">
+                        Fuga Personal Identificada
+                      </span>
+                      <p className="text-sm text-slate-200 italic leading-relaxed print-text-dark">
+                        "{fugaPersonal.trim() || 'No declarada explícitamente.'}"
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl bg-slate-900/70 border border-emerald-500/30 print-bg-subtle">
+                      <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-widest font-heading block mb-2">
+                        Regla de Oro (Conducta Observable)
+                      </span>
+                      <p className="text-sm text-slate-200 italic leading-relaxed print-text-dark">
+                        "{reglaPersonal.trim() || 'No declarada explícitamente.'}"
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Signature & Seal Area */}
+                  <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-slate-400">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-heading font-black">
+                        10%
+                      </div>
+                      <div>
+                        <span className="text-white font-bold block font-heading print-text-dark">Método Ingresarios</span>
+                        <span>Filosofía de Inversión y Gestión Patrimonial</span>
+                      </div>
+                    </div>
+
+                    <div className="text-center sm:text-right">
+                      <div className="w-48 border-b border-slate-600 mb-1 mx-auto sm:ml-auto"></div>
+                      <span className="font-heading font-semibold text-slate-300 print-text-dark">
+                        Firma / Compromiso de {nombre || 'Inversor'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Action Buttons in Summary View */}
+                <div className="flex flex-wrap items-center justify-center gap-4 pt-4 no-print">
+                  <button
+                    type="button"
+                    onClick={() => window.print()}
+                    className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 text-slate-950 font-heading font-black text-sm uppercase tracking-wider shadow-glow-green hover:scale-105 transition"
+                  >
+                    Imprimir / Guardar en PDF
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => { setViewMode('form'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    className="px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-heading font-bold text-sm uppercase transition"
+                  >
+                    Modificar Datos
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleResetForm}
+                    className="px-6 py-3.5 rounded-xl bg-transparent hover:bg-slate-900 text-slate-400 hover:text-slate-300 text-sm font-medium transition"
+                  >
+                    Nuevo Diagnóstico
+                  </button>
+                </div>
+              </div>
+            )}
+          </main>
+
+          {/* Footer */}
+          <footer className="relative z-10 border-t border-slate-800/80 bg-ing-dark py-6 text-center text-xs text-slate-500 no-print">
+            <div className="max-w-5xl mx-auto px-4 space-y-2">
+              <p>© {new Date().getFullYear()} Ingresarios — Todos los derechos reservados.</p>
+              <p className="text-[11px] text-slate-600 max-w-xl mx-auto">
+                Herramienta estrictamente educativa y de diagnóstico patrimonial para sesiones privadas. No constituye asesoramiento financiero regulado ni solicitud de captación de recursos.
+              </p>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    // Render the React application
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<MapaCapitalApp />);
+  </script>
+</body>
+</html>
