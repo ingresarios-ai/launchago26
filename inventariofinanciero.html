@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>EL OTRO 10% — Inventario de Preparación | Ingresarios</title>
+  <meta name="description" content="Consolida tu liquidez, activos de capital, compromisos y flujo independiente. Calculadora financiera privada de sesión con procesamiento 100% en el cliente." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Estilos 100% Autosuficientes e Incrustados (Cero dependencias externas para renderizado inmediato) -->
+  <style>
+    :root {
+      --bg-app: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f1f5f9;
+      --border-color: #e2e8f0;
+      --border-focus: #3b82f6;
+      --text-main: #0f172a;
+      --text-slate: #334155;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --primary-blue: #1e40af;
+      --primary-blue-light: #3b82f6;
+      --primary-blue-soft: #eff6ff;
+      --emerald-accent: #059669;
+      --emerald-soft: #ecfdf5;
+      --amber-accent: #d97706;
+      --amber-soft: #fffbeb;
+      --indigo-accent: #4f46e5;
+      --indigo-soft: #eef2ff;
+      --purple-accent: #7c3aed;
+      --purple-soft: #f5f3ff;
+      --rose-accent: #e11d48;
+      --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+      --shadow-elevated: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+      --shadow-sticky: 0 -10px 25px -5px rgba(15, 23, 42, 0.08), 0 -4px 6px -2px rgba(15, 23, 42, 0.03);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      padding-bottom: 120px; /* Espacio para el sticky footer */
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Top Navigation / Branding */
+    .header-nav {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(8px);
+    }
+
+    .header-nav-inner {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+    }
+
+    .brand-title {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .currency-select-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 4px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-slate);
+    }
+
+    .currency-select {
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-blue);
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      background: #ffffff;
+      color: var(--text-slate);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-card-subtle);
+      color: var(--text-main);
+      border-color: #cbd5e1;
+    }
+
+    /* Privacy Banner */
+    .privacy-banner {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin: 24px 0 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .privacy-icon {
+      font-size: 22px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .privacy-text h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 2px;
+    }
+
+    .privacy-text p {
+      font-size: 12.5px;
+      color: #15803d;
+      line-height: 1.4;
+    }
+
+    /* Hero / App Title */
+    .hero-section {
+      margin-bottom: 28px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-blue-soft);
+      color: var(--primary-blue);
+      border: 1px solid #bfdbfe;
+      border-radius: 9999px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 760px;
+    }
+
+    /* Form Card Grid */
+    .grid-sections {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 900px) {
+      .grid-sections {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Section Card */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .section-card:hover {
+      box-shadow: var(--shadow-elevated);
+      border-color: #cbd5e1;
+    }
+
+    .section-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .card-sec-a::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .card-sec-b::before { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+    .card-sec-c::before { background: linear-gradient(90deg, #d97706, #fbbf24); }
+    .card-sec-d::before { background: linear-gradient(90deg, #059669, #34d399); }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .section-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .badge-a { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+    .badge-b { background: #f5f3ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+    .badge-c { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    .badge-d { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+
+    .section-title-wrap h3 {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+
+    .section-title-wrap p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Inputs List */
+    .inputs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .input-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .input-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-slate);
+    }
+
+    .input-hint {
+      font-size: 11px;
+      color: var(--text-light);
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-prefix {
+      position: absolute;
+      left: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 44px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0 14px 0 32px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      text-align: right;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      background: #fafafa;
+    }
+
+    .form-input::placeholder {
+      color: #cbd5e1;
+      font-weight: 400;
+    }
+
+    /* Section Subtotal Footer */
+    .section-subtotal-box {
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-card-subtle);
+      margin: 0 -24px -24px;
+      padding: 16px 24px;
+      border-bottom-left-radius: var(--radius-lg);
+      border-bottom-right-radius: var(--radius-lg);
+    }
+
+    .subtotal-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-slate);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .subtotal-tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      margin-left: 6px;
+    }
+
+    .tag-a { background: #dbeafe; color: #1e40af; }
+    .tag-b { background: #ede9fe; color: #6d28d9; }
+    .tag-c { background: #fef3c7; color: #92400e; }
+    .tag-d { background: #d1fae5; color: #065f46; }
+
+    .subtotal-amount {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .amount-c { color: #b45309; }
+    .amount-d { color: #047857; }
+
+    /* Cross Analysis Diagnostic Cards */
+    .diagnostic-panel {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 36px;
+    }
+
+    .diagnostic-title {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .diagnostic-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .diagnostic-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .diagnostic-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .diag-card {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .diag-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .diag-value {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .diag-context {
+      font-size: 11.5px;
+      color: var(--text-slate);
+      line-height: 1.35;
+    }
+
+    .diag-progress-bar {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 9999px;
+      margin: 8px 0;
+      overflow: hidden;
+    }
+
+    .diag-progress-fill {
+      height: 100%;
+      background: #10b981;
+      border-radius: 9999px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* Next Step Action Box */
+    .next-step-box {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-elevated);
+    }
+
+    @media (max-width: 768px) {
+      .next-step-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .next-step-text h4 {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .next-step-text p {
+      font-size: 13px;
+      color: #94a3b8;
+      max-width: 600px;
+    }
+
+    .btn-cta-map {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #22c55e;
+      color: #052e16;
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 800;
+      padding: 12px 22px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);
+    }
+
+    .btn-cta-map:hover {
+      background: #16a34a;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    /* Floating / Sticky Footer Dashboard */
+    .sticky-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sticky);
+      z-index: 50;
+      padding: 12px 0;
+    }
+
+    .sticky-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .sticky-metrics {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .sticky-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sticky-item-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .sticky-item-val {
+      font-family: var(--font-heading);
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .sticky-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-clear {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-clear:hover {
+      background: #fef2f2;
+      border-color: #fca5a5;
+      color: #dc2626;
+    }
+
+    .btn-print {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--primary-blue);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(30, 64, 175, 0.25);
+    }
+
+    .btn-print:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding-bottom: 180px;
+      }
+      .sticky-inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .sticky-metrics {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px 16px;
+      }
+      .sticky-actions {
+        justify-content: flex-end;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding-bottom: 0 !important;
+      }
+      .header-nav, .sticky-footer, .next-step-box, .btn-clear, .btn-print, .currency-select-wrap {
+        display: none !important;
+      }
+      .section-card {
+        page-break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      .form-input {
+        border-bottom: 1px solid #94a3b8 !important;
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        background: transparent !important;
+      }
+      .diagnostic-panel {
+        page-break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="header-nav">
+    <div class="container">
+      <div class="header-nav-inner">
+        <div class="brand-group">
+          <div class="brand-badge">10</div>
+          <div>
+            <div class="brand-title">EL OTRO 10%</div>
+            <div class="brand-subtitle">Inventario de Preparación</div>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="currency-select-wrap">
+            <span>Moneda:</span>
+            <select id="currency-selector" class="currency-select" onchange="changeCurrency(this.value)">
+              <option value="USD">USD ($)</option>
+              <option value="COP">COP ($)</option>
+              <option value="MXN">MXN ($)</option>
+              <option value="EUR">EUR (€)</option>
+            </select>
+          </div>
+
+          <a href="/mapacapital" class="btn-secondary" title="Ir a Mapa de Capital">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            <span>Mapa de Capital</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Privacy Banner -->
+    <section class="privacy-banner" role="alert">
+      <div class="privacy-icon">🔒</div>
+      <div class="privacy-text">
+        <h4>Modo Privado Activo: Tus datos financieros no se envían a ningún servidor</h4>
+        <p>Todo el cálculo ocurre de manera 100% local en la memoria de tu dispositivo. No usamos bases de datos externas ni almacenamiento en la nube para garantizar tu confidencialidad absoluta.</p>
+      </div>
+    </section>
+
+    <!-- Hero Introduction -->
+    <section class="hero-section">
+      <div class="hero-badge">Diagnóstico Patrimonial de Sesión</div>
+      <h1 class="hero-title">Inventario de Preparación Financiera</h1>
+      <p class="hero-desc">
+        Ingresa tus números reales para consolidar tu reserva de seguridad, capital productivo, compromisos mensuales y flujo no dependiente del trabajo.
+      </p>
+    </section>
+
+    <!-- 4 Main Input Sections Grid -->
+    <div class="grid-sections">
+      
+      <!-- SECCIÓN A: Ahorros y Liquidez Inmediata -->
+      <article class="section-card card-sec-a">
+        <div>
+          <div class="section-header">
+            <div class="section-icon-badge badge-a">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div class="section-title-wrap">
+              <h3>Sección A: Ahorros y Liquidez</h3>
+              <p>Reserva familiar y capital de contingencia inmediata</p>
+            </div>
+          </div>
+
+          <div class="inputs-list">
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-a-1">Fondo de emergencia / Reserva familiar</label>
+                <span class="input-hint">3 a 6 meses de gastos</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-a-1">$</span>
+                <input type="text" id="in-sec-a-1" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'a1')" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-a-2">Cuentas bancarias / Depósitos a la vista</label>
+                <span class="input-hint">Ahorros y cuentas corrientes</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-a-2">$</span>
+                <input type="text" id="in-sec-a-2" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'a2')" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-a-3">Efectivo o equivalentes de caja</label>
+                <span class="input-hint">Divisas en mano / Fondos ultra líquidos</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-a-3">$</span>
+                <input type="text" id="in-sec-a-3" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'a3')" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-subtotal-box">
+          <div>
+            <span class="subtotal-label">Subtotal Ahorros / Liquidez</span>
+            <span class="subtotal-tag tag-a">Monto de Seguridad</span>
+          </div>
+          <div class="subtotal-amount" id="subtotal-a">$0</div>
+        </div>
+      </article>
+
+      <!-- SECCIÓN B: Inversiones y Activos de Capital -->
+      <article class="section-card card-sec-b">
+        <div>
+          <div class="section-header">
+            <div class="section-icon-badge badge-b">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <div class="section-title-wrap">
+              <h3>Sección B: Inversiones y Activos</h3>
+              <p>Patrimonio productivo y capital disponible</p>
+            </div>
+          </div>
+
+          <div class="inputs-list">
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-b-1">Bienes raíces o activos de renta</label>
+                <span class="input-hint">Valor neto de propiedades</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-b-1">$</span>
+                <input type="text" id="in-sec-b-1" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'b1')" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-b-2">Participaciones en empresas / Negocio propio</label>
+                <span class="input-hint">Valoración patrimonial neta</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-b-2">$</span>
+                <input type="text" id="in-sec-b-2" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'b2')" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-b-3">Cuentas de trading / Inversiones financieras</label>
+                <span class="input-hint">Acciones, ETFs, Bonos, Fondos</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-b-3">$</span>
+                <input type="text" id="in-sec-b-3" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'b3')" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-b-4">Fondos de retiro / Pensiones acumuladas</label>
+                <span class="input-hint">Aportes voluntarios y fondos privados</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-b-4">$</span>
+                <input type="text" id="in-sec-b-4" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'b4')" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-subtotal-box">
+          <div>
+            <span class="subtotal-label">Subtotal Inversiones y Capital</span>
+            <span class="subtotal-tag tag-b">Capital Potencial</span>
+          </div>
+          <div class="subtotal-amount" id="subtotal-b">$0</div>
+        </div>
+      </article>
+
+      <!-- SECCIÓN C: Obligaciones y Gastos Recurrentes (Mensuales) -->
+      <article class="section-card card-sec-c">
+        <div>
+          <div class="section-header">
+            <div class="section-icon-badge badge-c">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </div>
+            <div class="section-title-wrap">
+              <h3>Sección C: Gastos Recurrentes (Mensual)</h3>
+              <p>Obligaciones vitales para mantener el estilo de vida</p>
+            </div>
+          </div>
+
+          <div class="inputs-list">
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-c-1">Vivienda (hipoteca/alquiler) y servicios</label>
+                <span class="input-hint">Luz, agua, internet, administración</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-c-1">$</span>
+                <input type="text" id="in-sec-c-1" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'c1')" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-c-2">Alimentación, salud y familia</label>
+                <span class="input-hint">Mercado, seguros médicos, colegio</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-c-2">$</span>
+                <input type="text" id="in-sec-c-2" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'c2')" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-c-3">Pagos de deuda o compromisos de pasivos</label>
+                <span class="input-hint">Cuotas créditos, tarjetas, préstamos</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-c-3">$</span>
+                <input type="text" id="in-sec-c-3" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'c3')" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-c-4">Otros gastos fijos esenciales</label>
+                <span class="input-hint">Transporte, combustible, seguros</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-c-4">$</span>
+                <input type="text" id="in-sec-c-4" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'c4')" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-subtotal-box">
+          <div>
+            <span class="subtotal-label">Total Necesidad Mensual</span>
+            <span class="subtotal-tag tag-c">Cifra A</span>
+          </div>
+          <div class="subtotal-amount amount-c" id="subtotal-c">$0</div>
+        </div>
+      </article>
+
+      <!-- SECCIÓN D: Entradas Independientes del Trabajo (Mensuales) -->
+      <article class="section-card card-sec-d">
+        <div>
+          <div class="section-header">
+            <div class="section-icon-badge badge-d">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <div class="section-title-wrap">
+              <h3>Sección D: Ingresos Independientes (Mensual)</h3>
+              <p>Flujo que entra sin necesidad de tu presencia u horas</p>
+            </div>
+          </div>
+
+          <div class="inputs-list">
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-d-1">Rentas de inmuebles</label>
+                <span class="input-hint">Flujo neto de alquileres</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-d-1">$</span>
+                <input type="text" id="in-sec-d-1" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'd1')" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-d-2">Dividendos / Distribuciones pasivas</label>
+                <span class="input-hint">Negocios donde no eres operador activo</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-d-2">$</span>
+                <input type="text" id="in-sec-d-2" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'd2')" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-label-row">
+                <label class="input-label" for="in-sec-d-3">Intereses y rendimientos sostenibles</label>
+                <span class="input-hint">Plazos fijos, bonos, staking seguro</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-prefix" id="sym-sec-d-3">$</span>
+                <input type="text" id="in-sec-d-3" class="form-input" inputmode="numeric" placeholder="0" oninput="handleNumericInput(this, 'd3')" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-subtotal-box">
+          <div>
+            <span class="subtotal-label">Total Ingresos No Dependientes</span>
+            <span class="subtotal-tag tag-d">Cifra B</span>
+          </div>
+          <div class="subtotal-amount amount-d" id="subtotal-d">$0</div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Diagnostic & Cross-Analysis Panel -->
+    <section class="diagnostic-panel">
+      <h3 class="diagnostic-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+        Diagnóstico Patrimonial Inmediato
+      </h3>
+      <p class="diagnostic-desc">
+        Relación entre tu estilo de vida (Cifra A), tu independencia de flujo (Cifra B) y tu respaldo de liquidez.
+      </p>
+
+      <div class="diagnostic-grid">
+        <!-- Brecha Mensual -->
+        <div class="diag-card">
+          <div class="diag-label">Brecha Mensual a Cubrir (A - B)</div>
+          <div class="diag-value" id="diag-brecha">$0</div>
+          <div class="diag-context" id="diag-brecha-desc">
+            Monto mensual que aún depende de tu salario, ventas o presencia activa.
+          </div>
+        </div>
+
+        <!-- Cobertura de Independencia -->
+        <div class="diag-card">
+          <div class="diag-label">Cobertura de Flujo No Dependiente</div>
+          <div class="diag-value" id="diag-cobertura">0%</div>
+          <div class="diag-progress-bar">
+            <div class="diag-progress-fill" id="diag-cobertura-bar"></div>
+          </div>
+          <div class="diag-context" id="diag-cobertura-desc">
+            Meta: Llevar esta cifra al 100% para alcanzar la Libertad Financiera.
+          </div>
+        </div>
+
+        <!-- Runway / Meses de Reserva -->
+        <div class="diag-card">
+          <div class="diag-label">Meses de Autonomía (Runway)</div>
+          <div class="diag-value" id="diag-runway">0.0 meses</div>
+          <div class="diag-context" id="diag-runway-desc">
+            Meses que tu Sección A puede sostener tu costo de vida mensual sin nuevos ingresos.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Connect to Mapa de Capital -->
+    <section class="next-step-box">
+      <div class="next-step-text">
+        <h4>¿Listo para tu siguiente paso en la sesión?</h4>
+        <p>
+          Usa tu <strong>Cifra A</strong> (Necesidad Mensual) y tu <strong>Cifra B</strong> (Ingresos No Dependientes) para construir tu <strong>Mapa de Capital</strong> y estructurar tus 4 Zonas de Riqueza.
+        </p>
+      </div>
+      <div>
+        <a id="btn-export-mapa" href="/mapacapital" class="btn-cta-map">
+          <span>Abrir Mapa de Capital con mis Cifras</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Sticky Footer / Summary Dashboard -->
+  <footer class="sticky-footer" id="sticky-dashboard">
+    <div class="container">
+      <div class="sticky-inner">
+        <!-- Totales consolidados -->
+        <div class="sticky-metrics">
+          <div class="sticky-item">
+            <span class="sticky-item-label">
+              <span style="color:#3b82f6;">●</span> Monto de Seguridad (Sec. A)
+            </span>
+            <span class="sticky-item-val" id="foot-total-a">$0</span>
+          </div>
+
+          <div class="sticky-item">
+            <span class="sticky-item-label">
+              <span style="color:#7c3aed;">●</span> Capital Disponible (Sec. B)
+            </span>
+            <span class="sticky-item-val" id="foot-total-b">$0</span>
+          </div>
+
+          <div class="sticky-item">
+            <span class="sticky-item-label">
+              <span style="color:#d97706;">●</span> Necesidad Mensual (Cifra A)
+            </span>
+            <span class="sticky-item-val" style="color:#b45309;" id="foot-total-c">$0</span>
+          </div>
+
+          <div class="sticky-item">
+            <span class="sticky-item-label">
+              <span style="color:#059669;">●</span> Ingreso Independiente (Cifra B)
+            </span>
+            <span class="sticky-item-val" style="color:#047857;" id="foot-total-d">$0</span>
+          </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="sticky-actions">
+          <button type="button" class="btn-clear" onclick="confirmResetData()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            <span>Limpiar Datos</span>
+          </button>
+
+          <button type="button" class="btn-print" onclick="window.print()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>Imprimir / Guardar PDF</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script Lógica React-Like Client-Side 100% Nativo -->
+  <script>
+    // Estado Centralizado
+    const state = {
+      currency: 'USD',
+      symbol: '$',
+      inputs: {
+        a1: 0, a2: 0, a3: 0,
+        b1: 0, b2: 0, b3: 0, b4: 0,
+        c1: 0, c2: 0, c3: 0, c4: 0,
+        d1: 0, d2: 0, d3: 0
+      }
+    };
+
+    // Símbolos por moneda
+    const CURRENCY_SYMBOLS = {
+      USD: '$',
+      COP: '$',
+      MXN: '$',
+      EUR: '€'
+    };
+
+    // Formateador Numérico
+    function formatCurrency(num, curr = state.currency) {
+      const sym = CURRENCY_SYMBOLS[curr] || '$';
+      if (isNaN(num) || num === null || num === undefined) num = 0;
+      return `${sym}${num.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+    }
+
+    // Parsear input numérico sanitizado
+    function parseCleanNumber(val) {
+      if (!val) return 0;
+      const clean = val.toString().replace(/[^0-9.]/g, '');
+      const num = parseFloat(clean);
+      return isNaN(num) ? 0 : num;
+    }
+
+    // Manejar entrada de usuario en tiempo real
+    function handleNumericInput(el, key) {
+      const rawVal = el.value.replace(/[^0-9]/g, '');
+      const num = rawVal === '' ? 0 : parseInt(rawVal, 10);
+      
+      // Actualizar estado
+      state.inputs[key] = num;
+
+      // Re-formatear input visual con separador de miles
+      if (rawVal === '') {
+        el.value = '';
+      } else {
+        el.value = num.toLocaleString('en-US');
+      }
+
+      // Recalcular subtotales y diagnóstico
+      recalculateAll();
+      saveDraftToLocalStorage();
+    }
+
+    // Calcular Subtotales
+    function calculateSubtotals() {
+      const subA = state.inputs.a1 + state.inputs.a2 + state.inputs.a3;
+      const subB = state.inputs.b1 + state.inputs.b2 + state.inputs.b3 + state.inputs.b4;
+      const subC = state.inputs.c1 + state.inputs.c2 + state.inputs.c3 + state.inputs.c4;
+      const subD = state.inputs.d1 + state.inputs.d2 + state.inputs.d3;
+      return { subA, subB, subC, subD };
+    }
+
+    // Recalcular toda la UI en tiempo real
+    function recalculateAll() {
+      const { subA, subB, subC, subD } = calculateSubtotals();
+
+      // Actualizar Subtotales en las tarjetas
+      document.getElementById('subtotal-a').textContent = formatCurrency(subA);
+      document.getElementById('subtotal-b').textContent = formatCurrency(subB);
+      document.getElementById('subtotal-c').textContent = formatCurrency(subC);
+      document.getElementById('subtotal-d').textContent = formatCurrency(subD);
+
+      // Actualizar Sticky Footer
+      document.getElementById('foot-total-a').textContent = formatCurrency(subA);
+      document.getElementById('foot-total-b').textContent = formatCurrency(subB);
+      document.getElementById('foot-total-c').textContent = formatCurrency(subC);
+      document.getElementById('foot-total-d').textContent = formatCurrency(subD);
+
+      // Métricas de Diagnóstico Cruzado
+      // 1. Brecha Mensual (Max 0, Cifra A - Cifra B)
+      const brecha = Math.max(0, subC - subD);
+      const brechaEl = document.getElementById('diag-brecha');
+      brechaEl.textContent = formatCurrency(brecha);
+      const brechaDescEl = document.getElementById('diag-brecha-desc');
+      if (subC === 0) {
+        brechaDescEl.textContent = 'Ingresa tus gastos mensuales en la Sección C para ver tu brecha.';
+      } else if (brecha === 0) {
+        brechaDescEl.innerHTML = '<strong style="color:#059669;">¡Felicidades!</strong> Tus ingresos no dependientes cubren el 100% de tus gastos.';
+      } else {
+        brechaDescEl.textContent = `Necesitas generar ${formatCurrency(brecha)} adicionales en ingresos pasivos para cubrir tu estilo de vida.`;
+      }
+
+      // 2. Cobertura de Independencia (Cifra B / Cifra A)
+      const coberturaEl = document.getElementById('diag-cobertura');
+      const coberturaBarEl = document.getElementById('diag-cobertura-bar');
+      const coberturaDescEl = document.getElementById('diag-cobertura-desc');
+      
+      let pct = 0;
+      if (subC > 0) {
+        pct = Math.min(100, Math.round((subD / subC) * 100));
+      } else if (subD > 0) {
+        pct = 100;
+      }
+      
+      coberturaEl.textContent = `${pct}%`;
+      coberturaBarEl.style.width = `${pct}%`;
+      if (pct >= 100) {
+        coberturaBarEl.style.backgroundColor = '#059669';
+        coberturaDescEl.innerHTML = '<strong>Libertad Financiera Básica alcanzada</strong>. El 100% de tus gastos está cubierto sin trabajar activamente.';
+      } else if (pct >= 50) {
+        coberturaBarEl.style.backgroundColor = '#3b82f6';
+        coberturaDescEl.textContent = `Cubres más de la mitad de tu costo de vida (${pct}%). Estás en camino de consolidación.`;
+      } else {
+        coberturaBarEl.style.backgroundColor = '#f59e0b';
+        coberturaDescEl.textContent = `Tus ingresos no dependientes cubren el ${pct}% de tu necesidad. El restante depende de tu labor activa.`;
+      }
+
+      // 3. Meses de Autonomía (Runway: Subtotal A / Subtotal C)
+      const runwayEl = document.getElementById('diag-runway');
+      const runwayDescEl = document.getElementById('diag-runway-desc');
+      if (subC > 0) {
+        const meses = (subA / subC).toFixed(1);
+        runwayEl.textContent = `${meses} meses`;
+        if (parseFloat(meses) >= 6) {
+          runwayDescEl.innerHTML = '<strong style="color:#059669;">Excelente fondo de reserva</strong>. Supera los 6 meses de seguridad recomendados.';
+        } else if (parseFloat(meses) >= 3) {
+          runwayDescEl.textContent = 'Nivel aceptable de seguridad (3 a 6 meses). Se sugiere robustecer el fondo de emergencia.';
+        } else {
+          runwayDescEl.innerHTML = '<span style="color:#d97706;">Reserva ajustada</span>. Se recomienda alcanzar mínimo 3 a 6 meses de gastos fijos.';
+        }
+      } else {
+        runwayEl.textContent = '0.0 meses';
+        runwayDescEl.textContent = 'Ingresa tus gastos en la Sección C para calcular tu margen de meses de autonomía.';
+      }
+
+      // 4. Actualizar Enlace al Mapa de Capital
+      const btnMapa = document.getElementById('btn-export-mapa');
+      if (btnMapa) {
+        const params = new URLSearchParams();
+        if (subC > 0) params.set('necesidad', subC);
+        if (subD > 0) params.set('nodep', subD);
+        if (state.currency !== 'USD') params.set('moneda', state.currency);
+        btnMapa.href = `/mapacapital?${params.toString()}`;
+      }
+    }
+
+    // Cambiar Moneda
+    function changeCurrency(newCurr) {
+      state.currency = newCurr;
+      state.symbol = CURRENCY_SYMBOLS[newCurr] || '$';
+
+      // Actualizar prefijos en los inputs
+      document.querySelectorAll('.input-prefix').forEach(el => {
+        el.textContent = state.symbol;
+      });
+
+      recalculateAll();
+      saveDraftToLocalStorage();
+    }
+
+    // Confirmar y Limpiar Datos
+    function confirmResetData() {
+      const confirmMsg = '¿Estás seguro de borrar todos los datos locales? Esta acción restablecerá todas las casillas a cero.';
+      if (window.confirm(confirmMsg)) {
+        Object.keys(state.inputs).forEach(key => {
+          state.inputs[key] = 0;
+        });
+
+        // Limpiar inputs del DOM
+        document.querySelectorAll('.form-input').forEach(input => {
+          input.value = '';
+        });
+
+        recalculateAll();
+        try {
+          localStorage.removeItem('ingresarios_inventario_draft');
+        } catch(e) {}
+      }
+    }
+
+    // Guardado local opcional de conveniencia privada
+    function saveDraftToLocalStorage() {
+      try {
+        localStorage.setItem('ingresarios_inventario_draft', JSON.stringify({
+          inputs: state.inputs,
+          currency: state.currency
+        }));
+      } catch (e) {
+        // En navegadores con storage bloqueado, no pasa nada
+      }
+    }
+
+    // Recuperar borrador si el usuario refrescó
+    function loadDraftFromLocalStorage() {
+      try {
+        const saved = localStorage.getItem('ingresarios_inventario_draft');
+        if (saved) {
+          const data = JSON.parse(saved);
+          if (data && data.inputs) {
+            state.inputs = { ...state.inputs, ...data.inputs };
+            if (data.currency && CURRENCY_SYMBOLS[data.currency]) {
+              state.currency = data.currency;
+              const select = document.getElementById('currency-selector');
+              if (select) select.value = data.currency;
+              document.querySelectorAll('.input-prefix').forEach(el => {
+                el.textContent = CURRENCY_SYMBOLS[data.currency];
+              });
+            }
+
+            // Mapeo a los inputs HTML
+            const inputMap = {
+              'in-sec-a-1': 'a1', 'in-sec-a-2': 'a2', 'in-sec-a-3': 'a3',
+              'in-sec-b-1': 'b1', 'in-sec-b-2': 'b2', 'in-sec-b-3': 'b3', 'in-sec-b-4': 'b4',
+              'in-sec-c-1': 'c1', 'in-sec-c-2': 'c2', 'in-sec-c-3': 'c3', 'in-sec-c-4': 'c4',
+              'in-sec-d-1': 'd1', 'in-sec-d-2': 'd2', 'in-sec-d-3': 'd3'
+            };
+
+            Object.entries(inputMap).forEach(([id, key]) => {
+              const el = document.getElementById(id);
+              if (el && state.inputs[key] > 0) {
+                el.value = state.inputs[key].toLocaleString('en-US');
+              }
+            });
+          }
+        }
+      } catch (e) {}
+    }
+
+    // Inicialización al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDraftFromLocalStorage();
+      recalculateAll();
+    });
+  </script>
+</body>
+</html>

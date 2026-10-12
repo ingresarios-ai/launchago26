@@ -25,6 +25,8 @@
   "rewrites": [
     { "source": "/mapacapital", "destination": "/mapacapital.html" },
     { "source": "/mapa-capital", "destination": "/mapacapital.html" },
+    { "source": "/inventariofinanciero", "destination": "/inventariofinanciero.html" },
+    { "source": "/inventario-financiero", "destination": "/inventariofinanciero.html" },
     { "source": "/v2", "destination": "/v2.html" },
     { "source": "/test", "destination": "/test.html" },
     { "source": "/resultado", "destination": "/test.html" },
