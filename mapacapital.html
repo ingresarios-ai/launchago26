@@ -1941,6 +1941,30 @@
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('input-fecha').value = new Date().toISOString().split('T')[0];
       loadFromStorage();
+
+      // Leer parámetros transferidos desde /inventariofinanciero
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const necParam = urlParams.get('necesidad');
+        const nodepParam = urlParams.get('nodep');
+        const currParam = urlParams.get('moneda');
+        if (currParam && ['USD', 'COP', 'MXN', 'EUR'].includes(currParam)) {
+          setAppCurrency(currParam);
+        }
+        if (necParam) {
+          const necNum = parseInt(necParam, 10);
+          if (!isNaN(necNum) && necNum > 0) {
+            document.getElementById('input-necesidad').value = necNum.toLocaleString('en-US');
+          }
+        }
+        if (nodepParam) {
+          const nodepNum = parseInt(nodepParam, 10);
+          if (!isNaN(nodepNum) && nodepNum >= 0) {
+            document.getElementById('input-ingreso-nodep').value = nodepNum.toLocaleString('en-US');
+          }
+        }
+      } catch (e) {}
+
       saveAndRecalculate();
     });
   </script>
