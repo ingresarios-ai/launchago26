@@ -885,6 +885,8 @@
       </div>
 
       <div class="header-actions">
+        <div id="user-status-container"></div>
+
         <div class="privacy-badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           <span>100% Privado (Navegador)</span>
@@ -1335,7 +1337,10 @@
           </div>
         </div>
 
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <button type="button" class="btn-main" id="btn-save-mapa-top" onclick="triggerSaveMapa()" style="padding: 10px 20px; font-size: 12px; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: #041f0f; font-weight: 800; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.45);">
+            💾 Guardar Respuestas
+          </button>
           <button type="button" class="btn-main" style="padding: 10px 22px; font-size: 12px;" onclick="window.print()">
             🖨️ Descargar / Imprimir PDF
           </button>
@@ -1529,6 +1534,9 @@
 
       <!-- Action Buttons Footer -->
       <div class="no-print" style="display: flex; justify-content: center; gap: 16px; margin-top: 24px; flex-wrap: wrap;">
+        <button type="button" class="btn-main" id="btn-save-mapa-bottom" onclick="triggerSaveMapa()" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: #041f0f; font-weight: 800; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.45);">
+          💾 Guardar Respuestas en mi Cuenta
+        </button>
         <button type="button" class="btn-main" onclick="window.print()">
           🖨️ Descargar / Imprimir en PDF
         </button>
@@ -1552,6 +1560,9 @@
       </p>
     </div>
   </footer>
+
+  <!-- Integración con Supabase y GoHighLevel -->
+  <script src="/financial-db.js"></script>
 
   <!-- ==================== LOGIC (VANILLA JS, 100% RELIABLE) ==================== -->
   <script>
@@ -1935,6 +1946,55 @@
         saveAndRecalculate();
         try { localStorage.removeItem('ingresarios_mapa_capital_draft'); } catch(e) {}
       }
+    }
+
+    // Disparar Guardado de Mapa de Capital a Supabase y GHL
+    function triggerSaveMapa() {
+      const nombre = document.getElementById('input-nombre').value.trim();
+      const fecha = document.getElementById('input-fecha').value;
+      const necesidad = parseDigits(document.getElementById('input-necesidad').value);
+      const ingresoNoDep = parseDigits(document.getElementById('input-ingreso-nodep').value);
+      const z1 = parseDigits(document.getElementById('input-zona1').value);
+      const z2 = parseDigits(document.getElementById('input-zona2').value);
+      const z3 = parseDigits(document.getElementById('input-zona3').value);
+      const z4 = parseDigits(document.getElementById('input-zona4').value);
+      const totalCapital = z1 + z2 + z3 + z4;
+      const brecha = Math.max(0, necesidad - ingresoNoDep);
+      const cobertura = necesidad > 0 ? Math.min(100, Math.round((ingresoNoDep / necesidad) * 100)) : 0;
+      const fuga = document.getElementById('textarea-fuga').value.trim();
+      const regla = document.getElementById('textarea-regla').value.trim();
+
+      saveFinancialExercise({
+        exerciseType: 'mapa_capital',
+        data: {
+          nombre,
+          fecha,
+          perfil: appProfile,
+          moneda: appCurrency,
+          necesidad_mensual_a: necesidad,
+          ingreso_no_dependiente_b: ingresoNoDep,
+          zona_1_seguridad: z1,
+          zona_2_objetivos: z2,
+          zona_3_crecimiento: z3,
+          zona_4_asimetrico: z4,
+          total_capital: totalCapital,
+          fuga_identificada: fuga,
+          regla_proteccion: regla,
+          checks_reglas: checkStates
+        },
+        summary: {
+          nombre: nombre,
+          perfil: appProfile,
+          moneda: appCurrency,
+          cifra_a_necesidad_mensual: necesidad,
+          cifra_b_ingresos_no_dependientes: ingresoNoDep,
+          brecha_mensual: brecha,
+          cobertura_porcentaje: cobertura,
+          total_capital: totalCapital,
+          fuga_capital: fuga,
+          regla_oro: regla
+        }
+      });
     }
 
     // Init on DOM Load
