@@ -95,6 +95,7 @@
     { "source": "/compraexitosa", "destination": "/compraexitosa.html" },
     { "source": "/libro-dia1", "destination": "/libro-dia1.pdf" },
     { "source": "/descarga1", "destination": "/Tarjeta_de_Operacion_PEDEM.pdf" },
+    { "source": "/descarga2", "destination": "/Hoja_de_Auditoria_PEDEM.pdf" },
     { "source": "/vip", "destination": "/vip/index.html" }
   ],
   "headers": [
@@ -117,6 +118,32 @@
         {
           "key": "Content-Disposition",
           "value": "attachment; filename=\"Tarjeta_de_Operacion_PEDEM.pdf\""
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/pdf"
+        }
+      ]
+    },
+    {
+      "source": "/descarga2",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=\"Hoja_de_Auditoria_PEDEM.pdf\""
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/pdf"
+        }
+      ]
+    },
+    {
+      "source": "/Hoja_de_Auditoria_PEDEM.pdf",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=\"Hoja_de_Auditoria_PEDEM.pdf\""
         },
         {
           "key": "Content-Type",
